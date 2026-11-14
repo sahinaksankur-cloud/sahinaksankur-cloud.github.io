@@ -9,7 +9,7 @@ window.KK_CONFIG = {
   youtubeKanal: "https://www.youtube.com/@kuzeykampus",
 
   // İletişim sayfası
-  iletisimEposta: "",   // örnek: "iletisim@kuzeykampuscalculus.com"
+  iletisimEposta: "iletisim@kuzeykampuscalculus.com",
   whatsapp: "",         // örnek: "905xxxxxxxxx" (boş bırakılırsa WhatsApp düğmesi görünmez)
 
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.
