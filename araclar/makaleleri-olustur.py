@@ -194,19 +194,21 @@ def liste_sayfasi(yazarlar, seriler, yazilar):
         toplam = 0
         for s in (s for s in seriler if s["yazar"] == a["id"]):
             ys = sorted((y for y in yazilar if y["seri"] == s["id"]), key=lambda y: y["no"])
-            if not ys:
-                continue
             toplam += len(ys)
             maddeler = "\n".join(
                 f'            <li><a href="makaleler/{y["dosya"]}"><span class="num">#{y["no"]}</span>'
                 f'<span class="t">{e(y["baslik"])}</span>'
                 f'<span class="d">{tarih_yaz(y["tarih"])} · {y["dakika"]} dk</span></a></li>' for y in ys)
             aciklama = f'\n          <p class="series-desc">{e(s["aciklama"])}</p>' if s.get("aciklama") else ""
+            if ys:
+                icerik = f"""\n          <ul class="series-list">\n{maddeler}\n          </ul>"""
+                sayi = f"{len(ys)} makale"
+            else:
+                # Henüz makalesi olmayan seri: başlıklar gösterilmez, sadece seri görünür.
+                icerik = '\n          <p class="series-empty">Bu serinin makaleleri yakında eklenecek.</p>'
+                sayi = "Yakında"
             seri_bloklari.append(f"""        <details class="series" id="{e(s['id'])}"{' open' if not seri_bloklari else ''}>
-          <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{len(ys)} makale</span></summary>{aciklama}
-          <ul class="series-list">
-{maddeler}
-          </ul>
+          <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{sayi}</span></summary>{aciklama}{icerik}
         </details>""")
         if not seri_bloklari:
             continue
