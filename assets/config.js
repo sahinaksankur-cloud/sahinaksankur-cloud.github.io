@@ -28,10 +28,10 @@ window.KK_CONFIG = {
       id: "calc2",
       ad: "Calculus 2 | Sıfırdan Zirveye",
       kisaAd: "Calculus 2",
-      aciklama: "İntegrasyon teknikleri, integralin uygulamaları, diziler ve seriler.",
+      aciklama: "Diziler ve seriler, parametrik eğriler, kutupsal koordinatlar, konikler ve vektörler.",
       playlist: "PLQMBWHXZe7fl6qeCuYTQEkxC6m1xdB9Dd",
       dil: "tr",
-      aktif: false
+      aktif: true
     },
     {
       id: "en-calc",
