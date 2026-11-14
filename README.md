@@ -1,2 +1,17 @@
-# sahinaksankur-cloud.github.io
-Kuzey Kampüs – ders videoları, çalışma PDF’leri ve makaleler
+# Kuzey Kampüs – web sitesi
+
+Kuzey Kampüs – ders videoları, çalışma PDF'leri ve makaleler.
+
+## Videolar ve PDF'ler nasıl eklenir?
+
+Tüm videolar `data/videos.csv` dosyasında (ileride bir Google E-Tablo'da) tutulur:
+
+| Sütun | Açıklama |
+|---|---|
+| `liste` | Dersin kimliği (`calc1`, `calc2`, `en-calc`) |
+| `sira` | Videonun ders içindeki sırası |
+| `baslik` | Sitede görünen başlık |
+| `video` | YouTube linki ya da video kimliği |
+| `pdf` | Google Drive PDF linki. Birden fazlaysa aralarına `\|` koyun. Boş bırakılabilir. |
+
+Dersler ve genel ayarlar `assets/config.js` dosyasındadır.

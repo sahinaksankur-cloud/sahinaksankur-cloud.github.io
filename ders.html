@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ders – Kuzey Kampüs</title>
+  <meta name="description" content="Calculus konu anlatımı videoları ve ders notları.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html">Kuzey <span>Kampüs</span></a>
+      <nav class="nav">
+        <a href="index.html">Dersler</a>
+        <a data-yt href="#" target="_blank" rel="noopener">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="course-head">
+      <h1 id="course-title">Yükleniyor…</h1>
+      <p id="course-desc"></p>
+    </div>
+
+    <div id="course" class="layout">
+      <div>
+        <div class="player" id="player"></div>
+        <div class="now">
+          <h2 id="now-title"></h2>
+          <div class="sub" id="now-sub"></div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="prev" type="button">← Önceki ders</button>
+          <button class="btn primary" id="next" type="button">Sonraki ders →</button>
+          <a class="btn" id="yt" href="#" target="_blank" rel="noopener">YouTube'da aç</a>
+        </div>
+        <section class="pdf-box" id="pdf"></section>
+      </div>
+
+      <aside class="sidebar">
+        <div class="search">
+          <input id="search" type="search" placeholder="Ders ara: limit, türev, L'Hopital…" aria-label="Ders ara">
+          <div class="count" id="count"></div>
+        </div>
+        <ul class="list" id="list"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© Kuzey Kampüs – Şahin Aksankur</span>
+      <a data-yt href="#" target="_blank" rel="noopener">YouTube kanalı</a>
+    </div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
