@@ -1,12 +1,20 @@
 [
   {
     "id": "dusunen-insan",
+    "yazar": "sahin-aksankur",
     "ad": "Düşünen İnsan",
     "aciklama": "Matematik ve bilim tarihinden yola çıkarak düşünmenin kendisi üzerine makaleler."
   },
   {
     "id": "ezber-paradoksu",
+    "yazar": "sahin-aksankur",
     "ad": "Eğitimde Ezber Paradoksu",
+    "aciklama": "Eğitimde ezbere karşı yürütülecek gerçek bir mücadele, önce ezberin kendisini doğru anlamakla başlamalıdır. Bu seri, ezberi doğrudan kötü ilan etmek yerine önce temel kavramları birbirinden ayırıyor; ardından ezberin farklı biçimlerini ve eğitim sisteminde ortaya çıkan ezber mekanizmalarını ele alıyor."
+  },
+  {
+    "id": "egitim-uzerine",
+    "yazar": "sahin-aksankur",
+    "ad": "Eğitim Üzerine",
     "aciklama": ""
   }
 ]

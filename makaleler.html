@@ -31,23 +31,28 @@
   <main class="wrap">
     <section class="hero">
       <h1>Makaleler</h1>
-      <p>Şahin Aksankur'un matematik, bilim ve eğitim üzerine makaleleri. Her seri kendi içinde sırayla okunabilir.</p>
+      <p>Matematik, bilim ve eğitim üzerine makaleler. Her seri kendi içinde sırayla okunabilir.</p>
     </section>
     <div class="series-wrap">
-      <details class="series" id="dusunen-insan" open>
-        <summary><span class="series-name">Düşünen İnsan</span><span class="series-count">1 makale</span></summary>
-        <p class="series-desc">Matematik ve bilim tarihinden yola çıkarak düşünmenin kendisi üzerine makaleler.</p>
-        <ul class="series-list">
-          <li><a href="makaleler/dusunen-insan-13.html"><span class="num">#13</span><span class="t">Yanılabilir Olmak: Bilimin En Büyük Gücü</span><span class="d">9 Kasım 2026 · 7 dk</span></a></li>
-        </ul>
+      <details class="author" id="sahin-aksankur" open>
+        <summary><span class="author-name">Şahin Aksankur Makaleleri</span><span class="series-count">1 seri · 1 makale</span></summary>
+        <div class="author-series">
+        <details class="series" id="dusunen-insan" open>
+          <summary><span class="series-name">Düşünen İnsan</span><span class="series-count">1 makale</span></summary>
+          <p class="series-desc">Matematik ve bilim tarihinden yola çıkarak düşünmenin kendisi üzerine makaleler.</p>
+          <ul class="series-list">
+            <li><a href="makaleler/dusunen-insan-13.html"><span class="num">#13</span><span class="t">Yanılabilir Olmak: Bilimin En Büyük Gücü</span><span class="d">9 Kasım 2026 · 7 dk</span></a></li>
+          </ul>
+        </details>
+        </div>
       </details>
     </div>
   </main>
   <script>
-    // Adres #seri-adı ile açılırsa o seriyi aç.
+    // Adres #seri-adı ya da #yazar-adı ile açılırsa o bölümü ve üstündekileri aç.
     (function () {
       var d = location.hash && document.getElementById(location.hash.slice(1));
-      if (d && d.tagName === "DETAILS") d.open = true;
+      while (d) { if (d.tagName === "DETAILS") d.open = true; d = d.parentElement; }
     })();
   </script>
 

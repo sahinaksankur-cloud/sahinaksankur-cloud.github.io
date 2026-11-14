@@ -169,7 +169,7 @@ def yazi_sayfasi(y, seri, onceki, sonraki):
       <header class="article-head">
         <a class="article-series" href="../makaleler.html#{e(seri['id'])}">{e(seri['ad'])} · #{y['no']}</a>
         <h1>{e(y['baslik'])}</h1>
-        <p class="article-meta">Şahin Aksankur · <time datetime="{y['tarih']}">{tarih_yaz(y['tarih'])}</time> · {y['dakika']} dk okuma</p>
+        <p class="article-meta">{e(seri['yazar_ad'])} · <time datetime="{y['tarih']}">{tarih_yaz(y['tarih'])}</time> · {y['dakika']} dk okuma</p>
       </header>
       <div class="prose">
 {md_html(y['govde'])}
@@ -179,47 +179,57 @@ def yazi_sayfasi(y, seri, onceki, sonraki):
     jsonld = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": y["baslik"], "datePublished": y["tarih"],
-        "author": {"@type": "Person", "name": "Şahin Aksankur"},
+        "author": {"@type": "Person", "name": seri["yazar_ad"]},
         "isPartOf": {"@type": "CreativeWorkSeries", "name": seri["ad"]},
     }, ensure_ascii=False)
-    baslik = f"{seri['ad']} #{y['no']}: {y['baslik']} – Şahin Aksankur | Kuzey Kampüs"
+    baslik = f"{seri['ad']} #{y['no']}: {y['baslik']} – {seri['yazar_ad']} | Kuzey Kampüs"
     return sayfa(baslik, y.get("ozet", ""), f"makaleler/{y['dosya']}", govde, kok="../",
                  ek_head=f'  <meta property="og:type" content="article">\n  <script type="application/ld+json">{jsonld}</script>\n')
 
 
-def liste_sayfasi(seriler, yazilar):
-    bloklar = []
-    ilk = True
-    for s in seriler:
-        ys = sorted((y for y in yazilar if y["seri"] == s["id"]), key=lambda y: y["no"])
-        if not ys:
-            continue
-        maddeler = "\n".join(
-            f'          <li><a href="makaleler/{y["dosya"]}"><span class="num">#{y["no"]}</span>'
-            f'<span class="t">{e(y["baslik"])}</span>'
-            f'<span class="d">{tarih_yaz(y["tarih"])} · {y["dakika"]} dk</span></a></li>' for y in ys)
-        aciklama = f'\n        <p class="series-desc">{e(s["aciklama"])}</p>' if s.get("aciklama") else ""
-        bloklar.append(f"""      <details class="series" id="{e(s['id'])}"{' open' if ilk else ''}>
-        <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{len(ys)} makale</span></summary>{aciklama}
-        <ul class="series-list">
+def liste_sayfasi(yazarlar, seriler, yazilar):
+    yazar_bloklari = []
+    for a_i, a in enumerate(yazarlar):
+        seri_bloklari = []
+        toplam = 0
+        for s in (s for s in seriler if s["yazar"] == a["id"]):
+            ys = sorted((y for y in yazilar if y["seri"] == s["id"]), key=lambda y: y["no"])
+            if not ys:
+                continue
+            toplam += len(ys)
+            maddeler = "\n".join(
+                f'            <li><a href="makaleler/{y["dosya"]}"><span class="num">#{y["no"]}</span>'
+                f'<span class="t">{e(y["baslik"])}</span>'
+                f'<span class="d">{tarih_yaz(y["tarih"])} · {y["dakika"]} dk</span></a></li>' for y in ys)
+            aciklama = f'\n          <p class="series-desc">{e(s["aciklama"])}</p>' if s.get("aciklama") else ""
+            seri_bloklari.append(f"""        <details class="series" id="{e(s['id'])}"{' open' if not seri_bloklari else ''}>
+          <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{len(ys)} makale</span></summary>{aciklama}
+          <ul class="series-list">
 {maddeler}
-        </ul>
+          </ul>
+        </details>""")
+        if not seri_bloklari:
+            continue
+        yazar_bloklari.append(f"""      <details class="author" id="{e(a['id'])}"{' open' if a_i == 0 else ''}>
+        <summary><span class="author-name">{e(a['baslik'])}</span><span class="series-count">{len(seri_bloklari)} seri · {toplam} makale</span></summary>
+        <div class="author-series">
+{chr(10).join(seri_bloklari)}
+        </div>
       </details>""")
-        ilk = False
     govde = f"""  <main class="wrap">
     <section class="hero">
       <h1>Makaleler</h1>
-      <p>Şahin Aksankur'un matematik, bilim ve eğitim üzerine makaleleri. Her seri kendi içinde sırayla okunabilir.</p>
+      <p>Matematik, bilim ve eğitim üzerine makaleler. Her seri kendi içinde sırayla okunabilir.</p>
     </section>
     <div class="series-wrap">
-{chr(10).join(bloklar)}
+{chr(10).join(yazar_bloklari)}
     </div>
   </main>
   <script>
-    // Adres #seri-adı ile açılırsa o seriyi aç.
+    // Adres #seri-adı ya da #yazar-adı ile açılırsa o bölümü ve üstündekileri aç.
     (function () {{
       var d = location.hash && document.getElementById(location.hash.slice(1));
-      if (d && d.tagName === "DETAILS") d.open = true;
+      while (d) {{ if (d.tagName === "DETAILS") d.open = true; d = d.parentElement; }}
     }})();
   </script>"""
     return sayfa("Makaleler – Şahin Aksankur | Kuzey Kampüs",
@@ -229,6 +239,12 @@ def liste_sayfasi(seriler, yazilar):
 
 def main():
     seriler = json.loads((KOK / "makaleler" / "seriler.json").read_text(encoding="utf-8"))
+    yazarlar = json.loads((KOK / "makaleler" / "yazarlar.json").read_text(encoding="utf-8"))
+    yazar_map = {a["id"]: a for a in yazarlar}
+    for s in seriler:
+        if s.get("yazar") not in yazar_map:
+            raise SystemExit(f"'{s['id']}' serisinin yazarı yazarlar.json'da yok")
+        s["yazar_ad"] = yazar_map[s["yazar"]]["ad"]
     seri_map = {s["id"]: s for s in seriler}
     yazilar = [oku(p) for p in sorted(KAYNAK.glob("*.md"))]
     for y in yazilar:
@@ -240,7 +256,7 @@ def main():
             onceki = ys[i - 1] if i > 0 else None
             sonraki = ys[i + 1] if i + 1 < len(ys) else None
             (CIKTI / y["dosya"]).write_text(yazi_sayfasi(y, s, onceki, sonraki), encoding="utf-8")
-    (KOK / "makaleler.html").write_text(liste_sayfasi(seriler, yazilar), encoding="utf-8")
+    (KOK / "makaleler.html").write_text(liste_sayfasi(yazarlar, seriler, yazilar), encoding="utf-8")
     print(f"{len(yazilar)} makale oluşturuldu.")
 
 
