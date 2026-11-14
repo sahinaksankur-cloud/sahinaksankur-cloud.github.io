@@ -47,9 +47,14 @@
     return link;
   }
 
+  // "Boş PDF=https://... | Çözümlü PDF=https://..." biçimini okur.
+  // Etiket yazılmazsa "PDF 1", "PDF 2" kullanılır.
   function pdfList(value) {
     if (!value) return [];
-    return value.split("|").map(function (s) { return s.trim(); }).filter(Boolean);
+    return value.split("|").map(function (s) { return s.trim(); }).filter(Boolean).map(function (s, i) {
+      var m = s.match(/^([^=]+?)\s*=\s*(https?:\/\/.+)$/);
+      return m ? { ad: m[1].trim(), url: m[2].trim() } : { ad: "PDF " + (i + 1), url: s };
+    });
   }
 
   function loadVideos() {
@@ -175,11 +180,12 @@
           box.innerHTML = '<header><strong>Ders notu</strong></header><div class="pdf-empty">Bu dersin PDF\'i yakında eklenecek.</div>';
           return;
         }
-        var tabs = v.pdfs.length > 1 ? v.pdfs.map(function (_, j) {
-          return '<button type="button" class="tab' + (j === k ? " active" : "") + '" data-k="' + j + '">PDF ' + (j + 1) + "</button>";
+        var tabs = v.pdfs.length > 1 ? v.pdfs.map(function (p, j) {
+          return '<button type="button" class="tab' + (j === k ? " active" : "") + '" data-k="' + j + '">' + esc(p.ad) + "</button>";
         }).join("") : "";
-        box.innerHTML = "<header><strong>Ders notu</strong>" + tabs + "</header>" +
-          '<iframe class="pdf-frame" src="' + esc(pdfEmbedUrl(v.pdfs[k])) + '" title="Ders notu" loading="lazy"></iframe>';
+        var head = v.pdfs.length > 1 ? "Ders notları" : esc(v.pdfs[0].ad);
+        box.innerHTML = "<header><strong>" + head + "</strong>" + tabs + "</header>" +
+          '<iframe class="pdf-frame" src="' + esc(pdfEmbedUrl(v.pdfs[k].url)) + '" title="' + esc(v.pdfs[k].ad) + '" loading="lazy"></iframe>';
         Array.prototype.forEach.call(box.querySelectorAll(".tab"), function (t) {
           t.addEventListener("click", function () { showPdf(v, +t.getAttribute("data-k")); });
         });

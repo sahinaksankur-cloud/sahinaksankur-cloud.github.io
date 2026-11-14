@@ -12,6 +12,6 @@ Tüm videolar `data/videos.csv` dosyasında (ileride bir Google E-Tablo'da) tutu
 | `sira` | Videonun ders içindeki sırası |
 | `baslik` | Sitede görünen başlık |
 | `video` | YouTube linki ya da video kimliği |
-| `pdf` | Google Drive PDF linki. Birden fazlaysa aralarına `\|` koyun. Boş bırakılabilir. |
+| `pdf` | Google Drive PDF linki. Ad vermek için `Boş PDF=link` yazın. Birden fazlaysa aralarına `\|` koyun: `Boş PDF=link1 \| Çözümlü PDF=link2`. Boş bırakılabilir. |
 
 Dersler ve genel ayarlar `assets/config.js` dosyasındadır.
