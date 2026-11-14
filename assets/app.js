@@ -251,8 +251,7 @@
       var body = [
         "Konu: " + f.konu.value,
         "Ad Soyad: " + f.ad.value.trim(),
-        "Okul / Bölüm: " + f.okul.value.trim(),
-        "Ders / Konu: " + f.ders.value.trim(),
+        "Okul / Bölüm / Sınıf: " + f.okul.value.trim(),
         "",
         f.mesaj.value.trim()
       ].join("\n");
