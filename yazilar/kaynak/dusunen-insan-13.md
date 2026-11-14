@@ -5,7 +5,6 @@ baslik: Yanılabilir Olmak: Bilimin En Büyük Gücü
 tarih: 2026-11-09
 ozet: Bilimin gücü hiç yanılmamasında değil; yanıldığında kendi temelini yeniden kurabilme cesaretindedir. Sayıların hikâyesi üzerinden dogma ile aksiyom arasındaki fark.
 linkedin: https://www.linkedin.com/pulse/d%C3%BC%C5%9F%C3%BCnen-insan-13-yan%C4%B1labilir-olmak-bilimin-en-b%C3%BCy%C3%BCk-g%C3%BCc%C3%BC-aksankur-sja1f/
-ders: calc1 | bIExBypymfg | Calculus 1 Temel Bilgiler: Doğal, tam, rasyonel, irrasyonel ve reel sayılar
 ---
 
 ## Yanılmak Bir Zayıflık mıdır?
