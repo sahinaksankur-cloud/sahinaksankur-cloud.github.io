@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yazılar – Kuzey Kampüs</title>
+  <meta name="description" content="Şahin Aksankur&#x27;un matematik, bilim ve eğitim üzerine yazdığı yazı dizileri.">
+  <link rel="canonical" href="https://kuzeykampuscalculus.com/yazilar.html">
+  <meta property="og:title" content="Yazılar – Kuzey Kampüs">
+  <meta property="og:description" content="Şahin Aksankur&#x27;un matematik, bilim ve eğitim üzerine yazdığı yazı dizileri.">
+  <meta property="og:url" content="https://kuzeykampuscalculus.com/yazilar.html">
+  <meta property="og:locale" content="tr_TR">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html">Kuzey <span>Kampüs</span></a>
+      <nav class="nav">
+        <a href="index.html">Dersler</a>
+        <a href="yazilar.html" class="active">Yazılar</a>
+        <a href="iletisim.html">Birebir Ders</a>
+        <a data-yt href="#" target="_blank" rel="noopener">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Yazılar</h1>
+      <p>Matematik, bilim ve eğitim üzerine düşünceler. Her seri kendi içinde sırayla okunabilir.</p>
+    </section>
+    <div class="series-wrap">
+      <details class="series" id="dusunen-insan" open>
+        <summary><span class="series-name">Düşünen İnsan</span><span class="series-count">1 yazı</span></summary>
+        <p class="series-desc">Matematik ve bilim tarihinden yola çıkarak düşünmenin kendisi üzerine yazılar.</p>
+        <ul class="series-list">
+          <li><a href="yazilar/dusunen-insan-13.html"><span class="num">#13</span><span class="t">Yanılabilir Olmak: Bilimin En Büyük Gücü</span><span class="d">9 Kasım 2026 · 7 dk</span></a></li>
+        </ul>
+      </details>
+    </div>
+  </main>
+  <script>
+    // Adres #seri-adı ile açılırsa o seriyi aç.
+    (function () {
+      var d = location.hash && document.getElementById(location.hash.slice(1));
+      if (d && d.tagName === "DETAILS") d.open = true;
+    })();
+  </script>
+
+  <footer>
+    <div class="wrap">
+      <span>© Kuzey Kampüs – Şahin Aksankur</span>
+      <a href="iletisim.html">İletişim</a>
+      <a data-yt href="#" target="_blank" rel="noopener">YouTube kanalı</a>
+    </div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

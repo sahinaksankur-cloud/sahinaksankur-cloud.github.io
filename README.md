@@ -15,3 +15,9 @@ Tüm videolar `data/videos.csv` dosyasında (ileride bir Google E-Tablo'da) tutu
 | `pdf` | Google Drive PDF linki. Ad vermek için `Boş PDF=link` yazın. Birden fazlaysa aralarına `\|` koyun: `Boş PDF=link1 \| Çözümlü PDF=link2`. Boş bırakılabilir. |
 
 Dersler ve genel ayarlar `assets/config.js` dosyasındadır.
+
+## Yazılar nasıl eklenir?
+
+1. `yazilar/kaynak/` klasörüne yeni bir `.md` dosyası ekleyin (örnek: `dusunen-insan-13.md`). Dosyanın üstündeki `---` arasındaki bilgiler seri, numara, başlık, tarih, kısa özet, LinkedIn linki ve ilgili derstir.
+2. Yeni bir seri gerekiyorsa `yazilar/seriler.json` dosyasına ekleyin.
+3. `python3 araclar/yazilari-olustur.py` komutunu çalıştırın. Her yazının sayfası (`yazilar/<seri>-<no>.html`) ve liste sayfası (`yazilar.html`) yeniden oluşturulur. Ek bir paket gerekmez.
