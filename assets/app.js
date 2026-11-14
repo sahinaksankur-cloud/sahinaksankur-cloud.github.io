@@ -221,7 +221,47 @@
     });
   }
 
+  // ---------- İletişim sayfası ----------
+
+  function renderContact() {
+    var form = document.getElementById("contact-form");
+    var mail = CFG.iletisimEposta;
+    var line = document.getElementById("contact-email-line");
+    line.innerHTML = mail
+      ? 'E-posta: <a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>"
+      : "E-posta adresi yakında eklenecek.";
+
+    if (CFG.whatsapp) {
+      var wa = document.getElementById("wa-btn");
+      wa.href = "https://wa.me/" + CFG.whatsapp.replace(/\D/g, "") +
+        "?text=" + encodeURIComponent("Merhaba, Kuzey Kampüs sitesinden yazıyorum.");
+      wa.hidden = false;
+    }
+
+    form.addEventListener("input", function () { document.getElementById("form-error").hidden = true; });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var f = form.elements;
+      var err = document.getElementById("form-error");
+      if (!f.ad.value.trim() || !f.mesaj.value.trim()) { err.hidden = false; return; }
+      err.hidden = true;
+      if (!mail) { err.textContent = "E-posta adresi henüz eklenmedi."; err.hidden = false; return; }
+      var subject = "[Kuzey Kampüs] " + f.konu.value + " – " + f.ad.value.trim();
+      var body = [
+        "Konu: " + f.konu.value,
+        "Ad Soyad: " + f.ad.value.trim(),
+        "Okul / Bölüm: " + f.okul.value.trim(),
+        "Ders / Konu: " + f.ders.value.trim(),
+        "",
+        f.mesaj.value.trim()
+      ].join("\n");
+      location.href = "mailto:" + mail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("contact-form")) renderContact();
     var yt = document.querySelectorAll("[data-yt]");
     Array.prototype.forEach.call(yt, function (a) { a.href = CFG.youtubeKanal; });
     if (document.getElementById("courses")) renderHome();

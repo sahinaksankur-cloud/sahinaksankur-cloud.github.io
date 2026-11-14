@@ -140,5 +140,29 @@ a.card:hover { text-decoration: none; border-color: var(--accent); }
 
 .notice { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; color: var(--muted); margin-bottom: 48px; }
 
+/* İletişim sayfası */
+.cards.services { padding-bottom: 8px; }
+.contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; padding-bottom: 56px; align-items: start; }
+@media (max-width: 900px) { .contact-layout { grid-template-columns: minmax(0, 1fr); } }
+.contact-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: grid; gap: 16px; box-shadow: var(--shadow); }
+.contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .contact-form .row { grid-template-columns: 1fr; } }
+.contact-form label { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 600; }
+.contact-form input, .contact-form select, .contact-form textarea {
+  width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); font: inherit; font-weight: 400; font-size: 0.95rem;
+}
+.contact-form textarea { resize: vertical; }
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.btn.big { justify-self: start; padding: 11px 20px; font-size: 1rem; font-weight: 600; }
+.form-note { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.form-error { margin: 0; color: #c0392b; font-size: 0.9rem; }
+.contact-side { display: grid; gap: 16px; }
+.btn.wa { background: #1f8f4e; border-color: #1f8f4e; color: #fff; align-self: flex-start; margin-top: 4px; }
+
+.cta { background: var(--accent-soft); border-radius: var(--radius); padding: 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 48px; }
+.cta h3 { margin: 0 0 4px; }
+.cta p { margin: 0; color: var(--muted); }
+
 footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
 footer .wrap { padding-top: 20px; padding-bottom: 28px; display: flex; gap: 16px; flex-wrap: wrap; }
