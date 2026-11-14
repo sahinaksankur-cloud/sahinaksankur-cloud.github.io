@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Yazılar bölümünü oluşturur.
+"""Makaleler bölümünü oluşturur.
 
-yazilar/kaynak/*.md dosyalarını okuyup her yazı için yazilar/<ad>.html
-sayfasını ve kökteki yazilar.html liste sayfasını yazar.
-Ek paket gerekmez:  python3 araclar/yazilari-olustur.py
+makaleler/kaynak/*.md dosyalarını okuyup her makale için makaleler/<ad>.html
+sayfasını ve kökteki makaleler.html liste sayfasını yazar.
+Ek paket gerekmez:  python3 araclar/makaleleri-olustur.py
 
 Kaynak dosya biçimi (üstte --- arasında bilgiler, altta metin):
 
     ---
-    seri: dusunen-insan            # yazilar/seriler.json içindeki id
+    seri: dusunen-insan            # makaleler/seriler.json içindeki id
     no: 13
-    baslik: Yazının başlığı
+    baslik: Makalenin başlığı
     tarih: 2026-11-09
     ozet: Liste sayfasında ve Google'da görünen kısa açıklama.
     linkedin: https://www.linkedin.com/pulse/...   (isteğe bağlı)
@@ -27,8 +27,8 @@ import re
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
-KAYNAK = KOK / "yazilar" / "kaynak"
-CIKTI = KOK / "yazilar"
+KAYNAK = KOK / "makaleler" / "kaynak"
+CIKTI = KOK / "makaleler"
 SITE = "https://kuzeykampuscalculus.com"
 AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz",
          "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
@@ -94,8 +94,8 @@ def oku(yol):
     return bilgi
 
 
-def sayfa(baslik, aciklama, yol, govde, kok="", aktif="yazilar", ek_head=""):
-    nav = [("index.html", "Dersler", "dersler"), ("yazilar.html", "Yazılar", "yazilar"),
+def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
+    nav = [("index.html", "Dersler", "dersler"), ("makaleler.html", "Makaleler", "makaleler"),
            ("iletisim.html", "Birebir Ders", "iletisim")]
     linkler = "\n        ".join(
         f'<a href="{kok}{h}"{" class=\"active\"" if k == aktif else ""}>{ad}</a>' for h, ad, k in nav)
@@ -150,24 +150,24 @@ def yazi_sayfasi(y, seri, onceki, sonraki):
         parca = [p.strip() for p in y["ders"].split("|")]
         if len(parca) == 3:
             liste, vid, ad = parca
-            ek += (f'\n      <aside class="related">\n        <span class="related-label">Bu yazıyla ilgili ders</span>\n'
+            ek += (f'\n      <aside class="related">\n        <span class="related-label">Bu makaleyle ilgili ders</span>\n'
                    f'        <a href="../ders.html?liste={e(liste)}#v={e(vid)}">{e(ad)} →</a>\n      </aside>')
     gezinti = ""
     if onceki or sonraki:
-        sol = (f'<a class="pn prev" href="{onceki["dosya"]}"><span>← Önceki yazı</span>'
+        sol = (f'<a class="pn prev" href="{onceki["dosya"]}"><span>← Önceki makale</span>'
                f'#{onceki["no"]} {e(onceki["baslik"])}</a>') if onceki else "<span></span>"
-        sag = (f'<a class="pn next" href="{sonraki["dosya"]}"><span>Sonraki yazı →</span>'
+        sag = (f'<a class="pn next" href="{sonraki["dosya"]}"><span>Sonraki makale →</span>'
                f'#{sonraki["no"]} {e(sonraki["baslik"])}</a>') if sonraki else "<span></span>"
-        gezinti = f'\n      <nav class="prevnext" aria-label="Serideki diğer yazılar">{sol}{sag}</nav>'
+        gezinti = f'\n      <nav class="prevnext" aria-label="Serideki diğer makaleler">{sol}{sag}</nav>'
     kaynak = ""
     if y.get("linkedin"):
-        kaynak = (f'\n      <p class="article-origin">Bu yazı ilk olarak '
+        kaynak = (f'\n      <p class="article-origin">Bu makale ilk olarak '
                   f'<a href="{e(y["linkedin"])}" target="_blank" rel="noopener">LinkedIn\'de</a> yayımlandı.</p>')
 
     govde = f"""  <main class="wrap">
     <article class="article">
       <header class="article-head">
-        <a class="article-series" href="../yazilar.html#{e(seri['id'])}">{e(seri['ad'])} · #{y['no']}</a>
+        <a class="article-series" href="../makaleler.html#{e(seri['id'])}">{e(seri['ad'])} · #{y['no']}</a>
         <h1>{e(y['baslik'])}</h1>
         <p class="article-meta">Şahin Aksankur · <time datetime="{y['tarih']}">{tarih_yaz(y['tarih'])}</time> · {y['dakika']} dk okuma</p>
       </header>
@@ -182,8 +182,8 @@ def yazi_sayfasi(y, seri, onceki, sonraki):
         "author": {"@type": "Person", "name": "Şahin Aksankur"},
         "isPartOf": {"@type": "CreativeWorkSeries", "name": seri["ad"]},
     }, ensure_ascii=False)
-    baslik = f"{seri['ad']} #{y['no']}: {y['baslik']} – Kuzey Kampüs"
-    return sayfa(baslik, y.get("ozet", ""), f"yazilar/{y['dosya']}", govde, kok="../",
+    baslik = f"{seri['ad']} #{y['no']}: {y['baslik']} – Şahin Aksankur | Kuzey Kampüs"
+    return sayfa(baslik, y.get("ozet", ""), f"makaleler/{y['dosya']}", govde, kok="../",
                  ek_head=f'  <meta property="og:type" content="article">\n  <script type="application/ld+json">{jsonld}</script>\n')
 
 
@@ -195,12 +195,12 @@ def liste_sayfasi(seriler, yazilar):
         if not ys:
             continue
         maddeler = "\n".join(
-            f'          <li><a href="yazilar/{y["dosya"]}"><span class="num">#{y["no"]}</span>'
+            f'          <li><a href="makaleler/{y["dosya"]}"><span class="num">#{y["no"]}</span>'
             f'<span class="t">{e(y["baslik"])}</span>'
             f'<span class="d">{tarih_yaz(y["tarih"])} · {y["dakika"]} dk</span></a></li>' for y in ys)
         aciklama = f'\n        <p class="series-desc">{e(s["aciklama"])}</p>' if s.get("aciklama") else ""
         bloklar.append(f"""      <details class="series" id="{e(s['id'])}"{' open' if ilk else ''}>
-        <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{len(ys)} yazı</span></summary>{aciklama}
+        <summary><span class="series-name">{e(s['ad'])}</span><span class="series-count">{len(ys)} makale</span></summary>{aciklama}
         <ul class="series-list">
 {maddeler}
         </ul>
@@ -208,8 +208,8 @@ def liste_sayfasi(seriler, yazilar):
         ilk = False
     govde = f"""  <main class="wrap">
     <section class="hero">
-      <h1>Yazılar</h1>
-      <p>Matematik, bilim ve eğitim üzerine düşünceler. Her seri kendi içinde sırayla okunabilir.</p>
+      <h1>Makaleler</h1>
+      <p>Şahin Aksankur'un matematik, bilim ve eğitim üzerine makaleleri. Her seri kendi içinde sırayla okunabilir.</p>
     </section>
     <div class="series-wrap">
 {chr(10).join(bloklar)}
@@ -222,13 +222,13 @@ def liste_sayfasi(seriler, yazilar):
       if (d && d.tagName === "DETAILS") d.open = true;
     }})();
   </script>"""
-    return sayfa("Yazılar – Kuzey Kampüs",
-                 "Şahin Aksankur'un matematik, bilim ve eğitim üzerine yazdığı yazı dizileri.",
-                 "yazilar.html", govde)
+    return sayfa("Makaleler – Şahin Aksankur | Kuzey Kampüs",
+                 "Şahin Aksankur'un matematik, bilim ve eğitim üzerine yazdığı makale dizileri.",
+                 "makaleler.html", govde)
 
 
 def main():
-    seriler = json.loads((KOK / "yazilar" / "seriler.json").read_text(encoding="utf-8"))
+    seriler = json.loads((KOK / "makaleler" / "seriler.json").read_text(encoding="utf-8"))
     seri_map = {s["id"]: s for s in seriler}
     yazilar = [oku(p) for p in sorted(KAYNAK.glob("*.md"))]
     for y in yazilar:
@@ -240,8 +240,8 @@ def main():
             onceki = ys[i - 1] if i > 0 else None
             sonraki = ys[i + 1] if i + 1 < len(ys) else None
             (CIKTI / y["dosya"]).write_text(yazi_sayfasi(y, s, onceki, sonraki), encoding="utf-8")
-    (KOK / "yazilar.html").write_text(liste_sayfasi(seriler, yazilar), encoding="utf-8")
-    print(f"{len(yazilar)} yazı oluşturuldu.")
+    (KOK / "makaleler.html").write_text(liste_sayfasi(seriler, yazilar), encoding="utf-8")
+    print(f"{len(yazilar)} makale oluşturuldu.")
 
 
 if __name__ == "__main__":
