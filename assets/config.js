@@ -35,9 +35,9 @@ window.KK_CONFIG = {
     },
     {
       id: "calc1-soru",
-      ad: "Calculus 1 | Çalışma Soruları",
-      kisaAd: "Calculus 1 Sorular",
-      aciklama: "Limitten integrale, Calculus 1 konularının çözümlü çalışma soruları. Konu anlatımlarıyla aynı bölüm numaralarını izler.",
+      ad: "Calculus Çalışma Soruları",
+      kisaAd: "Çalışma Soruları",
+      aciklama: "Konu anlatımlarıyla aynı bölüm numaralarını izleyen çözümlü çalışma soruları. Şu an limitten integrale Calculus 1 konuları var.",
       playlist: "PLQMBWHXZe7fn-pXsh_1DtA5rli_-DYcMD",
       dil: "tr",
       aktif: true
