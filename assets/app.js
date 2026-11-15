@@ -315,6 +315,15 @@
     if (document.getElementById("contact-form")) renderContact();
     var yt = document.querySelectorAll("[data-yt]");
     Array.prototype.forEach.call(yt, function (a) { a.href = CFG.youtubeKanal; });
+    if (CFG.whatsappKanal) {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-wa-kanal]"), function (a) {
+        a.href = CFG.whatsappKanal;
+        a.hidden = false;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-wa-kanal-kutu]"), function (el) {
+        el.hidden = false;
+      });
+    }
     if (document.getElementById("courses")) renderHome();
     if (document.getElementById("course")) renderCourse();
   });
