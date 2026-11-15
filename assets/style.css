@@ -163,6 +163,9 @@ a.card:hover { text-decoration: none; border-color: var(--accent); }
 .cta { background: var(--accent-soft); border-radius: var(--radius); padding: 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 48px; }
 .cta h3 { margin: 0 0 4px; }
 .cta p { margin: 0; color: var(--muted); }
+.cta.wa-cta { margin-bottom: 16px; }
+.btn.wa.big { margin-top: 0; align-self: center; }
+[hidden] { display: none !important; }
 
 footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
 footer .wrap { padding-top: 20px; padding-bottom: 28px; display: flex; gap: 16px; flex-wrap: wrap; }

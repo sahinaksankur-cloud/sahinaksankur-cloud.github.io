@@ -8,6 +8,9 @@ window.KK_CONFIG = {
 
   youtubeKanal: "https://www.youtube.com/@kuzeykampus",
 
+  // WhatsApp duyuru kanalı (boş bırakılırsa sitedeki kanal bağlantıları görünmez)
+  whatsappKanal: "https://whatsapp.com/channel/0029Vb9Rc15KWEKtFHrbE23i",
+
   // İletişim sayfası
   iletisimEposta: "iletisim@kuzeykampuscalculus.com",
   whatsapp: "",         // örnek: "905xxxxxxxxx" (boş bırakılırsa WhatsApp düğmesi görünmez)
