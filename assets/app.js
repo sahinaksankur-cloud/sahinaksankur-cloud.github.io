@@ -41,7 +41,10 @@
   }
 
   // Google Drive linkini, indirme düğmesi olmayan önizleme linkine çevirir.
+  // Klasör linkleri, klasörün içeriğini gösteren listeye çevrilir.
   function pdfEmbedUrl(link) {
+    var f = link.match(/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\/([A-Za-z0-9_-]+)/);
+    if (f) return "https://drive.google.com/embeddedfolderview?id=" + f[1] + "#list";
     var m = link.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([A-Za-z0-9_-]+)/);
     if (m) return "https://drive.google.com/file/d/" + m[1] + "/preview";
     return link;
@@ -106,7 +109,10 @@
     loadVideos().then(function (videos) {
       box.innerHTML = CFG.dersler.map(function (d) {
         var n = videos.filter(function (v) { return v.liste === d.id; }).length;
-        var withPdf = videos.filter(function (v) { return v.liste === d.id && v.pdfs.length; }).length;
+        // Ortak klasör linki "PDF'li ders" sayısına katılmaz; sadece derse özel PDF'ler sayılır.
+        var withPdf = videos.filter(function (v) {
+          return v.liste === d.id && v.pdfs.some(function (p) { return !/\/folders\//.test(p.url); });
+        }).length;
         if (!d.aktif) {
           return '<div class="card soon"><span class="badge">Yakında</span><h3>' + esc(d.ad) +
             "</h3><p>" + esc(d.aciklama) + "</p></div>";
