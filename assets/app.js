@@ -50,6 +50,14 @@
     return link;
   }
 
+  // PDF'i indirme linki. Klasör linkinde klasörü Drive'da açar.
+  function pdfDownloadUrl(link) {
+    if (/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\//.test(link)) return link;
+    var m = link.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([A-Za-z0-9_-]+)/);
+    if (m) return "https://drive.google.com/uc?export=download&id=" + m[1];
+    return link;
+  }
+
   // "Boş PDF=https://... | Çözümlü PDF=https://..." biçimini okur.
   // Etiket yazılmazsa "PDF 1", "PDF 2" kullanılır.
   function pdfList(value) {
@@ -232,7 +240,12 @@
           return '<button type="button" class="tab' + (j === k ? " active" : "") + '" data-k="' + j + '">' + esc(p.ad) + "</button>";
         }).join("") : "";
         var head = v.pdfs.length > 1 ? "Ders notları" : esc(v.pdfs[0].ad);
-        box.innerHTML = "<header><strong>" + head + "</strong>" + tabs + "</header>" +
+        var url = v.pdfs[k].url;
+        var folder = /\/folders\//.test(url);
+        var dl = CFG.pdfIndirme === false ? "" :
+          '<a class="btn" href="' + esc(pdfDownloadUrl(url)) + '" target="_blank" rel="noopener"' + (folder ? "" : " download") + ">" +
+          (folder ? "Klasörü aç" : "⬇ İndir") + "</a>";
+        box.innerHTML = "<header><strong>" + head + "</strong>" + tabs + dl + "</header>" +
           '<iframe class="pdf-frame" src="' + esc(pdfEmbedUrl(v.pdfs[k].url)) + '" title="' + esc(v.pdfs[k].ad) + '" loading="lazy"></iframe>';
         Array.prototype.forEach.call(box.querySelectorAll(".tab"), function (t) {
           t.addEventListener("click", function () { showPdf(v, +t.getAttribute("data-k")); });

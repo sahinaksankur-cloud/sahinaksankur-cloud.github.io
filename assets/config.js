@@ -11,6 +11,9 @@ window.KK_CONFIG = {
   // WhatsApp duyuru kanalı (boş bırakılırsa sitedeki kanal bağlantıları görünmez)
   whatsappKanal: "https://whatsapp.com/channel/0029Vb9Rc15KWEKtFHrbE23i",
 
+  // Ders sayfasında PDF'lerin yanında "İndir" düğmesi görünsün mü (true / false)
+  pdfIndirme: true,
+
   // İletişim sayfası
   iletisimEposta: "iletisim@kuzeykampuscalculus.com",
   whatsapp: "",         // örnek: "905xxxxxxxxx" (boş bırakılırsa WhatsApp düğmesi görünmez)
