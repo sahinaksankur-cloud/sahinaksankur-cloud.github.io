@@ -21,3 +21,7 @@ Dersler ve genel ayarlar `assets/config.js` dosyasındadır.
 1. `makaleler/kaynak/` klasörüne yeni bir `.md` dosyası ekleyin (örnek: `dusunen-insan-13.md`). Dosyanın üstündeki `---` arasındaki bilgiler seri, numara, başlık, tarih, kısa özet, LinkedIn linki ve ilgili derstir.
 2. Yeni bir seri gerekiyorsa `makaleler/seriler.json` dosyasına ekleyin.
 3. `python3 araclar/makaleleri-olustur.py` komutunu çalıştırın. Her makalenin sayfası (`makaleler/<seri>-<no>.html`) ve liste sayfası (`makaleler.html`) yeniden oluşturulur. Ek bir paket gerekmez.
+
+## Telegram topluluğu nasıl açılır?
+
+`assets/config.js` dosyasındaki `topluluk` bölümüne grubun linkini (`grup`) ve varsa konu başlıklarının linklerini (`basliklar`) yazın. `grup` doluysa menüde Topluluk sayfası görünür, ders sayfalarında "Toplulukta sor" kutusu ve makalelerin sonunda "Toplulukta tartış" linki açılır. Boşsa hepsi gizli kalır.

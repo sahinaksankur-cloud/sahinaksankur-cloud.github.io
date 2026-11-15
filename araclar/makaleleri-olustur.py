@@ -122,6 +122,7 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
       <a class="brand" href="{kok}index.html">Kuzey <span>Kampüs</span></a>
       <nav class="nav">
         {linkler}
+        <a href="{kok}topluluk.html" data-topluluk-nav hidden>Topluluk</a>
         <a data-yt href="#" target="_blank" rel="noopener">YouTube</a>
       </nav>
     </div>
@@ -173,7 +174,8 @@ def yazi_sayfasi(y, seri, onceki, sonraki):
       </header>
       <div class="prose">
 {md_html(y['govde'])}
-      </div>{kaynak}{ek}{gezinti}
+      </div>{kaynak}
+      <p class="article-discuss" data-topluluk-tartis hidden>Bu makale hakkında ne düşünüyorsun? <a href="#" target="_blank" rel="noopener">Toplulukta tartış →</a></p>{ek}{gezinti}
     </article>
   </main>"""
     jsonld = json.dumps({
