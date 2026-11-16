@@ -8,11 +8,11 @@ Tüm videolar `data/videos.csv` dosyasında (ileride bir Google E-Tablo'da) tutu
 
 | Sütun | Açıklama |
 |---|---|
-| `liste` | Dersin kimliği (`calc1`, `calc2`, `en-calc`) |
+| `liste` | Dersin kimliği (`calc1`, `calc2`, `calc1-soru`, `en-calc`) |
 | `sira` | Videonun ders içindeki sırası |
 | `baslik` | Sitede görünen başlık |
 | `video` | YouTube linki ya da video kimliği |
-| `pdf` | Google Drive PDF linki. Ad vermek için `Boş PDF=link` yazın. Birden fazlaysa aralarına `\|` koyun: `Boş PDF=link1 \| Çözümlü PDF=link2`. Boş bırakılabilir. |
+| `pdf` | Sitedeki PDF dosyasının yolu (`pdf/` klasörü). Ad vermek için `Boş PDF=yol` yazın. Birden fazlaysa aralarına `\|` koyun: `Boş PDF=pdf/calc1/039-bos.pdf \| Çözümlü PDF=pdf/calc1/039-cozumlu.pdf`. Boş bırakılabilir. |
 
 Dersler ve genel ayarlar `assets/config.js` dosyasındadır.
 
