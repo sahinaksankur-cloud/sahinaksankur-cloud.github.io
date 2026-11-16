@@ -23,7 +23,24 @@
     for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
+  var BOLUMLER = O.bolumler || [];
+  function bolumNo(id) { var m = /^bolum-(\d+)$/.exec(id || ""); return m ? +m[1] : null; }
+  function tumSorular() {
+    return Object.keys(O.sorular).reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
+  }
+  // Bir testin (konu turu ya da bölüm sonu testi) bilgileri
+  function testBilgi(id) {
+    var no = bolumNo(id);
+    if (no) {
+      var b = BOLUMLER.filter(function (x) { return x.no === no; })[0] || { no: no, ad: "" };
+      return { id: id, bolum: true, ad: "Chapter " + no + " · " + b.ad, kisaAd: "Chapter " + no, ders: b.ders, sayi: O.bolumSoruSayisi || 5 };
+    }
+    var k = bul(O.konular, id) || {};
+    return { id: id, bolum: false, ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
+  }
   function havuz(id) {
+    var no = bolumNo(id);
+    if (no) return tumSorular().filter(function (q) { return String(q.b).split(".")[0] === String(no); });
     if (id === "karisik") {
       return Object.keys(O.sorular).reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
     }
@@ -34,7 +51,39 @@
     return String(html).replace(/([∫Σ])<sub>((?:(?!<\/sub>).)*)<\/sub><sup>((?:<sup>.*?<\/sup>|(?!<\/sup>).)*)<\/sup>/g,
       '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
   }
-  function bul(liste, id) { return liste.filter(function (x) { return x.id === id; })[0]; }
+  function bul(liste, id) { return (liste || []).filter(function (x) { return x.id === id; })[0]; }
+  // Daha önce sorulmamış sorulara öncelik verir; havuz bitince baştan başlar.
+  // Listeden n soru seçer; bölüm testlerinde soruları alt bölümlere (2.1, 2.2…) yayar.
+  function dengeliSec(liste, n, yay) {
+    liste = karistir(liste);
+    if (!yay) return liste.slice(0, n);
+    var gruplar = {}, sira = [];
+    liste.forEach(function (q) { var k = String(q.b); if (!gruplar[k]) { gruplar[k] = []; sira.push(k); } gruplar[k].push(q); });
+    sira = karistir(sira);
+    var sec = [];
+    while (sec.length < n && sira.length) {
+      sira = sira.filter(function (k) { return gruplar[k].length; });
+      for (var i = 0; i < sira.length && sec.length < n; i++) sec.push(gruplar[sira[i]].shift());
+    }
+    return karistir(sec);
+  }
+  function soruSec(id, n) {
+    var kayit = oku(), gor = (kayit.gorulen = kayit.gorulen || {}), h = havuz(id), yay = !!bolumNo(id);
+    var eski = gor[id] || [];
+    var yeni = h.filter(function (q) { return eski.indexOf(q.s) < 0; });
+    if (yeni.length < n) {
+      var secilen = yeni.slice();
+      var kalan = h.filter(function (q) { return secilen.indexOf(q) < 0; });
+      secilen = secilen.concat(dengeliSec(kalan, n - secilen.length, yay));
+      gor[id] = secilen.map(function (q) { return q.s; });
+      yaz(kayit);
+      return karistir(secilen);
+    }
+    var sec = dengeliSec(yeni, n, yay);
+    gor[id] = eski.concat(sec.map(function (q) { return q.s; }));
+    yaz(kayit);
+    return sec;
+  }
   function seviye() { return bul(SEVIYELER, durum.seviye) || SEVIYELER[0]; }
   function rekorAnahtar(konu) { return konu + ":" + seviye().id; }
 
@@ -85,6 +134,13 @@
       });
     });
 
+    if (O.bolumBaslik) $("oyun-bolum-baslik").textContent = O.bolumBaslik + " · " + (O.bolumSoruSayisi || 5) + " soru";
+    $("oyun-bolumler").innerHTML = BOLUMLER.map(function (b) {
+      var id = "bolum-" + b.no, r = (kayit.rekor || {})[rekorAnahtar(id)], t = testBilgi(id);
+      return '<button type="button" class="card oyun-konu oyun-bolum" data-konu="' + id + '">' +
+        '<span class="badge">Chapter ' + b.no + "</span><h3>" + b.ad + "</h3><p>" + b.aciklama + "</p>" +
+        '<span class="meta">' + t.sayi + " soru" + (r != null ? " · En iyi (" + seviye().ad + "): " + r + "/" + t.sayi : "") + "</span></button>";
+    }).join("");
     $("oyun-konular").innerHTML = O.konular.map(function (k) {
       var r = (kayit.rekor || {})[rekorAnahtar(k.id)];
       return '<button type="button" class="card oyun-konu" data-konu="' + k.id + '">' +
@@ -103,10 +159,10 @@
   // ---- Oyun ----
   function basla(konu) {
     durum.konu = konu;
-    durum.sorular = karistir(havuz(konu)).slice(0, O.soruSayisi);
+    var t = testBilgi(konu);
+    durum.sorular = soruSec(konu, t.sayi);
     durum.i = 0; durum.puan = 0; durum.kacan = [];
-    var k = bul(O.konular, konu);
-    $("oyun-konu-adi").textContent = (k ? k.ad : "") + " · " + seviye().ad;
+    $("oyun-konu-adi").textContent = t.kisaAd + " · " + seviye().ad;
     soruCiz();
     goster("oyun-soru");
   }
@@ -176,9 +232,12 @@
     $("oyun-sonuc-puan").textContent = p;
     $("oyun-sonuc-toplam").textContent = n;
     $("oyun-sonuc-baslik").textContent = p === n ? "Mükemmel! 🎉" : p >= n * 0.7 ? "Çok iyi!" : p >= n * 0.4 ? "Fena değil" : "Tekrar zamanı";
-    var konuBilgi = bul(O.konular, durum.konu) || {};
-    var oz = konuBilgi.sonuc;
-    $("oyun-sonuc-mesaj").textContent = oz ? (p >= n * 0.8 ? oz.iyi : p >= n * 0.5 ? oz.orta : oz.zayif) : p === n
+    var konuBilgi = testBilgi(durum.konu);
+    var oz = konuBilgi.sonuc, bs = O.bolumSonuc || {};
+    if (konuBilgi.bolum) $("oyun-sonuc-baslik").textContent = konuBilgi.ad;
+    $("oyun-sonuc-mesaj").textContent = konuBilgi.bolum
+      ? (p === n ? bs.tam : p >= n * 0.8 ? bs.iyi : p >= n * 0.6 ? bs.orta : bs.zayif)
+      : oz ? (p >= n * 0.8 ? oz.iyi : p >= n * 0.5 ? oz.orta : oz.zayif) : p === n
       ? (enZor ? "Hepsini doğru bildin. Başka bir konuya geçmeye ne dersin?" : "Hepsini doğru bildin. Bir üst seviyeyi dene!")
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
@@ -197,7 +256,10 @@
     } else {
       liste.hidden = true;
     }
+    $("oyun-ders-link").hidden = !konuBilgi.ders && konuBilgi.bolum;
     $("oyun-ders-link").href = konuBilgi.ders || "ders.html?liste=calc1";
+    $("oyun-ders-link").textContent = konuBilgi.bolum ? "Chapter'ın derslerine dön" : "Konu anlatımını izle";
+    $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : "Tekrar oyna";
     $("oyun-bar-dolu").style.width = "100%";
     goster("oyun-sonuc");
   }
@@ -206,4 +268,7 @@
   $("oyun-konu-degis").addEventListener("click", girisCiz);
 
   girisCiz();
+  // oyun.html#bolum-2 ya da oyun.html#limit gibi linkler testi doğrudan başlatır
+  var hedef = decodeURIComponent((location.hash || "").slice(1));
+  if (hedef && havuz(hedef).length) basla(hedef);
 })();

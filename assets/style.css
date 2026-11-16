@@ -327,3 +327,6 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 @media (max-width: 760px) { .nav-uzun { display: none; } .nav-kisa { display: inline; } }
 .cta.oyun-cta { margin-bottom: 16px; border: 2px solid var(--accent); background: var(--surface); }
 .cta.oyun-cta h3 { font-size: 1.25rem; }
+.oyun-bolum-not { color: var(--muted); margin: -4px 0 14px; max-width: 640px; }
+#oyun-bolumler { padding-bottom: 8px; }
+.oyun-bolum { border-left: 4px solid var(--accent); }
