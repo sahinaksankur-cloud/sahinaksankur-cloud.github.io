@@ -253,6 +253,18 @@
     });
   }
 
+  // Ana sayfadaki Dersler kutusu: aktif dersler ve video sayıları
+  function renderAnaDersler() {
+    var box = document.getElementById("ana-dersler");
+    loadVideos().then(function (videos) {
+      box.innerHTML = CFG.dersler.filter(function (d) { return d.aktif; }).map(function (d) {
+        var n = videos.filter(function (v) { return v.liste === d.id; }).length;
+        return '<a href="ders.html?liste=' + encodeURIComponent(d.id) + '">' + esc(d.kisaAd || d.ad) +
+          (n ? " <small>" + n + " video</small>" : "") + "</a>";
+      }).join("");
+    });
+  }
+
   // ---------- Ders sayfası ----------
 
   function renderCourse() {
@@ -262,7 +274,7 @@
     var main = document.getElementById("course");
 
     if (!ders) {
-      main.innerHTML = '<div class="notice">Bu ders bulunamadı. <a href="index.html">Ana sayfaya dön</a></div>';
+      main.innerHTML = '<div class="notice">Bu ders bulunamadı. <a href="dersler.html">Derslere dön</a></div>';
       return;
     }
 
@@ -437,6 +449,7 @@
       });
     }
     if (document.getElementById("courses")) renderHome();
+    if (document.getElementById("ana-dersler")) renderAnaDersler();
     if (document.getElementById("course")) renderCourse();
   });
 })();

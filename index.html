@@ -16,7 +16,7 @@
       <a class="brand" href="index.html">Kuzey <span>Kampüs</span></a>
       <nav class="nav">
         <a href="kampus.html"><span class="nav-uzun">Kampüsün İçinden</span><span class="nav-kisa">Kampüs</span></a>
-        <a href="index.html" class="active">Dersler</a>
+        <a href="dersler.html">Dersler</a>
         <a href="oyun.html"><span class="nav-uzun">Calculus Oyunu</span><span class="nav-kisa">Oyun</span></a>
         <a href="makaleler.html">Makaleler</a>
         <a href="topluluk.html" data-topluluk-nav hidden>Topluluk</a>
@@ -27,37 +27,50 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
+    <section class="ana-ozet">
       <h1>Calculus'u ezberlemeden,<br>anlayarak öğren.</h1>
-      <p>Konu anlatımları, çözümlü örnekler ve her dersin notu tek bir yerde. Boğaziçi, ODTÜ, İTÜ, Bilkent, Koç ve tüm üniversitelerin Calculus öğrencileri için.</p>
+      <p>Kuzey Kampüs, Calculus'u ezber yerine mantığıyla anlatan bir eğitim kanalı. Burada dersleri, kendini test edeceğin oyunu, okuluna özel köşeni ve düşünmeye dair yazıları bulacaksın.</p>
     </section>
 
-    <section class="cta oyun-cta">
-      <div>
-        <h3>🎮 Calculus Oyunu</h3>
-        <p>Calculus'a hazır mısın? Precalculus'tan integrale 10 soruluk turlar. Süre işliyor; kaç puan alabilirsin?</p>
+    <div class="ana-bolumler">
+      <section class="ana-bolum" style="--renk:#1f4e8c">
+        <h2>📚 Dersler</h2>
+        <p>Calculus 1 ve 2 konu anlatımları, çözümlü çalışma soruları ve her dersin PDF notu. Videolar sırayla, notlar yanında.</p>
+        <div class="ana-baglar" id="ana-dersler">
+          <a href="ders.html?liste=calc1">Calculus 1</a><a href="ders.html?liste=calc2">Calculus 2</a><a href="ders.html?liste=calc1-soru">Çalışma Soruları</a>
+        </div>
+        <a class="btn primary" href="dersler.html">Derslere git →</a>
+      </section>
+      <section class="ana-bolum" style="--renk:#7a4fb5">
+        <h2>🏛 Kampüsün İçinden</h2>
+        <p>Okuluna özel vize–final hazırlığı ve kampüsten paylaşımlar. Bu bölümü öğrencilerle birlikte büyütüyoruz.</p>
+        <div class="ana-baglar"><a href="kampus.html">ODTÜ</a><a href="kampus.html">Boğaziçi</a><a href="kampus.html">İTÜ</a></div>
+        <a class="btn primary" href="kampus.html">Kampüse gir →</a>
+      </section>
+      <section class="ana-bolum" style="--renk:#2e7d5b">
+        <h2>🎮 Calculus Oyunu</h2>
+        <p>Kendini test et: Calculus'a hazır mısın, sınava hazır mısın? Konu turları ve 5 saniyelik doğru–yanlış. Kayıt yok.</p>
+        <div class="ana-baglar"><a href="oyun.html">🧭 Calculus'a Hazır mısın?</a><a href="oyun.html">📝 Sınava Hazır mısın?</a><a href="oyun.html">🎯 Konu Turları</a><a href="oyun.html#dy-tum">⚡ Doğru / Yanlış</a></div>
+        <a class="btn primary" href="oyun.html">Oyna →</a>
+      </section>
+      <section class="ana-bolum" style="--renk:#c96a10">
+        <h2>✍️ Makaleler</h2>
+        <p>Matematik ve bilim tarihinden yola çıkarak düşünmenin kendisi üzerine yazılar: Düşünen İnsan, Eğitimde Ezber Paradoksu.</p>
+        <p class="ana-son">Son yazı: <a href="makaleler/dusunen-insan-13.html">Yanılabilir Olmak: Bilimin En Büyük Gücü</a></p>
+        <a class="btn primary" href="makaleler.html">Okumaya başla →</a>
+      </section>
+    </div>
+
+    <div class="ana-alt">
+      <div class="ana-mini" data-wa-kanal-kutu hidden>
+        <div><strong>📲 WhatsApp kanalı</strong><p>Yeni dersler ve canlı yayın duyuruları</p></div>
+        <a class="btn wa" data-wa-kanal href="#" target="_blank" rel="noopener">Takip et</a>
       </div>
-      <a class="btn primary big" href="oyun.html">Oyna →</a>
-    </section>
-
-    <h2 class="section-title">Dersler</h2>
-    <div class="cards" id="courses"></div>
-
-    <section class="cta wa-cta" data-wa-kanal-kutu hidden>
-      <div>
-        <h3>Yeni videolardan ilk sen haberdar ol</h3>
-        <p>Yeni dersler, sınav çözümleri ve canlı yayın duyuruları için WhatsApp kanalını takip et.</p>
+      <div class="ana-mini">
+        <div><strong>👤 Birebir ders</strong><p>Üniversite Calculus, AP, IB, SAT, TYT–AYT için bilgi al</p></div>
+        <a class="btn" href="iletisim.html">Bilgi al</a>
       </div>
-      <a class="btn wa big" data-wa-kanal href="#" target="_blank" rel="noopener">WhatsApp kanalını takip et</a>
-    </section>
-
-    <section class="cta">
-      <div>
-        <h3>Benimle birebir çalışmak ister misin?</h3>
-        <p>Üniversite Calculus, AP Calculus, IB, SAT, TYT–AYT ve lise matematiği için bilgi almak istersen bana yaz.</p>
-      </div>
-      <a class="btn primary big" href="iletisim.html">Bilgi al</a>
-    </section>
+    </div>
   </main>
 
   <footer>

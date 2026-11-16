@@ -24,7 +24,8 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 
 | Dosya | Ne işe yarar |
 |---|---|
-| `index.html` | Ana sayfa: Calculus Oyunu kutusu (giriş metninin hemen altında), ders kartları, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
+| `index.html` | Ana sayfa (özet): kısa kanal tanıtımı ve dört kutu — 📚 Dersler (sol üst; telefonda en üstte; ders bağlantıları ve video sayıları `#ana-dersler`, app.js `renderAnaDersler`), 🏛 Kampüsün İçinden, 🎮 Calculus Oyunu, ✍️ Makaleler ("Son yazı" bağlantısı elle yazılı: **yeni makale eklenince güncelle**); altta WhatsApp ve Birebir ders şeridi |
+| `dersler.html` | Ders kartları (`#courses`, app.js `renderHome`): Calculus 1, 2, Çalışma Soruları ve "Yakında" kartı. Menüdeki "Dersler" buraya gider |
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Calculus Oyunu: dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
@@ -72,8 +73,8 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
-- Menü sırası: Kampüsün İçinden/Kampüs, Dersler, Calculus Oyunu/Oyun, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
-- Menü tüm sayfalarda elle yazılı (index, ders, iletisim, oyun, kampus, topluluk); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
+- Menü sırası (Dersler → `dersler.html`): Kampüsün İçinden/Kampüs, Dersler, Calculus Oyunu/Oyun, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
+- Menü tüm sayfalarda elle yazılı (index, dersler, ders, iletisim, oyun, kampus, topluluk); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.

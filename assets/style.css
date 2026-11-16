@@ -415,3 +415,27 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 /* Telefonda menü tek satıra sığsın: YouTube bağlantısı alttaki bölümde ve ders sayfalarında var */
 @media (max-width: 700px) { .nav .nav-yt { display: none; } }
 .kampus-okul .kampus-gonder { margin-top: auto; align-self: flex-start; font-weight: 600; }
+
+/* Ana sayfa: kısa özet ve dört bölüm kutusu */
+.ana-ozet { padding: 44px 0 24px; max-width: 760px; }
+.ana-ozet h1 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.7rem); line-height: 1.15; margin: 0 0 14px; }
+.ana-ozet p { color: var(--muted); font-size: 1.08rem; line-height: 1.6; margin: 0; }
+.ana-bolumler { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding-bottom: 24px; }
+.ana-bolum {
+  background: var(--surface); border: 1px solid var(--border); border-top: 5px solid var(--renk, var(--accent));
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; display: flex; flex-direction: column; gap: 10px;
+}
+.ana-bolum h2 { margin: 0; font-size: 1.35rem; }
+.ana-bolum > p { margin: 0; color: var(--muted); line-height: 1.55; }
+.ana-baglar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.ana-baglar a { font-size: 0.88rem; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.ana-baglar a:hover { border-color: var(--accent); text-decoration: none; }
+.ana-baglar a small { color: var(--muted); font-weight: 400; }
+.ana-bolum .btn { margin-top: auto; align-self: flex-start; font-weight: 600; }
+.ana-bolum .ana-son { font-size: 0.9rem; }
+.ana-son a { font-weight: 600; }
+.ana-alt { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-bottom: 48px; }
+.ana-mini { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface); }
+.ana-mini p { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
+.ana-mini .btn.wa { margin-top: 0; align-self: center; }
+@media (max-width: 760px) { .ana-bolumler, .ana-alt { grid-template-columns: 1fr; } }
