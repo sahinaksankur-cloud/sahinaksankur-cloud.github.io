@@ -389,8 +389,17 @@
 
     // iletisim.html?konu=kampus gibi linkler konu seçimini doldurur
     var konuParam = new URLSearchParams(location.search).get("konu");
-    var konuHarita = { "kampus": "Kampüsün İçinden – paylaşım", "kampus-okul": "Kampüsün İçinden – okulumu ekleyin" };
+    var konuHarita = { "kampus": "Kampüsün İçinden – paylaşım", "kampus-okul": "Kampüsün İçinden – okulumu ekleyin",
+      "kampus-sinav": "Kampüsün İçinden – geçmiş sınav gönderiyorum" };
+    var okulHarita = { odtu: "ODTÜ", bogazici: "Boğaziçi", itu: "İTÜ" };
     if (konuParam && konuHarita[konuParam]) form.elements.konu.value = konuHarita[konuParam];
+    if (konuParam === "kampus-sinav") {
+      var okulAd = okulHarita[new URLSearchParams(location.search).get("okul")] || "";
+      if (okulAd && !form.elements.okul.value) form.elements.okul.value = okulAd;
+      if (!form.elements.mesaj.value) form.elements.mesaj.value = (okulAd ? okulAd + " " : "") +
+        "geçmiş sınavlarını gönderiyorum (ders, yıl, vize/final):\n\n" +
+        "Not: Sınav dosyalarını (PDF ya da fotoğraf) açılacak e-postaya ek olarak eklemeyi unutma.";
+    }
 
     form.addEventListener("input", function () { document.getElementById("form-error").hidden = true; });
 

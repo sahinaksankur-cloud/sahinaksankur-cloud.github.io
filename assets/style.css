@@ -407,10 +407,11 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .kampus-hedef p { margin: 0 0 10px; }
 .kampus-okullar { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 28px; }
 .kampus-okul { border-top: 4px solid var(--accent); }
-.kampus-okul ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.95rem; line-height: 1.5; display: grid; gap: 6px; }
+.kampus-okul ul { margin: 4px 0 12px; padding-left: 18px; color: var(--muted); font-size: 0.95rem; line-height: 1.5; display: grid; gap: 6px; }
 .kampus-okul ul strong { color: var(--text); }
 .kampus-kutular { display: grid; gap: 16px; }
 .kampus-kutular .cta { margin-bottom: 0; }
 .kampus-not { color: var(--muted); font-size: 0.85rem; margin: 20px 0 0; }
 /* Telefonda menü tek satıra sığsın: YouTube bağlantısı alttaki bölümde ve ders sayfalarında var */
 @media (max-width: 600px) { .nav .nav-yt { display: none; } }
+.kampus-okul .kampus-gonder { margin-top: auto; align-self: flex-start; font-weight: 600; }

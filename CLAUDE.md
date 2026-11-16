@@ -28,7 +28,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Calculus Oyunu: dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
-| `kampus.html` | Kampüsün İçinden: ODTÜ, Boğaziçi, İTÜ kartları (sınav hazırlık ve öğrenci paylaşımları için), "Bize yaz" ve "Okulumu ekleyin" kutuları (`iletisim.html?konu=kampus` / `?konu=kampus-okul` formu o konuyla açar), resmî bağ olmadığı notu. Üniversite logosu kullanılmaz |
+| `kampus.html` | Kampüsün İçinden: ODTÜ, Boğaziçi, İTÜ kartları (sınav hazırlık ve öğrenci paylaşımları için), her kartta "📤 … sınavı gönder" düğmesi (`iletisim.html?konu=kampus-sinav&okul=odtu|bogazici|itu`: konu, okul ve mesaj kendiliğinden dolar; öğrenci dosyayı e-postaya ekler), "Bize yaz" ve "Okulumu ekleyin" kutuları (`?konu=kampus` / `?konu=kampus-okul`), resmî bağ olmadığı notu. Üniversite logosu kullanılmaz |
 | `makaleler.html`, `makaleler/` | Makaleler; `araclar/makaleleri-olustur.py` ile üretilir (bkz. README) |
 | `topluluk.html` | Telegram topluluğu sayfası; `config.js` → `topluluk.grup` boş olduğu için gizli |
 | `yazilar.html`, `yazilar/` | Eski adresler; makalelere yönlendirir |
