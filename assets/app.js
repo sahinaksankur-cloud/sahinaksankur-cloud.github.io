@@ -58,13 +58,90 @@
     return link;
   }
 
-  // "Boş PDF=https://... | Çözümlü PDF=https://..." biçimini okur.
+  // "Boş PDF=pdf/calc1/045-bos.pdf | Çözümlü PDF=https://..." biçimini okur.
+  // Link, sitedeki bir dosya (pdf/...) ya da Google Drive linki olabilir.
   // Etiket yazılmazsa "PDF 1", "PDF 2" kullanılır.
   function pdfList(value) {
     if (!value) return [];
     return value.split("|").map(function (s) { return s.trim(); }).filter(Boolean).map(function (s, i) {
-      var m = s.match(/^([^=]+?)\s*=\s*(https?:\/\/.+)$/);
+      var m = s.match(/^([^=:/]+?)\s*=\s*(.+)$/);
       return m ? { ad: m[1].trim(), url: m[2].trim() } : { ad: "PDF " + (i + 1), url: s };
+    });
+  }
+
+  // Sitenin kendi içindeki PDF mi (Drive değil)?
+  function isLocalPdf(url) { return !/^https?:\/\//i.test(url); }
+
+  // İndirilen dosyanın adı: "Kuzey Kampus - <video başlığı> - <PDF adı>.pdf"
+  function pdfFileName(v, p) {
+    var name = "Kuzey Kampus - " + v.baslik + (p.ad && !/^PDF( \d+)?$/.test(p.ad) ? " - " + p.ad.replace(/\s*PDF$/i, "") : "");
+    return name.replace(/[\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 150) + ".pdf";
+  }
+
+  // PDF.js'i (assets/pdfjs) sadece gerektiğinde yükler.
+  var pdfjsReady = null;
+  function loadPdfjs() {
+    if (pdfjsReady) return pdfjsReady;
+    pdfjsReady = new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "assets/pdfjs/pdf.min.js";
+      s.onload = function () {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = "assets/pdfjs/pdf.worker.min.js";
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = function () { pdfjsReady = null; reject(new Error("pdf.js yüklenemedi")); };
+      document.head.appendChild(s);
+    });
+    return pdfjsReady;
+  }
+
+  // PDF'i sayfa sayfa, ekrana geldikçe çizer. Her cihazda (telefon dahil) çalışır.
+  var pdfRenderToken = 0;
+  function renderPdf(el, url, fallbackHtml) {
+    var token = ++pdfRenderToken;
+    el.innerHTML = '<div class="pdf-loading">PDF yükleniyor…</div>';
+    loadPdfjs().then(function (pdfjsLib) {
+      return pdfjsLib.getDocument(url).promise;
+    }).then(function (doc) {
+      if (token !== pdfRenderToken) return;
+      el.innerHTML = "";
+      var pages = [];
+      for (var i = 1; i <= doc.numPages; i++) {
+        var holder = document.createElement("div");
+        holder.className = "pdf-page";
+        holder.setAttribute("data-page", i);
+        holder.style.aspectRatio = "612 / 792";
+        el.appendChild(holder);
+        pages.push(holder);
+      }
+      function draw(holder) {
+        if (holder.getAttribute("data-done")) return;
+        holder.setAttribute("data-done", "1");
+        doc.getPage(+holder.getAttribute("data-page")).then(function (page) {
+          if (token !== pdfRenderToken) return;
+          var base = page.getViewport({ scale: 1 });
+          var ratio = Math.min(window.devicePixelRatio || 1, 2);
+          var scale = (holder.clientWidth || el.clientWidth || base.width) / base.width;
+          var vp = page.getViewport({ scale: scale * ratio });
+          var canvas = document.createElement("canvas");
+          canvas.width = Math.floor(vp.width);
+          canvas.height = Math.floor(vp.height);
+          holder.style.aspectRatio = base.width + " / " + base.height;
+          holder.appendChild(canvas);
+          page.render({ canvasContext: canvas.getContext("2d"), viewport: vp });
+        });
+      }
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); draw(e.target); } });
+        }, { root: el, rootMargin: "600px 0px" });
+        pages.forEach(function (p) { io.observe(p); });
+      } else {
+        pages.forEach(draw);
+      }
+    }).catch(function () {
+      if (token !== pdfRenderToken) return;
+      el.innerHTML = fallbackHtml;
     });
   }
 
@@ -241,12 +318,20 @@
         }).join("") : "";
         var head = v.pdfs.length > 1 ? "Ders notları" : esc(v.pdfs[0].ad);
         var url = v.pdfs[k].url;
+        var local = isLocalPdf(url);
         var folder = /\/folders\//.test(url);
-        var dl = CFG.pdfIndirme === false ? "" :
+        var dl = CFG.pdfIndirme === false ? "" : local ?
+          '<a class="btn" href="' + esc(url) + '" download="' + esc(pdfFileName(v, v.pdfs[k])) + '">⬇ İndir</a>' :
           '<a class="btn" href="' + esc(pdfDownloadUrl(url)) + '" target="_blank" rel="noopener"' + (folder ? "" : " download") + ">" +
           (folder ? "Klasörü aç" : "⬇ İndir") + "</a>";
-        box.innerHTML = "<header><strong>" + head + "</strong>" + tabs + dl + "</header>" +
-          '<iframe class="pdf-frame" src="' + esc(pdfEmbedUrl(v.pdfs[k].url)) + '" title="' + esc(v.pdfs[k].ad) + '" loading="lazy"></iframe>';
+        var openFull = local ? '<a class="btn" href="' + esc(url) + '" target="_blank" rel="noopener">Tam ekran</a>' : "";
+        box.innerHTML = "<header><strong>" + head + "</strong>" + tabs + openFull + dl + "</header>" +
+          (local ? '<div class="pdf-frame pdf-view" aria-label="' + esc(v.pdfs[k].ad) + '"></div>' :
+          '<iframe class="pdf-frame" src="' + esc(pdfEmbedUrl(v.pdfs[k].url)) + '" title="' + esc(v.pdfs[k].ad) + '" loading="lazy"></iframe>');
+        if (local) {
+          renderPdf(box.querySelector(".pdf-view"), url,
+            '<div class="pdf-empty">PDF burada gösterilemedi. <a href="' + esc(url) + '" target="_blank" rel="noopener">Yeni sekmede açın</a>.</div>');
+        }
         Array.prototype.forEach.call(box.querySelectorAll(".tab"), function (t) {
           t.addEventListener("click", function () { showPdf(v, +t.getAttribute("data-k")); });
         });
