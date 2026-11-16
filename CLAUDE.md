@@ -72,8 +72,8 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
-- Menü sırası: Dersler, Calculus Oyunu/Oyun, Kampüs, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. 600 px ve altında menüdeki YouTube gizlenir (`.nav-yt`), menü tek satıra sığsın diye.
-- Menüde oyun sekmesi tüm sayfalarda var: geniş ekranda "Calculus Oyunu", 760 px ve altında "Oyun" yazar (`.nav-uzun` / `.nav-kisa`); telefonda menünün sığması için kısa ad gerekli (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
+- Menü sırası: Kampüsün İçinden/Kampüs, Dersler, Calculus Oyunu/Oyun, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
+- Menü tüm sayfalarda elle yazılı (index, ders, iletisim, oyun, kampus, topluluk); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.

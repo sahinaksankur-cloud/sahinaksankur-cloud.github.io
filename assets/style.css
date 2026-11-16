@@ -324,7 +324,7 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .sinir sup { font-size: 0.75em; }
 .sinir .alt { order: 2; } .sinir .ust { order: 1; }
 .nav-kisa { display: none; }
-@media (max-width: 760px) { .nav-uzun { display: none; } .nav-kisa { display: inline; } }
+@media (max-width: 840px) { .nav-uzun { display: none; } .nav-kisa { display: inline; } }
 .cta.oyun-cta { margin-bottom: 16px; border: 2px solid var(--accent); background: var(--surface); }
 .cta.oyun-cta h3 { font-size: 1.25rem; }
 .oyun-bolum-not { color: var(--muted); margin: -4px 0 14px; max-width: 640px; }
@@ -413,5 +413,5 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .kampus-kutular .cta { margin-bottom: 0; }
 .kampus-not { color: var(--muted); font-size: 0.85rem; margin: 20px 0 0; }
 /* Telefonda menü tek satıra sığsın: YouTube bağlantısı alttaki bölümde ve ders sayfalarında var */
-@media (max-width: 600px) { .nav .nav-yt { display: none; } }
+@media (max-width: 700px) { .nav .nav-yt { display: none; } }
 .kampus-okul .kampus-gonder { margin-top: auto; align-self: flex-start; font-weight: 600; }
