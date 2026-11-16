@@ -293,6 +293,7 @@
     $("dy-kart").className = "dy-kart";
     $("dy-not").textContent = ""; $("dy-not").className = "dy-not";
     $("dy-dogru").disabled = false; $("dy-yanlis").disabled = false;
+    $("dy-dogru").classList.remove("secildi"); $("dy-yanlis").classList.remove("secildi");
     sayaciBaslat(function () { dyCevapla(null); }, "dy-sure", (DY && DY.sure) || 5,
       { uyari: DY && DY.uyari != null ? DY.uyari : 4, kritik: DY && DY.kritik != null ? DY.kritik : 2 });
   }
@@ -302,6 +303,7 @@
     sayaciDurdur();
     $("dy-sure").classList.remove("az", "uyari");
     $("dy-dogru").disabled = true; $("dy-yanlis").disabled = true;
+    if (cevap !== null) $(cevap ? "dy-dogru" : "dy-yanlis").classList.add("secildi");
     var q = dy.liste[dy.i], dogru = cevap !== null && cevap === q.d;
     var not = $("dy-not");
     if (dogru) {

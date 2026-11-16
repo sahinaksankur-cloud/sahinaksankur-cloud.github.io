@@ -349,14 +349,16 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .dy-kart.kirmizi { background: rgba(192, 57, 43, 0.14); border-color: #c0392b; }
 .dy-ifade { margin: 0; font-size: clamp(1.4rem, 6vw, 1.9rem); font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
 .dy-ifade sub { font-size: 0.55em; }
-.dy-not { min-height: 1.5em; margin: 10px 0 0; text-align: center; font-weight: 700; }
+.dy-not { min-height: 2.9em; margin: 10px 0 0; text-align: center; font-weight: 700; }
 .dy-not.iyi { color: #2e8b57; } .dy-not.kotu { color: #c0392b; }
 .dy-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 .dy-dugmeler button { font: inherit; font-size: 1.25rem; font-weight: 700; padding: 22px 8px; border-radius: 16px; border: 2px solid; cursor: pointer; touch-action: manipulation; }
 .dy-dugmeler button:disabled { opacity: 0.5; cursor: default; }
-.dy-d { background: rgba(46, 139, 87, 0.10); border-color: #2e8b57; color: #1f6b42; }
-.dy-y { background: rgba(192, 57, 43, 0.08); border-color: #c0392b; color: #a12f23; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dy-d { color: #7fd6a4; } :root:not([data-theme="light"]) .dy-y { color: #f19a8f; } :root:not([data-theme="light"]) .btn.dy { background: #3a2a14; color: #f5b971; } }
+/* Doğru / Yanlış düğmeleri renksiz: yeşil ve kırmızı sadece cevaptan sonra kartta görünür */
+.dy-dugmeler .dy-d, .dy-dugmeler .dy-y { background: var(--surface); border-color: var(--border); color: var(--text); }
+.dy-dugmeler .dy-d:hover:not(:disabled), .dy-dugmeler .dy-y:hover:not(:disabled) { border-color: var(--accent); }
+.dy-dugmeler button.secildi { opacity: 1; border-color: var(--accent); border-width: 3px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.dy { background: #3a2a14; color: #f5b971; } }
 .dy-alt { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 12px 0 0; }
 
 /* Oyun: dört test türü şeridi */
