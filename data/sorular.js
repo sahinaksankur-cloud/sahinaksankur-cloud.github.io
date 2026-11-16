@@ -13,7 +13,15 @@ window.KK_OYUN = {
     { id: "karisik", ad: "Karışık", aciklama: "Limit ve türevden karışık sorular." }
   ],
   soruSayisi: 10,
-  sure: 10,          // her soru için saniye (0 yazılırsa sayaç kapanır)
+
+  // Seviyeler: her soru için verilen süre (saniye). Sorular aynıdır, süre değişir.
+  seviyeler: [
+    { id: "kolay", ad: "Kolay", sure: 20 },
+    { id: "orta", ad: "Orta", sure: 15 },
+    { id: "zor", ad: "Zor", sure: 10 }
+  ],
+  uyari: 5,   // son kaç saniyede sayaç turuncu yanıp söner
+  kritik: 3,  // son kaç saniyede sayaç kırmızı yanıp söner
 
   sorular: {
     limit: [

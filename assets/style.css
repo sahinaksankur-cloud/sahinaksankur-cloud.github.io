@@ -261,6 +261,7 @@ footer .wrap { padding-top: 20px; padding-bottom: 28px; display: flex; gap: 16px
 button.card.oyun-konu { font: inherit; text-align: left; cursor: pointer; }
 button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-toplam { color: var(--muted); margin: -24px 0 0; }
+#oyun-giris .section-title:first-of-type { margin-top: 8px; }
 .oyun-toplam:empty { display: none; }
 #oyun-soru, #oyun-sonuc { max-width: 720px; margin: 0 auto; padding-top: 28px; }
 .oyun-ust { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
@@ -296,7 +297,23 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
   font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent);
   background: var(--accent-soft); border: 2px solid var(--accent);
 }
-.oyun-sure.az { color: #fff; background: #c0392b; border-color: #c0392b; animation: oyun-yanip 0.5s steps(2, start) infinite; }
-.oyun-sure.bitti { animation: none; opacity: 1; }
+.oyun-sure.uyari { color: #fff; background: #e67e22; border-color: #e67e22; animation: oyun-yanip 0.6s steps(2, start) infinite; }
+.oyun-sure.az { color: #fff; background: #c0392b; border-color: #c0392b; animation: oyun-yanip 0.4s steps(2, start) infinite; }
 @keyframes oyun-yanip { to { opacity: 0.35; } }
-@media (prefers-reduced-motion: reduce) { .oyun-sure.az { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .oyun-sure.uyari, .oyun-sure.az { animation: none; } }
+.oyun-seviyeler { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 560px; }
+.oyun-seviye {
+  font: inherit; cursor: pointer; display: grid; gap: 2px; justify-items: center; padding: 12px 8px; border-radius: 12px;
+  border: 2px solid var(--border); background: var(--surface); color: var(--text);
+}
+.oyun-seviye span { font-size: 0.85rem; color: var(--muted); }
+.oyun-seviye:hover { border-color: var(--accent); }
+.oyun-seviye.secili { border-color: var(--accent); background: var(--accent-soft); }
+.oyun-seviye.secili strong { color: var(--accent); }
+.oyun-kacan { margin-top: 20px; display: grid; gap: 12px; }
+.oyun-kacan h3 { margin: 0; font-size: 1.1rem; }
+.oyun-kacan-soru { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; }
+.oyun-kacan-soru p { margin: 0; line-height: 1.5; }
+.oyun-kacan-soru .s { font-weight: 600; }
+.oyun-kacan-soru .a { color: var(--muted); font-size: 0.95rem; }
+.oyun-kacan-soru .etiket { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: rgba(192, 57, 43, 0.12); color: #c0392b; margin-left: 4px; }
