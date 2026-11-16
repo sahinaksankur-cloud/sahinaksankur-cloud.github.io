@@ -125,58 +125,83 @@
   }
 
   // ---- Giriş ekranı ----
+  var HAZIRLIK = O.hazirlikTesti || "precalculus";
+  function enIyiYazi(r, n, sev) { return r != null ? '<span class="skor">En iyi: ' + r + "/" + n + (sev ? " (" + sev + ")" : "") + "</span>" : ""; }
+  function baglan(kap, sec, fn) {
+    Array.prototype.forEach.call(document.querySelectorAll(kap + " " + sec), function (b) { b.addEventListener("click", function () { fn(b); }); });
+  }
   function girisCiz() {
     sayaciDurdur();
-    var kayit = oku();
+    seviyeKapat();
+    var kayit = oku(), rek = kayit.rekor || {};
     durum.seviye = bul(SEVIYELER, durum.seviye) ? durum.seviye : (bul(SEVIYELER, kayit.seviye) ? kayit.seviye : SEVIYELER[0].id);
+    var sevAd = seviye().ad;
 
+    // 🧭 Calculus'a Hazır mısın?
+    var hz = bul(O.konular, HAZIRLIK) || {};
+    $("oyun-hazirlik").innerHTML = '<div><strong>Precalculus hazırlık testi</strong><p>' + (hz.aciklama || "") + "</p>" +
+      enIyiYazi(rek[rekorAnahtar(HAZIRLIK)], O.soruSayisi, sevAd) + "</div>" +
+      '<button type="button" class="btn big hazirlik-btn" data-konu="' + HAZIRLIK + '">Teste başla →</button>';
+    baglan("#oyun-hazirlik", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+
+    // 📝 Sınava Hazır mısın?
+    if (O.bolumBaslik) $("oyun-bolum-baslik").textContent = "📝 " + O.bolumBaslik;
+    $("oyun-bolumler").innerHTML = BOLUMLER.map(function (b) {
+      var id = "bolum-" + b.no;
+      return '<button type="button" class="sec s1" data-konu="' + id + '"><small>Chapter ' + b.no + "</small><strong>" + b.ad + "</strong>" +
+        enIyiYazi(rek[rekorAnahtar(id)], testBilgi(id).sayi, sevAd) + "</button>";
+    }).join("");
+    baglan("#oyun-bolumler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+
+    // 🎯 Konu turları (hazırlık testi hariç)
+    $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK; }).map(function (k) {
+      var ust = k.id === "karisik" ? "Tüm konular" : havuz(k.id).length + " soru";
+      return '<button type="button" class="sec s2" data-konu="' + k.id + '"><small>' + ust + "</small><strong>" + k.ad + "</strong>" +
+        enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + "</button>";
+    }).join("");
+    baglan("#oyun-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+
+    // ⚡ Doğru / Yanlış
+    var dyN = (DY && DY.soruSayisi) || 5;
+    $("oyun-dy").innerHTML = BOLUMLER.filter(function (b) { return havuz("dy-" + b.no).length; }).map(function (b) {
+      return '<button type="button" class="sec s3" data-dy="dy-' + b.no + '"><small>Chapter ' + b.no + "</small><strong>" + b.ad + "</strong>" +
+        enIyiYazi(rek["dy-" + b.no], dyN) + "</button>";
+    }).join("") + (havuz("dy-tum").length ? '<button type="button" class="sec s3" data-dy="dy-tum"><small>Hepsi</small><strong>Tüm chapter\'lar</strong>' +
+      enIyiYazi(rek["dy-tum"], dyN) + "</button>" : "");
+    baglan("#oyun-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
+
+    var top = kayit.toplam || 0;
+    $("oyun-toplam").textContent = top ? "Bu cihazda toplam puanın: " + top : "";
+    goster("oyun-giris");
+  }
+
+  // ---- Seviye seçimi (teste başlarken) ----
+  var seviyeHedef = null;
+  function seviyeSor(id) {
+    var t = testBilgi(id);
+    seviyeHedef = id;
+    var tur = t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    $("seviye-tur").textContent = tur;
+    $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
+    $("seviye-aciklama").textContent = t.sayi + " soru. Her soru için ne kadar süre istersin?";
     $("oyun-seviyeler").innerHTML = SEVIYELER.map(function (s) {
       var secili = s.id === durum.seviye;
       return '<button type="button" class="oyun-seviye' + (secili ? " secili" : "") + '" data-seviye="' + s.id +
         '" aria-pressed="' + secili + '"><strong>' + s.ad + "</strong><span>" + s.sure + " saniye</span></button>";
     }).join("");
-    Array.prototype.forEach.call(document.querySelectorAll(".oyun-seviye"), function (b) {
-      b.addEventListener("click", function () {
-        durum.seviye = b.getAttribute("data-seviye");
-        var k = oku(); k.seviye = durum.seviye; yaz(k);
-        girisCiz();
-      });
+    baglan("#oyun-seviyeler", "[data-seviye]", function (b) {
+      durum.seviye = b.getAttribute("data-seviye");
+      var k = oku(); k.seviye = durum.seviye; yaz(k);
+      var h = seviyeHedef; seviyeKapat(); basla(h);
     });
-
-    if (O.bolumBaslik) $("oyun-bolum-baslik").textContent = O.bolumBaslik;
-    $("oyun-bolumler").innerHTML = BOLUMLER.map(function (b) {
-      var id = "bolum-" + b.no, r = (kayit.rekor || {})[rekorAnahtar(id)], t = testBilgi(id);
-      var dyVar = havuz("dy-" + b.no).length > 0, rd = (kayit.rekor || {})["dy-" + b.no];
-      var enIyi = [];
-      if (rd != null) enIyi.push("⚡ " + rd + "/" + ((DY && DY.soruSayisi) || 5));
-      if (r != null) enIyi.push("📝 " + r + "/" + t.sayi + " (" + seviye().ad + ")");
-      return '<div class="card oyun-bolum">' +
-        '<span class="badge">Chapter ' + b.no + "</span><h3>" + b.ad + "</h3><p>" + b.aciklama + "</p>" +
-        '<div class="oyun-bolum-dugmeler">' +
-        (dyVar ? '<button type="button" class="btn dy" data-dy="dy-' + b.no + '">⚡ Doğru / Yanlış</button>' : "") +
-        '<button type="button" class="btn primary" data-konu="' + id + '">📝 5 Soru</button></div>' +
-        (enIyi.length ? '<span class="meta">En iyi: ' + enIyi.join(" · ") + "</span>" : "") + "</div>";
-    }).join("");
-    Array.prototype.forEach.call(document.querySelectorAll("#oyun-bolumler [data-konu]"), function (b) {
-      b.addEventListener("click", function () { basla(b.getAttribute("data-konu")); });
-    });
-    Array.prototype.forEach.call(document.querySelectorAll("#oyun-bolumler [data-dy]"), function (b) {
-      b.addEventListener("click", function () { dyBasla(b.getAttribute("data-dy")); });
-    });
-    $("oyun-konular").innerHTML = O.konular.map(function (k) {
-      var r = (kayit.rekor || {})[rekorAnahtar(k.id)];
-      return '<button type="button" class="card oyun-konu" data-konu="' + k.id + '">' +
-        (k.etiket ? '<span class="badge">' + k.etiket + "</span>" : "") +
-        "<h3>" + k.ad + "</h3><p>" + k.aciklama + "</p>" +
-        '<span class="meta">' + havuz(k.id).length + " soru" + (r != null ? " · En iyi (" + seviye().ad + "): " + r + "/" + O.soruSayisi : "") + "</span></button>";
-    }).join("");
-    Array.prototype.forEach.call(document.querySelectorAll("#oyun-konular .oyun-konu"), function (b) {
-      b.addEventListener("click", function () { basla(b.getAttribute("data-konu")); });
-    });
-    var top = kayit.toplam || 0;
-    $("oyun-toplam").textContent = top ? "Bu cihazda toplam puanın: " + top : "";
-    goster("oyun-giris");
+    $("seviye-perde").hidden = false;
+    var sec = document.querySelector("#oyun-seviyeler .secili") || document.querySelector("#oyun-seviyeler button");
+    if (sec) sec.focus();
   }
+  function seviyeKapat() { $("seviye-perde").hidden = true; seviyeHedef = null; }
+  $("seviye-vazgec").addEventListener("click", seviyeKapat);
+  $("seviye-perde").addEventListener("click", function (e) { if (e.target === this) seviyeKapat(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("seviye-perde").hidden) seviyeKapat(); });
 
   // ---- Oyun ----
   function basla(konu) {
@@ -344,10 +369,7 @@
     $("dy-bar").style.width = "100%";
     goster("oyun-sonuc");
   }
-  $("oyun-test-gec").addEventListener("click", function () { basla(this.getAttribute("data-hedef")); });
-  Array.prototype.forEach.call(document.querySelectorAll("[data-dy]"), function (b) {
-    b.addEventListener("click", function () { dyBasla(b.getAttribute("data-dy")); });
-  });
+  $("oyun-test-gec").addEventListener("click", function () { seviyeSor(this.getAttribute("data-hedef")); });
 
   // ---- Sonuç ----
   function bitir() {
@@ -412,5 +434,5 @@
   girisCiz();
   // oyun.html#bolum-2 ya da oyun.html#limit gibi linkler testi doğrudan başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
-  if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else basla(hedef); }
+  if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
 })();

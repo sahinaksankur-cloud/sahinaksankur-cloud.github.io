@@ -27,23 +27,44 @@
 
   <main class="wrap oyun">
     <section id="oyun-giris">
-      <div class="hero">
+      <div class="hero oyun-hero">
         <h1 id="oyun-ad">Calculus Oyunu</h1>
-        <p>"Sınava Hazır mısın?" testleriyle bir chapter'a hakim olup olmadığını ölç, konu turlarıyla tekrar et. Seviyeni seç, süre dolmadan cevapla; her doğru cevap 1 puan. Kayıt yok, puanların sadece bu cihazda tutulur.</p>
+        <p>Dört farklı test türü var. Neye ihtiyacın varsa onu seç. Kayıt yok, puanların sadece bu cihazda tutulur.</p>
       </div>
-      <h2 class="section-title">Seviye seç</h2>
-      <div class="oyun-seviyeler" id="oyun-seviyeler" role="group" aria-label="Seviye"></div>
-      <h2 class="section-title" id="oyun-bolum-baslik">Sınava Hazır mısın?</h2>
-      <p class="oyun-bolum-not">Bir chapter'a çalıştın mı? Önce <strong>⚡ Doğru / Yanlış</strong> ile temel bilgilerini yokla (5 ifade, her biri 5 saniye), sonra <strong>📝 5 Soru</strong> ile sınava hazır olup olmadığını gör. Sorular sadece o chapter'dan gelir; her denemede yenileri çıkar.</p>
-      <div class="card dy-tum">
-        <div><strong>⚡ Tüm chapter'lar</strong><p>Doğru / Yanlış · karışık genel tekrar</p></div>
-        <button type="button" class="btn dy" data-dy="dy-tum">Başla</button>
-      </div>
-      <div class="cards" id="oyun-bolumler"></div>
-      <h2 class="section-title">Konu turları · 10 soru</h2>
-      <div class="cards" id="oyun-konular"></div>
+
+      <section class="serit">
+        <div class="tur t0"><h2>🧭 Calculus'a Hazır mısın?</h2><p>Calculus'a başlamadan önce temel bilgilerini test et.</p><span class="ozellik">10 soru · precalculus</span></div>
+        <div class="giris-kart" id="oyun-hazirlik"></div>
+      </section>
+
+      <section class="serit">
+        <div class="tur t1"><h2 id="oyun-bolum-baslik">📝 Sınava Hazır mısın?</h2><p>Bir chapter'a çalıştın mı? Sınava hazır olup olmadığını gör. Sorular sadece o chapter'dan gelir.</p><span class="ozellik">5 soru · chapter testi</span></div>
+        <div class="secenekler" id="oyun-bolumler"></div>
+      </section>
+
+      <section class="serit">
+        <div class="tur t2"><h2>🎯 Konu Turları</h2><p>Bir konuyu baştan sona tekrar et, puanını yükselt.</p><span class="ozellik">10 soru · tekrar</span></div>
+        <div class="secenekler" id="oyun-konular"></div>
+      </section>
+
+      <section class="serit">
+        <div class="tur t3"><h2>⚡ Doğru / Yanlış</h2><p>Temel bilgilerin yerinde mi? Düşünmeden bilmen gerekenler.</p><span class="ozellik">5 ifade · her biri 5 sn</span></div>
+        <div class="secenekler" id="oyun-dy"></div>
+      </section>
+
       <p class="oyun-toplam" id="oyun-toplam"></p>
     </section>
+
+    <div class="perde" id="seviye-perde" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="seviye-baslik">
+        <small id="seviye-tur"></small>
+        <h3 id="seviye-baslik"></h3>
+        <p id="seviye-aciklama"></p>
+        <div class="oyun-seviyeler" id="oyun-seviyeler" role="group" aria-label="Seviye"></div>
+        <p class="panel-not">Seviyeye dokununca test başlar. Son seçtiğin seviye işaretli gelir.</p>
+        <button type="button" class="btn" id="seviye-vazgec">Vazgeç</button>
+      </div>
+    </div>
 
     <section id="oyun-soru" hidden>
       <div class="oyun-ust">
