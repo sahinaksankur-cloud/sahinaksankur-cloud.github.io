@@ -24,7 +24,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 
 | Dosya | Ne işe yarar |
 |---|---|
-| `index.html` | Ana sayfa: ders kartları, Calculus Oyunu kutusu, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
+| `index.html` | Ana sayfa: Calculus Oyunu kutusu (giriş metninin hemen altında), ders kartları, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Calculus Oyunu: konu seç, rastgele 10 soru, 3 seçenek, doğru cevap 1 puan. Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
