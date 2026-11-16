@@ -323,3 +323,7 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .sinir { display: inline-flex; flex-direction: column; vertical-align: middle; font-size: 0.65em; line-height: 1.05; margin: 0 2px 0 1px; text-align: left; }
 .sinir sup { font-size: 0.75em; }
 .sinir .alt { order: 2; } .sinir .ust { order: 1; }
+.nav-kisa { display: none; }
+@media (max-width: 760px) { .nav-uzun { display: none; } .nav-kisa { display: inline; } }
+.cta.oyun-cta { margin-bottom: 16px; border: 2px solid var(--accent); background: var(--surface); }
+.cta.oyun-cta h3 { font-size: 1.25rem; }

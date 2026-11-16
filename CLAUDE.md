@@ -24,7 +24,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 
 | Dosya | Ne işe yarar |
 |---|---|
-| `index.html` | Ana sayfa: ders kartları, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
+| `index.html` | Ana sayfa: ders kartları, Calculus Oyunu kutusu, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Calculus Oyunu: konu seç, rastgele 10 soru, 3 seçenek, doğru cevap 1 puan. Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
@@ -67,7 +67,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Seviyeler (`seviyeler`): Kolay 20 sn, Orta 15 sn, Zor 10 sn. Sorular aynı, sadece süre değişir; seçilen seviye cihazda hatırlanır, en iyi skor konu+seviye için ayrı tutulur. Sayaç sağ üstte; son 5 sn (`uyari`) turuncu, son 3 sn (`kritik`) kırmızı yanıp söner. Süre dolarsa puan verilmez ve hemen sonraki soruya geçilir. Yanlış ve süresi dolan sorular, doğru cevap ve açıklamasıyla tur sonunda "Kaçırdığın sorular" listesinde gösterilir.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
-- Menüde "Oyun" sekmesi tüm sayfalarda var (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
+- Menüde oyun sekmesi tüm sayfalarda var: geniş ekranda "Calculus Oyunu", 760 px ve altında "Oyun" yazar (`.nav-uzun` / `.nav-kisa`); telefonda menünün sığması için kısa ad gerekli (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.
