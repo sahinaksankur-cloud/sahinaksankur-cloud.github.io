@@ -33,8 +33,12 @@
       </div>
       <h2 class="section-title">Seviye seç</h2>
       <div class="oyun-seviyeler" id="oyun-seviyeler" role="group" aria-label="Seviye"></div>
-      <h2 class="section-title" id="oyun-bolum-baslik">Sınava Hazır mısın? · 5 soru</h2>
-      <p class="oyun-bolum-not">Bir chapter'a çalıştın mı? Sınava hazır olup olmadığını 5 soruyla test et. Sorular sadece o chapter'dan, farklı alt bölümlerinden gelir; her denemede yeni sorular çıkar.</p>
+      <h2 class="section-title" id="oyun-bolum-baslik">Sınava Hazır mısın?</h2>
+      <p class="oyun-bolum-not">Bir chapter'a çalıştın mı? Önce <strong>⚡ Doğru / Yanlış</strong> ile temel bilgilerini yokla (5 ifade, her biri 5 saniye), sonra <strong>📝 5 Soru</strong> ile sınava hazır olup olmadığını gör. Sorular sadece o chapter'dan gelir; her denemede yenileri çıkar.</p>
+      <div class="card dy-tum">
+        <div><strong>⚡ Tüm chapter'lar</strong><p>Doğru / Yanlış · karışık genel tekrar</p></div>
+        <button type="button" class="btn dy" data-dy="dy-tum">Başla</button>
+      </div>
       <div class="cards" id="oyun-bolumler"></div>
       <h2 class="section-title">Konu turları · 10 soru</h2>
       <div class="cards" id="oyun-konular"></div>
@@ -56,6 +60,22 @@
       </div>
     </section>
 
+    <section id="dy-soru" hidden>
+      <div class="oyun-ust">
+        <span><span id="dy-ad"></span> · <span id="dy-ilerleme"></span></span>
+        <span class="dy-seri" id="dy-seri">🔥 0</span>
+        <span class="oyun-sure" id="dy-sure" role="timer" aria-live="off">5</span>
+      </div>
+      <div class="oyun-bar"><div id="dy-bar"></div></div>
+      <div class="dy-kart" id="dy-kart"><p class="dy-ifade" id="dy-ifade"></p></div>
+      <p class="dy-not" id="dy-not" aria-live="polite"></p>
+      <div class="dy-dugmeler">
+        <button type="button" class="dy-d" id="dy-dogru">✓ Doğru</button>
+        <button type="button" class="dy-y" id="dy-yanlis">✗ Yanlış</button>
+      </div>
+      <p class="dy-alt">Puan: <strong id="dy-puan">0</strong> · Her ifade için <span id="dy-sn">5</span> saniye</p>
+    </section>
+
     <section id="oyun-sonuc" hidden>
       <div class="oyun-kart oyun-sonuc">
         <p class="oyun-sonuc-baslik" id="oyun-sonuc-baslik"></p>
@@ -63,6 +83,7 @@
         <p id="oyun-sonuc-mesaj"></p>
         <p class="oyun-rekor" id="oyun-rekor"></p>
         <div class="oyun-dugmeler">
+          <button class="btn primary big" id="oyun-test-gec" type="button" hidden>📝 5 Soruya geç</button>
           <button class="btn primary big" id="oyun-tekrar" type="button">Tekrar oyna</button>
           <button class="btn big" id="oyun-konu-degis" type="button">Konu değiştir</button>
           <a class="btn big" id="oyun-ders-link" href="ders.html?liste=calc1">Konu anlatımını izle</a>
@@ -84,6 +105,7 @@
   <script src="assets/config.js"></script>
   <script src="assets/app.js"></script>
   <script src="data/sorular.js"></script>
+  <script src="data/dogru-yanlis.js"></script>
   <script src="assets/oyun.js"></script>
 </body>
 </html>

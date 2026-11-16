@@ -330,3 +330,31 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-bolum-not { color: var(--muted); margin: -4px 0 14px; max-width: 640px; }
 #oyun-bolumler { padding-bottom: 8px; }
 .oyun-bolum { border-left: 4px solid var(--accent); }
+
+/* Oyun: ⚡ Doğru / Yanlış */
+.dy-tum { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; border: 2px dashed #e67e22; margin-bottom: 16px; }
+.dy-tum p { margin: 2px 0 0; }
+.btn.dy { background: #fff4e5; border-color: #e67e22; color: #a35400; font-weight: 600; justify-content: center; }
+.btn.dy:hover { border-color: #c96a10; }
+.oyun-bolum-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.oyun-bolum-dugmeler .btn { justify-content: center; font-weight: 600; padding: 10px 8px; }
+.oyun-bolum h3 { margin-top: 2px; }
+#dy-soru { max-width: 720px; margin: 0 auto; padding-top: 28px; }
+.dy-seri { font-weight: 700; color: #c0392b; }
+.dy-kart {
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  min-height: 190px; display: grid; place-items: center; padding: 20px; text-align: center; transition: background 0.15s, border-color 0.15s;
+}
+.dy-kart.yesil { background: rgba(46, 139, 87, 0.16); border-color: #2e8b57; }
+.dy-kart.kirmizi { background: rgba(192, 57, 43, 0.14); border-color: #c0392b; }
+.dy-ifade { margin: 0; font-size: clamp(1.4rem, 6vw, 1.9rem); font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.dy-ifade sub { font-size: 0.55em; }
+.dy-not { min-height: 1.5em; margin: 10px 0 0; text-align: center; font-weight: 700; }
+.dy-not.iyi { color: #2e8b57; } .dy-not.kotu { color: #c0392b; }
+.dy-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.dy-dugmeler button { font: inherit; font-size: 1.25rem; font-weight: 700; padding: 22px 8px; border-radius: 16px; border: 2px solid; cursor: pointer; touch-action: manipulation; }
+.dy-dugmeler button:disabled { opacity: 0.5; cursor: default; }
+.dy-d { background: rgba(46, 139, 87, 0.10); border-color: #2e8b57; color: #1f6b42; }
+.dy-y { background: rgba(192, 57, 43, 0.08); border-color: #c0392b; color: #a12f23; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dy-d { color: #7fd6a4; } :root:not([data-theme="light"]) .dy-y { color: #f19a8f; } :root:not([data-theme="light"]) .btn.dy { background: #3a2a14; color: #f5b971; } }
+.dy-alt { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 12px 0 0; }

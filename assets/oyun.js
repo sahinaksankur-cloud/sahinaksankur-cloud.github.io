@@ -11,6 +11,9 @@
   var KRITIK = O.kritik == null ? 3 : O.kritik; // kırmızı yanıp sönme başlar
   var durum = { konu: null, seviye: null, sorular: [], i: 0, puan: 0, kacan: [] };
   var sayac = null;
+  var DY = window.KK_DY || null;
+  var dy = { id: null, liste: [], i: 0, puan: 0, seri: 0, enSeri: 0, kacan: [], kilit: false };
+  function dyId(id) { var m = /^dy-(tum|\d+)$/.exec(id || ""); return m ? m[1] : null; }
 
   function oku() {
     try { return JSON.parse(localStorage.getItem(DEPO)) || {}; } catch (e) { return {}; }
@@ -39,6 +42,11 @@
     return { id: id, bolum: false, ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
   function havuz(id) {
+    var d = dyId(id);
+    if (d) {
+      var hepsi = (DY && DY.ifadeler) || [];
+      return d === "tum" ? hepsi : hepsi.filter(function (q) { return String(q.b).split(".")[0] === d; });
+    }
     var no = bolumNo(id);
     if (no) return tumSorular().filter(function (q) { return String(q.b).split(".")[0] === String(no); });
     if (id === "karisik") {
@@ -89,7 +97,7 @@
 
   if (O.ad) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
   function goster(bolum) {
-    ["oyun-giris", "oyun-soru", "oyun-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });
+    ["oyun-giris", "oyun-soru", "dy-soru", "oyun-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });
     window.scrollTo(0, 0);
   }
 
@@ -97,9 +105,10 @@
   function sayaciDurdur() {
     if (sayac) { clearInterval(sayac); sayac = null; }
   }
-  function sayaciBaslat(sureBitti) {
+  function sayaciBaslat(sureBitti, elId, ozelSure, esik) {
     sayaciDurdur();
-    var el = $("oyun-sure"), sure = seviye().sure;
+    var el = $(elId || "oyun-sure"), sure = ozelSure || seviye().sure;
+    var uyari = esik ? esik.uyari : UYARI, kritik = esik ? esik.kritik : KRITIK;
     if (!sure) { el.hidden = true; return; }
     el.hidden = false;
     var bitis = Date.now() + sure * 1000;
@@ -107,8 +116,8 @@
       var kalan = Math.max(0, bitis - Date.now());
       var sn = Math.ceil(kalan / 1000);
       el.textContent = sn;
-      el.classList.toggle("az", sn <= KRITIK);
-      el.classList.toggle("uyari", sn > KRITIK && sn <= UYARI);
+      el.classList.toggle("az", sn <= kritik);
+      el.classList.toggle("uyari", sn > kritik && sn <= uyari);
       if (kalan <= 0) { sayaciDurdur(); sureBitti(); }
     }
     guncelle();
@@ -134,13 +143,26 @@
       });
     });
 
-    if (O.bolumBaslik) $("oyun-bolum-baslik").textContent = O.bolumBaslik + " · " + (O.bolumSoruSayisi || 5) + " soru";
+    if (O.bolumBaslik) $("oyun-bolum-baslik").textContent = O.bolumBaslik;
     $("oyun-bolumler").innerHTML = BOLUMLER.map(function (b) {
       var id = "bolum-" + b.no, r = (kayit.rekor || {})[rekorAnahtar(id)], t = testBilgi(id);
-      return '<button type="button" class="card oyun-konu oyun-bolum" data-konu="' + id + '">' +
+      var dyVar = havuz("dy-" + b.no).length > 0, rd = (kayit.rekor || {})["dy-" + b.no];
+      var enIyi = [];
+      if (rd != null) enIyi.push("⚡ " + rd + "/" + ((DY && DY.soruSayisi) || 5));
+      if (r != null) enIyi.push("📝 " + r + "/" + t.sayi + " (" + seviye().ad + ")");
+      return '<div class="card oyun-bolum">' +
         '<span class="badge">Chapter ' + b.no + "</span><h3>" + b.ad + "</h3><p>" + b.aciklama + "</p>" +
-        '<span class="meta">' + t.sayi + " soru" + (r != null ? " · En iyi (" + seviye().ad + "): " + r + "/" + t.sayi : "") + "</span></button>";
+        '<div class="oyun-bolum-dugmeler">' +
+        (dyVar ? '<button type="button" class="btn dy" data-dy="dy-' + b.no + '">⚡ Doğru / Yanlış</button>' : "") +
+        '<button type="button" class="btn primary" data-konu="' + id + '">📝 5 Soru</button></div>' +
+        (enIyi.length ? '<span class="meta">En iyi: ' + enIyi.join(" · ") + "</span>" : "") + "</div>";
     }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#oyun-bolumler [data-konu]"), function (b) {
+      b.addEventListener("click", function () { basla(b.getAttribute("data-konu")); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#oyun-bolumler [data-dy]"), function (b) {
+      b.addEventListener("click", function () { dyBasla(b.getAttribute("data-dy")); });
+    });
     $("oyun-konular").innerHTML = O.konular.map(function (k) {
       var r = (kayit.rekor || {})[rekorAnahtar(k.id)];
       return '<button type="button" class="card oyun-konu" data-konu="' + k.id + '">' +
@@ -148,7 +170,7 @@
         "<h3>" + k.ad + "</h3><p>" + k.aciklama + "</p>" +
         '<span class="meta">' + havuz(k.id).length + " soru" + (r != null ? " · En iyi (" + seviye().ad + "): " + r + "/" + O.soruSayisi : "") + "</span></button>";
     }).join("");
-    Array.prototype.forEach.call(document.querySelectorAll(".oyun-konu"), function (b) {
+    Array.prototype.forEach.call(document.querySelectorAll("#oyun-konular .oyun-konu"), function (b) {
       b.addEventListener("click", function () { basla(b.getAttribute("data-konu")); });
     });
     var top = kayit.toplam || 0;
@@ -214,9 +236,126 @@
   }
   $("oyun-sonraki").addEventListener("click", sonraki);
 
+  // ---- ⚡ Doğru / Yanlış ----
+  function dyBasla(id) {
+    sayaciDurdur();
+    var n = (DY && DY.soruSayisi) || 5;
+    var liste = soruSec(id, n);
+    // En az bir doğru ve bir yanlış ifade olsun
+    var h = havuz(id);
+    [true, false].forEach(function (deger) {
+      if (liste.length > 1 && !liste.some(function (q) { return q.d === deger; })) {
+        var aday = karistir(h.filter(function (q) { return q.d === deger; }))[0];
+        if (aday) liste[liste.length - 1] = aday;
+      }
+    });
+    dy.id = id; dy.liste = karistir(liste); dy.i = 0; dy.puan = 0; dy.seri = 0; dy.enSeri = 0; dy.kacan = [];
+    var d = dyId(id);
+    var b = BOLUMLER.filter(function (x) { return String(x.no) === d; })[0];
+    $("dy-ad").textContent = "⚡ " + (d === "tum" ? "Tüm chapter'lar" : "Chapter " + d);
+    $("dy-sn").textContent = (DY && DY.sure) || 5;
+    dyCiz();
+    goster("dy-soru");
+  }
+  function dyCiz() {
+    var q = dy.liste[dy.i];
+    dy.kilit = false;
+    $("dy-ilerleme").textContent = (dy.i + 1) + " / " + dy.liste.length;
+    $("dy-puan").textContent = dy.puan;
+    $("dy-seri").textContent = "🔥 " + dy.seri;
+    $("dy-bar").style.width = (dy.i / dy.liste.length * 100) + "%";
+    $("dy-ifade").innerHTML = bicim(q.s);
+    $("dy-kart").className = "dy-kart";
+    $("dy-not").textContent = ""; $("dy-not").className = "dy-not";
+    $("dy-dogru").disabled = false; $("dy-yanlis").disabled = false;
+    sayaciBaslat(function () { dyCevapla(null); }, "dy-sure", (DY && DY.sure) || 5,
+      { uyari: DY && DY.uyari != null ? DY.uyari : 4, kritik: DY && DY.kritik != null ? DY.kritik : 2 });
+  }
+  function dyCevapla(cevap) {
+    if (dy.kilit) return;
+    dy.kilit = true;
+    sayaciDurdur();
+    $("dy-sure").classList.remove("az", "uyari");
+    $("dy-dogru").disabled = true; $("dy-yanlis").disabled = true;
+    var q = dy.liste[dy.i], dogru = cevap !== null && cevap === q.d;
+    var not = $("dy-not");
+    if (dogru) {
+      dy.puan++; dy.seri++; dy.enSeri = Math.max(dy.enSeri, dy.seri);
+      $("dy-kart").className = "dy-kart yesil";
+      not.textContent = "✓ Doğru bildin!"; not.className = "dy-not iyi";
+    } else {
+      dy.seri = 0;
+      dy.kacan.push({ q: q, neden: cevap === null ? "sure" : "yanlis" });
+      $("dy-kart").className = "dy-kart kirmizi";
+      not.textContent = (cevap === null ? "⏱ Süre doldu · " : "✗ ") +
+        (q.d ? "Bu ifade doğruydu." : "Bu ifade yanlıştı" + (q.n ? " · doğrusu: " + q.n : "."));
+      not.className = "dy-not kotu";
+    }
+    $("dy-puan").textContent = dy.puan;
+    $("dy-seri").textContent = "🔥 " + dy.seri;
+    setTimeout(function () {
+      if (dy.i < dy.liste.length - 1) { dy.i++; dyCiz(); } else { dyBitir(); }
+    }, dogru ? 700 : 1600);
+  }
+  $("dy-dogru").addEventListener("click", function () { dyCevapla(true); });
+  $("dy-yanlis").addEventListener("click", function () { dyCevapla(false); });
+  document.addEventListener("keydown", function (e) {
+    if ($("dy-soru").hidden) return;
+    if (e.key === "d" || e.key === "D" || e.key === "ArrowLeft") dyCevapla(true);
+    if (e.key === "y" || e.key === "Y" || e.key === "ArrowRight") dyCevapla(false);
+  });
+
+  function dyBitir() {
+    sayaciDurdur();
+    var n = dy.liste.length, p = dy.puan, kayit = oku();
+    kayit.rekor = kayit.rekor || {};
+    var eski = kayit.rekor[dy.id], yeniRekor = eski == null || p > eski;
+    if (yeniRekor) kayit.rekor[dy.id] = p;
+    kayit.toplam = (kayit.toplam || 0) + p;
+    kayit.oyun = (kayit.oyun || 0) + 1;
+    yaz(kayit);
+    var d = dyId(dy.id), so = (DY && DY.sonuc) || {};
+    var b = BOLUMLER.filter(function (x) { return String(x.no) === d; })[0];
+    $("oyun-sonuc-baslik").textContent = "⚡ " + (d === "tum" ? "Tüm chapter'lar" : "Chapter " + d + (b ? " · " + b.ad : ""));
+    $("oyun-sonuc-puan").textContent = p;
+    $("oyun-sonuc-toplam").textContent = n;
+    var mesaj = p === n ? so.tam : p >= n * 0.8 ? so.iyi : p >= n * 0.6 ? so.orta : so.zayif;
+    if (d === "tum") mesaj = mesaj.replace(/ ?Şimdi.*$| ?sonra 5 soruluk teste geç\.| ?5 soruluk teste geçmeden önce chapter'ın derslerine dön\./, "");
+    $("oyun-sonuc-mesaj").textContent = mesaj;
+    $("oyun-rekor").textContent = "🔥 En uzun seri: " + dy.enSeri + (yeniRekor && eski != null ? " · Yeni rekor! (Önceki en iyi: " + eski + ")" : "");
+    var liste = $("oyun-kacan");
+    if (dy.kacan.length) {
+      liste.innerHTML = "<h3>Kaçırdıkların</h3>" + dy.kacan.map(function (k) {
+        return '<div class="oyun-kacan-soru"><p class="s">' + bicim(k.q.s) + "</p>" +
+          '<p class="c"><strong>' + (k.q.d ? "Doğru" : "Yanlış") + ".</strong>" +
+          (!k.q.d && k.q.n ? " Doğrusu: " + k.q.n : "") +
+          (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p></div>";
+      }).join("");
+      liste.hidden = false;
+    } else { liste.hidden = true; }
+    $("oyun-test-gec").hidden = d === "tum";
+    $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
+    $("oyun-tekrar").textContent = "⚡ Yeni ifadelerle tekrar";
+    $("oyun-tekrar").classList.toggle("primary", d === "tum");
+    $("oyun-tekrar").setAttribute("data-hedef", dy.id);
+    $("oyun-konu-degis").textContent = "Geri dön";
+    $("oyun-ders-link").hidden = !(b && b.ders);
+    if (b && b.ders) { $("oyun-ders-link").href = b.ders; $("oyun-ders-link").textContent = "Chapter'ın derslerine dön"; }
+    $("dy-bar").style.width = "100%";
+    goster("oyun-sonuc");
+  }
+  $("oyun-test-gec").addEventListener("click", function () { basla(this.getAttribute("data-hedef")); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-dy]"), function (b) {
+    b.addEventListener("click", function () { dyBasla(b.getAttribute("data-dy")); });
+  });
+
   // ---- Sonuç ----
   function bitir() {
     sayaciDurdur();
+    $("oyun-test-gec").hidden = true;
+    $("oyun-tekrar").classList.add("primary");
+    $("oyun-tekrar").setAttribute("data-hedef", durum.konu);
+    $("oyun-konu-degis").textContent = "Konu değiştir";
     var n = durum.sorular.length, p = durum.puan;
     var kayit = oku();
     kayit.rekor = kayit.rekor || {};
@@ -264,11 +403,14 @@
     goster("oyun-sonuc");
   }
 
-  $("oyun-tekrar").addEventListener("click", function () { basla(durum.konu); });
+  $("oyun-tekrar").addEventListener("click", function () {
+    var h = this.getAttribute("data-hedef") || durum.konu;
+    if (dyId(h)) dyBasla(h); else basla(h);
+  });
   $("oyun-konu-degis").addEventListener("click", girisCiz);
 
   girisCiz();
   // oyun.html#bolum-2 ya da oyun.html#limit gibi linkler testi doğrudan başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
-  if (hedef && havuz(hedef).length) basla(hedef);
+  if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else basla(hedef); }
 })();

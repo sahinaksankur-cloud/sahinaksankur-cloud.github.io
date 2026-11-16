@@ -35,7 +35,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `assets/app.js`, `assets/style.css` | Site kodu ve görünüm |
 | `assets/pdfjs/` | PDF.js (PDF'leri sayfa içinde, telefonda da göstermek için) |
 | `data/videos.csv` | Tüm videolar ve PDF'leri |
-| `data/sorular.js`, `assets/oyun.js` | Oyunun soru bankası ve kodu |
+| `data/sorular.js`, `data/dogru-yanlis.js`, `assets/oyun.js` | Oyunun soru bankası, Doğru/Yanlış ifadeleri ve kodu |
 | `pdf/<liste>/` | Sitedeki PDF dosyaları |
 
 ### `assets/config.js` içindeki önemli ayarlar
@@ -66,6 +66,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Soru biçimi: `{ b: "2.4", s: "soru (HTML)", c: ["DOĞRU", "yanlış", "yanlış"], a: "kısa açıklama" }`. `b`, Thomas'ın (geç transandantal baskı) alt bölümüdür: eˣ, ln, ters trigonometri Chapter 7'de (`"7"`), kısmi integrasyon ve genelleştirilmiş integral Chapter 8'de (`"8"`), lise ön bilgisi `"0"`. Yeni soru eklerken `b`'yi mutlaka doğru yaz. **İlk seçenek doğru cevaptır**, oyunda karıştırılır. Üç seçenek birbirinden farklı olmalı.
 - Seviyeler (`seviyeler`): Kolay 20 sn, Orta 15 sn, Zor 10 sn. Sorular aynı, sadece süre değişir; seçilen seviye cihazda hatırlanır, en iyi skor konu+seviye için ayrı tutulur. Sayaç sağ üstte; son 5 sn (`uyari`) turuncu, son 3 sn (`kritik`) kırmızı yanıp söner. Süre dolarsa puan verilmez ve hemen sonraki soruya geçilir. Yanlış ve süresi dolan sorular, doğru cevap ve açıklamasıyla tur sonunda "Kaçırdığın sorular" listesinde gösterilir.
 - "Sınava Hazır mısın?" (`bolumler`, Chapter 1–6): sadece `b`'si o chapter'a ait sorular gelir; 5 soru mümkünse farklı alt bölümlerden seçilir. Tüm modlarda daha önce görülmemiş sorulara öncelik verilir (`localStorage` → `gorulen`). Sonuç mesajları `bolumSonuc`. `oyun.html#bolum-2` gibi bir link testi doğrudan başlatır (konu turları için `#limit` vb.).
+- **⚡ Doğru / Yanlış** (`data/dogru-yanlis.js`, `window.KK_DY`): "Sınava Hazır mısın?" içinde her chapter kartında ikinci düğme, ayrıca "Tüm chapter'lar" karışık turu. Turda `soruSayisi` (5) ifade, her biri `sure` (5) saniye; seviyelerden bağımsız. Sayaç `uyari` (4) sn'den turuncu, `kritik` (2) sn'den kırmızı. İfade biçimi: `{ b: "2.6", s: "ifade (HTML)", d: true/false, n: "yanlışsa doğrusu" }`. Chapter başına 20 ifade (1–6). Her turda en az bir doğru ve bir yanlış ifade olur. Sonuçta "📝 5 Soruya geç" ile aynı chapter'ın testine geçilir. Link: `oyun.html#dy-2`, `#dy-tum`.
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
