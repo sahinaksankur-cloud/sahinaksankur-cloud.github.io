@@ -62,11 +62,11 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - YouTube video açıklamalarındaki PDF linkleri hâlâ Google Drive'daki **eski** dosyalara gidiyor. Bu Drive dosyaları **silinmemeli**.
 
 ## Oyun
-- Soru bankası `data/sorular.js`: `ad` (oyunun adı, sayfa başlığı buradan gelir), `konular` (id, ad, açıklama), `sorular.<id>` listeleri. Şu an `limit` ve `turev`, 60'ar soru; `karisik` tüm konuları birleştirir.
+- Soru bankası `data/sorular.js`: `ad` (oyunun adı, sayfa başlığı buradan gelir), `konular` (id, ad, açıklama), `sorular.<id>` listeleri. Şu an `limit`, `turev` ve `integral`, 60'ar soru; `karisik` tüm konuları birleştirir.
 - Soru biçimi: `{ s: "soru (HTML)", c: ["DOĞRU", "yanlış", "yanlış"], a: "kısa açıklama" }`. **İlk seçenek doğru cevaptır**, oyunda karıştırılır. Üç seçenek birbirinden farklı olmalı.
 - Seviyeler (`seviyeler`): Kolay 20 sn, Orta 15 sn, Zor 10 sn. Sorular aynı, sadece süre değişir; seçilen seviye cihazda hatırlanır, en iyi skor konu+seviye için ayrı tutulur. Sayaç sağ üstte; son 5 sn (`uyari`) turuncu, son 3 sn (`kritik`) kırmızı yanıp söner. Süre dolarsa puan verilmez ve hemen sonraki soruya geçilir. Yanlış ve süresi dolan sorular, doğru cevap ve açıklamasıyla tur sonunda "Kaçırdığın sorular" listesinde gösterilir.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
-- Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
+- Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
 - Menüde "Oyun" sekmesi tüm sayfalarda var (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
 
 ## Kullanıcıya dosya gönderirken (Mac)

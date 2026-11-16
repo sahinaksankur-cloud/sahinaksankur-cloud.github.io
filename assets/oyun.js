@@ -29,6 +29,11 @@
     }
     return O.sorular[id] || [];
   }
+  // ∫ ve Σ işaretlerinin alt/üst sınırlarını ders kitabındaki gibi alt alta yazar.
+  function bicim(html) {
+    return String(html).replace(/([∫Σ])<sub>((?:(?!<\/sub>).)*)<\/sub><sup>((?:<sup>.*?<\/sup>|(?!<\/sup>).)*)<\/sup>/g,
+      '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
+  }
   function bul(liste, id) { return liste.filter(function (x) { return x.id === id; })[0]; }
   function seviye() { return bul(SEVIYELER, durum.seviye) || SEVIYELER[0]; }
   function rekorAnahtar(konu) { return konu + ":" + seviye().id; }
@@ -110,10 +115,10 @@
     $("oyun-ilerleme").textContent = "Soru " + (durum.i + 1) + " / " + durum.sorular.length;
     $("oyun-puan").textContent = durum.puan;
     $("oyun-bar-dolu").style.width = (durum.i / durum.sorular.length * 100) + "%";
-    $("oyun-metin").innerHTML = q.s;
+    $("oyun-metin").innerHTML = bicim(q.s);
     var secenekler = karistir(q.c.map(function (m, j) { return { m: m, dogru: j === 0 }; }));
     $("oyun-secenekler").innerHTML = secenekler.map(function (s, j) {
-      return '<button type="button" class="oyun-secenek" data-j="' + j + '">' + s.m + "</button>";
+      return '<button type="button" class="oyun-secenek" data-j="' + j + '">' + bicim(s.m) + "</button>";
     }).join("");
     $("oyun-aciklama").hidden = true;
     $("oyun-sonraki").hidden = true;
@@ -138,7 +143,7 @@
     if (dogru) durum.puan++; else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis" }); }
     $("oyun-puan").textContent = durum.puan;
     var ac = $("oyun-aciklama");
-    ac.innerHTML = (dogru ? "<strong>Doğru!</strong> " : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + q.a;
+    ac.innerHTML = (dogru ? "<strong>Doğru!</strong> " : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a);
     ac.className = "oyun-aciklama " + (dogru ? "iyi" : "kotu");
     ac.hidden = false;
     var son = durum.i === durum.sorular.length - 1;
@@ -180,10 +185,10 @@
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
       liste.innerHTML = "<h3>Kaçırdığın sorular</h3>" + durum.kacan.map(function (k) {
-        return '<div class="oyun-kacan-soru"><p class="s">' + k.q.s + "</p>" +
-          '<p class="c">Doğru cevap: <strong>' + k.q.c[0] + "</strong>" +
+        return '<div class="oyun-kacan-soru"><p class="s">' + bicim(k.q.s) + "</p>" +
+          '<p class="c">Doğru cevap: <strong>' + bicim(k.q.c[0]) + "</strong>" +
           (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p>" +
-          '<p class="a">' + k.q.a + "</p></div>";
+          '<p class="a">' + bicim(k.q.a) + "</p></div>";
       }).join("");
       liste.hidden = false;
     } else {

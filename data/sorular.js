@@ -10,7 +10,8 @@ window.KK_OYUN = {
   konular: [
     { id: "limit", ad: "Limit", aciklama: "Doğrudan yerine koyma, 0/0, sonsuzda limit, asimptotlar." },
     { id: "turev", ad: "Türev", aciklama: "Türev kuralları, zincir kuralı, türevin anlamı." },
-    { id: "karisik", ad: "Karışık", aciklama: "Limit ve türevden karışık sorular." }
+    { id: "integral", ad: "İntegral", aciklama: "Antitürev, belirli integral, Temel Teorem, alan, değişken değiştirme." },
+    { id: "karisik", ad: "Karışık", aciklama: "Limit, türev ve integralden karışık sorular." }
   ],
   soruSayisi: 10,
 
@@ -86,6 +87,75 @@ window.KK_OYUN = {
       { s: "f(x) = (x<sup>2</sup> − 1)/(x − 1) fonksiyonunun x = 1'deki durumu nedir?", c: ["Kaldırılabilir süreksizlik", "Sonsuz süreksizlik", "Sürekli"], a: "f(1) tanımsız ama limit 2 var. f(1) = 2 tanımlanırsa süreksizlik kalkar." },
       { s: "f(x) = x<sup>3</sup> − x − 1 için f(1) = −1 ve f(2) = 5. [1, 2] aralığında f(x) = 0'ın kökü var mı?", c: ["Evet, en az bir kök var", "Hayır, kök yok", "Bir şey söylenemez"], a: "Ara Değer Teoremi: f sürekli ve işaret değiştiriyor, demek ki arada en az bir kök var." },
       { s: "y = tan x fonksiyonunun dikey asimptotlarından biri hangisi?", c: ["x = π/2", "x = 0", "x = π"], a: "tan x = sin x / cos x; cos x = 0 olduğu yerde (x = π/2) dikey asimptot var." }
+    ],
+
+    integral: [
+      // Antitürev (belirsiz integral)
+      { s: "∫ x<sup>2</sup> dx = ?", c: ["x<sup>3</sup>/3 + C", "2x + C", "x<sup>3</sup> + C"], a: "Kuvvet kuralı: üssü bir artır, yeni üsse böl." },
+      { s: "∫ 5 dx = ?", c: ["5x + C", "5 + C", "C"], a: "Sabitin integrali: 5x + C." },
+      { s: "∫ x<sup>4</sup> dx = ?", c: ["x<sup>5</sup>/5 + C", "4x<sup>3</sup> + C", "x<sup>5</sup> + C"], a: "x<sup>n+1</sup>/(n + 1): x<sup>5</sup>/5." },
+      { s: "∫ (1/x) dx = ?", c: ["ln|x| + C", "−1/x<sup>2</sup> + C", "1/x + C"], a: "Kuvvet kuralı n = −1'de çalışmaz; (ln|x|)′ = 1/x." },
+      { s: "∫ e<sup>x</sup> dx = ?", c: ["e<sup>x</sup> + C", "x·e<sup>x</sup> + C", "e<sup>x+1</sup>/(x + 1) + C"], a: "e<sup>x</sup>'in türevi kendisi, integrali de kendisi." },
+      { s: "∫ cos x dx = ?", c: ["sin x + C", "−sin x + C", "cos x + C"], a: "(sin x)′ = cos x." },
+      { s: "∫ sin x dx = ?", c: ["−cos x + C", "cos x + C", "−sin x + C"], a: "(−cos x)′ = sin x. İşarete dikkat!" },
+      { s: "∫ sec<sup>2</sup> x dx = ?", c: ["tan x + C", "sec x · tan x + C", "−cot x + C"], a: "(tan x)′ = sec<sup>2</sup> x." },
+      { s: "∫ √x dx = ?", c: ["(2/3)x<sup>3/2</sup> + C", "(1/2)x<sup>−1/2</sup> + C", "x<sup>3/2</sup> + C"], a: "√x = x<sup>1/2</sup> → x<sup>3/2</sup>/(3/2)." },
+      { s: "∫ (1/x<sup>2</sup>) dx = ?", c: ["−1/x + C", "1/x + C", "ln(x<sup>2</sup>) + C"], a: "x<sup>−2</sup> → x<sup>−1</sup>/(−1) = −1/x." },
+      { s: "∫ (3x<sup>2</sup> + 2x) dx = ?", c: ["x<sup>3</sup> + x<sup>2</sup> + C", "6x + 2 + C", "x<sup>3</sup> + 2x<sup>2</sup> + C"], a: "Terim terim: x<sup>3</sup> + x<sup>2</sup>." },
+      { s: "∫ 1/(1 + x<sup>2</sup>) dx = ?", c: ["arctan x + C", "ln(1 + x<sup>2</sup>) + C", "arcsin x + C"], a: "(arctan x)′ = 1/(1 + x<sup>2</sup>)." },
+      { s: "∫ 1/√(1 − x<sup>2</sup>) dx = ?", c: ["arcsin x + C", "arctan x + C", "√(1 − x<sup>2</sup>) + C"], a: "(arcsin x)′ = 1/√(1 − x<sup>2</sup>)." },
+      { s: "∫ sec x · tan x dx = ?", c: ["sec x + C", "tan x + C", "sec<sup>2</sup> x + C"], a: "(sec x)′ = sec x tan x." },
+      { s: "∫ csc<sup>2</sup> x dx = ?", c: ["−cot x + C", "cot x + C", "−csc x + C"], a: "(cot x)′ = −csc<sup>2</sup> x, bu yüzden işaret eksi." },
+      { s: "∫ (e<sup>x</sup> + 1) dx = ?", c: ["e<sup>x</sup> + x + C", "e<sup>x</sup> + C", "e<sup>x+1</sup> + C"], a: "Terim terim: e<sup>x</sup> + x." },
+      { s: "Belirsiz integralde neden + C yazarız?", c: ["Sabitin türevi 0 olduğu için sonsuz sayıda antitürev vardır", "Hesap hatası payı için", "Sadece belirli integralde gerekir"], a: "x<sup>2</sup>, x<sup>2</sup> + 1, x<sup>2</sup> − 7… hepsinin türevi 2x." },
+      { s: "F′(x) = 2x ve F(0) = 3 ise F(x) = ?", c: ["x<sup>2</sup> + 3", "x<sup>2</sup>", "2x + 3"], a: "F(x) = x<sup>2</sup> + C, F(0) = C = 3." },
+      // Belirli integral ve Kalkülüsün Temel Teoremi
+      { s: "∫<sub>0</sub><sup>1</sup> x dx = ?", c: ["1/2", "1", "0"], a: "[x<sup>2</sup>/2] 0'dan 1'e: 1/2." },
+      { s: "∫<sub>0</sub><sup>2</sup> x<sup>2</sup> dx = ?", c: ["8/3", "4", "8"], a: "[x<sup>3</sup>/3] 0'dan 2'ye: 8/3." },
+      { s: "∫<sub>0</sub><sup>π</sup> sin x dx = ?", c: ["2", "0", "1"], a: "[−cos x] 0'dan π'ye: −(−1) − (−1) = 2." },
+      { s: "∫<sub>0</sub><sup>2π</sup> sin x dx = ?", c: ["0", "2", "4"], a: "Pozitif ve negatif alanlar birbirini götürür: net integral 0." },
+      { s: "∫<sub>1</sub><sup>e</sup> (1/x) dx = ?", c: ["1", "e", "0"], a: "[ln x] 1'den e'ye: 1 − 0." },
+      { s: "∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = ?", c: ["e − 1", "e", "1"], a: "[e<sup>x</sup>] 0'dan 1'e: e − 1." },
+      { s: "∫<sub>−1</sub><sup>1</sup> x<sup>3</sup> dx = ?", c: ["0", "1/2", "2"], a: "x<sup>3</sup> tek fonksiyon, aralık simetrik: 0." },
+      { s: "∫<sub>0</sub><sup>π/2</sup> cos x dx = ?", c: ["1", "0", "π/2"], a: "[sin x] 0'dan π/2'ye: 1 − 0." },
+      { s: "∫<sub>a</sub><sup>a</sup> f(x) dx = ?", c: ["0", "f(a)", "2f(a)"], a: "Genişliği sıfır olan aralıkta integral 0." },
+      { s: "∫<sub>a</sub><sup>b</sup> f(x) dx = 5 ise ∫<sub>b</sub><sup>a</sup> f(x) dx = ?", c: ["−5", "5", "0"], a: "Sınırlar yer değiştirirse işaret değişir." },
+      { s: "∫<sub>0</sub><sup>2</sup> f = 3 ve ∫<sub>2</sub><sup>5</sup> f = 4 ise ∫<sub>0</sub><sup>5</sup> f = ?", c: ["7", "1", "12"], a: "Aralıklar birleştirilebilir: 3 + 4." },
+      { s: "∫<sub>0</sub><sup>3</sup> f(x) dx = 4 ise ∫<sub>0</sub><sup>3</sup> 2f(x) dx = ?", c: ["8", "4", "6"], a: "Sabit çarpan dışarı çıkar: 2 · 4." },
+      { s: "Kalkülüsün Temel Teoremi: F′ = f ise ∫<sub>a</sub><sup>b</sup> f(x) dx = ?", c: ["F(b) − F(a)", "F(a) − F(b)", "F(b) + F(a)"], a: "Üst sınırdaki değer eksi alt sınırdaki değer." },
+      { s: "d/dx ∫<sub>0</sub><sup>x</sup> sin t dt = ?", c: ["sin x", "cos x", "1 − cos x"], a: "Temel Teorem, 1. kısım: integrali türevlemek integrand'ı geri verir." },
+      { s: "d/dx ∫<sub>1</sub><sup>x</sup> t<sup>2</sup> dt = ?", c: ["x<sup>2</sup>", "x<sup>3</sup>/3", "2x"], a: "Temel Teorem: f(x) = x<sup>2</sup>." },
+      { s: "d/dx ∫<sub>0</sub><sup>x<sup>2</sup></sup> cos t dt = ?", c: ["2x · cos(x<sup>2</sup>)", "cos(x<sup>2</sup>)", "cos(2x)"], a: "Üst sınır x<sup>2</sup>: zincir kuralıyla cos(x<sup>2</sup>) · 2x." },
+      { s: "d/dx ∫<sub>x</sub><sup>5</sup> t<sup>3</sup> dt = ?", c: ["−x<sup>3</sup>", "x<sup>3</sup>", "0"], a: "Değişken alt sınırda: işaret eksi olur." },
+      { s: "f(x) ≥ 0 ise ∫<sub>a</sub><sup>b</sup> f(x) dx neyi verir?", c: ["Eğrinin altında, x ekseninin üstünde kalan alanı", "Teğetin eğimini", "Fonksiyonun en büyük değerini"], a: "Belirli integral, pozitif fonksiyon için alandır." },
+      // Alan ve ortalama değer
+      { s: "f(x) = x fonksiyonunun [0, 2] aralığındaki ortalama değeri kaçtır?", c: ["1", "2", "1/2"], a: "(1/(b − a)) ∫ f = (1/2) · 2 = 1." },
+      { s: "f(x) = x<sup>2</sup> fonksiyonunun [0, 3] aralığındaki ortalama değeri kaçtır?", c: ["3", "9", "1"], a: "(1/3) · ∫<sub>0</sub><sup>3</sup> x<sup>2</sup> dx = (1/3) · 9 = 3." },
+      { s: "y = x ile x ekseni arasında [−1, 1] aralığındaki toplam alan kaçtır?", c: ["1", "0", "2"], a: "İki üçgen, her biri 1/2. Net integral 0 olsa da toplam alan 1." },
+      { s: "y = x ve y = x<sup>2</sup> eğrileri arasında [0, 1] aralığındaki alan kaçtır?", c: ["1/6", "1/2", "1/3"], a: "∫<sub>0</sub><sup>1</sup> (x − x<sup>2</sup>) dx = 1/2 − 1/3." },
+      { s: "y = √x eğrisinin altında [0, 4] aralığındaki alan kaçtır?", c: ["16/3", "8", "4"], a: "(2/3)x<sup>3/2</sup> 0'dan 4'e: (2/3) · 8." },
+      // Toplamlar ve Riemann
+      { s: "Σ<sub>k=1</sub><sup>5</sup> k = ?", c: ["15", "10", "5"], a: "1 + 2 + 3 + 4 + 5 = 15." },
+      { s: "Σ<sub>k=1</sub><sup>n</sup> k = ?", c: ["n(n + 1)/2", "n<sup>2</sup>/2", "n(n − 1)/2"], a: "Gauss'un formülü: n(n + 1)/2." },
+      { s: "Σ<sub>k=1</sub><sup>4</sup> k<sup>2</sup> = ?", c: ["30", "16", "10"], a: "1 + 4 + 9 + 16 = 30." },
+      { s: "Σ<sub>k=1</sub><sup>10</sup> 3 = ?", c: ["30", "3", "13"], a: "3, on kez toplanır: 30." },
+      { s: "Riemann toplamlarının, parça sayısı n → ∞ iken limiti nedir?", c: ["Belirli integral", "Türev", "Ortalama hız"], a: "Belirli integral, Riemann toplamlarının limiti olarak tanımlanır." },
+      { s: "f(x) = x için [0, 2] aralığı 2 eşit parçaya bölünürse sağ uç noktalı Riemann toplamı kaçtır?", c: ["3", "1", "2"], a: "Δx = 1: f(1)·1 + f(2)·1 = 1 + 2 = 3." },
+      // Değişken değiştirme
+      { s: "∫ 2x (x<sup>2</sup> + 1)<sup>5</sup> dx = ?", c: ["(x<sup>2</sup> + 1)<sup>6</sup>/6 + C", "(x<sup>2</sup> + 1)<sup>6</sup> + C", "2(x<sup>2</sup> + 1)<sup>6</sup> + C"], a: "u = x<sup>2</sup> + 1, du = 2x dx: ∫ u<sup>5</sup> du = u<sup>6</sup>/6." },
+      { s: "∫ cos(3x) dx = ?", c: ["sin(3x)/3 + C", "3 sin(3x) + C", "sin(3x) + C"], a: "u = 3x, du = 3 dx: (1/3) sin u." },
+      { s: "∫ e<sup>2x</sup> dx = ?", c: ["e<sup>2x</sup>/2 + C", "2e<sup>2x</sup> + C", "e<sup>2x</sup> + C"], a: "u = 2x: (1/2)e<sup>u</sup>." },
+      { s: "∫ x · e<sup>x<sup>2</sup></sup> dx = ?", c: ["e<sup>x<sup>2</sup></sup>/2 + C", "e<sup>x<sup>2</sup></sup> + C", "2x · e<sup>x<sup>2</sup></sup> + C"], a: "u = x<sup>2</sup>, du = 2x dx: (1/2)e<sup>u</sup>." },
+      { s: "∫ 1/(2x + 1) dx = ?", c: ["(1/2) ln|2x + 1| + C", "ln|2x + 1| + C", "2 ln|2x + 1| + C"], a: "u = 2x + 1, du = 2 dx: (1/2) ln|u|." },
+      { s: "∫ sin x · cos x dx = ?", c: ["sin<sup>2</sup>x / 2 + C", "cos<sup>2</sup>x / 2 + C", "sin 2x + C"], a: "u = sin x, du = cos x dx: u<sup>2</sup>/2." },
+      { s: "∫ tan x dx = ?", c: ["−ln|cos x| + C", "ln|cos x| + C", "sec<sup>2</sup> x + C"], a: "tan x = sin x / cos x; u = cos x: −ln|u|." },
+      { s: "∫ 2x / (x<sup>2</sup> + 1) dx = ?", c: ["ln(x<sup>2</sup> + 1) + C", "arctan x + C", "1/(x<sup>2</sup> + 1) + C"], a: "Pay, paydanın türevi: ln|payda|." },
+      { s: "∫<sub>0</sub><sup>1</sup> 2x (x<sup>2</sup> + 1) dx = ?", c: ["3/2", "2", "1"], a: "u = x<sup>2</sup> + 1, sınırlar 1'den 2'ye: [u<sup>2</sup>/2] = 2 − 1/2." },
+      // Kısmi integrasyon ve genelleştirilmiş integral
+      { s: "∫ x · e<sup>x</sup> dx = ?", c: ["x·e<sup>x</sup> − e<sup>x</sup> + C", "x·e<sup>x</sup> + C", "x<sup>2</sup>e<sup>x</sup>/2 + C"], a: "Kısmi integrasyon: u = x, dv = e<sup>x</sup> dx." },
+      { s: "∫ ln x dx = ?", c: ["x·ln x − x + C", "1/x + C", "x·ln x + C"], a: "Kısmi integrasyon: u = ln x, dv = dx." },
+      { s: "∫ x · cos x dx = ?", c: ["x·sin x + cos x + C", "x·sin x − cos x + C", "−x·sin x + C"], a: "u = x, dv = cos x dx: x sin x − ∫ sin x dx." },
+      { s: "∫<sub>1</sub><sup>∞</sup> (1/x<sup>2</sup>) dx = ?", c: ["1", "∞", "0"], a: "lim<sub>b→∞</sub> [−1/x] 1'den b'ye = 0 − (−1) = 1." }
     ],
 
     turev: [
