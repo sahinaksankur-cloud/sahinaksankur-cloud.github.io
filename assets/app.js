@@ -387,6 +387,11 @@
       wa.hidden = false;
     }
 
+    // iletisim.html?konu=kampus gibi linkler konu seçimini doldurur
+    var konuParam = new URLSearchParams(location.search).get("konu");
+    var konuHarita = { "kampus": "Kampüsün İçinden – paylaşım", "kampus-okul": "Kampüsün İçinden – okulumu ekleyin" };
+    if (konuParam && konuHarita[konuParam]) form.elements.konu.value = konuHarita[konuParam];
+
     form.addEventListener("input", function () { document.getElementById("form-error").hidden = true; });
 
     form.addEventListener("submit", function (e) {

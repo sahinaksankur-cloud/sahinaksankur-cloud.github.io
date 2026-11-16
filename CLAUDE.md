@@ -28,6 +28,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Calculus Oyunu: dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
+| `kampus.html` | Kampüsün İçinden: ODTÜ, Boğaziçi, İTÜ kartları (sınav hazırlık ve öğrenci paylaşımları için), "Bize yaz" ve "Okulumu ekleyin" kutuları (`iletisim.html?konu=kampus` / `?konu=kampus-okul` formu o konuyla açar), resmî bağ olmadığı notu. Üniversite logosu kullanılmaz |
 | `makaleler.html`, `makaleler/` | Makaleler; `araclar/makaleleri-olustur.py` ile üretilir (bkz. README) |
 | `topluluk.html` | Telegram topluluğu sayfası; `config.js` → `topluluk.grup` boş olduğu için gizli |
 | `yazilar.html`, `yazilar/` | Eski adresler; makalelere yönlendirir |
@@ -71,6 +72,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
+- Menü sırası: Dersler, Calculus Oyunu/Oyun, Kampüs, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. 600 px ve altında menüdeki YouTube gizlenir (`.nav-yt`), menü tek satıra sığsın diye.
 - Menüde oyun sekmesi tüm sayfalarda var: geniş ekranda "Calculus Oyunu", 760 px ve altında "Oyun" yazar (`.nav-uzun` / `.nav-kisa`); telefonda menünün sığması için kısa ad gerekli (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
 
 ## Kullanıcıya dosya gönderirken (Mac)

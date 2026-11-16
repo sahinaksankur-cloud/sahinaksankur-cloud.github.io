@@ -95,7 +95,7 @@ def oku(yol):
 
 
 def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
-    nav = [("index.html", "Dersler", "dersler"), ("oyun.html", '<span class="nav-uzun">Calculus Oyunu</span><span class="nav-kisa">Oyun</span>', "oyun"), ("makaleler.html", "Makaleler", "makaleler"),
+    nav = [("index.html", "Dersler", "dersler"), ("oyun.html", '<span class="nav-uzun">Calculus Oyunu</span><span class="nav-kisa">Oyun</span>', "oyun"), ("kampus.html", "Kampüs", "kampus"), ("makaleler.html", "Makaleler", "makaleler"),
            ("iletisim.html", "Birebir Ders", "iletisim")]
     linkler = "\n        ".join(
         f'<a href="{kok}{h}"{" class=\"active\"" if k == aktif else ""}>{ad}</a>' for h, ad, k in nav)
@@ -123,7 +123,7 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
       <nav class="nav">
         {linkler}
         <a href="{kok}topluluk.html" data-topluluk-nav hidden>Topluluk</a>
-        <a data-yt href="#" target="_blank" rel="noopener">YouTube</a>
+        <a data-yt href="#" target="_blank" rel="noopener" class="nav-yt">YouTube</a>
       </nav>
     </div>
   </header>
