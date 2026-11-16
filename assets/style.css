@@ -317,3 +317,6 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-kacan-soru .s { font-weight: 600; }
 .oyun-kacan-soru .a { color: var(--muted); font-size: 0.95rem; }
 .oyun-kacan-soru .etiket { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: rgba(192, 57, 43, 0.12); color: #c0392b; margin-left: 4px; }
+.oyun-ust { flex-wrap: nowrap; }
+.oyun-ust > span:first-child { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 380px) { .oyun-ust { font-size: 0.85rem; gap: 8px; } .oyun-sure { min-width: 44px; height: 44px; font-size: 1.25rem; } }
