@@ -95,7 +95,7 @@ def oku(yol):
 
 
 def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
-    nav = [("index.html", "Dersler", "dersler"), ("makaleler.html", "Makaleler", "makaleler"),
+    nav = [("index.html", "Dersler", "dersler"), ("oyun.html", "Oyun", "oyun"), ("makaleler.html", "Makaleler", "makaleler"),
            ("iletisim.html", "Birebir Ders", "iletisim")]
     linkler = "\n        ".join(
         f'<a href="{kok}{h}"{" class=\"active\"" if k == aktif else ""}>{ad}</a>' for h, ad, k in nav)

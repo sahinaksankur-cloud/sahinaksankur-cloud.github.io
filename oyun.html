@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculus Oyunu – Kuzey Kampüs</title>
+  <meta name="description" content="Limit ve türev bilgini 10 soruluk kısa turlarla oynayarak tekrar et. Kayıt gerekmez.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html">Kuzey <span>Kampüs</span></a>
+      <nav class="nav">
+        <a href="index.html">Dersler</a>
+        <a href="oyun.html" class="active">Oyun</a>
+        <a href="makaleler.html">Makaleler</a>
+        <a href="topluluk.html" data-topluluk-nav hidden>Topluluk</a>
+        <a href="iletisim.html">Birebir Ders</a>
+        <a data-yt href="#" target="_blank" rel="noopener">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap oyun">
+    <section id="oyun-giris">
+      <div class="hero">
+        <h1 id="oyun-ad">Calculus Oyunu</h1>
+        <p>10 soruluk kısa turlarla temel bilgilerini tekrar et. Her doğru cevap 1 puan. Kayıt yok, puanların sadece bu cihazda tutulur.</p>
+      </div>
+      <h2 class="section-title">Konu seç</h2>
+      <div class="cards" id="oyun-konular"></div>
+      <p class="oyun-toplam" id="oyun-toplam"></p>
+    </section>
+
+    <section id="oyun-soru" hidden>
+      <div class="oyun-ust">
+        <span id="oyun-konu-adi"></span>
+        <span id="oyun-ilerleme"></span>
+        <span class="oyun-puan">Puan: <strong id="oyun-puan">0</strong></span>
+      </div>
+      <div class="oyun-bar"><div id="oyun-bar-dolu"></div></div>
+      <div class="oyun-kart">
+        <p class="oyun-metin" id="oyun-metin"></p>
+        <div class="oyun-secenekler" id="oyun-secenekler"></div>
+        <p class="oyun-aciklama" id="oyun-aciklama" hidden></p>
+        <button class="btn primary big" id="oyun-sonraki" type="button" hidden>Sonraki soru →</button>
+      </div>
+    </section>
+
+    <section id="oyun-sonuc" hidden>
+      <div class="oyun-kart oyun-sonuc">
+        <p class="oyun-sonuc-baslik" id="oyun-sonuc-baslik"></p>
+        <p class="oyun-sonuc-puan"><strong id="oyun-sonuc-puan"></strong> / <span id="oyun-sonuc-toplam"></span></p>
+        <p id="oyun-sonuc-mesaj"></p>
+        <p class="oyun-rekor" id="oyun-rekor"></p>
+        <div class="oyun-dugmeler">
+          <button class="btn primary big" id="oyun-tekrar" type="button">Tekrar oyna</button>
+          <button class="btn big" id="oyun-konu-degis" type="button">Konu değiştir</button>
+          <a class="btn big" id="oyun-ders-link" href="ders.html?liste=calc1">Konu anlatımını izle</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© Kuzey Kampüs – Şahin Aksankur</span>
+      <a href="iletisim.html">İletişim</a>
+      <a data-yt href="#" target="_blank" rel="noopener">YouTube kanalı</a>
+      <a data-wa-kanal href="#" target="_blank" rel="noopener" hidden>WhatsApp kanalı</a>
+    </div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="data/sorular.js"></script>
+  <script src="assets/oyun.js"></script>
+</body>
+</html>

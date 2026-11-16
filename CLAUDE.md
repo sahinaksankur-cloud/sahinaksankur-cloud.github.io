@@ -27,6 +27,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `index.html` | Ana sayfa: ders kartları, WhatsApp kanalı kutusu, birebir ders bilgi kutusu |
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
+| `oyun.html` | Calculus Oyunu: konu seç, rastgele 10 soru, 3 seçenek, doğru cevap 1 puan. Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
 | `makaleler.html`, `makaleler/` | Makaleler; `araclar/makaleleri-olustur.py` ile üretilir (bkz. README) |
 | `topluluk.html` | Telegram topluluğu sayfası; `config.js` → `topluluk.grup` boş olduğu için gizli |
 | `yazilar.html`, `yazilar/` | Eski adresler; makalelere yönlendirir |
@@ -34,6 +35,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `assets/app.js`, `assets/style.css` | Site kodu ve görünüm |
 | `assets/pdfjs/` | PDF.js (PDF'leri sayfa içinde, telefonda da göstermek için) |
 | `data/videos.csv` | Tüm videolar ve PDF'leri |
+| `data/sorular.js`, `assets/oyun.js` | Oyunun soru bankası ve kodu |
 | `pdf/<liste>/` | Sitedeki PDF dosyaları |
 
 ### `assets/config.js` içindeki önemli ayarlar
@@ -58,6 +60,13 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
   3. Ghostscript ile sıkıştırma: `gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.6 -dPDFSETTINGS=/ebook`.
 - Ghostscript yavaştır; çok dosyada işleri paralel çalıştır, uzun işi arka planda yürüt ve **yarım kalmış dosyaları commit etme**. Sonra her dosyada sayfa sayısını, telif notunu ve kitap sayfasını kontrol et.
 - YouTube video açıklamalarındaki PDF linkleri hâlâ Google Drive'daki **eski** dosyalara gidiyor. Bu Drive dosyaları **silinmemeli**.
+
+## Oyun
+- Soru bankası `data/sorular.js`: `ad` (oyunun adı, sayfa başlığı buradan gelir), `konular` (id, ad, açıklama), `sorular.<id>` listeleri. Şu an `limit` ve `turev`, 30'ar soru; `karisik` tüm konuları birleştirir.
+- Soru biçimi: `{ s: "soru (HTML)", c: ["DOĞRU", "yanlış", "yanlış"], a: "kısa açıklama" }`. **İlk seçenek doğru cevaptır**, oyunda karıştırılır. Üç seçenek birbirinden farklı olmalı.
+- Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
+- Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
+- Menüde "Oyun" sekmesi tüm sayfalarda var (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.
