@@ -290,3 +290,13 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-rekor { color: var(--accent); font-weight: 600; }
 .oyun-rekor:empty { display: none; }
 .oyun-dugmeler { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+.oyun-ust { align-items: center; }
+.oyun-sure {
+  min-width: 52px; height: 52px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent);
+  background: var(--accent-soft); border: 2px solid var(--accent);
+}
+.oyun-sure.az { color: #fff; background: #c0392b; border-color: #c0392b; animation: oyun-yanip 0.5s steps(2, start) infinite; }
+.oyun-sure.bitti { animation: none; opacity: 1; }
+@keyframes oyun-yanip { to { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .oyun-sure.az { animation: none; } }

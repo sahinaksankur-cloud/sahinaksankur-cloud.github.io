@@ -13,6 +13,7 @@ window.KK_OYUN = {
     { id: "karisik", ad: "Karışık", aciklama: "Limit ve türevden karışık sorular." }
   ],
   soruSayisi: 10,
+  sure: 10,          // her soru için saniye (0 yazılırsa sayaç kapanır)
 
   sorular: {
     limit: [

@@ -64,6 +64,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 ## Oyun
 - Soru bankası `data/sorular.js`: `ad` (oyunun adı, sayfa başlığı buradan gelir), `konular` (id, ad, açıklama), `sorular.<id>` listeleri. Şu an `limit` ve `turev`, 30'ar soru; `karisik` tüm konuları birleştirir.
 - Soru biçimi: `{ s: "soru (HTML)", c: ["DOĞRU", "yanlış", "yanlış"], a: "kısa açıklama" }`. **İlk seçenek doğru cevaptır**, oyunda karıştırılır. Üç seçenek birbirinden farklı olmalı.
+- Her soruda sayaç var (`sure`, varsayılan 10 sn, sağ üstte). Son 3 saniyede kırmızı yanıp söner. Süre dolarsa puan verilmez, doğru cevap ve açıklama gösterilir, 2,5 sn sonra sonraki soruya geçilir. Cevap verilince sayaç durur.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
 - Menüde "Oyun" sekmesi tüm sayfalarda var (makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir; menü listesi o dosyada).

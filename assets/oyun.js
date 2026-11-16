@@ -7,6 +7,28 @@
   var DEPO = "kk-oyun-v1";
   var $ = function (id) { return document.getElementById(id); };
   var durum = { konu: null, sorular: [], i: 0, puan: 0 };
+  var SURE = O.sure == null ? 10 : O.sure;
+  var sayac = null, otomatik = null;
+
+  function sayaciDurdur() {
+    if (sayac) { clearInterval(sayac); sayac = null; }
+  }
+  function sayaciBaslat(sureBitti) {
+    sayaciDurdur();
+    var el = $("oyun-sure");
+    if (!SURE) { el.hidden = true; return; }
+    el.hidden = false;
+    var bitis = Date.now() + SURE * 1000;
+    function guncelle() {
+      var kalan = Math.max(0, bitis - Date.now());
+      var sn = Math.ceil(kalan / 1000);
+      el.textContent = sn;
+      el.classList.toggle("az", sn <= 3);
+      if (kalan <= 0) { sayaciDurdur(); sureBitti(); }
+    }
+    guncelle();
+    sayac = setInterval(guncelle, 100);
+  }
 
   function oku() {
     try { return JSON.parse(localStorage.getItem(DEPO)) || {}; } catch (e) { return {}; }
@@ -69,36 +91,50 @@
     }).join("");
     $("oyun-aciklama").hidden = true;
     $("oyun-sonraki").hidden = true;
+    if (otomatik) { clearTimeout(otomatik); otomatik = null; }
+    $("oyun-sure").classList.remove("bitti");
     Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b) {
       b.addEventListener("click", function () { cevapla(b, secenekler, q); });
     });
+    sayaciBaslat(function () { cevapla(null, secenekler, q); });
   }
 
   function cevapla(btn, secenekler, q) {
+    sayaciDurdur();
     var dugmeler = document.querySelectorAll(".oyun-secenek");
     Array.prototype.forEach.call(dugmeler, function (b, j) {
       b.disabled = true;
       if (secenekler[j].dogru) b.classList.add("dogru");
     });
-    var j = +btn.getAttribute("data-j");
-    var dogru = secenekler[j].dogru;
-    if (dogru) durum.puan++; else btn.classList.add("yanlis");
+    var sureDoldu = !btn;
+    var dogru = !sureDoldu && secenekler[+btn.getAttribute("data-j")].dogru;
+    if (dogru) durum.puan++; else if (btn) btn.classList.add("yanlis");
     $("oyun-puan").textContent = durum.puan;
     var ac = $("oyun-aciklama");
-    ac.innerHTML = (dogru ? "<strong>Doğru!</strong> " : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + q.a;
+    ac.innerHTML = (dogru ? "<strong>Doğru!</strong> " : sureDoldu ? "<strong>Süre doldu!</strong> Doğru cevap yeşil. "
+      : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + q.a;
     ac.className = "oyun-aciklama " + (dogru ? "iyi" : "kotu");
     ac.hidden = false;
     var son = durum.i === durum.sorular.length - 1;
     $("oyun-sonraki").textContent = son ? "Sonucu gör →" : "Sonraki soru →";
     $("oyun-sonraki").hidden = false;
-    $("oyun-sonraki").focus();
+    if (sureDoldu) {
+      $("oyun-sure").classList.add("bitti");
+      otomatik = setTimeout(sonraki, 2500);
+    } else {
+      $("oyun-sonraki").focus();
+    }
   }
 
-  $("oyun-sonraki").addEventListener("click", function () {
+  function sonraki() {
+    if (otomatik) { clearTimeout(otomatik); otomatik = null; }
     if (durum.i < durum.sorular.length - 1) { durum.i++; soruCiz(); } else { bitir(); }
-  });
+  }
+
+  $("oyun-sonraki").addEventListener("click", sonraki);
 
   function bitir() {
+    sayaciDurdur();
     var n = durum.sorular.length, p = durum.puan;
     var kayit = oku();
     kayit.rekor = kayit.rekor || {};
@@ -122,7 +158,7 @@
   }
 
   $("oyun-tekrar").addEventListener("click", function () { basla(durum.konu); });
-  $("oyun-konu-degis").addEventListener("click", girisCiz);
+  $("oyun-konu-degis").addEventListener("click", function () { sayaciDurdur(); girisCiz(); });
 
   girisCiz();
 })();
