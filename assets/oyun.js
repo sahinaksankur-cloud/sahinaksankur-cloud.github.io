@@ -88,6 +88,7 @@
     $("oyun-konular").innerHTML = O.konular.map(function (k) {
       var r = (kayit.rekor || {})[rekorAnahtar(k.id)];
       return '<button type="button" class="card oyun-konu" data-konu="' + k.id + '">' +
+        (k.etiket ? '<span class="badge">' + k.etiket + "</span>" : "") +
         "<h3>" + k.ad + "</h3><p>" + k.aciklama + "</p>" +
         '<span class="meta">' + havuz(k.id).length + " soru" + (r != null ? " · En iyi (" + seviye().ad + "): " + r + "/" + O.soruSayisi : "") + "</span></button>";
     }).join("");
@@ -175,7 +176,9 @@
     $("oyun-sonuc-puan").textContent = p;
     $("oyun-sonuc-toplam").textContent = n;
     $("oyun-sonuc-baslik").textContent = p === n ? "Mükemmel! 🎉" : p >= n * 0.7 ? "Çok iyi!" : p >= n * 0.4 ? "Fena değil" : "Tekrar zamanı";
-    $("oyun-sonuc-mesaj").textContent = p === n
+    var konuBilgi = bul(O.konular, durum.konu) || {};
+    var oz = konuBilgi.sonuc;
+    $("oyun-sonuc-mesaj").textContent = oz ? (p >= n * 0.8 ? oz.iyi : p >= n * 0.5 ? oz.orta : oz.zayif) : p === n
       ? (enZor ? "Hepsini doğru bildin. Başka bir konuya geçmeye ne dersin?" : "Hepsini doğru bildin. Bir üst seviyeyi dene!")
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
@@ -194,6 +197,7 @@
     } else {
       liste.hidden = true;
     }
+    $("oyun-ders-link").href = konuBilgi.ders || "ders.html?liste=calc1";
     $("oyun-bar-dolu").style.width = "100%";
     goster("oyun-sonuc");
   }

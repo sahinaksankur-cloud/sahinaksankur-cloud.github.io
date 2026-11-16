@@ -8,10 +8,20 @@ window.KK_OYUN = {
 
   // Konular: yeni bir konu (ör. lise, ortaokul) eklemek için buraya bir satır ve aşağıda aynı id ile bir soru listesi ekleyin.
   konular: [
-    { id: "limit", ad: "Limit", aciklama: "Doğrudan yerine koyma, 0/0, sonsuzda limit, asimptotlar." },
-    { id: "turev", ad: "Türev", aciklama: "Türev kuralları, zincir kuralı, türevin anlamı." },
-    { id: "integral", ad: "İntegral", aciklama: "Antitürev, belirli integral, Temel Teorem, alan, değişken değiştirme." },
-    { id: "karisik", ad: "Karışık", aciklama: "Limit, türev ve integralden karışık sorular." }
+    {
+      id: "precalculus", ad: "Precalculus", etiket: "Calculus'a hazır mısın?",
+      aciklama: "Calculus'a başlamadan önce bilmen gereken temel konular: cebir, fonksiyonlar, logaritma, trigonometri. Bu test, Calculus öğrenmeye hazır olup olmadığını gösterir.",
+      ders: "ders.html?liste=calc1#v=bIExBypymfg",
+      sonuc: {
+        iyi: "Calculus'a hazırsın! Temelin sağlam. Limit konusuyla devam edebilirsin.",
+        orta: "Temelin var ama bazı eksiklerin var. Kaçırdığın soruları tekrar et; Calculus'ta bunlara sürekli ihtiyacın olacak.",
+        zayif: "Calculus'a başlamadan önce temel konuları tekrar etmen gerekiyor. Calculus 1'in ilk derslerinden (Temel Bilgiler ve Fonksiyonlar) başla, sonra bu testi tekrar çöz."
+      }
+    },
+    { id: "limit", ad: "Limit", aciklama: "Doğrudan yerine koyma, 0/0, sonsuzda limit, asimptotlar.", ders: "ders.html?liste=calc1#v=HnSsg_0mgXs" },
+    { id: "turev", ad: "Türev", aciklama: "Türev kuralları, zincir kuralı, türevin anlamı.", ders: "ders.html?liste=calc1#v=mUD3cNYDzQI" },
+    { id: "integral", ad: "İntegral", aciklama: "Antitürev, belirli integral, Temel Teorem, alan, değişken değiştirme.", ders: "ders.html?liste=calc1#v=SY37ttXCbi0" },
+    { id: "karisik", ad: "Karışık", aciklama: "Tüm konulardan karışık sorular." }
   ],
   soruSayisi: 10,
 
@@ -25,6 +35,75 @@ window.KK_OYUN = {
   kritik: 3,  // son kaç saniyede sayaç kırmızı yanıp söner
 
   sorular: {
+    precalculus: [
+      // Üslü ifadeler ve cebir
+      { s: "2<sup>3</sup> · 2<sup>2</sup> = ?", c: ["2<sup>5</sup>", "2<sup>6</sup>", "4<sup>5</sup>"], a: "Tabanlar aynıysa üsler toplanır: 3 + 2 = 5." },
+      { s: "(x<sup>3</sup>)<sup>2</sup> = ?", c: ["x<sup>6</sup>", "x<sup>5</sup>", "x<sup>9</sup>"], a: "Üssün üssü çarpılır: 3 · 2 = 6." },
+      { s: "2<sup>−3</sup> = ?", c: ["1/8", "−8", "−6"], a: "Negatif üs, ters çevirmek demektir: 1/2<sup>3</sup>." },
+      { s: "9<sup>1/2</sup> = ?", c: ["3", "4,5", "81"], a: "Üs 1/2, karekök demektir: √9 = 3." },
+      { s: "8<sup>2/3</sup> = ?", c: ["4", "16/3", "2"], a: "Önce küpkök, sonra kare: (∛8)<sup>2</sup> = 2<sup>2</sup> = 4." },
+      { s: "√(x<sup>2</sup>) = ?", c: ["|x|", "x", "−x"], a: "Karekök hiçbir zaman negatif olmaz: √(x<sup>2</sup>) = |x|. Calculus'ta çok önemli!" },
+      { s: "(a + b)<sup>2</sup> = ?", c: ["a<sup>2</sup> + 2ab + b<sup>2</sup>", "a<sup>2</sup> + b<sup>2</sup>", "a<sup>2</sup> + ab + b<sup>2</sup>"], a: "En sık yapılan hata: ortadaki 2ab'yi unutmak." },
+      { s: "x<sup>2</sup> − 9 ifadesinin çarpanları nedir?", c: ["(x − 3)(x + 3)", "(x − 3)<sup>2</sup>", "(x − 9)(x + 1)"], a: "İki kare farkı: a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b)." },
+      { s: "x<sup>2</sup> − 5x + 6 ifadesinin çarpanları nedir?", c: ["(x − 2)(x − 3)", "(x + 2)(x + 3)", "(x − 1)(x − 6)"], a: "Çarpımı 6, toplamı −5 olan iki sayı: −2 ve −3." },
+      { s: "x<sup>3</sup> − 8 ifadesinin çarpanları nedir?", c: ["(x − 2)(x<sup>2</sup> + 2x + 4)", "(x − 2)<sup>3</sup>", "(x − 2)(x<sup>2</sup> + 4)"], a: "İki küp farkı: a<sup>3</sup> − b<sup>3</sup> = (a − b)(a<sup>2</sup> + ab + b<sup>2</sup>)." },
+      { s: "1/√2 ifadesinin paydası rasyonel yapılırsa ne olur?", c: ["√2 / 2", "2√2", "1/2"], a: "Pay ve paydayı √2 ile çarp: √2 / 2." },
+      { s: "x ≠ 1 için (x<sup>2</sup> − 1) / (x − 1) = ?", c: ["x + 1", "x − 1", "x"], a: "(x − 1)(x + 1) / (x − 1) = x + 1. Limitte bu sadeleştirmeyi çok kullanacaksın." },
+      { s: "1/a + 1/b = ?", c: ["(a + b) / (ab)", "2 / (a + b)", "1 / (a + b)"], a: "Payda eşitle: b/(ab) + a/(ab)." },
+      // Denklemler ve eşitsizlikler
+      { s: "2x + 3 = 11 ise x = ?", c: ["4", "7", "8"], a: "2x = 8 → x = 4." },
+      { s: "x<sup>2</sup> = 16 ise x = ?", c: ["4 veya −4", "Sadece 4", "8"], a: "Karesi 16 olan iki sayı var: ±4." },
+      { s: "x<sup>2</sup> − 4x + 3 = 0 denkleminin kökleri nedir?", c: ["1 ve 3", "−1 ve −3", "2 ve 3"], a: "(x − 1)(x − 3) = 0." },
+      { s: "x<sup>2</sup> + x + 1 = 0 denkleminin kaç reel kökü vardır?", c: ["Reel kökü yok", "1", "2"], a: "Diskriminant: 1 − 4 = −3 < 0." },
+      { s: "|x| < 3 eşitsizliğinin çözümü nedir?", c: ["−3 < x < 3", "x < 3", "x > −3"], a: "Mutlak değer, sıfıra olan uzaklıktır: 3'ten yakın sayılar." },
+      { s: "|x − 2| = 5 denkleminin çözümleri nedir?", c: ["x = 7 veya x = −3", "Sadece x = 7", "x = 3 veya x = −7"], a: "x − 2 = 5 veya x − 2 = −5." },
+      { s: "2x − 1 > 5 eşitsizliğinin çözümü nedir?", c: ["x > 3", "x > 2", "x < 3"], a: "2x > 6 → x > 3." },
+      { s: "−2x < 6 eşitsizliğinin çözümü nedir?", c: ["x > −3", "x < −3", "x > 3"], a: "Negatif sayıya bölünce eşitsizlik yön değiştirir." },
+      // Doğrular
+      { s: "(1, 2) ve (3, 6) noktalarından geçen doğrunun eğimi kaçtır?", c: ["2", "1/2", "4"], a: "Eğim = (6 − 2) / (3 − 1) = 2." },
+      { s: "y = 3x − 2 doğrusunun eğimi kaçtır?", c: ["3", "−2", "2/3"], a: "y = mx + n biçiminde m eğimdir." },
+      { s: "y = 2x + 1 doğrusuna paralel bir doğrunun eğimi kaçtır?", c: ["2", "−1/2", "1/2"], a: "Paralel doğruların eğimleri eşittir." },
+      { s: "y = 2x + 1 doğrusuna dik bir doğrunun eğimi kaçtır?", c: ["−1/2", "2", "1/2"], a: "Dik doğruların eğimleri çarpımı −1'dir." },
+      { s: "y = −x + 4 doğrusu y eksenini nerede keser?", c: ["y = 4", "y = −1", "y = −4"], a: "x = 0 koy: y = 4." },
+      // Fonksiyonlar
+      { s: "f(x) = x<sup>2</sup> + 1 ise f(2) = ?", c: ["5", "4", "3"], a: "2<sup>2</sup> + 1 = 5." },
+      { s: "f(x) = 2x + 1 ve g(x) = x<sup>2</sup> ise (f ∘ g)(x) = ?", c: ["2x<sup>2</sup> + 1", "(2x + 1)<sup>2</sup>", "2x<sup>2</sup> + x"], a: "f(g(x)) = 2 · x<sup>2</sup> + 1. Önce içteki g uygulanır." },
+      { s: "f(x) = 2x + 1 ve g(x) = x<sup>2</sup> ise g(f(1)) = ?", c: ["9", "3", "5"], a: "f(1) = 3, sonra g(3) = 9." },
+      { s: "f(x) = √(x − 2) fonksiyonunun tanım kümesi nedir?", c: ["x ≥ 2", "x > 2", "Tüm reel sayılar"], a: "Karekökün içi negatif olamaz: x − 2 ≥ 0." },
+      { s: "f(x) = 1/(x − 1) fonksiyonunun tanım kümesi nedir?", c: ["x ≠ 1", "x > 1", "x ≠ 0"], a: "Payda sıfır olamaz." },
+      { s: "f(x) = 2x + 3 fonksiyonunun tersi nedir?", c: ["(x − 3)/2", "(x + 3)/2", "1/(2x + 3)"], a: "y = 2x + 3 → x = (y − 3)/2. Ters fonksiyon 1/f değildir!" },
+      { s: "f(x) = x<sup>2</sup> fonksiyonu tek mi, çift mi?", c: ["Çift", "Tek", "Ne tek ne çift"], a: "f(−x) = f(x): grafik y eksenine göre simetrik." },
+      { s: "f(x) = x<sup>3</sup> fonksiyonu tek mi, çift mi?", c: ["Tek", "Çift", "Ne tek ne çift"], a: "f(−x) = −f(x): grafik orijine göre simetrik." },
+      { s: "y = (x − 2)<sup>2</sup> + 3 parabolünün tepe noktası neresidir?", c: ["(2, 3)", "(−2, 3)", "(3, 2)"], a: "y = (x − h)<sup>2</sup> + k biçiminde tepe (h, k)." },
+      { s: "y = f(x) grafiğini 2 birim sağa kaydırırsak yeni fonksiyon hangisi olur?", c: ["y = f(x − 2)", "y = f(x + 2)", "y = f(x) + 2"], a: "Sağa kaydırmak için x yerine x − 2 yazılır. f(x) + 2 yukarı kaydırır." },
+      { s: "Dikey doğru testi neyi kontrol eder?", c: ["Grafiğin bir fonksiyon olup olmadığını", "Fonksiyonun birebir olup olmadığını", "Fonksiyonun artan olup olmadığını"], a: "Her dikey doğru grafiği en fazla bir kez kesmeli." },
+      { s: "Yatay doğru testi neyi kontrol eder?", c: ["Fonksiyonun birebir olup olmadığını", "Grafiğin bir fonksiyon olup olmadığını", "Fonksiyonun sürekli olup olmadığını"], a: "Birebir fonksiyonun tersi vardır." },
+      // Üstel ve logaritmik
+      { s: "log<sub>2</sub> 8 = ?", c: ["3", "4", "1/3"], a: "2<sup>3</sup> = 8." },
+      { s: "log<sub>10</sub> 1000 = ?", c: ["3", "100", "30"], a: "10<sup>3</sup> = 1000." },
+      { s: "ln 1 = ?", c: ["0", "1", "e"], a: "e<sup>0</sup> = 1." },
+      { s: "ln e = ?", c: ["1", "0", "e"], a: "e<sup>1</sup> = e." },
+      { s: "log(ab) = ?", c: ["log a + log b", "log a · log b", "log(a + b)"], a: "Çarpımın logaritması, logaritmaların toplamıdır." },
+      { s: "log(a / b) = ?", c: ["log a − log b", "log a / log b", "log(a − b)"], a: "Bölümün logaritması, logaritmaların farkıdır." },
+      { s: "log(a<sup>n</sup>) = ?", c: ["n · log a", "(log a)<sup>n</sup>", "log(na)"], a: "Üs başa çarpan olarak gelir." },
+      { s: "e<sup>ln 5</sup> = ?", c: ["5", "e<sup>5</sup>", "ln 5"], a: "e<sup>x</sup> ile ln x birbirinin tersidir." },
+      { s: "2<sup>x</sup> = 32 ise x = ?", c: ["5", "16", "6"], a: "2<sup>5</sup> = 32." },
+      { s: "ln x = 0 ise x = ?", c: ["1", "0", "e"], a: "e<sup>0</sup> = 1." },
+      // Trigonometri
+      { s: "sin 30° = ?", c: ["1/2", "√3/2", "√2/2"], a: "Özel açılar: sin 30° = 1/2." },
+      { s: "cos 60° = ?", c: ["1/2", "√3/2", "0"], a: "cos 60° = sin 30° = 1/2." },
+      { s: "tan 45° = ?", c: ["1", "0", "√3"], a: "45°'de sin ve cos eşit: oranları 1." },
+      { s: "sin(π/2) = ?", c: ["1", "0", "−1"], a: "Birim çemberde π/2: (0, 1) noktası." },
+      { s: "cos π = ?", c: ["−1", "0", "1"], a: "Birim çemberde π: (−1, 0) noktası." },
+      { s: "sin<sup>2</sup>x + cos<sup>2</sup>x = ?", c: ["1", "0", "2"], a: "Pisagor özdeşliği; birim çemberden gelir." },
+      { s: "180° kaç radyandır?", c: ["π", "2π", "π/2"], a: "Yarım tur = π radyan. Calculus'ta açılar hep radyan!" },
+      { s: "sin(−x) = ?", c: ["−sin x", "sin x", "cos x"], a: "Sinüs tek fonksiyondur." },
+      { s: "tan x = ?", c: ["sin x / cos x", "cos x / sin x", "sin x · cos x"], a: "Tanjant, sinüsün kosinüse oranıdır." },
+      { s: "sin x fonksiyonunun periyodu nedir?", c: ["2π", "π", "π/2"], a: "Bir tam tur sonra değerler tekrar eder." },
+      { s: "1 + tan<sup>2</sup>x = ?", c: ["sec<sup>2</sup>x", "csc<sup>2</sup>x", "cos<sup>2</sup>x"], a: "sin<sup>2</sup>x + cos<sup>2</sup>x = 1'i cos<sup>2</sup>x'e böl." },
+      { s: "sin 2x = ?", c: ["2 sin x · cos x", "2 sin x", "sin<sup>2</sup>x − cos<sup>2</sup>x"], a: "İki kat açı formülü." }
+    ],
+
     limit: [
       { s: "lim<sub>x→∞</sub> 1/x = ?", c: ["0", "1", "∞"], a: "x büyüdükçe 1/x küçülür ve 0'a yaklaşır." },
       { s: "lim<sub>x→2</sub> (x<sup>2</sup> + 1) = ?", c: ["5", "4", "3"], a: "Polinomda doğrudan yerine koyarız: 2<sup>2</sup> + 1 = 5." },
