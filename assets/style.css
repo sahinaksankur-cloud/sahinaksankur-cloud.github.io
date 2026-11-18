@@ -439,3 +439,7 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-grafik .egri { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 .oyun-grafik .bos { fill: var(--surface-2); stroke: var(--accent); stroke-width: 2.2; }
 .oyun-grafik .dolu { fill: var(--accent); }
+.oyun-grafik .ek { stroke: #d9822b; stroke-width: 2.2; stroke-linecap: round; }
+.oyun-grafik .ek.kesikli { stroke-dasharray: 6 5; stroke-width: 1.8; }
+.oyun-grafik .yazi { fill: var(--text); font-size: 14px; font-weight: 700; font-style: italic; text-anchor: end; font-family: var(--serif); paint-order: stroke; stroke: var(--surface-2); stroke-width: 3px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .oyun-grafik .ek { stroke: #f5b971; } }

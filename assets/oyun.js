@@ -60,7 +60,9 @@
       '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
   }
   // Grafikli sorular: q.g = { x: [min, max], y: [min, max], p: [{ f: "x/2 + 1", a: 0, b: 3 }], bos: [[x, y]], dolu: [[x, y]], harf: { a: 1 } }
-  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar, dikey: kesik çizgiyle dikey asimptotlar.
+  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar, dikey: kesik çizgiyle dikey asimptotlar,
+  // ek: [{ f, a, b, k }] kesen/teğet doğruları (turuncu, k: kesikli), yazi: [[x, y, "P"]] nokta adı.
+  var grafikNo = 0;
   function grafik(g) {
     var W = 320, H = 210, sl = 26, sr = 10, su = 10, sa = 26;
     var x0 = g.x[0], x1 = g.x[1], y0 = g.y[0], y1 = g.y[1];
@@ -89,8 +91,19 @@
       for (k = 0; k <= n; k++) { var x = pr.a + (pr.b - pr.a) * k / n; d += (k ? "L" : "M") + r(X(x)) + "," + r(Y(f(x))); }
       o += '<path class="egri" d="' + d + '"/>';
     });
+    // Kesen/teğet gibi yardımcı doğrular (turuncu; k: true ise kesikli), grafik alanının dışına taşmaz.
+    var kirp = "kk-kirp-" + (++grafikNo);
+    if (g.ek) {
+      o += '<clipPath id="' + kirp + '"><rect x="' + sl + '" y="' + su + '" width="' + (W - sl - sr) + '" height="' + (H - su - sa) + '"/></clipPath><g clip-path="url(#' + kirp + ')">';
+      g.ek.forEach(function (pr) {
+        var f = new Function("x", "return " + pr.f);
+        o += '<line class="ek' + (pr.k ? " kesikli" : "") + '" x1="' + r(X(pr.a)) + '" y1="' + r(Y(f(pr.a))) + '" x2="' + r(X(pr.b)) + '" y2="' + r(Y(f(pr.b))) + '"/>';
+      });
+      o += "</g>";
+    }
     (g.bos || []).forEach(function (n) { o += '<circle class="bos" cx="' + r(X(n[0])) + '" cy="' + r(Y(n[1])) + '" r="4.5"/>'; });
     (g.dolu || []).forEach(function (n) { o += '<circle class="dolu" cx="' + r(X(n[0])) + '" cy="' + r(Y(n[1])) + '" r="4.5"/>'; });
+    (g.yazi || []).forEach(function (n) { o += '<text class="yazi" x="' + r(X(n[0]) - 7) + '" y="' + r(Y(n[1]) - 8) + '">' + n[2] + "</text>"; });
     return o + "</svg>";
   }
   function soruHtml(q) { return bicim(q.s) + (q.g ? grafik(q.g) : ""); }
