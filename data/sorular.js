@@ -189,7 +189,20 @@ window.KK_OYUN = {
       { b: "2.1", s: "y = x<sup>2</sup> fonksiyonunun [1, 3] aralığındaki ortalama değişim hızı kaçtır?", c: ["4", "8", "2"], a: "(f(3) − f(1)) / (3 − 1) = (9 − 1)/2 = 4." },
       { b: "2.1", s: "Bir eğrinin iki noktasından geçen kesen doğrunun eğimi neyi verir?", c: ["Ortalama değişim hızını", "Anlık değişim hızını", "Eğrinin altındaki alanı"], a: "Kesen: ortalama hız. Kesen teğete yaklaşınca (limit) anlık hız elde edilir." },
       { b: "2.3", s: "lim<sub>x→2</sub> (3x − 1) = 5 için ε = 0,3 verilirse seçilebilecek en büyük δ kaçtır?", c: ["0,1", "0,3", "0,9"], a: "|(3x − 1) − 5| = 3|x − 2| < 0,3 → |x − 2| < 0,1." },
-      { b: "2.3", s: "Limitin ε-δ tanımındaki 0 < |x − a| < δ koşulu neyi anlatır?", c: ["x'in a'ya δ'dan yakın olduğunu ama a'ya eşit olmadığını", "f(x)'in L'ye ε'dan yakın olduğunu", "x'in a'ya eşit olduğunu"], a: "Limitte x, a'ya yaklaşır ama a'nın kendisine bakılmaz." }
+      { b: "2.3", s: "Limitin ε-δ tanımındaki 0 < |x − a| < δ koşulu neyi anlatır?", c: ["x'in a'ya δ'dan yakın olduğunu ama a'ya eşit olmadığını", "f(x)'in L'ye ε'dan yakın olduğunu", "x'in a'ya eşit olduğunu"], a: "Limitte x, a'ya yaklaşır ama a'nın kendisine bakılmaz." },
+      // --- Sonsuzda limitler: derece karşılaştırma, x → −∞ işaret tuzağı, sin x / x ve cos x / x ---
+      { b: "2.6", s: "lim<sub>x→−∞</sub> 1/x = ?", c: ["0", "−∞", "−1"], a: "x çok negatif olunca 1/x sıfıra (eksi taraftan) yaklaşır: 0." },
+      { b: "2.6", s: "lim<sub>x→∞</sub> (x<sup>2</sup> + 1) / (x<sup>3</sup> − 2) = ?", c: ["0", "1", "∞"], a: "Paydanın derecesi (3) payınkinden (2) büyük: limit 0." },
+      { b: "2.6", s: "lim<sub>x→−∞</sub> (3x<sup>2</sup> − x) / (x<sup>3</sup> + 4) = ?", c: ["0", "3", "−∞"], a: "Paydanın derecesi büyük: x → −∞'da da limit 0." },
+      { b: "2.6", s: "lim<sub>x→∞</sub> (x<sup>3</sup> + 2) / (x<sup>2</sup> − 1) = ?", c: ["∞", "1", "0"], a: "Payın derecesi büyük; ifade x gibi davranır: +∞." },
+      { b: "2.6", s: "lim<sub>x→−∞</sub> (x<sup>3</sup> + 2) / (x<sup>2</sup> − 1) = ?", c: ["−∞", "∞", "0"], a: "İfade x<sup>3</sup>/x<sup>2</sup> = x gibi davranır; x → −∞ iken −∞. İşarete dikkat!" },
+      { b: "2.6", s: "lim<sub>x→−∞</sub> (x<sup>2</sup> + 1) / (x − 3) = ?", c: ["−∞", "∞", "1"], a: "İfade x<sup>2</sup>/x = x gibi davranır; x → −∞ iken −∞." },
+      { b: "2.6", s: "lim<sub>x→−∞</sub> (6x<sup>3</sup> + 1) / (2x<sup>3</sup> − x) = ?", c: ["3", "−3", "0"], a: "Dereceler eşit: baş katsayıların oranı 6/2 = 3. x<sup>3</sup>/x<sup>3</sup> = 1 olduğundan işaret değişmez." },
+      { b: "2.6", s: "lim<sub>x→∞</sub> cos x / x = ?", c: ["0", "1", "Limit yok"], a: "−1 ≤ cos x ≤ 1 ve payda sonsuza büyür: −1/x ≤ cos x / x ≤ 1/x, sıkıştırma ile 0." },
+      { b: "2.6", s: "lim<sub>x→−∞</sub> sin x / x = ?", c: ["0", "1", "−1"], a: "|sin x| ≤ 1 ve |x| sonsuza büyür; sıkıştırma ile 0." },
+      { b: "2.6", s: "Hangisinin limiti 1'dir?", c: ["lim<sub>x→0</sub> sin x / x", "lim<sub>x→∞</sub> sin x / x", "lim<sub>x→∞</sub> cos x / x"], a: "sin x / x sadece x → 0'da 1'e gider. x → ∞'da sin x / x ve cos x / x ikisi de 0'a gider." },
+      { b: "2.6", s: "lim<sub>x→∞</sub> sin x / x = 0 olmasının sebebi nedir?", c: ["sin x −1 ile 1 arasında kalır, payda ise sonsuza büyür", "sin x sıfıra gider", "sin x / x her zaman 1'e gider"], a: "sin x'in limiti yoktur ama sınırlıdır; sınırlı bir şeyi sonsuza büyüyen bir sayıya bölünce sonuç 0'a gider (sıkıştırma)." },
+      { b: "2.6", s: "Rasyonel bir fonksiyonda payın derecesi paydanınkinden küçükse, x → ∞ iken limit nedir?", c: ["0", "Baş katsayıların oranı", "∞"], a: "Derece küçükse 0, eşitse baş katsayıların oranı, büyükse ±∞." },
     ],
 
     integral: [
