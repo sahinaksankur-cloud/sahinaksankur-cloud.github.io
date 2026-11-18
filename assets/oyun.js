@@ -60,7 +60,7 @@
       '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
   }
   // Grafikli sorular: q.g = { x: [min, max], y: [min, max], p: [{ f: "x/2 + 1", a: 0, b: 3 }], bos: [[x, y]], dolu: [[x, y]], harf: { a: 1 } }
-  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar.
+  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar, dikey: kesik çizgiyle dikey asimptotlar.
   function grafik(g) {
     var W = 320, H = 210, sl = 26, sr = 10, su = 10, sa = 26;
     var x0 = g.x[0], x1 = g.x[1], y0 = g.y[0], y1 = g.y[1];
@@ -83,6 +83,7 @@
       o += '<line class="kesik" x1="' + hx + '" y1="' + su + '" x2="' + hx + '" y2="' + r(tabanY) + '"/>' +
         '<text class="harf" x="' + hx + '" y="' + r(tabanY + 17) + '">' + h + "</text>";
     });
+    (g.dikey || []).forEach(function (a) { o += '<line class="kesik" x1="' + r(X(a)) + '" y1="' + su + '" x2="' + r(X(a)) + '" y2="' + (H - sa) + '"/>'; });
     (g.p || []).forEach(function (pr) {
       var f = new Function("x", "return " + pr.f), d = "", n = 60;
       for (k = 0; k <= n; k++) { var x = pr.a + (pr.b - pr.a) * k / n; d += (k ? "L" : "M") + r(X(x)) + "," + r(Y(f(x))); }
