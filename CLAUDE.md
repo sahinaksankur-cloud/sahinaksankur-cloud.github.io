@@ -13,6 +13,7 @@ Site sahibinin ayrıca verdiği talimat dosyaları varsa onlar bu dosyadan önce
   Oturum başında `git config user.email` değerini kontrol et; göndermeden önce `git log` ile yazarı doğrula.
 - `main`'e GitHub'ın "Merge" düğmesiyle birleştirme yapma (GitHub kendi yazar bilgisini kullanabilir).
   Yerelde fast-forward edip `git push origin HEAD:main` ile gönder; önce `git fetch` ile `main`'in ilerlemediğini kontrol et.
+- **Her yayından önce** `python3 araclar/surum-guncelle.py` çalıştır ve commit'e kat: sayfalardaki CSS/JS bağlantılarına (`assets/…`, `data/…`) `?v=<tarih-saat>` yazar. Yoksa tarayıcılar eski JS/CSS'i önbellekten getirir (yeni HTML + eski soru dosyası gibi karışık sürüm görünür). Yeni bir sayfa ya da script eklenirse bağlantısı da bu biçimde olmalı.
 - **Sitede ücret, fiyat, ödeme ya da satış ifadesi olmamalı.** Site bilgi ve iletişim amaçlı.
 - API anahtarı, parola gibi gizli bilgileri hiçbir dosyaya yazma.
 - Geri alınması zor işlemlerden (geçmişi yeniden yazmak, dosya/dal silmek) önce kullanıcıdan onay al.
