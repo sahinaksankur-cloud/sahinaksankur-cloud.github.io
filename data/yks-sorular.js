@@ -50,7 +50,28 @@ window.KK_YKS = {
       { s: "İki basamaklı en küçük tam sayı kaçtır?", c: ["−99", "10", "−10"], a: "Tam sayılar negatif olabilir: iki basamaklı en küçük tam sayı −99." },
       { s: "Bir basamaklı kaç tane tam sayı vardır?", c: ["19", "10", "18"], a: "−9'dan 9'a kadar: 9 negatif, 9 pozitif ve 0 → 19." },
       { s: "Rakamları birbirinden farklı üç basamaklı en küçük tam sayı kaçtır?", c: ["−987", "102", "−999"], a: "Negatif olabilir: rakamları farklı en büyük üç basamaklı sayı 987, en küçüğü −987. −999'un rakamları farklı değil." },
-      { s: "İki basamaklı tam sayıların toplamı kaçtır?", c: ["0", "4905", "−4905"], a: "10 ile −10, 11 ile −11, …, 99 ile −99 birbirini götürür: toplam 0." }
+      { s: "İki basamaklı tam sayıların toplamı kaçtır?", c: ["0", "4905", "−4905"], a: "10 ile −10, 11 ile −11, …, 99 ile −99 birbirini götürür: toplam 0." },
+      // Tam sayılarda işlemler: işaret, parantez, yazım, işlem önceliği
+      { s: "−3 + 5 = ?", c: ["2", "−8", "8"], a: "Farklı işaretli sayılar: büyükten küçüğü çıkar, büyüğün işaretini al: 5 − 3 = 2." },
+      { s: "−3 − 5 = ?", c: ["−8", "2", "−2"], a: "Eksi yönde 3, sonra 5 daha: −8." },
+      { s: "−3 − (−5) = ?", c: ["2", "−8", "8"], a: "Negatif bir sayıyı çıkarmak, onu eklemektir: −3 + 5 = 2." },
+      { s: "(−3) · (−4) = ?", c: ["12", "−12", "−7"], a: "Aynı işaretli iki sayının çarpımı pozitiftir: 12." },
+      { s: "−(−(−4)) = ?", c: ["−4", "4", "0"], a: "Üç eksi: −(−(−4)) = −(4) = −4. Tek sayıda eksi varsa sonuç negatif." },
+      { s: "“3 · −4” yazımı için hangisi doğrudur?", c: ["Yanlış; 3 · (−4) yazılmalı", "Doğru bir yazımdır", "3 − 4 demektir"], a: "İki işlem işareti yan yana yazılmaz; negatif sayı paranteze alınır: 3 · (−4) = −12." },
+      { s: "Hangisi doğru yazılmıştır?", c: ["5 · (−2)", "5 · −2", "5 −· 2"], a: "Negatif sayı bir işlem işaretinden sonra geliyorsa parantez içinde yazılır." },
+      { s: "x = −2 ise 5 − 3x = ?", c: ["11", "−1", "−4"], a: "x yerine (−2) yaz: 5 − 3 · (−2) = 5 + 6 = 11." },
+      { s: "x = −3 ise −x = ?", c: ["3", "−3", "0"], a: "−x = −(−3) = 3." },
+      { s: "5 − (−2) · 3 = ?", c: ["11", "21", "−1"], a: "Önce çarpma: (−2) · 3 = −6. Sonra 5 − (−6) = 11." },
+      { s: "−7 + 3 · (−2) = ?", c: ["−13", "8", "−1"], a: "Önce çarpma: 3 · (−2) = −6. Sonra −7 + (−6) = −13." },
+      { s: "−12 ÷ (−3) · 2 = ?", c: ["8", "2", "−8"], a: "Bölme ve çarpma soldan sağa: −12 ÷ (−3) = 4, sonra 4 · 2 = 8." },
+      { s: "(−6) ÷ 2 · (−3) = ?", c: ["9", "1", "−9"], a: "Soldan sağa: (−6) ÷ 2 = −3, sonra (−3) · (−3) = 9." },
+      { s: "2 · (−3) − (−4) · 2 = ?", c: ["2", "−14", "−2"], a: "Önce çarpmalar: −6 ve −8. Sonra −6 − (−8) = −6 + 8 = 2." },
+      { s: "20 ÷ (−4) − (−3) · 2 = ?", c: ["1", "−11", "−4"], a: "Önce bölme ve çarpma: −5 ve −6. Sonra −5 − (−6) = 1." },
+      { s: "10 − (3 − 7) = ?", c: ["14", "0", "6"], a: "Önce parantez: 3 − 7 = −4. Sonra 10 − (−4) = 14." },
+      { s: "−2 · (5 − 8) = ?", c: ["6", "−6", "−18"], a: "Önce parantez: 5 − 8 = −3. Sonra −2 · (−3) = 6." },
+      { s: "(−4 + 1) · (2 − 6) = ?", c: ["12", "−12", "−8"], a: "Parantezler: −3 ve −4. Çarpım: (−3) · (−4) = 12." },
+      { s: "−8 − 2 · (3 − 5) = ?", c: ["−4", "−12", "20"], a: "Önce parantez (−2), sonra çarpma: 2 · (−2) = −4. Son olarak −8 − (−4) = −4." },
+      { s: "−[3 − (5 − 9)] = ?", c: ["−7", "11", "7"], a: "İçten dışa: 5 − 9 = −4; 3 − (−4) = 7; −[7] = −7." }
     ]
   },
 
@@ -70,6 +91,12 @@ window.KK_YKS = {
     { k: "yks-tam", s: "İki tam sayının farkı her zaman bir tam sayıdır.", d: true },
     { k: "yks-tam", s: "İki tam sayının bölümü her zaman bir tam sayıdır.", d: false, n: "1 ÷ 2 = 1/2 tam sayı değil" },
     { k: "yks-tam", s: "En küçük tam sayı −1'dir.", d: false, n: "En küçük tam sayı yoktur; −1 en büyük negatif tam sayıdır" },
-    { k: "yks-tam", s: "Bir basamaklı tam sayıların toplamı 0'dır.", d: true }
+    { k: "yks-tam", s: "Bir basamaklı tam sayıların toplamı 0'dır.", d: true },
+    { k: "yks-tam", s: "3 · −4 doğru bir yazımdır.", d: false, n: "İki işlem işareti yan yana gelmez: 3 · (−4)" },
+    { k: "yks-tam", s: "İki negatif sayının çarpımı pozitiftir.", d: true },
+    { k: "yks-tam", s: "İki negatif sayının toplamı pozitiftir.", d: false, n: "−2 + (−3) = −5" },
+    { k: "yks-tam", s: "a − (−b) = a + b", d: true },
+    { k: "yks-tam", s: "10 − (3 − 7) = 10 − 3 − 7", d: false, n: "Önündeki eksi parantezdeki her terimin işaretini değiştirir: 10 − 3 + 7" },
+    { k: "yks-tam", s: "Çarpma ve bölme soldan sağa doğru yapılır.", d: true }
   ]
 };
