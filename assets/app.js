@@ -187,48 +187,6 @@
     return String(s).toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "");
   }
 
-  // ---------- Topluluk (Telegram) ----------
-
-  function topluluk() { return CFG.topluluk || {}; }
-
-  function toplulukLink(baslik) {
-    var T = topluluk();
-    if (!T.grup) return "";
-    return (T.basliklar && T.basliklar[baslik]) || T.grup;
-  }
-
-  function setupTopluluk() {
-    if (!topluluk().grup) return;
-    Array.prototype.forEach.call(document.querySelectorAll("[data-topluluk-nav]"), function (a) { a.hidden = false; });
-    var genel = toplulukLink("genel");
-    Array.prototype.forEach.call(document.querySelectorAll("[data-topluluk-tartis]"), function (p) {
-      p.querySelector("a").href = genel; p.hidden = false;
-    });
-    Array.prototype.forEach.call(document.querySelectorAll("[data-topluluk-grup]"), function (a) {
-      a.href = topluluk().grup; a.hidden = false;
-    });
-    Array.prototype.forEach.call(document.querySelectorAll("[data-topluluk-yakinda]"), function (el) { el.hidden = true; });
-  }
-
-  // Ders sayfasındaki "Toplulukta sor" kutusu: hangi derste olunduğunu panoya kopyalar.
-  function updateAsk(ders, v) {
-    var box = document.getElementById("ask");
-    var link = toplulukLink(ders.id);
-    if (!box || !link) return;
-    box.hidden = false;
-    var btn = document.getElementById("ask-btn");
-    btn.href = link;
-    btn.onclick = function () {
-      var text = (ders.kisaAd || ders.ad) + ", " + v.baslik + " hakkında sorum: ";
-      var note = document.getElementById("ask-note");
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () {
-          note.textContent = "Kopyalandı. Gruba yapıştırıp sorunu yaz.";
-        }, function () { note.textContent = ""; });
-      }
-    };
-  }
-
   // ---------- Ana sayfa ----------
 
   function renderHome() {
@@ -361,9 +319,6 @@
         document.getElementById("next").disabled = current === videos.length - 1;
         document.getElementById("yt").href = "https://www.youtube.com/watch?v=" + v.id;
         showPdf(v, 0);
-        updateAsk(ders, v);
-        var askNote = document.getElementById("ask-note");
-        if (askNote) askNote.textContent = "";
         if (!opts || !opts.fromHash) history.replaceState(null, "", "#v=" + v.id);
         drawList();
         if (opts && opts.scroll) window.scrollTo({ top: 0, behavior: "smooth" });
@@ -435,7 +390,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    setupTopluluk();
     if (document.getElementById("contact-form")) renderContact();
     var yt = document.querySelectorAll("[data-yt]");
     Array.prototype.forEach.call(yt, function (a) { a.href = CFG.youtubeKanal; });

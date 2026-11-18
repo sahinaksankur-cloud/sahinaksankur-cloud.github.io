@@ -31,7 +31,6 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `oyun.html` | Calculus Oyunu: dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
 | `kampus.html` | Kampüsün İçinden: ODTÜ, Boğaziçi, İTÜ kartları (sınav hazırlık ve öğrenci paylaşımları için), her kartta "📤 … sınavı gönder" düğmesi (`iletisim.html?konu=kampus-sinav&okul=odtu|bogazici|itu`: konu, okul ve mesaj kendiliğinden dolar; öğrenci dosyayı e-postaya ekler), "Bize yaz" ve "Okulumu ekleyin" kutuları (`?konu=kampus` / `?konu=kampus-okul`), resmî bağ olmadığı notu. Üniversite logosu kullanılmaz |
 | `makaleler.html`, `makaleler/` | Makaleler; `araclar/makaleleri-olustur.py` ile üretilir (bkz. README) |
-| `topluluk.html` | Telegram topluluğu sayfası; `config.js` → `topluluk.grup` boş olduğu için gizli |
 | `yazilar.html`, `yazilar/` | Eski adresler; makalelere yönlendirir |
 | `assets/config.js` | Tüm ayarlar ve ders listesi |
 | `assets/app.js`, `assets/style.css` | Site kodu ve görünüm |
@@ -45,7 +44,6 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - `whatsappKanal`: WhatsApp duyuru kanalı linki. Boşsa sitedeki tüm kanal bağlantıları gizlenir.
 - `pdfIndirme`: `false` yapılırsa PDF'lerin yanındaki "⬇ İndir" düğmesi kalkar.
 - `whatsapp`: Birebir iletişim numarası. **Boş kalmalı** (kişisel numara gösterilmiyor).
-- `topluluk`: Telegram grubu ve başlık linkleri. Boşken ilgili her şey gizli.
 - `sheetCsvUrl`: Doluysa video listesi `data/videos.csv` yerine bu Google E-Tablo'dan okunur. Şu an boş.
 
 ### `data/videos.csv`
@@ -73,8 +71,8 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
-- Menü sırası (Dersler → `dersler.html`): Kampüsün İçinden/Kampüs, Dersler, Calculus Oyunu/Oyun, Makaleler, (Topluluk – gizli), Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
-- Menü tüm sayfalarda elle yazılı (index, dersler, ders, iletisim, oyun, kampus, topluluk); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
+- Menü sırası (Dersler → `dersler.html`): Kampüsün İçinden/Kampüs, Dersler, Calculus Oyunu/Oyun, Makaleler, Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
+- Menü tüm sayfalarda elle yazılı (index, dersler, ders, iletisim, oyun, kampus); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.

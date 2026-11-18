@@ -18,19 +18,6 @@ window.KK_CONFIG = {
   iletisimEposta: "iletisim@kuzeykampuscalculus.com",
   whatsapp: "",         // örnek: "905xxxxxxxxx" (boş bırakılırsa WhatsApp düğmesi görünmez)
 
-  // Telegram topluluğu. "grup" boş kaldığı sürece Topluluk sayfası menüde görünmez
-  // ve ders sayfalarındaki "Toplulukta sor" düğmeleri gizli kalır.
-  // Konu başlığı linki boşsa düğme grubun kendisine gider.
-  topluluk: {
-    grup: "",            // örnek: "https://t.me/kuzeykampus"
-    basliklar: {
-      calc1: "",         // Calculus 1 başlığının linki, örnek: "https://t.me/kuzeykampus/3"
-      calc2: "",
-      "calc1-soru": "",
-      genel: ""          // Genel Sohbet: makalelerin altındaki "toplulukta tartış" linki buraya gider
-    }
-  },
-
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.
   dersler: [
     {
