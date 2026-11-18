@@ -427,3 +427,15 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .ana-mini p { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
 .ana-mini .btn.wa { margin-top: 0; align-self: center; }
 @media (max-width: 760px) { .ana-bolumler, .ana-alt { grid-template-columns: 1fr; } }
+
+/* Oyun: grafikli sorular */
+.oyun-grafik { display: block; width: 100%; max-width: 420px; height: auto; margin: 14px auto 0; background: var(--surface-2); border-radius: 10px; }
+.oyun-kacan-soru .oyun-grafik { max-width: 320px; margin-left: 0; }
+.oyun-grafik .iz { stroke: var(--border); stroke-width: 1; }
+.oyun-grafik .eksen { stroke: var(--muted); stroke-width: 1.4; }
+.oyun-grafik .kesik { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; }
+.oyun-grafik .sayi { fill: var(--muted); font-size: 12px; paint-order: stroke; stroke: var(--surface-2); stroke-width: 3px; font-weight: 400; text-anchor: middle; font-family: var(--font); }
+.oyun-grafik .harf { fill: var(--text); font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; font-family: var(--serif); }
+.oyun-grafik .egri { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.oyun-grafik .bos { fill: var(--surface-2); stroke: var(--accent); stroke-width: 2.2; }
+.oyun-grafik .dolu { fill: var(--accent); }

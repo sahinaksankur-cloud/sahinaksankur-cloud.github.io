@@ -59,6 +59,41 @@
     return String(html).replace(/([∫Σ])<sub>((?:(?!<\/sub>).)*)<\/sub><sup>((?:<sup>.*?<\/sup>|(?!<\/sup>).)*)<\/sup>/g,
       '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
   }
+  // Grafikli sorular: q.g = { x: [min, max], y: [min, max], p: [{ f: "x/2 + 1", a: 0, b: 3 }], bos: [[x, y]], dolu: [[x, y]], harf: { a: 1 } }
+  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar.
+  function grafik(g) {
+    var W = 320, H = 210, sl = 26, sr = 10, su = 10, sa = 26;
+    var x0 = g.x[0], x1 = g.x[1], y0 = g.y[0], y1 = g.y[1];
+    var X = function (x) { return sl + (x - x0) / (x1 - x0) * (W - sl - sr); };
+    var Y = function (y) { return su + (y1 - y) / (y1 - y0) * (H - su - sa); };
+    var r = function (v) { return Math.round(v * 10) / 10; };
+    var o = '<svg class="oyun-grafik" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Fonksiyon grafiği">';
+    var i, k;
+    for (i = Math.ceil(x0); i <= x1; i++) o += '<line class="iz" x1="' + r(X(i)) + '" y1="' + su + '" x2="' + r(X(i)) + '" y2="' + (H - sa) + '"/>';
+    for (i = Math.ceil(y0); i <= y1; i++) o += '<line class="iz" x1="' + sl + '" y1="' + r(Y(i)) + '" x2="' + (W - sr) + '" y2="' + r(Y(i)) + '"/>';
+    if (y0 <= 0 && y1 >= 0) o += '<line class="eksen" x1="' + sl + '" y1="' + r(Y(0)) + '" x2="' + (W - sr) + '" y2="' + r(Y(0)) + '"/>';
+    if (x0 <= 0 && x1 >= 0) o += '<line class="eksen" x1="' + r(X(0)) + '" y1="' + su + '" x2="' + r(X(0)) + '" y2="' + (H - sa) + '"/>';
+    var harfX = {};
+    Object.keys(g.harf || {}).forEach(function (h) { harfX[g.harf[h]] = h; });
+    var tabanY = Math.min(H - sa, Math.max(su, Y(Math.max(y0, Math.min(0, y1)))));
+    for (i = Math.ceil(x0); i <= x1; i++) if (i !== 0 && !(i in harfX)) o += '<text class="sayi" x="' + r(X(i)) + '" y="' + r(tabanY + 15) + '">' + String(i).replace("-", "−") + "</text>";
+    for (i = Math.ceil(y0); i <= y1; i++) if (i !== 0) o += '<text class="sayi" x="' + r((x0 <= 0 && x1 >= 0 ? X(0) : sl) - 6) + '" y="' + r(Y(i) + 4) + '" text-anchor="end">' + String(i).replace("-", "−") + "</text>";
+    Object.keys(g.harf || {}).forEach(function (h) {
+      var hx = r(X(g.harf[h]));
+      o += '<line class="kesik" x1="' + hx + '" y1="' + su + '" x2="' + hx + '" y2="' + r(tabanY) + '"/>' +
+        '<text class="harf" x="' + hx + '" y="' + r(tabanY + 17) + '">' + h + "</text>";
+    });
+    (g.p || []).forEach(function (pr) {
+      var f = new Function("x", "return " + pr.f), d = "", n = 60;
+      for (k = 0; k <= n; k++) { var x = pr.a + (pr.b - pr.a) * k / n; d += (k ? "L" : "M") + r(X(x)) + "," + r(Y(f(x))); }
+      o += '<path class="egri" d="' + d + '"/>';
+    });
+    (g.bos || []).forEach(function (n) { o += '<circle class="bos" cx="' + r(X(n[0])) + '" cy="' + r(Y(n[1])) + '" r="4.5"/>'; });
+    (g.dolu || []).forEach(function (n) { o += '<circle class="dolu" cx="' + r(X(n[0])) + '" cy="' + r(Y(n[1])) + '" r="4.5"/>'; });
+    return o + "</svg>";
+  }
+  function soruHtml(q) { return bicim(q.s) + (q.g ? grafik(q.g) : ""); }
+  function anahtar(q) { return q.g ? q.s + "#" + JSON.stringify(q.g) : q.s; }
   function bul(liste, id) { return (liste || []).filter(function (x) { return x.id === id; })[0]; }
   // Daha önce sorulmamış sorulara öncelik verir; havuz bitince baştan başlar.
   // Listeden n soru seçer; bölüm testlerinde soruları alt bölümlere (2.1, 2.2…) yayar.
@@ -78,17 +113,17 @@
   function soruSec(id, n) {
     var kayit = oku(), gor = (kayit.gorulen = kayit.gorulen || {}), h = havuz(id), yay = !!bolumNo(id);
     var eski = gor[id] || [];
-    var yeni = h.filter(function (q) { return eski.indexOf(q.s) < 0; });
+    var yeni = h.filter(function (q) { return eski.indexOf(anahtar(q)) < 0; });
     if (yeni.length < n) {
       var secilen = yeni.slice();
       var kalan = h.filter(function (q) { return secilen.indexOf(q) < 0; });
       secilen = secilen.concat(dengeliSec(kalan, n - secilen.length, yay));
-      gor[id] = secilen.map(function (q) { return q.s; });
+      gor[id] = secilen.map(anahtar);
       yaz(kayit);
       return karistir(secilen);
     }
     var sec = dengeliSec(yeni, n, yay);
-    gor[id] = eski.concat(sec.map(function (q) { return q.s; }));
+    gor[id] = eski.concat(sec.map(anahtar));
     yaz(kayit);
     return sec;
   }
@@ -219,7 +254,7 @@
     $("oyun-ilerleme").textContent = "Soru " + (durum.i + 1) + " / " + durum.sorular.length;
     $("oyun-puan").textContent = durum.puan;
     $("oyun-bar-dolu").style.width = (durum.i / durum.sorular.length * 100) + "%";
-    $("oyun-metin").innerHTML = bicim(q.s);
+    $("oyun-metin").innerHTML = soruHtml(q);
     var secenekler = karistir(q.c.map(function (m, j) { return { m: m, dogru: j === 0 }; }));
     $("oyun-secenekler").innerHTML = secenekler.map(function (s, j) {
       return '<button type="button" class="oyun-secenek" data-j="' + j + '">' + bicim(s.m) + "</button>";
@@ -410,7 +445,7 @@
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
       liste.innerHTML = "<h3>Kaçırdığın sorular</h3>" + durum.kacan.map(function (k) {
-        return '<div class="oyun-kacan-soru"><p class="s">' + bicim(k.q.s) + "</p>" +
+        return '<div class="oyun-kacan-soru"><p class="s">' + soruHtml(k.q) + "</p>" +
           '<p class="c">Doğru cevap: <strong>' + bicim(k.q.c[0]) + "</strong>" +
           (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p>" +
           '<p class="a">' + bicim(k.q.a) + "</p></div>";
