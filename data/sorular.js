@@ -31,7 +31,7 @@ window.KK_OYUN = {
   bolumSoruSayisi: 5,
   bolumler: [
     { no: 1, ad: "Fonksiyonlar", aciklama: "Fonksiyonlar ve grafikleri, bileşke ve kaydırma, trigonometrik fonksiyonlar.", ders: "ders.html?liste=calc1#v=bIExBypymfg" },
-    { no: 2, ad: "Limit ve Süreklilik", aciklama: "Değişim hızı, limit kuralları, ε-δ tanımı, tek taraflı limitler, süreklilik, sonsuzda limit.", ders: "ders.html?liste=calc1#v=HnSsg_0mgXs" },
+    { no: 2, ad: "Limit ve Süreklilik", aciklama: "Değişim hızı, limit kuralları, tek taraflı limitler, süreklilik, sonsuzda limit.", ders: "ders.html?liste=calc1#v=HnSsg_0mgXs" },
     { no: 3, ad: "Türev", aciklama: "Teğet ve türev, türev kuralları, trigonometrik türevler, zincir kuralı, kapalı türev, bağlantılı hızlar, lineerleştirme.", ders: "ders.html?liste=calc1#v=mUD3cNYDzQI" },
     { no: 4, ad: "Türevin Uygulamaları", aciklama: "Ekstremumlar, Ortalama Değer Teoremi, monotonluk, konkavlık, optimizasyon, Newton yöntemi, antitürev.", ders: "ders.html?liste=calc1#v=WCEK5zGndVs" },
     { no: 5, ad: "İntegral", aciklama: "Sonlu toplamlar, sigma, belirli integral, Temel Teorem, değişken değiştirme, eğriler arası alan.", ders: "ders.html?liste=calc1#v=kwstzBwV40Y" },
@@ -194,11 +194,9 @@ window.KK_OYUN = {
       { b: "2.5", s: "f(x) = (x<sup>2</sup> − 1)/(x − 1) fonksiyonunun x = 1'deki durumu nedir?", c: ["Kaldırılabilir süreksizlik", "Sonsuz süreksizlik", "Sürekli"], a: "f(1) tanımsız ama limit 2 var. f(1) = 2 tanımlanırsa süreksizlik kalkar." },
       { b: "2.5", s: "f(x) = x<sup>3</sup> − x − 1 için f(1) = −1 ve f(2) = 5. [1, 2] aralığında f(x) = 0'ın kökü var mı?", c: ["Evet, en az bir kök var", "Hayır, kök yok", "Bir şey söylenemez"], a: "Ara Değer Teoremi: f sürekli ve işaret değiştiriyor, demek ki arada en az bir kök var." },
       { b: "2.6", s: "y = tan x fonksiyonunun dikey asimptotlarından biri hangisi?", c: ["x = π/2", "x = 0", "x = π"], a: "tan x = sin x / cos x; cos x = 0 olduğu yerde (x = π/2) dikey asimptot var." },
-      // --- Chapter 2 ek (2.1 ve 2.3) ---
+      // --- Chapter 2 ek (2.1) ---
       { b: "2.1", s: "y = x<sup>2</sup> fonksiyonunun [1, 3] aralığındaki ortalama değişim hızı kaçtır?", c: ["4", "8", "2"], a: "(f(3) − f(1)) / (3 − 1) = (9 − 1)/2 = 4." },
       { b: "2.1", s: "Bir eğrinin iki noktasından geçen kesen doğrunun eğimi neyi verir?", c: ["Ortalama değişim hızını", "Anlık değişim hızını", "Eğrinin altındaki alanı"], a: "Kesen: ortalama hız. Kesen teğete yaklaşınca (limit) anlık hız elde edilir." },
-      { b: "2.3", s: "lim<sub>x→2</sub> (3x − 1) = 5 için ε = 0,3 verilirse seçilebilecek en büyük δ kaçtır?", c: ["0,1", "0,3", "0,9"], a: "|(3x − 1) − 5| = 3|x − 2| < 0,3 → |x − 2| < 0,1." },
-      { b: "2.3", s: "Limitin ε-δ tanımındaki 0 < |x − a| < δ koşulu neyi anlatır?", c: ["x'in a'ya δ'dan yakın olduğunu ama a'ya eşit olmadığını", "f(x)'in L'ye ε'dan yakın olduğunu", "x'in a'ya eşit olduğunu"], a: "Limitte x, a'ya yaklaşır ama a'nın kendisine bakılmaz." },
       // --- Sonsuzda limitler: derece karşılaştırma, x → −∞ işaret tuzağı, sin x / x ve cos x / x ---
       { b: "2.6", s: "lim<sub>x→−∞</sub> 1/x = ?", c: ["0", "−∞", "−1"], a: "x çok negatif olunca 1/x sıfıra (eksi taraftan) yaklaşır: 0." },
       { b: "2.6", s: "lim<sub>x→∞</sub> (x<sup>2</sup> + 1) / (x<sup>3</sup> − 2) = ?", c: ["0", "1", "∞"], a: "Paydanın derecesi (3) payınkinden (2) büyük: limit 0." },
