@@ -6,7 +6,8 @@ window.KK_YKS = {
   konular: [
     { id: "yks-rakam", ad: "Rakamlar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-dogal", ad: "Doğal Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
-    { id: "yks-tam", ad: "Tam Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
+    { id: "yks-tam", ad: "Tam Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -80,6 +81,51 @@ window.KK_YKS = {
       { s: "(−2) · (−3) − (−3) = ?", c: ["9", "3", "−9"], a: "Önce çarpma: 6. Sonra 6 − (−3) = 6 + 3 = 9." },
       { s: "−4'ün 3 katının 2 eksiği kaçtır?", c: ["−14", "−18", "14"], a: "Önce 3 katı: 3 · (−4) = −12. Sonra 2 eksiği: −12 − 2 = −14." },
       { s: "3 − 2 · [4 − (1 − 3)] = ?", c: ["−9", "3", "6"], a: "İçten dışa: 1 − 3 = −2; 4 − (−2) = 6; 2 · 6 = 12; 3 − 12 = −9." }
+    ],
+
+    "yks-rasyonel": [
+      // Kavram
+      { s: "Rasyonel sayı nedir?", c: ["Tam sayıların bölümü (payda ≠ 0)", "Kesirli yazılmış her sayı", "Ondalık kısmı olan sayı"], a: "a ve b tam sayı, b ≠ 0 olmak üzere a/b biçiminde yazılabilen sayı. √2/2 kesirli yazılmış ama rasyonel değil." },
+      { s: "a/b rasyonel sayısında b hangi değeri alamaz?", c: ["0", "1", "−1"], a: "Payda 0 olamaz; 5/0 tanımsızdır." },
+      { s: "Hangisi rasyonel değildir?", c: ["√2", "0,25", "−3"], a: "0,25 = 1/4 ve −3 = −3/1 rasyoneldir. √2 iki tam sayının bölümü olarak yazılamaz." },
+      { s: "Hangisi rasyoneldir?", c: ["0,333…", "π", "√3"], a: "Devirli ondalık sayılar rasyoneldir: 0,333… = 1/3." },
+      { s: "5 sayısı için hangisi doğrudur?", c: ["Hem tam sayı hem rasyoneldir", "Sadece tam sayıdır", "Rasyonel değildir"], a: "5 = 5/1: her tam sayı aynı zamanda rasyoneldir." },
+      { s: "0 rasyonel bir sayı mıdır?", c: ["Evet, 0 = 0/1", "Hayır", "Tanımsızdır"], a: "0/1 = 0 tanımlıdır. Tanımsız olan 1/0'dır." },
+      { s: "√2/2 rasyonel bir sayı mıdır?", c: ["Hayır; pay tam sayı değil", "Evet; kesir biçiminde", "Evet; paydası 2"], a: "Kesir biçiminde yazılmak yetmez; pay ve payda tam sayı olmalı." },
+      { s: "En küçük pozitif rasyonel sayı kaçtır?", c: ["Yoktur", "1", "0,1"], a: "Hangi pozitif rasyonel sayıyı alırsan al, yarısı daha küçük ve yine rasyonel." },
+      { s: "1/3 ile 1/2 arasında kaç rasyonel sayı vardır?", c: ["Sonsuz tane", "Hiç yok", "1 tane"], a: "İki rasyonel sayı arasında her zaman sonsuz tane rasyonel sayı vardır (örneğin 5/12). Tam sayılarda böyle değil: 1 ile 2 arasında tam sayı yok." },
+      // Daireler: kesrin anlamı
+      { s: "Boyalı kısım bütünün kaçta kaçıdır?", g: {pasta: [{n: 4, k: 1}]}, c: ["1/4", "1/3", "4/1"], a: "Bütün 4 eşit parça, 1 parça boyalı: 1/4. (1/3, boyalıyı boyasızla karşılaştırmak olur.)" },
+      { s: "Pasta 8 eşit dilime bölünmüş. Ali boyalı dilimleri aldı. Ali pastanın kaçta kaçını aldı?", g: {pasta: [{n: 8, k: 3}]}, c: ["3/8", "3/5", "5/8"], a: "8 dilimden 3'ü: 3/8. 5/8 kalan kısım." },
+      { s: "Hangisi boyalı kısmı <u>göstermez</u>?", g: {pasta: [{n: 8, k: 2}]}, c: ["1/2", "2/8", "1/4"], a: "8 parçadan 2'si: 2/8 = 1/4 (denk kesirler). 1/2 olması için 4 parça boyanmalıydı." },
+      { s: "Boyalı kısımlardan hangisi daha büyüktür?", g: {pasta: [{n: 3, k: 1}, {n: 4, k: 1}]}, c: ["1/3", "1/4", "Eşittir"], a: "Bütün ne kadar çok parçaya bölünürse her parça o kadar küçük olur: 1/3 > 1/4." },
+      // Daireler: toplama ve çıkarma
+      { s: "Boyalı kısımların toplamı hangi işlemle gösterilir?", g: {pasta: [{n: 6, k: 1}, {n: 4, k: 1}]}, c: ["1/6 + 1/4", "1/10", "2/10"], a: "Bir daireden 1/6, diğerinden 1/4: toplam 1/6 + 1/4. Parçalar ya da paydalar doğrudan toplanmaz." },
+      { s: "Bu iki boyalı parça neden doğrudan “2 parça” diye toplanamaz?", g: {pasta: [{n: 6, k: 1}, {n: 4, k: 1}]}, c: ["Parçaların büyüklüğü farklı", "Daireler farklı renkte", "Toplanabilir, sonuç 2/10"], a: "1/6 ile 1/4 aynı büyüklükte değil. Toplamak için önce iki daireyi de aynı büyüklükte parçalara bölmek (paydaları eşitlemek) gerekir." },
+      { s: "1/2 + 1/2 işleminde paydaları da toplasaydık 2/4 bulurduk. Şekle göre doğru sonuç nedir?", g: {pasta: [{n: 2, k: 1}, {n: 2, k: 1}]}, c: ["1 (bir bütün)", "1/2", "2/4"], a: "İki yarım bir bütün eder. Paydaları toplamak yanlış: 2/4 = 1/2, yani sonuç değişmemiş gibi olurdu." },
+      { s: "1/6 ve 1/4'ü toplamak için iki daireyi de aynı büyüklükte parçalara bölmek gerekir. En az kaç parçaya bölünmeli?", g: {pasta: [{n: 6, k: 1}, {n: 4, k: 1}]}, c: ["12", "10", "24"], a: "6 ve 4'ün en küçük ortak katı 12. (24 de olur ama en az 12.) 1/6 = 2/12, 1/4 = 3/12." },
+      { s: "Daireler 12 eşit parçaya bölündü. Boyalı kısımların toplamı nedir?", g: {pasta: [{n: 12, k: 2}, {n: 12, k: 3}]}, c: ["5/12", "5/24", "6/12"], a: "Parçalar artık eşit: 2/12 + 3/12 = 5/12. Paydalar toplanmaz; parçalar sayılır." },
+      { s: "Şekle göre hangi işlem doğrudur?", g: {pasta: [{n: 3, k: 1}, {n: 6, k: 1}]}, c: ["1/3 + 1/6 = 1/2", "1/3 + 1/6 = 2/9", "1/3 + 1/6 = 1/9"], a: "1/3 = 2/6. 2/6 + 1/6 = 3/6 = 1/2." },
+      { s: "Boyalı kısımdan 1/2 çıkarılırsa ne kalır?", g: {pasta: [{n: 4, k: 3}]}, c: ["1/4", "1", "1/2"], a: "3/4 − 1/2 = 3/4 − 2/4 = 1/4." },
+      // Basit, bileşik ve tam sayılı kesir
+      { s: "Hangisi bileşik kesirdir?", c: ["7/5", "5/7", "1/2"], a: "Payı paydasına eşit ya da paydasından büyük kesir bileşiktir: 7/5." },
+      { s: "4/4 kesri için hangisi doğrudur?", c: ["Bileşik kesirdir", "Basit kesirdir", "Kesir değildir"], a: "Pay paydaya eşitse kesir bileşiktir; değeri 1'dir." },
+      { s: "Her daire 4 eşit parçaya bölünmüş. Boyalı kısım bileşik kesir olarak nasıl yazılır?", g: {pasta: [{n: 4, k: 4}, {n: 4, k: 1}]}, c: ["5/4", "5/8", "4/5"], a: "Her parça 1/4 ve 5 parça boyalı: 5/4. 5/8 diyen iki daireyi tek bütün saymış." },
+      { s: "Boyalı kısmı gösteren tam sayılı kesir hangisidir?", g: {pasta: [{n: 1, k: 1}, {n: 4, k: 1}]}, c: ["1<sup>1</sup>⁄<sub>4</sub>", "1<sup>1</sup>⁄<sub>5</sub>", "4<sup>1</sup>⁄<sub>4</sub>"], a: "Bir bütün ve 4 parçadan 1'i: 1<sup>1</sup>⁄<sub>4</sub>. Bu, 5/4 ile aynı miktardır." },
+      { s: "Şekil 2<sup>2</sup>⁄<sub>3</sub>'ü gösteriyor. Aynı miktar bileşik kesir olarak nasıl yazılır?", g: {pasta: [{n: 1, k: 1}, {n: 1, k: 1}, {n: 3, k: 2}]}, c: ["8/3", "4/3", "6/3"], a: "2 bütün = 6/3, üstüne 2/3: 8/3." },
+      { s: "Her daire 3 eşit parçaya bölünmüş. Hangisi boyalı kısmı <u>göstermez</u>?", g: {pasta: [{n: 3, k: 3}, {n: 3, k: 3}, {n: 3, k: 1}]}, c: ["7/9", "2<sup>1</sup>⁄<sub>3</sub>", "7/3"], a: "Her parça 1/3 ve 7 parça boyalı: 7/3 = 2<sup>1</sup>⁄<sub>3</sub>. 7/9 diyen üç daireyi tek bütün saymış." },
+      { s: "7/3 kesrinin tam sayılı kesir olarak yazılışı hangisidir?", c: ["2<sup>1</sup>⁄<sub>3</sub>", "2<sup>1</sup>⁄<sub>7</sub>", "3<sup>1</sup>⁄<sub>3</sub>"], a: "7'nin içinde 2 tane 3 var, 1 artar: 2<sup>1</sup>⁄<sub>3</sub>." },
+      { s: "9/4 kesrinin tam sayılı kesir olarak yazılışı hangisidir?", c: ["2<sup>1</sup>⁄<sub>4</sub>", "2<sup>1</sup>⁄<sub>9</sub>", "4<sup>1</sup>⁄<sub>9</sub>"], a: "9'un içinde 2 tane 4 var, 1 artar: 2<sup>1</sup>⁄<sub>4</sub>." },
+      { s: "2<sup>1</sup>⁄<sub>3</sub> kesrinin bileşik kesir olarak yazılışı hangisidir?", c: ["7/3", "5/3", "3/3"], a: "2 · 3 + 1 = 7: 7/3." },
+      { s: "3<sup>2</sup>⁄<sub>5</sub> kesrinin bileşik kesir olarak yazılışı hangisidir?", c: ["17/5", "11/5", "13/5"], a: "3 · 5 + 2 = 17: 17/5." },
+      // İşlemler ve işaret
+      { s: "1/2 + 1/4 = ?", c: ["3/4", "2/6", "1/8"], a: "Paydalar eşitlenir: 2/4 + 1/4 = 3/4. Payları ve paydaları ayrı ayrı toplamak (2/6) yanlış." },
+      { s: "2/3 − 1/6 = ?", c: ["1/2", "1/3", "1/9"], a: "4/6 − 1/6 = 3/6 = 1/2." },
+      { s: "−1/2 + 1/3 = ?", c: ["−1/6", "1/6", "0"], a: "−3/6 + 2/6 = −1/6." },
+      { s: "(−2/3) · (3/4) = ?", c: ["−1/2", "1/2", "−8/9"], a: "Pay paya, payda paydaya: −6/12 = −1/2. Çapraz çarpmak (−8/9) yanlış." },
+      { s: "(−1/2) ÷ (−1/4) = ?", c: ["2", "−2", "1/8"], a: "Bölme, ters çevirip çarpmaktır: (−1/2) · (−4/1) = 2." },
+      { s: "3 − 1/2 = ?", c: ["5/2", "1", "−5/2"], a: "3 = 6/2: 6/2 − 1/2 = 5/2." },
+      { s: "−(1/2 − 1) = ?", c: ["1/2", "−1/2", "3/2"], a: "Önce parantez: 1/2 − 1 = −1/2. Sonra −(−1/2) = 1/2." }
     ]
   },
 
@@ -105,6 +151,17 @@ window.KK_YKS = {
     { k: "yks-tam", s: "İki negatif sayının toplamı pozitiftir.", d: false, n: "−2 + (−3) = −5" },
     { k: "yks-tam", s: "a − (−b) = a + b", d: true },
     { k: "yks-tam", s: "10 − (3 − 7) = 10 − 3 − 7", d: false, n: "Önündeki eksi parantezdeki her terimin işaretini değiştirir: 10 − 3 + 7" },
-    { k: "yks-tam", s: "Çarpma ve bölme soldan sağa doğru yapılır.", d: true }
+    { k: "yks-tam", s: "Çarpma ve bölme soldan sağa doğru yapılır.", d: true },
+    { k: "yks-rasyonel", s: "Her tam sayı bir rasyonel sayıdır.", d: true },
+    { k: "yks-rasyonel", s: "Her rasyonel sayı bir tam sayıdır.", d: false, n: "1/2 rasyonel ama tam sayı değil" },
+    { k: "yks-rasyonel", s: "0,333… rasyonel bir sayıdır.", d: true },
+    { k: "yks-rasyonel", s: "En küçük pozitif rasyonel sayı vardır.", d: false, n: "Her pozitif rasyonel sayının yarısı daha küçüktür" },
+    { k: "yks-rasyonel", s: "İki rasyonel sayının bölümü her zaman rasyoneldir.", d: false, n: "Bölen 0 olursa tanımsızdır" },
+    { k: "yks-rasyonel", s: "1/2 + 1/3 = 2/5", d: false, n: "Paydalar eşitlenir: 3/6 + 2/6 = 5/6" },
+    { k: "yks-rasyonel", s: "1/8, 1/4'ten küçüktür.", d: true },
+    { k: "yks-rasyonel", s: "(−1/2) · (−1/2) = −1/4", d: false, n: "(−) · (−) = (+): 1/4" },
+    { k: "yks-rasyonel", s: "Basit kesirler 1'den küçüktür.", d: true },
+    { k: "yks-rasyonel", s: "Payı paydasına eşit olan kesir basit kesirdir.", d: false, n: "Bileşik kesirdir; değeri 1'dir" },
+    { k: "yks-rasyonel", s: "1<sup>1</sup>⁄<sub>4</sub> ile 5/4 aynı sayıdır.", d: true }
   ]
 };
