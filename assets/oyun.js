@@ -60,7 +60,7 @@
       '$1<span class="sinir"><span class="ust">$3</span><span class="alt">$2</span></span>');
   }
   // Grafikli sorular: q.g = { x: [min, max], y: [min, max], p: [{ f: "x/2 + 1", a: 0, b: 3 }], bos: [[x, y]], dolu: [[x, y]], harf: { a: 1 } }
-  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar, dikey: kesik çizgiyle dikey asimptotlar,
+  // p: eğri parçaları (JavaScript ifadesi, a ≤ x ≤ b; ek: true ise turuncu kesikli, n: nokta sayısı), bos: boş daire (delik), dolu: dolu nokta, harf: x eksenindeki harfli noktalar, dikey: kesik çizgiyle dikey asimptotlar,
   // ek: [{ f, a, b, k }] kesen/teğet doğruları (turuncu, k: kesikli), yazi: [[x, y, "P"]] nokta adı.
   var grafikNo = 0;
   function grafik(g) {
@@ -87,9 +87,9 @@
     });
     (g.dikey || []).forEach(function (a) { o += '<line class="kesik" x1="' + r(X(a)) + '" y1="' + su + '" x2="' + r(X(a)) + '" y2="' + (H - sa) + '"/>'; });
     (g.p || []).forEach(function (pr) {
-      var f = new Function("x", "return " + pr.f), d = "", n = 60;
+      var f = new Function("x", "return " + pr.f), d = "", n = pr.n || 60;
       for (k = 0; k <= n; k++) { var x = pr.a + (pr.b - pr.a) * k / n; d += (k ? "L" : "M") + r(X(x)) + "," + r(Y(f(x))); }
-      o += '<path class="egri" d="' + d + '"/>';
+      o += '<path class="egri' + (pr.ek ? " ek" : "") + '" d="' + d + '"/>';
     });
     // Kesen/teğet gibi yardımcı doğrular (turuncu; k: true ise kesikli), grafik alanının dışına taşmaz.
     var kirp = "kk-kirp-" + (++grafikNo);

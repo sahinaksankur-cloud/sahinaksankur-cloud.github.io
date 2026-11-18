@@ -44,6 +44,8 @@ window.KK_DY = {
       { b: "2.6", s: "lim<sub>x→∞</sub> sin x / x = 1", d: false, n: "0" },
       { b: "2.4", s: "lim<sub>x→0</sub> (1 − cos x)/x = 1", d: false, n: "0" },
       { b: "2.2", s: "0/0 çıkarsa limit yoktur.", d: false, n: "0/0 belirsizlik; limit olabilir" },
+      { b: "2.2", s: "−1 ≤ sin(1/x) ≤ 1 olduğundan lim<sub>x→0</sub> sin(1/x) = 0'dır.", d: false, n: "Sınırlı olmak limit demek değil; sin(1/x) salınır, limiti yok" },
+      { b: "2.2", s: "Sıkıştırma Teoremi'nde alt ve üst fonksiyonların limiti aynı olmalıdır.", d: true },
       { b: "2.2", s: "lim<sub>x→2</sub> (x² − 4)/(x − 2) = 4", d: true },
       { b: "2.2", s: "lim<sub>x→3</sub> (2x + 1) = 7", d: true },
       { b: "2.6", s: "lim<sub>x→∞</sub> (3x² + 1)/(x² − 5) = 3", d: true },
