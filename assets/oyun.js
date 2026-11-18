@@ -123,7 +123,23 @@
     (g.yazi || []).forEach(function (n) { o += '<text class="yazi" x="' + r(X(n[0]) - 7) + '" y="' + r(Y(n[1]) - 8) + '">' + n[2] + "</text>"; });
     return o + "</svg>";
   }
-  function soruHtml(q) { return bicim(q.s) + (q.g ? grafik(q.g) : ""); }
+  // Kesir daireleri: q.g = { pasta: [{ n: 8, k: 3 }, …] } → her daire n eşit parçaya bölünür, ilk k parça boyalı.
+  function pastaCiz(daireler) {
+    var R = 46, A = 2 * R + 12, W = daireler.length * A, H = A;
+    var o = '<svg class="oyun-grafik oyun-pasta" style="max-width:' + (daireler.length * 150) + 'px" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Parçalara bölünmüş daire">';
+    daireler.forEach(function (d, i) {
+      var cx = i * A + A / 2, cy = H / 2;
+      for (var j = 0; j < d.n; j++) {
+        var a1 = -Math.PI / 2 + 2 * Math.PI * j / d.n, a2 = -Math.PI / 2 + 2 * Math.PI * (j + 1) / d.n;
+        var x1 = cx + R * Math.cos(a1), y1 = cy + R * Math.sin(a1), x2 = cx + R * Math.cos(a2), y2 = cy + R * Math.sin(a2);
+        var yay = d.n === 1 ? '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '"' :
+          '<path d="M' + cx + "," + cy + " L" + x1.toFixed(1) + "," + y1.toFixed(1) + " A" + R + "," + R + " 0 " + (a2 - a1 > Math.PI ? 1 : 0) + " 1 " + x2.toFixed(1) + "," + y2.toFixed(1) + ' Z"';
+        o += yay + ' class="dilim' + (j < d.k ? " boyali" : "") + '"/>';
+      }
+    });
+    return o + "</svg>";
+  }
+  function soruHtml(q) { return bicim(q.s) + (q.g ? (q.g.pasta ? pastaCiz(q.g.pasta) : grafik(q.g)) : ""); }
   function anahtar(q) { return q.g ? q.s + "#" + JSON.stringify(q.g) : q.s; }
   function bul(liste, id) { return (liste || []).filter(function (x) { return x.id === id; })[0]; }
   // Listeden n soru seçer; bölüm testlerinde soruları alt bölümlere (2.1, 2.2…) yayar.
