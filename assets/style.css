@@ -452,3 +452,11 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-grafik .egri.ek { stroke: #d9822b; stroke-width: 2; stroke-dasharray: 6 5; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .oyun-grafik .egri.ek { stroke: #f5b971; } }
 .oyun-metin .nw, .oyun-kacan-soru .nw { white-space: nowrap; }
+
+/* Testler: 🎓 Üniversite / 📘 YKS sekmeleri */
+.sekmeler { display: flex; gap: 8px; margin: 0 0 20px; border-bottom: 1px solid var(--border); }
+.sekmeler button { font: inherit; font-weight: 600; font-size: 1rem; padding: 10px 16px; border: 0; background: none; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.sekmeler button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.sekmeler button:hover { color: var(--text); }
+.sekmeler button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sec .skor + .skor { margin-top: 2px; }

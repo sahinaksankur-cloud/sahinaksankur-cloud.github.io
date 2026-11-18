@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=202611182059">
+  <link rel="stylesheet" href="assets/style.css?v=202611182148">
 </head>
 <body>
   <header class="topbar">
@@ -29,8 +29,15 @@
     <section id="oyun-giris">
       <div class="hero oyun-hero">
         <h1 id="oyun-ad">Testler</h1>
-        <p>Dört farklı test türü var. Neye ihtiyacın varsa onu seç. Kayıt yok, puanların sadece bu cihazda tutulur.</p>
+        <p>Kendini test et. Kayıt yok, puanların sadece bu cihazda tutulur.</p>
       </div>
+
+      <div class="sekmeler" role="tablist" aria-label="Test grubu">
+        <button type="button" role="tab" id="sekme-uni" aria-controls="panel-uni" aria-selected="true">🎓 Üniversite</button>
+        <button type="button" role="tab" id="sekme-yks" aria-controls="panel-yks" aria-selected="false">📘 YKS</button>
+      </div>
+
+      <div id="panel-uni" role="tabpanel" aria-labelledby="sekme-uni">
 
       <section class="serit">
         <div class="tur t0"><h2>🧭 Calculus'a Hazır mısın?</h2><p>Calculus'a başlamadan önce temel bilgilerini test et.</p><span class="ozellik">10 soru · precalculus</span></div>
@@ -53,6 +60,21 @@
       </section>
 
       <p class="oyun-toplam" id="oyun-toplam"></p>
+      </div>
+
+      <div id="panel-yks" role="tabpanel" aria-labelledby="sekme-yks" hidden>
+      <section class="serit">
+        <div class="tur t1"><h2>📝 Konu Testi</h2><p>Bir konuyu seç, o konudan 10 soru gelsin. Önce hiç görmediğin sorular, sonra çözemediklerin gelir.</p><span class="ozellik">10 soru · TYT</span></div>
+        <div class="secenekler" id="yks-konular"></div>
+      </section>
+
+      <section class="serit">
+        <div class="tur t3"><h2>⚡ Doğru / Yanlış</h2><p>Kurallar ve sık yapılan hatalar. Düşünmeden bilmen gerekenler.</p><span class="ozellik">5 ifade · her biri 5 sn</span></div>
+        <div class="secenekler" id="yks-dy"></div>
+      </section>
+
+      <p class="oyun-toplam" id="yks-toplam"></p>
+      </div>
     </section>
 
     <div class="perde" id="seviye-perde" hidden>
@@ -69,7 +91,7 @@
     <section id="oyun-soru" hidden>
       <div class="oyun-ust">
         <span><span id="oyun-konu-adi"></span> · <span id="oyun-ilerleme"></span></span>
-        <span class="oyun-puan">Puan: <strong id="oyun-puan">0</strong></span>
+        <span class="oyun-puan">Doğru: <strong id="oyun-puan">0</strong></span>
         <span class="oyun-sure" id="oyun-sure" role="timer" aria-live="off">10</span>
       </div>
       <div class="oyun-bar"><div id="oyun-bar-dolu"></div></div>
@@ -123,10 +145,11 @@
     </div>
   </footer>
 
-  <script src="assets/config.js?v=202611182059"></script>
-  <script src="assets/app.js?v=202611182059"></script>
-  <script src="data/sorular.js?v=202611182059"></script>
-  <script src="data/dogru-yanlis.js?v=202611182059"></script>
-  <script src="assets/oyun.js?v=202611182059"></script>
+  <script src="assets/config.js?v=202611182148"></script>
+  <script src="assets/app.js?v=202611182148"></script>
+  <script src="data/sorular.js?v=202611182148"></script>
+  <script src="data/dogru-yanlis.js?v=202611182148"></script>
+  <script src="data/yks-sorular.js?v=202611182148"></script>
+  <script src="assets/oyun.js?v=202611182148"></script>
 </body>
 </html>

@@ -13,7 +13,19 @@
   var sayac = null;
   var DY = window.KK_DY || null;
   var dy = { id: null, liste: [], i: 0, puan: 0, seri: 0, enSeri: 0, kacan: [], kilit: false };
-  function dyId(id) { var m = /^dy-(tum|\d+)$/.exec(id || ""); return m ? m[1] : null; }
+  function dyId(id) { var m = /^dy-(tum|yks|\d+)$/.exec(id || ""); return m ? m[1] : null; }
+
+  // 📘 YKS soruları (data/yks-sorular.js): konular "yks-" ile başlar, Üniversite turlarına karışmaz.
+  var YKS = window.KK_YKS || null;
+  if (YKS) {
+    (YKS.konular || []).forEach(function (k) {
+      k.grup = "yks";
+      O.konular.push(k);
+      O.sorular[k.id] = (YKS.sorular[k.id] || []).map(function (q) { q.b = q.b || "yks"; q.k = k.id; return q; });
+    });
+    if (DY) DY.ifadeler = DY.ifadeler.concat((YKS.dogruYanlis || []).map(function (q) { q.b = "yks"; return q; }));
+  }
+  function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
   function oku() {
     try { return JSON.parse(localStorage.getItem(DEPO)) || {}; } catch (e) { return {}; }
@@ -28,8 +40,14 @@
   }
   var BOLUMLER = O.bolumler || [];
   function bolumNo(id) { var m = /^bolum-(\d+)$/.exec(id || ""); return m ? +m[1] : null; }
+  // Üniversite (Calculus) soruları; YKS listeleri hariç.
   function tumSorular() {
-    return Object.keys(O.sorular).reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
+    return Object.keys(O.sorular).filter(function (k) { return !/^yks-/.test(k); })
+      .reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
+  }
+  function yksSorular() {
+    return Object.keys(O.sorular).filter(function (k) { return /^yks-/.test(k); })
+      .reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
   }
   // Bir testin (konu turu ya da bölüm sonu testi) bilgileri
   function testBilgi(id) {
@@ -39,19 +57,18 @@
       return { id: id, bolum: true, ad: "Chapter " + no + " · " + b.ad, kisaAd: "Chapter " + no, ders: b.ders, sayi: O.bolumSoruSayisi || 5 };
     }
     var k = bul(O.konular, id) || {};
-    return { id: id, bolum: false, ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
+    return { id: id, bolum: false, yks: k.grup === "yks", ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
   function havuz(id) {
     var d = dyId(id);
     if (d) {
       var hepsi = (DY && DY.ifadeler) || [];
-      return d === "tum" ? hepsi : hepsi.filter(function (q) { return String(q.b).split(".")[0] === d; });
+      if (d === "tum") return hepsi.filter(function (q) { return q.b !== "yks"; });
+      return hepsi.filter(function (q) { return String(q.b).split(".")[0] === d; });
     }
     var no = bolumNo(id);
     if (no) return tumSorular().filter(function (q) { return String(q.b).split(".")[0] === String(no); });
-    if (id === "karisik") {
-      return Object.keys(O.sorular).reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
-    }
+    if (id === "karisik") return tumSorular();
     return O.sorular[id] || [];
   }
   // ∫ ve Σ işaretlerinin alt/üst sınırlarını ders kitabındaki gibi alt alta yazar.
@@ -109,7 +126,6 @@
   function soruHtml(q) { return bicim(q.s) + (q.g ? grafik(q.g) : ""); }
   function anahtar(q) { return q.g ? q.s + "#" + JSON.stringify(q.g) : q.s; }
   function bul(liste, id) { return (liste || []).filter(function (x) { return x.id === id; })[0]; }
-  // Daha önce sorulmamış sorulara öncelik verir; havuz bitince baştan başlar.
   // Listeden n soru seçer; bölüm testlerinde soruları alt bölümlere (2.1, 2.2…) yayar.
   function dengeliSec(liste, n, yay) {
     liste = karistir(liste);
@@ -124,23 +140,37 @@
     }
     return karistir(sec);
   }
-  function soruSec(id, n) {
-    var kayit = oku(), gor = (kayit.gorulen = kayit.gorulen || {}), h = havuz(id), yay = !!bolumNo(id);
-    var eski = gor[id] || [];
-    var yeni = h.filter(function (q) { return eski.indexOf(anahtar(q)) < 0; });
-    if (yeni.length < n) {
-      var secilen = yeni.slice();
-      var kalan = h.filter(function (q) { return secilen.indexOf(q) < 0; });
-      secilen = secilen.concat(dengeliSec(kalan, n - secilen.length, yay));
-      gor[id] = secilen.map(anahtar);
-      yaz(kayit);
-      return karistir(secilen);
-    }
-    var sec = dengeliSec(yeni, n, yay);
-    gor[id] = eski.concat(sec.map(anahtar));
-    yaz(kayit);
-    return sec;
+  // Soru geçmişi (sadece bu cihazda): kayit.cevap[anahtar] = [1 çözüldü | 0 çözülemedi, tur no].
+  // Seçim sırası: önce hiç görülmemiş sorular; onlar bitince çözülemeyenler (en eski denenen önce,
+  // yani yine çözülemeyen bir sonraki tura kalır); hepsi çözülünce daha önce çözülenler (puansız).
+  function cevaplar(kayit) { return (kayit.cevap = kayit.cevap || {}); }
+  function cozulenSayi(liste, kayit) {
+    var c = cevaplar(kayit);
+    return liste.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 1; }).length;
   }
+  function eskidenSec(liste, m, c) {
+    return karistir(liste).sort(function (a, b) { return c[anahtar(a)][1] - c[anahtar(b)][1]; }).slice(0, m);
+  }
+  function soruSec(id, n) {
+    var kayit = oku(), c = cevaplar(kayit), h = havuz(id), yay = !!bolumNo(id);
+    var yeni = h.filter(function (q) { return !c[anahtar(q)]; });
+    var kacan = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 0; });
+    var cozulen = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 1; });
+    var sec = dengeliSec(yeni, n, yay);
+    if (sec.length < n) sec = sec.concat(eskidenSec(kacan, n - sec.length, c));
+    if (sec.length < n) sec = sec.concat(eskidenSec(cozulen, n - sec.length, c));
+    return karistir(sec);
+  }
+  // Cevabı kaydeder; soru ilk kez doğru çözüldüyse true döner (yeni puan). Her soru en fazla 1 puan getirir.
+  function cevapYaz(q, dogru) {
+    var kayit = oku(), c = cevaplar(kayit), k = anahtar(q), once = c[k];
+    var yeniPuan = dogru && !(once && once[0] === 1);
+    c[k] = [dogru || (once && once[0] === 1) ? 1 : 0, kayit.tur || 0];
+    delete kayit.gorulen;
+    yaz(kayit);
+    return yeniPuan;
+  }
+  function turArtir() { var k = oku(); k.tur = (k.tur || 0) + 1; yaz(k); }
   function seviye() { return bul(SEVIYELER, durum.seviye) || SEVIYELER[0]; }
   function rekorAnahtar(konu) { return konu + ":" + seviye().id; }
 
@@ -203,8 +233,8 @@
     baglan("#oyun-bolumler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
 
     // 🎯 Konu turları (hazırlık testi hariç)
-    $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK; }).map(function (k) {
-      var ust = k.id === "karisik" ? "Tüm konular" : havuz(k.id).length + " soru";
+    $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK && k.grup !== "yks"; }).map(function (k) {
+      var hk = havuz(k.id), ust = (k.id === "karisik" ? "Tüm konular · " : "") + "Puan: " + cozulenSayi(hk, kayit) + " / " + hk.length;
       return '<button type="button" class="sec s2" data-konu="' + k.id + '"><small>' + ust + "</small><strong>" + k.ad + "</strong>" +
         enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + "</button>";
     }).join("");
@@ -219,8 +249,26 @@
       enIyiYazi(rek["dy-tum"], dyN) + "</button>" : "");
     baglan("#oyun-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
 
-    var top = kayit.toplam || 0;
-    $("oyun-toplam").textContent = top ? "Bu cihazda toplam puanın: " + top : "";
+    var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir. Puanların sadece bu cihazda tutulur.";
+    var uni = tumSorular();
+    $("oyun-toplam").textContent = "Üniversite toplam puanın: " + cozulenSayi(uni, kayit) + " / " + uni.length + "." + PUAN_NOT;
+
+    // 📘 YKS
+    if ($("panel-yks")) {
+      var yk = O.konular.filter(function (k) { return k.grup === "yks"; });
+      $("yks-konular").innerHTML = yk.map(function (k) {
+        var hk = havuz(k.id);
+        return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
+          '<span class="skor">Puan: ' + cozulenSayi(hk, kayit) + " / " + hk.length + "</span>" +
+          enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + "</button>";
+      }).join("");
+      baglan("#yks-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+      $("yks-dy").innerHTML = havuz("dy-yks").length ? '<button type="button" class="sec s3" data-dy="dy-yks"><small>' + havuz("dy-yks").length +
+        " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
+      baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
+      var ys = yksSorular();
+      $("yks-toplam").textContent = "YKS toplam puanın: " + cozulenSayi(ys, kayit) + " / " + ys.length + "." + PUAN_NOT;
+    }
     goster("oyun-giris");
   }
 
@@ -229,7 +277,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     $("seviye-aciklama").textContent = t.sayi + " soru. Her soru için ne kadar süre istersin?";
@@ -257,7 +305,8 @@
     durum.konu = konu;
     var t = testBilgi(konu);
     durum.sorular = soruSec(konu, t.sayi);
-    durum.i = 0; durum.puan = 0; durum.kacan = [];
+    durum.i = 0; durum.puan = 0; durum.kacan = []; durum.yeniPuan = 0;
+    turArtir();
     $("oyun-konu-adi").textContent = t.kisaAd + " · " + seviye().ad;
     soruCiz();
     goster("oyun-soru");
@@ -283,6 +332,7 @@
     sayaciBaslat(function () {
       // Süre doldu: puan yok, doğrudan sonraki soruya geç; doğru cevap sonuç ekranında gösterilir.
       durum.kacan.push({ q: q, neden: "sure" });
+      cevapYaz(q, false);
       sonraki();
     }, null, seviye().sure + ek);
   }
@@ -296,9 +346,12 @@
     });
     var dogru = secenekler[+btn.getAttribute("data-j")].dogru;
     if (dogru) durum.puan++; else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis" }); }
+    var yeniPuan = cevapYaz(q, dogru);
+    if (yeniPuan) durum.yeniPuan++;
     $("oyun-puan").textContent = durum.puan;
     var ac = $("oyun-aciklama");
-    ac.innerHTML = (dogru ? "<strong>Doğru!</strong> " : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a);
+    ac.innerHTML = (dogru ? "<strong>Doğru! " + (yeniPuan ? "+1 puan" : "(Bu soruyu daha önce çözmüştün; puan yok.)") + "</strong> "
+      : "<strong>Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a);
     ac.className = "oyun-aciklama " + (dogru ? "iyi" : "kotu");
     ac.hidden = false;
     var son = durum.i === durum.sorular.length - 1;
@@ -325,10 +378,11 @@
         if (aday) liste[liste.length - 1] = aday;
       }
     });
+    turArtir();
     dy.id = id; dy.liste = karistir(liste); dy.i = 0; dy.puan = 0; dy.seri = 0; dy.enSeri = 0; dy.kacan = [];
     var d = dyId(id);
     var b = BOLUMLER.filter(function (x) { return String(x.no) === d; })[0];
-    $("dy-ad").textContent = "⚡ " + (d === "tum" ? "Tüm chapter'lar" : "Chapter " + d);
+    $("dy-ad").textContent = "⚡ " + (d === "yks" ? "YKS · Temel Kavramlar" : d === "tum" ? "Tüm chapter'lar" : "Chapter " + d);
     $("dy-sn").textContent = (DY && DY.sure) || 5;
     dyCiz();
     goster("dy-soru");
@@ -358,12 +412,14 @@
     var q = dy.liste[dy.i], dogru = cevap !== null && cevap === q.d;
     var not = $("dy-not");
     if (dogru) {
+      cevapYaz(q, true);
       dy.puan++; dy.seri++; dy.enSeri = Math.max(dy.enSeri, dy.seri);
       $("dy-kart").className = "dy-kart yesil";
       not.textContent = "✓ Doğru bildin!"; not.className = "dy-not iyi";
     } else {
       dy.seri = 0;
       dy.kacan.push({ q: q, neden: cevap === null ? "sure" : "yanlis" });
+      cevapYaz(q, false);
       $("dy-kart").className = "dy-kart kirmizi";
       not.textContent = (cevap === null ? "⏱ Süre doldu · " : "✗ ") +
         (q.d ? "Bu ifade doğruydu." : "Bu ifade yanlıştı" + (q.n ? " · doğrusu: " + q.n : "."));
@@ -389,16 +445,16 @@
     kayit.rekor = kayit.rekor || {};
     var eski = kayit.rekor[dy.id], yeniRekor = eski == null || p > eski;
     if (yeniRekor) kayit.rekor[dy.id] = p;
-    kayit.toplam = (kayit.toplam || 0) + p;
+    delete kayit.toplam;
     kayit.oyun = (kayit.oyun || 0) + 1;
     yaz(kayit);
     var d = dyId(dy.id), so = (DY && DY.sonuc) || {};
     var b = BOLUMLER.filter(function (x) { return String(x.no) === d; })[0];
-    $("oyun-sonuc-baslik").textContent = "⚡ " + (d === "tum" ? "Tüm chapter'lar" : "Chapter " + d + (b ? " · " + b.ad : ""));
+    $("oyun-sonuc-baslik").textContent = "⚡ " + (d === "yks" ? "YKS · Temel Kavramlar" : d === "tum" ? "Tüm chapter'lar" : "Chapter " + d + (b ? " · " + b.ad : ""));
     $("oyun-sonuc-puan").textContent = p;
     $("oyun-sonuc-toplam").textContent = n;
     var mesaj = p === n ? so.tam : p >= n * 0.8 ? so.iyi : p >= n * 0.6 ? so.orta : so.zayif;
-    if (d === "tum") mesaj = mesaj.replace(/ ?Şimdi.*$| ?sonra 5 soruluk teste geç\.| ?5 soruluk teste geçmeden önce chapter'ın derslerine dön\./, "");
+    if (d === "tum" || d === "yks") mesaj = mesaj.replace(/ ?Şimdi.*$| ?sonra 5 soruluk teste geç\.| ?5 soruluk teste geçmeden önce chapter'ın derslerine dön\./, "");
     $("oyun-sonuc-mesaj").textContent = mesaj;
     $("oyun-rekor").textContent = "🔥 En uzun seri: " + dy.enSeri + (yeniRekor && eski != null ? " · Yeni rekor! (Önceki en iyi: " + eski + ")" : "");
     var liste = $("oyun-kacan");
@@ -411,10 +467,10 @@
       }).join("");
       liste.hidden = false;
     } else { liste.hidden = true; }
-    $("oyun-test-gec").hidden = d === "tum";
+    $("oyun-test-gec").hidden = d === "tum" || d === "yks";
     $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
     $("oyun-tekrar").textContent = "⚡ Yeni ifadelerle tekrar";
-    $("oyun-tekrar").classList.toggle("primary", d === "tum");
+    $("oyun-tekrar").classList.toggle("primary", d === "tum" || d === "yks");
     $("oyun-tekrar").setAttribute("data-hedef", dy.id);
     $("oyun-konu-degis").textContent = "Geri dön";
     $("oyun-ders-link").hidden = !(b && b.ders);
@@ -438,7 +494,7 @@
     var eski = kayit.rekor[anahtar];
     var yeniRekor = eski == null || p > eski;
     if (yeniRekor) kayit.rekor[anahtar] = p;
-    kayit.toplam = (kayit.toplam || 0) + p;
+    delete kayit.toplam;
     kayit.oyun = (kayit.oyun || 0) + 1;
     yaz(kayit);
 
@@ -454,9 +510,12 @@
       : oz ? (p >= n * 0.8 ? oz.iyi : p >= n * 0.5 ? oz.orta : oz.zayif) : p === n
       ? (enZor ? "Hepsini doğru bildin. Başka bir konuya geçmeye ne dersin?" : "Hepsini doğru bildin. Bir üst seviyeyi dene!")
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
+      : konuBilgi.yks ? "Kaçırdığın soruların cevapları aşağıda. Çözemediğin sorular, yeni sorular bitince tekrar karşına çıkacak."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
-    $("oyun-rekor").textContent = yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ")"
-      : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) : "";
+    var topP = konuBilgi.yks ? cozulenSayi(yksSorular(), kayit) : cozulenSayi(tumSorular(), kayit);
+    $("oyun-rekor").textContent = (yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
+      : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
+      "Bu turda " + durum.yeniPuan + " yeni puan · " + (konuBilgi.yks ? "YKS" : "Üniversite") + " toplam puanın: " + topP;
 
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
@@ -470,7 +529,7 @@
     } else {
       liste.hidden = true;
     }
-    $("oyun-ders-link").hidden = !konuBilgi.ders && konuBilgi.bolum;
+    $("oyun-ders-link").hidden = !konuBilgi.ders && (konuBilgi.bolum || konuBilgi.yks);
     $("oyun-ders-link").href = konuBilgi.ders || "ders.html?liste=calc1";
     $("oyun-ders-link").textContent = konuBilgi.bolum ? "Chapter'ın derslerine dön" : "Konu anlatımını izle";
     $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : "Tekrar oyna";
@@ -484,8 +543,22 @@
   });
   $("oyun-konu-degis").addEventListener("click", girisCiz);
 
+  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS ----
+  function sekmeAc(ad) {
+    if (!$("panel-yks")) return;
+    ["uni", "yks"].forEach(function (x) {
+      $("panel-" + x).hidden = x !== ad;
+      $("sekme-" + x).setAttribute("aria-selected", String(x === ad));
+    });
+    var k = oku(); k.sekme = ad; yaz(k);
+  }
+  ["uni", "yks"].forEach(function (x) {
+    if ($("sekme-" + x)) $("sekme-" + x).addEventListener("click", function () { sekmeAc(x); });
+  });
+
   girisCiz();
-  // oyun.html#bolum-2 ya da oyun.html#limit gibi linkler testi doğrudan başlatır
+  // oyun.html#bolum-2, #limit, #yks, #yks-rakam gibi linkler ilgili sekmeyi açar ve testi başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
+  sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedef ? "uni" : (oku().sekme === "yks" ? "yks" : "uni"));
   if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
 })();
