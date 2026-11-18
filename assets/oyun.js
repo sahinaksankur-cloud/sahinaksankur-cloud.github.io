@@ -278,11 +278,13 @@
     Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b) {
       b.addEventListener("click", function () { cevapla(b, secenekler, q); });
     });
+    // Grafikli ve parçalı fonksiyonlu sorular daha uzun okunur: her seviyede ek süre.
+    var ek = (q.g || /class="parcali"/.test(q.s)) ? (O.ekSure == null ? 5 : O.ekSure) : 0;
     sayaciBaslat(function () {
       // Süre doldu: puan yok, doğrudan sonraki soruya geç; doğru cevap sonuç ekranında gösterilir.
       durum.kacan.push({ q: q, neden: "sure" });
       sonraki();
-    });
+    }, null, seviye().sure + ek);
   }
 
   function cevapla(btn, secenekler, q) {

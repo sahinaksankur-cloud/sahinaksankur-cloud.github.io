@@ -4,7 +4,7 @@
 
 window.KK_OYUN = {
   // Oyunun adı: sayfa başlığında görünür. Değiştirmek için sadece burayı düzenleyin.
-  ad: "Calculus Oyunu",
+  ad: "Testler",
 
   // Konular: yeni bir konu (ör. lise, ortaokul) eklemek için buraya bir satır ve aşağıda aynı id ile bir soru listesi ekleyin.
   konular: [
@@ -46,10 +46,11 @@ window.KK_OYUN = {
 
   // Seviyeler: her soru için verilen süre (saniye). Sorular aynıdır, süre değişir.
   seviyeler: [
-    { id: "kolay", ad: "Kolay", sure: 20 },
-    { id: "orta", ad: "Orta", sure: 15 },
-    { id: "zor", ad: "Zor", sure: 10 }
+    { id: "kolay", ad: "Kolay", sure: 30 },
+    { id: "orta", ad: "Orta", sure: 20 },
+    { id: "zor", ad: "Zor", sure: 12 }
   ],
+  ekSure: 5,  // grafikli ve parçalı fonksiyonlu sorulara her seviyede eklenen saniye
   uyari: 5,   // son kaç saniyede sayaç turuncu yanıp söner
   kritik: 3,  // son kaç saniyede sayaç kırmızı yanıp söner
 
