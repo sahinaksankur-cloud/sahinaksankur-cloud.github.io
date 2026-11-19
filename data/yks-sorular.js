@@ -250,7 +250,23 @@ window.KK_YKS = {
       { s: "(2 + 3) · 4 = ?", c: ["20", "14", "24"], a: "Parantez her şeyden önce: 5 · 4 = 20." },
       { s: "12 ÷ 3 · 2 = ?", c: ["8", "2", "6"], a: "Çarpma ve bölme soldan sağa: 12 ÷ 3 = 4, 4 · 2 = 8." },
       { s: "18 ÷ (6 − 3) = ?", c: ["6", "0", "9"], a: "Önce parantez: 6 − 3 = 3, 18 ÷ 3 = 6. 0, parantezi görmezden gelince çıkar." },
-      { s: "6 − 3 · 2 + 1 = ?", c: ["1", "7", "−1"], a: "Önce çarpma: 6 − 6 + 1. Sonra soldan sağa: 0 + 1 = 1." }
+      { s: "6 − 3 · 2 + 1 = ?", c: ["1", "7", "−1"], a: "Önce çarpma: 6 − 6 + 1. Sonra soldan sağa: 0 + 1 = 1." },
+      // Kesirler (paydalar eşit): işaret ve parantez tekrarı
+      { s: "2/7 + 3/7 = ?", c: ["5/7", "5/14", "6/7"], a: "Paydalar eşitse paylar toplanır, payda aynı kalır: 5/7. Paydaları da toplamak sık yapılan hata." },
+      { s: "7/9 − 2/9 = ?", c: ["5/9", "−5/9", "9/9"], a: "Paylar çıkarılır, payda aynı kalır: 5/9." },
+      { s: "3/11 + 5/11 − 2/11 = ?", c: ["6/11", "10/11", "6/33"], a: "Paylar soldan sağa: 3 + 5 − 2 = 6. Payda 11 kalır: 6/11." },
+      { s: "2/5 − 4/5 = ?", c: ["−2/5", "2/5", "−6/5"], a: "2 − 4 = −2: sonuç −2/5. Küçükten büyük çıkınca sonuç negatif." },
+      { s: "−(3/7 − 5/7) = ?", c: ["2/7", "−2/7", "8/7"], a: "Önce parantez: 3/7 − 5/7 = −2/7. Önündeki eksi: −(−2/7) = 2/7." },
+      { s: "−(5/7 − 3/7) = ?", c: ["−2/7", "2/7", "−8/7"], a: "Önce parantez: 5/7 − 3/7 = 2/7. Önündeki eksi: −2/7." },
+      { s: "−(2/11 + 5/11) = ?", c: ["−7/11", "3/11", "7/11"], a: "Önce parantez: 7/11, sonra −7/11. (Eksiyi dağıtırsan: −2/11 − 5/11.)" },
+      { s: "−(4/13 − 4/13) = ?", c: ["0", "−8/13", "8/13"], a: "Parantezin içi 0: −0 = 0." },
+      { s: "−(6/11 − 2/11) + 4/11 = ?", c: ["0", "8/11", "−8/11"], a: "−(4/11) + 4/11 = 0." },
+      { s: "3 · (5/7 − 3/7) = ?", c: ["6/7", "12/7", "2/21"], a: "Önce parantez: 2/7. Sonra 3 · 2/7 = 6/7. Tam sayı ile çarparken sadece pay çarpılır. 12/7, sadece 5/7'yi çarpınca çıkar." },
+      { s: "2 · (−3/5) − 1/5 = ?", c: ["−7/5", "1", "−8/5"], a: "Önce çarpma: −6/5. Sonra −6/5 − 1/5 = −7/5." },
+      { s: "−2 · (−3/5) − 1/5 = ?", c: ["1", "−7/5", "7/5"], a: "Önce çarpma: (−2) · (−3/5) = 6/5. Sonra 6/5 − 1/5 = 5/5 = 1." },
+      { s: "1/7 + 2/7 · 3 = ?", c: ["1", "9/7", "6/7"], a: "Önce çarpma: 2/7 · 3 = 6/7. Sonra 1/7 + 6/7 = 7/7 = 1." },
+      { s: "(1/7 + 2/7) · 3 = ?", c: ["9/7", "1", "9/21"], a: "Önce parantez: 3/7. Sonra 3/7 · 3 = 9/7. Paydayı da çarpmak (9/21) hata." },
+      { s: "5/8 − (1/8 − 3/8) = ?", c: ["7/8", "3/8", "1/8"], a: "Önce parantez: 1/8 − 3/8 = −2/8. Sonra 5/8 − (−2/8) = 5/8 + 2/8 = 7/8." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -349,6 +365,9 @@ window.KK_YKS = {
     { k: "yks-islem", s: "12 ÷ 3 · 2 = 2", d: false, n: "Soldan sağa: 4 · 2 = 8" },
     { k: "yks-islem", s: "48/32'nin en sade hâli 3/2'dir.", d: true },
     { k: "yks-islem", s: "36/24 en çok 6 ile sadeleşir.", d: false, n: "12 ile: 3/2" },
+    { k: "yks-islem", s: "2/7 + 3/7 = 5/14", d: false, n: "Payda aynı kalır: 5/7" },
+    { k: "yks-islem", s: "−(3/7 − 5/7) = 2/7", d: true },
+    { k: "yks-islem", s: "3 · (5/7 − 3/7) = 15/7 − 3/7", d: false, n: "3 · 5/7 − 3 · 3/7 = 6/7" },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
