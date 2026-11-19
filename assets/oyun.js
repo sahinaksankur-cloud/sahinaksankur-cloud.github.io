@@ -194,7 +194,8 @@
   function rekorAnahtar(konu) { return konu + ":" + seviye().id; }
 
   // ---- ⭐ Tam doğru bonusu: 10 soruluk testlerde tüm sorular doğruysa (data/sorular.js → tamBonus).
-  // Her konu + seviye için en iyi bonus sayılır; aynı bonus tekrar oynayarak üst üste eklenmez.
+  // Bonus, turda puan getiren en az bir soru varsa toplam puana eklenir (kayit.bonus["konu:seviye"] birikir).
+  // Konunun tüm soruları çözüldükten sonraki turlarda, sorularda olduğu gibi bonus da eklenmez; kutlama yine gösterilir.
   // hiz: true → soru başına ortalama kaç saniye erken bitirdiyse o kadar ek bonus (12 sn'lik soruyu 9 sn'de çözen +3).
   var TAM_BONUS = O.tamBonus || { kolay: { puan: 1 }, orta: { puan: 2 }, zor: { puan: 1, hiz: true } };
   function bonusHesap(seviyeId, kalanSn, n) {
@@ -212,7 +213,12 @@
     Object.keys(b).forEach(function (k) { if (/^yks-/.test(k) === !!yks) top += b[k]; });
     return top;
   }
-  function bonusRozet(kayit, konu) { var b = bonusKonu(kayit, konu); return b ? '<span class="skor bonus-rozet">⭐ Bonus: ' + b + "</span>" : ""; }
+  function bonusRozet(kayit, konu) { var b = bonusKonu(kayit, konu); return b ? '<span class="skor bonus-rozet">⭐ Bonus: +' + b + "</span>" : ""; }
+  // "YKS toplam puanın: 52 (40 / 120 soru + 12 bonus)"
+  function toplamYazi(ad, liste, kayit, yks) {
+    var c = cozulenSayi(liste, kayit), b = bonusGrup(kayit, yks);
+    return ad + " toplam puanın: " + (c + b) + " (" + c + " / " + liste.length + " soru" + (b ? " + " + b + " bonus" : "") + ")";
+  }
 
   if (O.ad) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
   // ---- Sesler (Web Audio; ses dosyası yok). Öğrenci 🔊 düğmesiyle kapatabilir; seçim cihazda hatırlanır. ----
@@ -353,10 +359,9 @@
       enIyiYazi(rek["dy-tum"], dyN) + "</button>" : "");
     baglan("#oyun-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
 
-    var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir. Puanların sadece bu cihazda tutulur.";
+    var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir; 10 soruluk bir testin hepsini doğru yaparsan ⭐ bonus da kazanırsın. Puanların sadece bu cihazda tutulur.";
     var uni = tumSorular();
-    var bu = bonusGrup(kayit, false), by = bonusGrup(kayit, true);
-    $("oyun-toplam").textContent = "Üniversite toplam puanın: " + cozulenSayi(uni, kayit) + " / " + uni.length + (bu ? " · ⭐ Bonus: " + bu : "") + "." + PUAN_NOT;
+    $("oyun-toplam").textContent = toplamYazi("Üniversite", uni, kayit, false) + "." + PUAN_NOT;
 
     // 📘 YKS
     if ($("panel-yks")) {
@@ -372,7 +377,7 @@
         " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
       var ys = yksSorular();
-      $("yks-toplam").textContent = "YKS toplam puanın: " + cozulenSayi(ys, kayit) + " / " + ys.length + (by ? " · ⭐ Bonus: " + by : "") + "." + PUAN_NOT;
+      $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, true) + "." + PUAN_NOT;
     }
     goster("oyun-giris");
   }
@@ -609,10 +614,8 @@
     var bonus = null;
     if (p === n && n >= (O.soruSayisi || 10) && !testBilgi(durum.konu).bolum) {
       bonus = bonusHesap(seviye().id, durum.kalan, n);
-      kayit.bonus = kayit.bonus || {};
-      bonus.eski = kayit.bonus[anahtar] || 0;
-      bonus.eklenen = Math.max(0, bonus.toplam - bonus.eski);
-      if (bonus.toplam > bonus.eski) kayit.bonus[anahtar] = bonus.toplam;
+      bonus.eklendi = durum.yeniPuan > 0;   // turda yeni puan yoksa konu zaten bitmiştir: bonus eklenmez
+      if (bonus.eklendi) { kayit.bonus = kayit.bonus || {}; kayit.bonus[anahtar] = (kayit.bonus[anahtar] || 0) + bonus.toplam; }
     }
     yaz(kayit);
 
@@ -630,11 +633,12 @@
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
       : konuBilgi.yks ? "Kaçırdığın soruların cevapları aşağıda. Çözemediğin sorular, yeni sorular bitince tekrar karşına çıkacak."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
-    var topP = konuBilgi.yks ? cozulenSayi(yksSorular(), kayit) : cozulenSayi(tumSorular(), kayit);
+    var hk = havuz(durum.konu), bitti = hk.length && cozulenSayi(hk, kayit) === hk.length;
     $("oyun-rekor").textContent = (yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
       : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
-      "Bu turda " + durum.yeniPuan + " yeni puan · " + (konuBilgi.yks ? "YKS" : "Üniversite") + " toplam puanın: " + topP +
-      (bonusGrup(kayit, konuBilgi.yks) ? " · ⭐ Bonus: " + bonusGrup(kayit, konuBilgi.yks) : "");
+      "Bu turda " + durum.yeniPuan + " yeni puan" + (bonus && bonus.eklendi ? " + " + bonus.toplam + " bonus" : "") + " · " +
+      toplamYazi(konuBilgi.yks ? "YKS" : "Üniversite", konuBilgi.yks ? yksSorular() : tumSorular(), kayit, konuBilgi.yks) +
+      (bitti ? " · ✓ Bu konudaki tüm soruları çözdün! Sorular yine gelir ama artık puan ve bonus eklenmez." : "");
 
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
@@ -664,16 +668,16 @@
       ? (b.hiz ? "+" + b.sabit + " tam doğru · +" + b.hiz + " hız bonusu (soru başına ortalama " + String(b.ort).replace(".", ",") + " sn erken)"
         : "+" + b.sabit + " tam doğru · Soruları daha erken bitirirsen her saniye için +1 hız bonusu")
       : seviye().ad + " seviyede tam doğru";
-    var not = b.eklenen === b.toplam ? ""
-      : b.eklenen > 0 ? "Önceki en iyi bonusun " + b.eski + " idi; toplamına +" + b.eklenen + " eklendi."
-      : "Bu konu ve seviyede daha önce " + b.eski + " bonus almıştın; en iyisi sayılır.";
+    var not = b.eklendi ? "Toplam puanına +" + b.toplam + " eklendi."
+      : "Bu konudaki tüm soruları daha önce çözmüştün; bu tur puan ve bonus eklenmedi. Yeni konulara geç!";
     var d = document.createElement("div");
     d.id = "kutlama"; d.className = "kutlama";
     d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-labelledby", "kutlama-baslik");
     d.innerHTML = '<canvas class="kutlama-fisek" aria-hidden="true"></canvas>' +
       '<div class="kutlama-kutu"><div class="kutlama-yildiz" aria-hidden="true">⭐ 🌟 ⭐</div>' +
       '<h2 id="kutlama-baslik">Tebrikler!</h2><p class="kutlama-metin">Tüm soruları doğru cevapladın.</p>' +
-      '<p class="kutlama-bonus">+' + b.toplam + ' bonus</p><p class="kutlama-detay">' + detay + "</p>" +
+      (b.eklendi ? '<p class="kutlama-bonus">+' + b.toplam + ' bonus</p><p class="kutlama-detay">' + detay + "</p>"
+        : '<p class="kutlama-bonus kucuk">⭐ Tam doğru!</p>') +
       (not ? '<p class="kutlama-not">' + not + "</p>" : "") +
       '<button type="button" class="btn primary big" id="kutlama-kapat">Harika! →</button></div>';
     document.body.appendChild(d);

@@ -480,6 +480,7 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .kutlama-kutu h2 { font-family: var(--serif); font-size: 2.4rem; margin: 6px 0 4px; }
 .kutlama-metin { font-size: 1.15rem; margin: 0 0 10px; }
 .kutlama-bonus { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 4px 0 6px; color: #e08e00; }
+.kutlama-bonus.kucuk { font-size: 2.2rem; }
 .kutlama-detay { color: var(--muted); margin: 0 0 6px; }
 .kutlama-not { color: var(--muted); font-size: 0.9rem; margin: 0 0 6px; }
 .kutlama-kutu .btn { margin-top: 12px; }
