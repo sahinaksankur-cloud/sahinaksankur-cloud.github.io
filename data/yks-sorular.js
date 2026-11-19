@@ -10,7 +10,8 @@ window.KK_YKS = {
     { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-irrasyonel", ad: "İrrasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-reel", ad: "Reel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
-    { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
+    { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -197,6 +198,28 @@ window.KK_YKS = {
       { s: "x / (x − 3) ifadesinin x = 0 için değeri nedir?", c: ["0", "Tanımsız", "1"], a: "0 / (0 − 3) = 0 / (−3) = 0. Tanımsız olduğu değer x = 3." },
       { s: "2 / (x · (x − 5)) ifadesi kaç farklı x değeri için tanımsızdır?", c: ["2", "1", "0"], a: "Çarpımın sıfır olması için çarpanlardan biri sıfır olmalı: x = 0 ya da x = 5." }
     ],
+    "yks-tekcift": [
+      // Tanım
+      { s: "Çift sayı nedir? (k bir tam sayı)", c: ["2k biçiminde yazılan tam sayı", "2k + 1 biçiminde yazılan sayı", "Sadece pozitif tam sayılar"], a: "2'ye kalansız bölünen tam sayılar çifttir: 2k. Tek sayılar 2k + 1 biçimindedir." },
+      { s: "0 için hangisi doğrudur?", c: ["Çift sayıdır", "Tek sayıdır", "Ne tek ne çifttir"], a: "0 = 2 · 0: 2'ye kalansız bölünür, çifttir." },
+      { s: "−7 için hangisi doğrudur?", c: ["Tek sayıdır", "Çift sayıdır", "Negatif olduğu için ne tek ne çift"], a: "−7 = 2 · (−4) + 1: tektir. Negatif tam sayılar da tek ya da çifttir." },
+      // İşlemler
+      { s: "Tek + Tek = ?", c: ["Çift", "Tek", "Bazen tek bazen çift"], a: "3 + 5 = 8. İki tek sayının toplamı her zaman çifttir." },
+      { s: "Çift − Tek = ?", c: ["Tek", "Çift", "Bazen tek bazen çift"], a: "8 − 3 = 5. Çıkarma, toplama ile aynı kurala uyar." },
+      { s: "Tek · Tek = ?", c: ["Tek", "Çift", "Bazen tek bazen çift"], a: "3 · 5 = 15. Tek sayıların çarpımı her zaman tektir." },
+      { s: "Çift · Tek = ?", c: ["Çift", "Tek", "Bazen tek bazen çift"], a: "4 · 3 = 12. Çarpanlardan biri çiftse çarpım çifttir." },
+      { s: "Çift ÷ Çift için hangisi doğrudur?", c: ["Tek ya da çift olabilir", "Her zaman çift sayıdır", "Her zaman tek sayıdır"], a: "8 ÷ 2 = 4 çift, 6 ÷ 2 = 3 tek. Bölmede tek-çift kuralı yoktur." },
+      { s: "3<sup>10</sup> sayısı için hangisi doğrudur?", c: ["Tektir", "Çifttir", "Belirlenemez"], a: "Tek sayıların çarpımı tektir: 3 · 3 · … · 3 tek." },
+      { s: "2026 · 2027 + 1 sayısı için hangisi doğrudur?", c: ["Tektir", "Çifttir", "Belirlenemez"], a: "Hesap gerekmez: 2026 çift → çarpım çift → çift + 1 tek." },
+      { s: "1 + 2 + 3 + … + 10 toplamı için hangisi doğrudur?", c: ["Tektir", "Çifttir", "Belirlenemez"], a: "Toplamda 5 tane tek sayı var (1, 3, 5, 7, 9). Tek sayıda tek sayı toplanırsa sonuç tektir: 55." },
+      // Harfli
+      { s: "a tek bir tam sayıdır. Hangisi kesinlikle çifttir?", c: ["a + 1", "a + 2", "2a + 1"], a: "Tek + 1 = çift. a + 2 ve 2a + 1 tektir." },
+      { s: "a tek bir tam sayıdır. 3a + 5 için hangisi doğrudur?", c: ["Çifttir", "Tektir", "Belirlenemez"], a: "3a: tek · tek = tek. Tek + 5 = tek + tek = çift." },
+      { s: "a ve b tam sayılardır, a · b tek ise hangisi kesinlikle doğrudur?", c: ["a ve b tektir", "a ve b çifttir", "a + b tektir"], a: "Çarpanlardan biri çift olsaydı çarpım çift olurdu: ikisi de tek. O zaman a + b çifttir." },
+      { s: "a ve b tam sayılardır, a · b çift ise hangisi kesinlikle doğrudur?", c: ["En az biri çifttir", "Her ikisi de çifttir", "a + b çifttir"], a: "Biri çift olması yeter: 2 · 3 = 6. Bu örnekte a + b = 5, tek." },
+      { s: "a ve b tam sayılardır, a + b tek ise a · b için hangisi doğrudur?", c: ["Çifttir", "Tektir", "Belirlenemez"], a: "Toplam tekse biri tek biri çifttir. Çift çarpan varsa çarpım çifttir." },
+      { s: "n bir tam sayıdır. n · (n + 1) için hangisi doğrudur?", c: ["Her zaman çifttir", "Her zaman tektir", "n'ye bağlıdır"], a: "n ile n + 1 ardışıktır; biri mutlaka çifttir. Bu yüzden çarpım çifttir." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -276,6 +299,15 @@ window.KK_YKS = {
     { k: "yks-tanimsiz", s: "1 / (x − 1) ifadesi x = −1 için tanımsızdır.", d: false, n: "x = −1'de payda −2; tanımsız olduğu yer x = 1" },
     { k: "yks-tanimsiz", s: "x / (x + 2) ifadesi x = 0 için tanımsızdır.", d: false, n: "0/2 = 0; payın 0 olması sorun değil" },
     { k: "yks-tanimsiz", s: "√(−1) reel sayılarda tanımsızdır.", d: true },
+    { k: "yks-tekcift", s: "0 bir çift sayıdır.", d: true },
+    { k: "yks-tekcift", s: "Negatif sayılar tek ya da çift olamaz.", d: false, n: "−3 tek, −4 çifttir" },
+    { k: "yks-tekcift", s: "Tek · Tek = Tek", d: true },
+    { k: "yks-tekcift", s: "Tek + Tek = Tek", d: false, n: "3 + 5 = 8, çift" },
+    { k: "yks-tekcift", s: "İki çift sayının bölümü her zaman çifttir.", d: false, n: "6 ÷ 2 = 3, tek" },
+    { k: "yks-tekcift", s: "Ardışık iki tam sayının çarpımı çifttir.", d: true },
+    { k: "yks-tekcift", s: "a · b çift ise a ve b'nin ikisi de çifttir.", d: false, n: "2 · 3 = 6; biri çift olması yeter" },
+    { k: "yks-tekcift", s: "Çift bir sayının her pozitif kuvveti çifttir.", d: true },
+    { k: "yks-tekcift", s: "Ardışık iki tam sayının toplamı çifttir.", d: false, n: "n + (n + 1) = 2n + 1, tek" },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
