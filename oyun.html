@@ -70,12 +70,8 @@
 
       <section class="serit">
         <div class="tur t2"><h2>🔁 Konu Tekrarı</h2><p>İstediğin 3–5 konuyu seç, onlardan karışık 10 soru gelsin.</p><span class="ozellik">10 soru · karma</span></div>
-        <div class="tekrar-kutu">
-          <div class="secenekler" id="yks-tekrar-konular"></div>
-          <div class="tekrar-alt">
-            <button type="button" class="btn primary" id="yks-tekrar-basla" disabled>Tekrara başla →</button>
-            <p class="tekrar-not" id="yks-tekrar-not" aria-live="polite"></p>
-          </div>
+        <div class="secenekler">
+          <button type="button" class="sec s2 tekrar-ac" id="tekrar-ac"><small>🔁 3–5 konu</small><strong>Konuları seçerek tekrar et</strong><span class="skor">Yukarıdaki konu kartlarına dokunarak seçeceksin.</span></button>
         </div>
       </section>
 
@@ -85,6 +81,15 @@
       </section>
 
       <p class="oyun-toplam" id="yks-toplam"></p>
+      <div class="tekrar-cubuk" id="tekrar-cubuk" hidden>
+        <div class="tekrar-cubuk-ic">
+          <p class="tekrar-not" id="yks-tekrar-not" aria-live="polite"></p>
+          <div class="tekrar-cubuk-dugmeler">
+            <button type="button" class="btn" id="tekrar-vazgec">Vazgeç</button>
+            <button type="button" class="btn primary" id="yks-tekrar-basla" disabled>Tekrara başla →</button>
+          </div>
+        </div>
+      </div>
       </div>
     </section>
 

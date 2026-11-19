@@ -399,7 +399,6 @@
     // 📘 YKS
     if ($("panel-yks")) {
       var yk = O.konular.filter(function (k) { return k.grup === "yks" && !k.gizli; });
-      tekrarCiz(yk, kayit);
       $("yks-konular").innerHTML = yk.map(function (k) {
         var hk = havuz(k.id);
         return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
@@ -413,7 +412,11 @@
           "<strong>Yukarıdaki konuların hepsinden karışık 10 soru</strong>" +
           '<span class="skor">' + (kalan ? "Çözmediğin: " + kalan + " / " + hepsi.length : "✓ Hepsini çözdün") + bonusRozet(kayit, TUM_TEKRAR) + "</span></button>";
       })();
-      baglan("#yks-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+      baglan("#yks-konular", "[data-konu]", function (b) {
+        var id = b.getAttribute("data-konu");
+        if (secimModu && id !== TUM_TEKRAR) tekrarSec_(id, b); else seviyeSor(id);
+      });
+      tekrarModuUygula();
       $("yks-dy").innerHTML = havuz("dy-yks").length ? '<button type="button" class="sec s3" data-dy="dy-yks"><small>' + havuz("dy-yks").length +
         " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
@@ -468,6 +471,7 @@
 
   // ---- Oyun ----
   function basla(konu) {
+    if (secimModu) tekrarModu(false);
     durum.konu = konu;
     var t = testBilgi(konu);
     durum.sorular = soruSec(konu, t.sayi);
@@ -797,35 +801,45 @@
   });
   $("oyun-konu-degis").addEventListener("click", girisCiz);
 
-  // 🔁 Konu Tekrarı şeridi: konu seçimi, seçenek ve başlat düğmesi
-  function tekrarCiz(yk, kayit) {
-    if (!$("yks-tekrar-konular")) return;
-    var s = tekrarSecim(), c = cevaplar(kayit);
-    $("yks-tekrar-konular").innerHTML = yk.map(function (k) {
-      var h = O.sorular[k.id] || [], kalan = h.filter(function (q) { return !cozulduMu(q, c); }).length, sec = s.k.indexOf(k.id) >= 0;
-      return '<button type="button" class="sec s2 tekrar-sec' + (sec ? " secili" : "") + '" aria-pressed="' + sec + '" data-tekrar="' + k.id + '">' +
-        "<small>" + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
-        '<span class="skor">' + (kalan ? "Çözmediğin: " + kalan : "✓ Hepsini çözdün") + "</span></button>";
-    }).join("");
-    tekrarDurum();
-  }
+  // 🔁 Konu Tekrarı: şeritteki düğme Konu Testi kartlarını seçim moduna alır; altta seçim çubuğu çıkar
+  var secimModu = false;
   function tekrarKaydet(s) { var k = oku(); k.tekrar = { k: s.k, c: s.c }; yaz(k); }
-  function tekrarDurum() {
-    var s = tekrarSecim(), n = s.k.length, not = $("yks-tekrar-not"), dugme = $("yks-tekrar-basla");
-    dugme.disabled = !(n >= TEKRAR_EN_AZ && n <= TEKRAR_EN_COK);
-    not.textContent = n < TEKRAR_EN_AZ ? "En az " + TEKRAR_EN_AZ + " konu seç (" + n + " seçili)." : n + " konu seçili.";
-  }
-  if ($("yks-tekrar-konular")) {
-    $("yks-tekrar-konular").addEventListener("click", function (e) {
-      var b = e.target.closest ? e.target.closest("[data-tekrar]") : null; if (!b) return;
-      var s = tekrarSecim(), id = b.getAttribute("data-tekrar"), i = s.k.indexOf(id);
-      if (i >= 0) s.k.splice(i, 1);
-      else if (s.k.length >= TEKRAR_EN_COK) { $("yks-tekrar-not").textContent = "En fazla " + TEKRAR_EN_COK + " konu seçebilirsin."; return; }
-      else s.k.push(id);
-      tekrarKaydet(s);
-      b.classList.toggle("secili", i < 0); b.setAttribute("aria-pressed", String(i < 0));
-      tekrarDurum();
+  function tekrarModuUygula() {
+    var s = tekrarSecim();
+    Array.prototype.forEach.call(document.querySelectorAll("#yks-konular [data-konu]"), function (b) {
+      var sec = secimModu && s.k.indexOf(b.getAttribute("data-konu")) >= 0;
+      b.classList.toggle("secili", sec);
+      if (secimModu) b.setAttribute("aria-pressed", String(sec)); else b.removeAttribute("aria-pressed");
     });
+    if (secimModu) tekrarDurum();
+  }
+  function tekrarModu(acik) {
+    secimModu = acik;
+    if (!$("panel-yks")) return;
+    $("panel-yks").classList.toggle("secim-modu", acik);
+    $("tekrar-cubuk").hidden = !acik;
+    tekrarModuUygula();
+    if (acik) {
+      var hedef = $("yks-konular").closest(".serit");
+      hedef.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    }
+  }
+  function tekrarSec_(id, b) {
+    var s = tekrarSecim(), i = s.k.indexOf(id);
+    if (i >= 0) s.k.splice(i, 1);
+    else if (s.k.length >= TEKRAR_EN_COK) { $("yks-tekrar-not").textContent = "En fazla " + TEKRAR_EN_COK + " konu seçebilirsin."; return; }
+    else s.k.push(id);
+    tekrarKaydet(s);
+    tekrarModuUygula();
+  }
+  function tekrarDurum() {
+    var s = tekrarSecim(), n = s.k.length;
+    $("yks-tekrar-basla").disabled = !(n >= TEKRAR_EN_AZ && n <= TEKRAR_EN_COK);
+    $("yks-tekrar-not").textContent = "🔁 Tekrar için " + TEKRAR_EN_AZ + "–" + TEKRAR_EN_COK + " konu seç · " + n + " seçili";
+  }
+  if ($("tekrar-ac")) {
+    $("tekrar-ac").addEventListener("click", function () { tekrarModu(true); });
+    $("tekrar-vazgec").addEventListener("click", function () { tekrarModu(false); });
     $("yks-tekrar-basla").addEventListener("click", function () { if (!this.disabled) seviyeSor(TEKRAR); });
   }
 
@@ -837,6 +851,7 @@
       $("sekme-" + x).setAttribute("aria-selected", String(x === ad));
     });
     var k = oku(); k.sekme = ad; yaz(k);
+    if (ad !== "yks" && secimModu) tekrarModu(false);
   }
   ["uni", "yks"].forEach(function (x) {
     if ($("sekme-" + x)) $("sekme-" + x).addEventListener("click", function () { sekmeAc(x); });
