@@ -661,7 +661,7 @@
     var eski = $("kutlama"); if (eski) eski.remove();
     var detay = b.saniyeli
       ? "+" + b.sabit + " tam doğru · +" + b.hiz + " hız bonusu (" + durum.kalan + " sn artırdın)"
-      : seviye().ad + " seviyesinde tam doğru";
+      : seviye().ad + " seviyede tam doğru";
     var not = b.eklenen === b.toplam ? ""
       : b.eklenen > 0 ? "Önceki en iyi bonusun " + b.eski + " idi; toplamına +" + b.eklenen + " eklendi."
       : "Bu konu ve seviyede daha önce " + b.eski + " bonus almıştın; en iyisi sayılır.";
