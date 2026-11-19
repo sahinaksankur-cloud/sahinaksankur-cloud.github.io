@@ -277,7 +277,24 @@ window.KK_YKS = {
       { s: "−1/2 + 1/4 = ?", c: ["−1/4", "1/4", "−3/4"], a: "−2/4 + 1/4 = −1/4." },
       { s: "−1/3 − 1/6 = ?", c: ["−1/2", "−1/6", "1/6"], a: "−2/6 − 1/6 = −3/6 = −1/2." },
       { s: "−(1/4 − 1/2) = ?", c: ["1/4", "−1/4", "3/4"], a: "Önce parantez: 1/4 − 2/4 = −1/4. Önündeki eksi: 1/4." },
-      { s: "1/2 − (1/4 − 1/2) = ?", c: ["3/4", "1/4", "−1/4"], a: "Parantez: 1/4 − 2/4 = −1/4. Sonra 1/2 − (−1/4) = 2/4 + 1/4 = 3/4." }
+      { s: "1/2 − (1/4 − 1/2) = ?", c: ["3/4", "1/4", "−1/4"], a: "Parantez: 1/4 − 2/4 = −1/4. Sonra 1/2 − (−1/4) = 2/4 + 1/4 = 3/4." },
+      // Kesirlerde çarpma: temel
+      { s: "2/3 · 4/5 = ?", c: ["8/15", "6/8", "8/5"], a: "Pay ile pay, payda ile payda çarpılır: (2 · 4)/(3 · 5) = 8/15. Payda eşitlemeye gerek yok." },
+      { s: "3/4 · 2/3 = ?", c: ["1/2", "6/7", "5/7"], a: "(3 · 2)/(4 · 3) = 6/12 = 1/2. Çarpmadan önce 3'ler sadeleşir: 2/4 = 1/2." },
+      { s: "1/2 · 1/2 = ?", c: ["1/4", "1", "1/2"], a: "Yarının yarısı: 1/4. 1/2 + 1/2 = 1 ile karıştırma." },
+      { s: "3 · 2/7 = ?", c: ["6/7", "6/21", "2/21"], a: "3 = 3/1: (3 · 2)/(1 · 7) = 6/7. Tam sayı ile çarparken sadece pay çarpılır." },
+      { s: "(−1/2) · 4/5 = ?", c: ["−2/5", "2/5", "−1/10"], a: "(−) · (+) = (−). 4/10 = 2/5: sonuç −2/5." },
+      { s: "(−2/3) · (−3/4) = ?", c: ["1/2", "−1/2", "6/7"], a: "(−) · (−) = (+). 6/12 = 1/2." },
+      // Çarpma + toplama/çıkarma + parantez
+      { s: "1/2 + 1/2 · 1/2 = ?", c: ["3/4", "1/2", "1"], a: "Önce çarpma: 1/2 · 1/2 = 1/4. Sonra 1/2 + 1/4 = 3/4." },
+      { s: "(1/2 + 1/2) · 1/2 = ?", c: ["1/2", "3/4", "1/4"], a: "Parantez çarpmanın önüne geçer: 1 · 1/2 = 1/2." },
+      { s: "1 − 1/2 · 1/2 = ?", c: ["3/4", "1/4", "0"], a: "Önce çarpma: 1/4. Sonra 1 − 1/4 = 3/4." },
+      { s: "(1 − 1/2) · 1/2 = ?", c: ["1/4", "3/4", "1/2"], a: "Önce parantez: 1/2. Sonra 1/2 · 1/2 = 1/4." },
+      { s: "2/3 · (1/2 − 1/4) = ?", c: ["1/6", "1/12", "−1/6"], a: "Önce parantez: 2/4 − 1/4 = 1/4. Sonra 2/3 · 1/4 = 2/12 = 1/6." },
+      { s: "2 · (1/2 − 1/3) = ?", c: ["1/3", "2/3", "1/6"], a: "Parantez: 3/6 − 2/6 = 1/6. Sonra 2 · 1/6 = 2/6 = 1/3. 2/3, sadece 1/2'yi çarpınca çıkar." },
+      { s: "3/4 · 2 − 1/2 = ?", c: ["1", "9/8", "1/2"], a: "Önce çarpma: 3/4 · 2 = 6/4 = 3/2. Sonra 3/2 − 1/2 = 1." },
+      { s: "−(1/3 · 3/4) = ?", c: ["−1/4", "1/4", "−3/7"], a: "Parantez: 3/12 = 1/4. Önündeki eksi: −1/4." },
+      { s: "−1/2 · (1/3 − 1) = ?", c: ["1/3", "−1/3", "−2/3"], a: "Parantez: 1/3 − 3/3 = −2/3. Sonra (−1/2) · (−2/3) = 2/6 = 1/3." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -381,6 +398,9 @@ window.KK_YKS = {
     { k: "yks-islem", s: "3 · (5/7 − 3/7) = 15/7 − 3/7", d: false, n: "3 · 5/7 − 3 · 3/7 = 6/7" },
     { k: "yks-islem", s: "1/2 + 1/4 = 2/6", d: false, n: "Payda eşitlenir: 2/4 + 1/4 = 3/4" },
     { k: "yks-islem", s: "1/3 − 1/2 negatif bir sayıdır.", d: true },
+    { k: "yks-islem", s: "1/2 · 1/2 = 1", d: false, n: "Yarının yarısı: 1/4" },
+    { k: "yks-islem", s: "3 · 2/7 = 6/21", d: false, n: "Sadece pay çarpılır: 6/7" },
+    { k: "yks-islem", s: "(1/2 + 1/2) · 1/2 = 1/2", d: true },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
