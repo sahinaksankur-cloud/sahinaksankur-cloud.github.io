@@ -501,4 +501,4 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .kesir.buyuk .kesir { font-size: 0.8em; }
 .nw { white-space: nowrap; }
 /* Soru içinde kendi satırında duran dizi (ör. sıralamayı bozan kesir) */
-.dizi { display: block; margin: 0.45em 0; color: var(--accent); font-size: 0.78em; }
+.dizi { display: block; margin: 0 0 0.35em; color: var(--accent); font-size: 0.78em; }
