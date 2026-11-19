@@ -11,7 +11,8 @@ window.KK_YKS = {
     { id: "yks-irrasyonel", ad: "İrrasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-reel", ad: "Reel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
-    { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -220,6 +221,37 @@ window.KK_YKS = {
       { s: "a ve b tam sayılardır, a + b tek ise a · b için hangisi doğrudur?", c: ["Çifttir", "Tektir", "Belirlenemez"], a: "Toplam tekse biri tek biri çifttir. Çift çarpan varsa çarpım çifttir." },
       { s: "n bir tam sayıdır. n · (n + 1) için hangisi doğrudur?", c: ["Her zaman çifttir", "Her zaman tektir", "n'ye bağlıdır"], a: "n ile n + 1 ardışıktır; biri mutlaka çifttir. Bu yüzden çarpım çifttir." }
     ],
+    "yks-islem": [
+      // Dağılma özelliği: hesaplatmadan özelliği göster
+      { s: "99 · 7 = 100 · 7 − 7 eşitliği için hangisi doğrudur?", c: ["Doğru: (100 − 1) · 7", "Yanlış: 100 · 7 − 1 olmalı", "Yanlış: 99 · 100 − 7 olmalı"], a: "99 = 100 − 1. Dağılma: (100 − 1) · 7 = 100 · 7 − 1 · 7. Hesap kolaylaşır: 700 − 7." },
+      { s: "Hangisi 101 · 8'e eşittir?", c: ["100 · 8 + 8", "100 · 8 + 1", "100 + 8"], a: "101 = 100 + 1: (100 + 1) · 8 = 100 · 8 + 1 · 8." },
+      { s: "13 · 17 + 13 · 3 ifadesi hangisine eşittir?", c: ["13 · (17 + 3)", "13 · 17 · 3", "(13 + 13) · 20"], a: "Ortak çarpan 13 dışarı alınır: 13 · (17 + 3) = 13 · 20. Dağılmanın tersi." },
+      { s: "5 · (4 + 6) = 5 · 4 + 5 · 6 eşitliği hangi özelliktir?", c: ["Dağılma özelliği", "Değişme özelliği", "Birleşme özelliği"], a: "Çarpma, toplama üzerine dağılır: parantezin içindeki her terim 5 ile çarpılır." },
+      { s: "3 · (9 − 4) ifadesi hangisine eşittir?", c: ["3 · 9 − 3 · 4", "3 · 9 − 4", "3 · 9 − 4 · 9"], a: "3, parantezin içindeki her terimle çarpılır: 3 · 9 − 3 · 4. Sadece ilk terimi çarpmak sık yapılan hata." },
+      // Sadeleştirme
+      { s: "48/32 kesri en çok kaç ile sadeleşir?", c: ["16", "8", "4"], a: "48 = 16 · 3, 32 = 16 · 2. En büyük ortak bölen 16: 48/32 = 3/2." },
+      { s: "36/24 kesri en çok kaç ile sadeleşir?", c: ["12", "6", "4"], a: "36 = 12 · 3, 24 = 12 · 2: 36/24 = 3/2. 6 ile de sadeleşir ama 6/4 hâlâ sadeleşir." },
+      { s: "45/30 kesri en çok kaç ile sadeleşir?", c: ["15", "5", "3"], a: "45 = 15 · 3, 30 = 15 · 2: 45/30 = 3/2." },
+      { s: "18/27 kesri en çok kaç ile sadeleşir?", c: ["9", "3", "6"], a: "18 = 9 · 2, 27 = 9 · 3: 18/27 = 2/3. 6, 27'yi bölmez." },
+      { s: "48/32 kesrinin en sade hâli hangisidir?", c: ["3/2", "6/4", "12/8"], a: "Üçü de aynı sayı ama 6/4 ve 12/8 hâlâ 2 ile sadeleşir. En sade hâl 3/2." },
+      { s: "Hangi kesir en sade hâldedir?", c: ["7/9", "6/9", "8/10"], a: "7 ile 9'un 1'den başka ortak böleni yok. 6/9 = 2/3, 8/10 = 4/5." },
+      // İşlem önceliği ve parantez
+      { s: "3 · (9 − 4) = ?", c: ["15", "23", "5"], a: "Önce parantez: 9 − 4 = 5, sonra 3 · 5 = 15. (Dağıtarak: 27 − 12 = 15.) 23, sadece 9'u çarpınca çıkar." },
+      { s: "4 · (10 − 7) = ?", c: ["12", "33", "3"], a: "Önce parantez: 10 − 7 = 3, sonra 4 · 3 = 12." },
+      { s: "−(12 − 8) = ?", c: ["−4", "4", "−20"], a: "Önce parantez: 12 − 8 = 4. Önündeki eksi: −4." },
+      { s: "−(8 − 12) = ?", c: ["4", "−4", "20"], a: "Önce parantez: 8 − 12 = −4. Önündeki eksi: −(−4) = 4." },
+      { s: "−(4 + 6) = ?", c: ["−10", "−2", "10"], a: "Önce parantez: 4 + 6 = 10, sonra −10. (Eksiyi dağıtırsan: −4 − 6.)" },
+      { s: "−(5 − 5) = ?", c: ["0", "−10", "10"], a: "Parantezin içi 0: −0 = 0." },
+      { s: "−(7 − 2) + 5 = ?", c: ["0", "10", "−10"], a: "−(5) + 5 = 0." },
+      { s: "3 · (−4) − 7 = ?", c: ["−19", "5", "−33"], a: "Önce çarpma: 3 · (−4) = −12, sonra −12 − 7 = −19." },
+      { s: "−3 · (−4) − 7 = ?", c: ["5", "−19", "19"], a: "Önce çarpma: (−3) · (−4) = 12, sonra 12 − 7 = 5." },
+      { s: "2 · (−5) + 10 = ?", c: ["0", "−20", "20"], a: "Önce çarpma: −10, sonra −10 + 10 = 0." },
+      { s: "2 + 3 · 4 = ?", c: ["14", "20", "24"], a: "Çarpma, toplamadan önce: 3 · 4 = 12, 2 + 12 = 14." },
+      { s: "(2 + 3) · 4 = ?", c: ["20", "14", "24"], a: "Parantez her şeyden önce: 5 · 4 = 20." },
+      { s: "12 ÷ 3 · 2 = ?", c: ["8", "2", "6"], a: "Çarpma ve bölme soldan sağa: 12 ÷ 3 = 4, 4 · 2 = 8." },
+      { s: "18 ÷ (6 − 3) = ?", c: ["6", "0", "9"], a: "Önce parantez: 6 − 3 = 3, 18 ÷ 3 = 6. 0, parantezi görmezden gelince çıkar." },
+      { s: "6 − 3 · 2 + 1 = ?", c: ["1", "7", "−1"], a: "Önce çarpma: 6 − 6 + 1. Sonra soldan sağa: 0 + 1 = 1." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -308,6 +340,15 @@ window.KK_YKS = {
     { k: "yks-tekcift", s: "a · b çift ise a ve b'nin ikisi de çifttir.", d: false, n: "2 · 3 = 6; biri çift olması yeter" },
     { k: "yks-tekcift", s: "Çift bir sayının her pozitif kuvveti çifttir.", d: true },
     { k: "yks-tekcift", s: "Ardışık iki tam sayının toplamı çifttir.", d: false, n: "n + (n + 1) = 2n + 1, tek" },
+    { k: "yks-islem", s: "99 · 7 = 100 · 7 − 7", d: true },
+    { k: "yks-islem", s: "101 · 6 = 100 · 6 + 1", d: false, n: "100 · 6 + 6" },
+    { k: "yks-islem", s: "5 · (4 + 6) = 5 · 4 + 5 · 6", d: true },
+    { k: "yks-islem", s: "3 · (9 − 4) = 3 · 9 − 4", d: false, n: "3 · 9 − 3 · 4" },
+    { k: "yks-islem", s: "−(12 − 8) = −12 − 8", d: false, n: "−12 + 8" },
+    { k: "yks-islem", s: "2 + 3 · 4 = 14", d: true },
+    { k: "yks-islem", s: "12 ÷ 3 · 2 = 2", d: false, n: "Soldan sağa: 4 · 2 = 8" },
+    { k: "yks-islem", s: "48/32'nin en sade hâli 3/2'dir.", d: true },
+    { k: "yks-islem", s: "36/24 en çok 6 ile sadeleşir.", d: false, n: "12 ile: 3/2" },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
