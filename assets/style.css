@@ -496,7 +496,7 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .kesir > span:first-child { border-bottom: 0.08em solid currentColor; }
 /* Merdiven kesir: ortadaki ana çizgi iç kesirlerden belirgin biçimde uzun ve kalın */
 .kesir.buyuk { font-size: 1em; margin: 0 0.15em; }
-.kesir.buyuk > span { display: flex; justify-content: center; align-items: center; padding: 0.12em 0.6em; }
+.kesir.buyuk > span { display: block; text-align: center; white-space: nowrap; padding: 0.12em 0.6em; }
 .kesir.buyuk > span:first-child { border-bottom-width: 0.14em; }
 .kesir.buyuk .kesir { font-size: 0.8em; }
 .nw { white-space: nowrap; }
