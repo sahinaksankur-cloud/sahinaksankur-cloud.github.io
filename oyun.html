@@ -69,6 +69,21 @@
       </section>
 
       <section class="serit">
+        <div class="tur t2"><h2>🔁 Konu Tekrarı</h2><p>3–5 konu seç, hepsinden karışık 10 soru gelsin. Daha önce çözdüğün soruların gelip gelmeyeceğine sen karar ver.</p><span class="ozellik">10 soru · karma</span></div>
+        <div class="tekrar-kutu">
+          <div class="secenekler" id="yks-tekrar-konular"></div>
+          <div class="tekrar-alt">
+            <div class="tekrar-secenek" id="yks-tekrar-secenek" role="radiogroup" aria-label="Daha önce çözdüğüm sorular">
+              <label><input type="radio" name="tekrar-c" value="yeni"> Sadece çözmediklerim</label>
+              <label><input type="radio" name="tekrar-c" value="hepsi"> Çözdüklerim de gelsin (puansız)</label>
+            </div>
+            <button type="button" class="btn primary" id="yks-tekrar-basla" disabled>Tekrara başla →</button>
+            <p class="tekrar-not" id="yks-tekrar-not" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="serit">
         <div class="tur t3"><h2>⚡ Doğru / Yanlış</h2><p>Kurallar ve sık yapılan hatalar. Düşünmeden bilmen gerekenler.</p><span class="ozellik">5 ifade · her biri 5 sn</span></div>
         <div class="secenekler" id="yks-dy"></div>
       </section>
@@ -127,6 +142,7 @@
         <p class="oyun-sonuc-puan"><strong id="oyun-sonuc-puan"></strong> / <span id="oyun-sonuc-toplam"></span></p>
         <p id="oyun-sonuc-mesaj"></p>
         <p class="oyun-rekor" id="oyun-rekor"></p>
+        <p class="oyun-tekrar-not" id="oyun-tekrar-not" hidden></p>
         <div class="oyun-dugmeler">
           <button class="btn primary big" id="oyun-test-gec" type="button" hidden>📝 5 Soruya geç</button>
           <button class="btn primary big" id="oyun-tekrar" type="button">Tekrar oyna</button>
