@@ -7,7 +7,8 @@ window.KK_YKS = {
     { id: "yks-rakam", ad: "Rakamlar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-dogal", ad: "Doğal Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tam", ad: "Tam Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
-    { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
+    { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-irrasyonel", ad: "İrrasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -125,6 +126,37 @@ window.KK_YKS = {
       { s: "(−1/2) ÷ (−1/4) = ?", c: ["2", "−2", "1/8"], a: "Bölme, ters çevirip çarpmaktır: (−1/2) · (−4/1) = 2." },
       { s: "3 − 1/2 = ?", c: ["5/2", "1", "−5/2"], a: "3 = 6/2: 6/2 − 1/2 = 5/2." },
       { s: "−(1/2 − 1) = ?", c: ["1/2", "−1/2", "3/2"], a: "Önce parantez: 1/2 − 1 = −1/2. Sonra −(−1/2) = 1/2." }
+    ],
+    "yks-irrasyonel": [
+      // Kavram
+      { s: "İrrasyonel sayı nedir?", c: ["Tam sayıların bölümü olamayan sayı", "Kök işaretiyle yazılan her sayı", "Ondalık kısmı sonsuz olan her sayı"], a: "a/b (a, b tam sayı, b ≠ 0) biçiminde yazılamayan sayı. √4 = 2 kökle yazılmış ama rasyonel; 0,333… = 1/3 ondalığı sonsuz ama rasyonel." },
+      { s: "Hangisi irrasyoneldir?", c: ["√5", "√9", "√(1/4)"], a: "√9 = 3 ve √(1/4) = 1/2 rasyoneldir. 5 bir tam sayının karesi değil: √5 irrasyonel." },
+      { s: "Hangisi irrasyonel <u>değildir</u>?", c: ["√16", "√7", "π"], a: "√16 = 4, bir tam sayı. Kök işareti tek başına irrasyonel demek değildir." },
+      { s: "İrrasyonel bir sayının ondalık açılımı için hangisi doğrudur?", c: ["Sonsuzdur, devretmez", "Sonludur", "Sonsuzdur ve devreder"], a: "Sonlu ya da devirli ondalıklar rasyoneldir. İrrasyonelin ondalıkları hiç tekrar etmeden sonsuza gider." },
+      { s: "0,1010010001… (her seferinde bir sıfır fazla) sayısı için hangisi doğrudur?", c: ["İrrasyoneldir", "Rasyoneldir", "Devirli bir sayıdır"], a: "Bir düzeni var ama sürekli tekrar eden bir blok yok; devirli değil, irrasyonel." },
+      { s: "0,121212… sayısı için hangisi doğrudur?", c: ["Rasyoneldir", "İrrasyoneldir", "Tam sayıdır"], a: "12 sürekli tekrar ediyor (devirli): 0,121212… = 12/99 = 4/33." },
+      // π ve e
+      { s: "π sayısı için hangisi doğrudur?", c: ["İrrasyoneldir", "3,14'e eşittir", "22/7'ye eşittir"], a: "3,14 ve 22/7, π'nin yaklaşık değerleridir. π = 3,14159… ondalıkları devretmeden sonsuza gider." },
+      { s: "22/7 sayısı için hangisi doğrudur?", c: ["Rasyoneldir", "İrrasyoneldir", "π'ye eşittir"], a: "İki tam sayının bölümü: rasyonel. 22/7 = 3,142857…, π = 3,14159…: yakın ama eşit değil." },
+      { s: "e ≈ 2,718… (Euler sayısı) için hangisi doğrudur?", c: ["İrrasyoneldir", "Rasyoneldir", "Devirli sayıdır"], a: "e de π gibi irrasyoneldir; ondalıkları devretmez. Calculus'ta üstel fonksiyon ve ln ile çok karşına çıkacak." },
+      { s: "π − 3 sayısı için hangisi doğrudur?", c: ["İrrasyoneldir", "Rasyoneldir", "Bir tam sayıdır"], a: "π − 3 = 0,14159…: irrasyonelden rasyonel çıkarınca sonuç yine irrasyoneldir." },
+      { s: "Hangisi rasyoneldir?", c: ["π / π", "π + 1", "2π"], a: "π / π = 1. İrrasyonel sayılar arasındaki işlemin sonucu rasyonel olabilir." },
+      { s: "İki irrasyonel sayının çarpımı için hangisi doğrudur?", c: ["Rasyonel olabilir", "Her zaman irrasyoneldir", "Her zaman tam sayıdır"], a: "√2 · √2 = 2 rasyonel; √2 · √3 = √6 irrasyonel." },
+      // Karekök
+      { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
+      { s: "√9 = ?", c: ["3", "±3", "−3"], a: "√9 tek bir sayıdır: 3. x<sup>2</sup> = 9 denkleminin çözümleri ±3'tür; bu ikisi farklı şeyler." },
+      { s: "√2 · √2 = ?", c: ["2", "4", "2√2"], a: "√a · √a = a: kök kendisiyle çarpılınca kalkar." },
+      { s: "√3 · √12 = ?", c: ["6", "36", "√15"], a: "√3 · √12 = √36 = 6." },
+      { s: "2√3 · 3√3 = ?", c: ["18", "6√3", "5√3"], a: "Kök dışındakiler çarpılır: 2 · 3 = 6. Kökler çarpılır: √3 · √3 = 3. Sonuç 6 · 3 = 18." },
+      { s: "√2 + √2 = ?", c: ["2√2", "√4", "4"], a: "Aynı kökler x + x = 2x gibi toplanır: 2√2. √2 + √2, √4 değildir." },
+      { s: "√9 + √16 = ?", c: ["7", "5", "25"], a: "3 + 4 = 7. √(9 + 16) = 5 ile karıştırma: kök toplamaya dağılmaz." },
+      { s: "6 / √2 = ?", c: ["3√2", "3", "2√3"], a: "Pay ve paydayı √2 ile çarp: 6√2 / 2 = 3√2." },
+      { s: "10 / √5 = ?", c: ["2√5", "2", "5√2"], a: "Pay ve paydayı √5 ile çarp: 10√5 / 5 = 2√5." },
+      { s: "√50 hangi iki ardışık tam sayı arasındadır?", c: ["7 ile 8", "6 ile 7", "24 ile 25"], a: "7<sup>2</sup> = 49 &lt; 50 &lt; 64 = 8<sup>2</sup>." },
+      // Küpkök
+      { s: "∛(−8) = ?", c: ["−2", "2", "Tanımsız"], a: "(−2)<sup>3</sup> = −8. Küpkökün içi negatif olabilir." },
+      { s: "Hangisi reel sayılarda tanımsızdır?", c: ["√(−8)", "∛(−8)", "−√8"], a: "Karekökün içi negatif olamaz: hiçbir reel sayının karesi negatif değildir. ∛(−8) = −2 ve −√8 = −2√2 tanımlıdır." },
+      { s: "∛(−27) + √9 = ?", c: ["0", "6", "Tanımsız"], a: "∛(−27) = −3 ve √9 = 3: toplam 0." }
     ]
   },
 
@@ -161,6 +193,17 @@ window.KK_YKS = {
     { k: "yks-rasyonel", s: "(−1/2) · (−1/2) = −1/4", d: false, n: "(−) · (−) = (+): 1/4" },
     { k: "yks-rasyonel", s: "Basit kesirler 1'den küçüktür.", d: true },
     { k: "yks-rasyonel", s: "Payı paydasına eşit olan kesir basit kesirdir.", d: false, n: "Bileşik kesirdir; değeri 1'dir" },
-    { k: "yks-rasyonel", s: "1<sup>1</sup>⁄<sub>4</sub> ile 5/4 aynı sayıdır.", d: true }
+    { k: "yks-rasyonel", s: "1<sup>1</sup>⁄<sub>4</sub> ile 5/4 aynı sayıdır.", d: true },
+    { k: "yks-irrasyonel", s: "√2 rasyonel bir sayıdır.", d: false, n: "İki tam sayının bölümü olarak yazılamaz; irrasyoneldir" },
+    { k: "yks-irrasyonel", s: "π = 22/7", d: false, n: "22/7 yaklaşık değerdir; π irrasyoneldir" },
+    { k: "yks-irrasyonel", s: "e sayısı irrasyoneldir.", d: true },
+    { k: "yks-irrasyonel", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
+    { k: "yks-irrasyonel", s: "√3 · √3 = 3", d: true },
+    { k: "yks-irrasyonel", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
+    { k: "yks-irrasyonel", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
+    { k: "yks-irrasyonel", s: "√(−4) reel sayılarda tanımsızdır.", d: true },
+    { k: "yks-irrasyonel", s: "Rasyonel bir sayı ile irrasyonel bir sayının toplamı irrasyoneldir.", d: true },
+    { k: "yks-irrasyonel", s: "İki irrasyonel sayının çarpımı her zaman irrasyoneldir.", d: false, n: "√2 · √2 = 2 rasyoneldir" },
+    { k: "yks-irrasyonel", s: "0,1010010001… devirli bir sayıdır.", d: false, n: "Tekrar eden bir blok yok; irrasyoneldir" }
   ]
 };
