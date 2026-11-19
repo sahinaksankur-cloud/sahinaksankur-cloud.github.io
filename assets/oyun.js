@@ -23,7 +23,10 @@
       O.konular.push(k);
       O.sorular[k.id] = (YKS.sorular[k.id] || []).map(function (q) { q.b = q.b || "yks"; q.k = k.id; return q; });
     });
-    if (DY) DY.ifadeler = DY.ifadeler.concat((YKS.dogruYanlis || []).map(function (q) { q.b = "yks"; return q; }));
+    // Sadece listedeki konuların ifadeleri gelir; konusu henüz açılmamış ifadeler dosyada bekler.
+    var acik = {}; (YKS.konular || []).forEach(function (k) { acik[k.id] = true; });
+    if (DY) DY.ifadeler = DY.ifadeler.concat((YKS.dogruYanlis || []).filter(function (q) { return acik[q.k]; })
+      .map(function (q) { q.b = "yks"; return q; }));
   }
   function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
