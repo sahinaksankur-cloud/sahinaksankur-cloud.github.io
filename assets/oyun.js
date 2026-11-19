@@ -195,11 +195,12 @@
 
   // ---- ⭐ Tam doğru bonusu: 10 soruluk testlerde tüm sorular doğruysa (data/sorular.js → tamBonus).
   // Her konu + seviye için en iyi bonus sayılır; aynı bonus tekrar oynayarak üst üste eklenmez.
-  var TAM_BONUS = O.tamBonus || { kolay: { puan: 1 }, orta: { puan: 2 }, zor: { puan: 3, saniye: 10 } };
-  function bonusHesap(seviyeId, kalanSn) {
+  // hiz: true → soru başına ortalama kaç saniye erken bitirdiyse o kadar ek bonus (12 sn'lik soruyu 9 sn'de çözen +3).
+  var TAM_BONUS = O.tamBonus || { kolay: { puan: 1 }, orta: { puan: 2 }, zor: { puan: 1, hiz: true } };
+  function bonusHesap(seviyeId, kalanSn, n) {
     var b = TAM_BONUS[seviyeId] || { puan: 0 };
-    var hiz = b.saniye ? Math.round(kalanSn / b.saniye) : 0;
-    return { sabit: b.puan || 0, hiz: hiz, toplam: (b.puan || 0) + hiz, saniyeli: !!b.saniye };
+    var ort = n ? kalanSn / n : 0, hiz = b.hiz ? Math.round(ort) : 0;
+    return { sabit: b.puan || 0, hiz: hiz, ort: Math.round(ort * 10) / 10, toplam: (b.puan || 0) + hiz, saniyeli: !!b.hiz };
   }
   function bonusKonu(kayit, konu) {
     var b = kayit.bonus || {}, top = 0;
@@ -444,7 +445,7 @@
   }
 
   function cevapla(btn, secenekler, q) {
-    var kalanSn = Math.max(0, Math.ceil((sayacBitis - Date.now()) / 1000));
+    var kalanSn = Math.max(0, (sayacBitis - Date.now()) / 1000); // tam ölçüm; bonusta ortalama alınıp yuvarlanır
     sayaciDurdur();
     $("oyun-sure").classList.remove("az", "uyari");
     Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b, j) {
@@ -607,7 +608,7 @@
     // ⭐ Tam doğru bonusu (sadece 10 soruluk testler; chapter testleri 5 soru olduğu için hariç)
     var bonus = null;
     if (p === n && n >= (O.soruSayisi || 10) && !testBilgi(durum.konu).bolum) {
-      bonus = bonusHesap(seviye().id, durum.kalan);
+      bonus = bonusHesap(seviye().id, durum.kalan, n);
       kayit.bonus = kayit.bonus || {};
       bonus.eski = kayit.bonus[anahtar] || 0;
       bonus.eklenen = Math.max(0, bonus.toplam - bonus.eski);
@@ -660,7 +661,8 @@
   function kutla(b) {
     var eski = $("kutlama"); if (eski) eski.remove();
     var detay = b.saniyeli
-      ? "+" + b.sabit + " tam doğru · +" + b.hiz + " hız bonusu (" + durum.kalan + " sn artırdın)"
+      ? (b.hiz ? "+" + b.sabit + " tam doğru · +" + b.hiz + " hız bonusu (soru başına ortalama " + String(b.ort).replace(".", ",") + " sn erken)"
+        : "+" + b.sabit + " tam doğru · Soruları daha erken bitirirsen her saniye için +1 hız bonusu")
       : seviye().ad + " seviyede tam doğru";
     var not = b.eklenen === b.toplam ? ""
       : b.eklenen > 0 ? "Önceki en iyi bonusun " + b.eski + " idi; toplamına +" + b.eklenen + " eklendi."
