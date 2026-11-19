@@ -8,7 +8,9 @@ window.KK_YKS = {
     { id: "yks-dogal", ad: "Doğal Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tam", ad: "Tam Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
-    { id: "yks-irrasyonel", ad: "İrrasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
+    { id: "yks-irrasyonel", ad: "İrrasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-reel", ad: "Reel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -148,6 +150,53 @@ window.KK_YKS = {
       { s: "√50 hangi iki ardışık tam sayı arasındadır?", c: ["7 ile 8", "6 ile 7", "24 ile 25"], a: "7<sup>2</sup> = 49 &lt; 50 &lt; 64 = 8<sup>2</sup>." }
     ],
 
+
+    "yks-reel": [
+      // Kümeler ve kapsama
+      { s: "Reel sayılar kümesi hangi sayılardan oluşur?", c: ["Rasyoneller ve irrasyoneller", "Sadece rasyonel sayılar", "Tam sayılar ve doğal sayılar"], a: "ℝ = rasyoneller ∪ irrasyoneller. Sayı doğrusundaki her sayı bu ikisinden birine girer." },
+      { s: "Hem rasyonel hem irrasyonel olan kaç sayı vardır?", c: ["Hiç yoktur", "Bir tane: 0", "Sonsuz tane"], a: "Bir sayı ya iki tam sayının bölümü olarak yazılır (rasyonel) ya da yazılamaz (irrasyonel); ikisi birden olamaz." },
+      { s: "Hangisi doğrudur?", c: ["ℤ ⊂ ℚ", "ℚ ⊂ ℤ", "ℝ ⊂ ℚ"], a: "Her tam sayı rasyoneldir (5 = 5/1). Tersi yanlış: 1/2 tam sayı değil. Sıralama: ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ." },
+      { s: "−3 sayısı hangi kümede <u>değildir</u>?", c: ["ℕ", "ℤ", "ℚ"], a: "−3 tam sayı, rasyonel ve reeldir. Negatif olduğu için doğal sayı değildir." },
+      { s: "√9 sayısı hangi kümelerin hepsindedir?", c: ["Doğal, tam, rasyonel, reel", "Sadece irrasyonel ve reel", "Sadece reel"], a: "√9 = 3. Kök işaretine aldanma: 3 doğal sayıdır, dolayısıyla tam, rasyonel ve reeldir." },
+      { s: "0 için hangisi <u>yanlıştır</u>?", c: ["İrrasyoneldir", "Doğal sayıdır", "Rasyoneldir"], a: "0 = 0/1: rasyoneldir. Aynı zamanda doğal sayı, tam sayı ve reel sayıdır." },
+      // Bu sayı hangi kümede?
+      { s: "√4 bir tam sayı mıdır?", c: ["Evet, √4 = 2", "Hayır, köklü sayıdır", "Hayır, irrasyoneldir"], a: "Önce kökü hesapla: √4 = 2. Kök işareti sayıyı irrasyonel yapmaz." },
+      { s: "−√16 hangi kümededir?", c: ["Tam sayılar", "Doğal sayılar", "İrrasyoneller"], a: "−√16 = −4: tam sayı (dolayısıyla rasyonel ve reel). Negatif olduğu için doğal sayı değil." },
+      { s: "√(4/9) için hangisi doğrudur?", c: ["Rasyoneldir", "İrrasyoneldir", "Tam sayıdır"], a: "√(4/9) = 2/3: iki tam sayının bölümü, rasyonel. Tam sayı değil." },
+      { s: "π / 2 için hangisi doğrudur?", c: ["İrrasyoneldir", "Rasyoneldir", "Kesir olduğu için rasyoneldir"], a: "Kesir biçiminde yazılmak yetmez; pay π irrasyonel. π / 2 = 1,5707… irrasyoneldir." },
+      { s: "Hangisi bir tam sayıdır?", c: ["√25 − 1", "√5 − 1", "√2 · 3"], a: "√25 − 1 = 5 − 1 = 4. Diğer ikisi irrasyoneldir." },
+      { s: "Hangisi bir reel sayı <u>değildir</u>?", c: ["√(−4)", "−√4", "−π"], a: "Karekökün içi negatif olamaz: √(−4) reel sayı değildir. −√4 = −2 ve −π reel sayılardır." },
+      // Sayı doğrusu ve sıralama
+      { s: "Sayı doğrusundaki her nokta için hangisi doğrudur?", c: ["Bir reel sayıya karşılık gelir", "Bir rasyonel sayıya karşılık gelir", "Bir tam sayıya karşılık gelir"], a: "√2 ve π gibi irrasyoneller de sayı doğrusunda bir noktadır. Rasyoneller doğruyu doldurmaz; reel sayılar doldurur." },
+      { s: "1 ile 2 arasında kaç reel sayı vardır?", c: ["Sonsuz tane", "Hiç yoktur", "9 tane"], a: "Sadece 1,1, 1,2, … değil: 1,01, 1,001, √2, … İki reel sayı arasında her zaman sonsuz tane reel sayı vardır." },
+      { s: "Hangisi en büyüktür?", c: ["22/7", "π", "3,14"], a: "22/7 = 3,1428…, π = 3,1415…, 3,14. Yaklaşık değer olan 22/7, π'den biraz büyüktür." },
+      { s: "√2, 1,4 ve 3/2 küçükten büyüğe nasıl sıralanır?", c: ["1,4 &lt; √2 &lt; 3/2", "√2 &lt; 1,4 &lt; 3/2", "1,4 &lt; 3/2 &lt; √2"], a: "√2 = 1,414…, 3/2 = 1,5. Sıra: 1,4 &lt; 1,414… &lt; 1,5." },
+      { s: "Hangi sayı √5 ile √10 arasındadır?", c: ["3", "2", "4"], a: "3 = √9 ve 5 &lt; 9 &lt; 10. 2 = √4 ve 4 = √16 aralığın dışında." },
+      // Kümeler neden genişledi?
+      { s: "x + 5 = 2 denkleminin çözümü hangi kümede <u>yoktur</u>?", c: ["ℕ", "ℤ", "ℚ"], a: "x = −3. Negatif sayılar doğal sayılarda yok; bu yüzden tam sayılara ihtiyaç duyuldu." },
+      { s: "2x = 3 denkleminin çözümü hangi kümede <u>yoktur</u>?", c: ["ℤ", "ℚ", "ℝ"], a: "x = 3/2 tam sayı değil; bu yüzden rasyonel sayılara ihtiyaç duyuldu." },
+      { s: "x<sup>2</sup> = 2 denkleminin çözümleri hangi sayılardır?", c: ["İrrasyoneller", "Rasyoneller", "Doğal sayılar"], a: "x = √2 ya da x = −√2. Rasyonel sayılar yetmedi; reel sayılara ihtiyaç duyuldu." },
+      { s: "x<sup>2</sup> = −1 denkleminin reel sayılarda kaç çözümü vardır?", c: ["0", "1", "2"], a: "Hiçbir reel sayının karesi negatif olamaz. (Bunun için ileride karmaşık sayılar gelecek.)" }
+    ],
+
+    "yks-tanimsiz": [
+      // Sıfıra bölme
+      { s: "5 / 0 = ?", c: ["Tanımsız", "0", "∞"], a: "0 ile çarpılınca 5 veren bir sayı yok: 5/0 tanımsızdır. ∞ bir sayı değildir." },
+      { s: "0 / 5 = ?", c: ["0", "Tanımsız", "5"], a: "5 · 0 = 0 olduğu için 0/5 = 0. Payın 0 olması sorun değil; sorun paydanın 0 olması." },
+      { s: "6 / 0 = k olsaydı k · 0 = 6 olmalıydı. Hangisi doğrudur?", c: ["Hiçbir k uymaz", "Her k uyar", "Sadece k = 6 uyar"], a: "k · 0 her zaman 0'dır, 6 olamaz. Hiçbir sayı uymadığı için 6/0 tanımsızdır." },
+      { s: "0 / 0 = k olsaydı k · 0 = 0 olmalıydı. Hangisi doğrudur?", c: ["Her k uyar", "Hiçbir k uymaz", "Sadece k = 0 uyar"], a: "Her sayı uyduğu için tek bir değer seçilemez: 0/0 belirsizdir. Calculus'ta limitte 0/0 görünce iş bitmez, başlar." },
+      { s: "Hangisi tanımsızdır?", c: ["7 / (2 − 2)", "(2 − 2) / 7", "(2 + 2) / 7"], a: "Önce paydaya bak: 2 − 2 = 0 → 7/0 tanımsız. (2 − 2)/7 = 0/7 = 0." },
+      // 0⁰, karekök, sonsuz
+      { s: "0<sup>0</sup> için lisede ve YKS'de kabul edilen hangisidir?", c: ["Tanımsızdır", "1'e eşittir", "0'a eşittir"], a: "a<sup>0</sup> = 1 kuralı 1, 0<sup>n</sup> = 0 kuralı 0 der; iki kural çatışır. Bu yüzden 0<sup>0</sup> tanımsız kabul edilir." },
+      { s: "Reel sayılarda √(−9) için hangisi doğrudur?", c: ["Tanımsızdır", "−3'e eşittir", "±3'e eşittir"], a: "Hiçbir reel sayının karesi −9 olamaz: (−3)<sup>2</sup> = 9." },
+      { s: "∞ için hangisi doğrudur?", c: ["Bir sayı değildir", "En büyük doğal sayıdır", "En büyük reel sayıdır"], a: "∞ \"sınırsız büyüme\" fikridir, bir sayı değildir. En büyük doğal sayı ya da reel sayı yoktur." },
+      // Paydayı sıfır yapan değer
+      { s: "3 / (x − 2) ifadesi x'in hangi değeri için tanımsızdır?", c: ["x = 2", "x = 0", "x = −2"], a: "Payda sıfır olunca tanımsız: x − 2 = 0 → x = 2." },
+      { s: "(x − 2) / 3 ifadesi x'in hangi değeri için tanımsızdır?", c: ["Yoktur", "x = 2", "x = 3"], a: "Payda 3, hiçbir zaman 0 olmaz. x = 2'de pay 0 olur: 0/3 = 0, tanımlıdır." },
+      { s: "5 / (x + 4) ifadesi x'in hangi değeri için tanımsızdır?", c: ["x = −4", "x = 4", "x = −5"], a: "x + 4 = 0 → x = −4. Kontrol: −4 + 4 = 0." },
+      { s: "x / (x − 3) ifadesinin x = 0 için değeri nedir?", c: ["0", "Tanımsız", "1"], a: "0 / (0 − 3) = 0 / (−3) = 0. Tanımsız olduğu değer x = 3." },
+      { s: "2 / (x · (x − 5)) ifadesi kaç farklı x değeri için tanımsızdır?", c: ["2", "1", "0"], a: "Çarpımın sıfır olması için çarpanlardan biri sıfır olmalı: x = 0 ya da x = 5." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -208,6 +257,25 @@ window.KK_YKS = {
     { k: "yks-irrasyonel", s: "π, 3,14'e eşittir.", d: false, n: "3,14 yaklaşık değerdir; π = 3,14159…" },
     { k: "yks-irrasyonel", s: "√16 irrasyoneldir.", d: false, n: "√16 = 4, bir tam sayı" },
     { k: "yks-irrasyonel", s: "√2 + 1 irrasyoneldir.", d: true },
+    { k: "yks-reel", s: "Her irrasyonel sayı bir reel sayıdır.", d: true },
+    { k: "yks-reel", s: "Her reel sayı rasyoneldir.", d: false, n: "√2 reel ama rasyonel değil" },
+    { k: "yks-reel", s: "Her doğal sayı bir reel sayıdır.", d: true },
+    { k: "yks-reel", s: "22/7 &lt; π", d: false, n: "22/7 = 3,1428… &gt; π = 3,1415…" },
+    { k: "yks-reel", s: "İki doğal sayının farkı her zaman doğal sayıdır.", d: false, n: "2 − 5 = −3" },
+    { k: "yks-reel", s: "İki tam sayının bölümü her zaman tam sayıdır.", d: false, n: "1 ÷ 2 = 1/2" },
+    { k: "yks-reel", s: "İki irrasyonel sayının toplamı her zaman irrasyoneldir.", d: false, n: "√2 + (−√2) = 0" },
+    { k: "yks-reel", s: "Sayı doğrusunda √2'ye karşılık gelen bir nokta vardır.", d: true },
+    { k: "yks-reel", s: "1 ile 2 arasında sonlu sayıda reel sayı vardır.", d: false, n: "Sonsuz tane vardır" },
+    { k: "yks-reel", s: "√4 bir irrasyonel sayıdır.", d: false, n: "√4 = 2, bir tam sayı" },
+    { k: "yks-reel", s: "−√9 bir tam sayıdır.", d: true },
+    { k: "yks-tanimsiz", s: "5 / 0 = ∞", d: false, n: "Tanımsızdır; ∞ bir sayı değildir" },
+    { k: "yks-tanimsiz", s: "0 / 5 = 0", d: true },
+    { k: "yks-tanimsiz", s: "0 / 0 = 1", d: false, n: "0/0 belirsizdir" },
+    { k: "yks-tanimsiz", s: "0<sup>0</sup> = 1", d: false, n: "Lisede ve YKS'de tanımsız kabul edilir" },
+    { k: "yks-tanimsiz", s: "1 / (x − 1) ifadesi x = 1 için tanımsızdır.", d: true },
+    { k: "yks-tanimsiz", s: "1 / (x − 1) ifadesi x = −1 için tanımsızdır.", d: false, n: "x = −1'de payda −2; tanımsız olduğu yer x = 1" },
+    { k: "yks-tanimsiz", s: "x / (x + 2) ifadesi x = 0 için tanımsızdır.", d: false, n: "0/2 = 0; payın 0 olması sorun değil" },
+    { k: "yks-tanimsiz", s: "√(−1) reel sayılarda tanımsızdır.", d: true },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
