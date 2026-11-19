@@ -464,3 +464,27 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-pasta .dilim { fill: var(--surface); stroke: var(--text); stroke-width: 1.6; stroke-linejoin: round; }
 .oyun-pasta .dilim.boyali { fill: #e08a2e; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .oyun-pasta .dilim.boyali { fill: #f5b971; } }
+
+/* 🔊 Ses düğmesi (test ekranının üstünde) */
+.ses-dugme { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 1.1rem; line-height: 1; cursor: pointer; padding: 0; }
+.ses-dugme:hover { background: var(--surface-2); }
+@media (max-width: 380px) { .ses-dugme { width: 34px; height: 34px; font-size: 0.95rem; } }
+.bonus-rozet { color: #b7791f; font-weight: 600; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bonus-rozet { color: #f5c451; } }
+
+/* 🎆 Tam doğru kutlaması */
+.kutlama { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(12, 14, 20, 0.72); animation: kutlama-gir 0.25s ease-out; }
+.kutlama-fisek { position: absolute; inset: 0; width: 100%; height: 100%; }
+.kutlama-kutu { position: relative; max-width: 420px; width: 100%; text-align: center; background: var(--surface); color: var(--text); border-radius: 22px; padding: 28px 22px 24px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); border: 3px solid #f5b700; animation: kutlama-zipla 0.6s cubic-bezier(.2, 1.6, .4, 1); }
+.kutlama-yildiz { font-size: 2rem; letter-spacing: 6px; animation: kutlama-parla 1.2s ease-in-out infinite alternate; }
+.kutlama-kutu h2 { font-family: var(--serif); font-size: 2.4rem; margin: 6px 0 4px; }
+.kutlama-metin { font-size: 1.15rem; margin: 0 0 10px; }
+.kutlama-bonus { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 4px 0 6px; color: #e08e00; }
+.kutlama-detay { color: var(--muted); margin: 0 0 6px; }
+.kutlama-not { color: var(--muted); font-size: 0.9rem; margin: 0 0 6px; }
+.kutlama-kutu .btn { margin-top: 12px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kutlama-bonus { color: #f5c451; } }
+@keyframes kutlama-gir { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kutlama-zipla { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes kutlama-parla { from { transform: scale(1); filter: brightness(1); } to { transform: scale(1.15); filter: brightness(1.3); } }
+@media (prefers-reduced-motion: reduce) { .kutlama, .kutlama-kutu, .kutlama-yildiz { animation: none; } }

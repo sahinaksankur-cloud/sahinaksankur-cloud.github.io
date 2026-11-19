@@ -9,8 +9,8 @@
   var SEVIYELER = O.seviyeler || [{ id: "orta", ad: "Orta", sure: 15 }];
   var UYARI = O.uyari == null ? 5 : O.uyari;   // turuncu yanıp sönme başlar
   var KRITIK = O.kritik == null ? 3 : O.kritik; // kırmızı yanıp sönme başlar
-  var durum = { konu: null, seviye: null, sorular: [], i: 0, puan: 0, kacan: [] };
-  var sayac = null;
+  var durum = { konu: null, seviye: null, sorular: [], i: 0, puan: 0, kacan: [], kalan: 0 };
+  var sayac = null, sayacBitis = 0;
   var DY = window.KK_DY || null;
   var dy = { id: null, liste: [], i: 0, puan: 0, seri: 0, enSeri: 0, kacan: [], kilit: false };
   function dyId(id) { var m = /^dy-(tum|yks|\d+)$/.exec(id || ""); return m ? m[1] : null; }
@@ -193,7 +193,89 @@
   function seviye() { return bul(SEVIYELER, durum.seviye) || SEVIYELER[0]; }
   function rekorAnahtar(konu) { return konu + ":" + seviye().id; }
 
+  // ---- ⭐ Tam doğru bonusu: 10 soruluk testlerde tüm sorular doğruysa (data/sorular.js → tamBonus).
+  // Her konu + seviye için en iyi bonus sayılır; aynı bonus tekrar oynayarak üst üste eklenmez.
+  var TAM_BONUS = O.tamBonus || { kolay: { puan: 1 }, orta: { puan: 2 }, zor: { puan: 3, saniye: 10 } };
+  function bonusHesap(seviyeId, kalanSn) {
+    var b = TAM_BONUS[seviyeId] || { puan: 0 };
+    var hiz = b.saniye ? Math.round(kalanSn / b.saniye) : 0;
+    return { sabit: b.puan || 0, hiz: hiz, toplam: (b.puan || 0) + hiz, saniyeli: !!b.saniye };
+  }
+  function bonusKonu(kayit, konu) {
+    var b = kayit.bonus || {}, top = 0;
+    Object.keys(b).forEach(function (k) { if (k.slice(0, k.lastIndexOf(":")) === konu) top += b[k]; });
+    return top;
+  }
+  function bonusGrup(kayit, yks) {
+    var b = kayit.bonus || {}, top = 0;
+    Object.keys(b).forEach(function (k) { if (/^yks-/.test(k) === !!yks) top += b[k]; });
+    return top;
+  }
+  function bonusRozet(kayit, konu) { var b = bonusKonu(kayit, konu); return b ? '<span class="skor bonus-rozet">⭐ Bonus: ' + b + "</span>" : ""; }
+
   if (O.ad) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
+  // ---- Sesler (Web Audio; ses dosyası yok). Öğrenci 🔊 düğmesiyle kapatabilir; seçim cihazda hatırlanır. ----
+  var sesAcik = oku().ses !== false, actx = null;
+  function sesBaglam() {
+    if (!actx) {
+      var A = window.AudioContext || window.webkitAudioContext;
+      if (!A) return null;
+      try { actx = new A(); } catch (e) { return null; }
+    }
+    if (actx.state === "suspended") actx.resume();
+    return actx;
+  }
+  function ton(c, frekans, bas, sure, tip, siddet) {
+    var o = c.createOscillator(), g = c.createGain(), t0 = c.currentTime + bas;
+    o.type = tip || "sine"; o.frequency.setValueAtTime(frekans, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(siddet || 0.2, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + sure);
+    o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + sure + 0.05);
+  }
+  var SESLER = {
+    // Saat tıkırtısı: kısa, tok bir "tik" (her saniyede bir)
+    tik: function (c) { ton(c, 1500, 0, 0.05, "square", 0.08); ton(c, 900, 0, 0.08, "sine", 0.15); },
+    // Sayfa çevirme: süzgeçten geçen kısa bir hışırtı
+    sayfa: function (c) {
+      var n = Math.floor(c.sampleRate * 0.35), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2);
+      var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(), t0 = c.currentTime;
+      src.buffer = buf; f.type = "bandpass"; f.Q.value = 0.8;
+      f.frequency.setValueAtTime(700, t0); f.frequency.exponentialRampToValueAtTime(3500, t0 + 0.3);
+      g.gain.setValueAtTime(0.5, t0);
+      src.connect(f); f.connect(g); g.connect(c.destination); src.start(t0);
+    },
+    // Kutlama: yükselen kısa bir melodi ve parıltılar
+    kutlama: function (c) {
+      [523, 659, 784, 1047].forEach(function (fr, i) { ton(c, fr, i * 0.11, 0.3, "triangle", 0.22); });
+      [1047, 1319, 1568].forEach(function (fr) { ton(c, fr, 0.5, 0.9, "triangle", 0.12); });
+      for (var i = 0; i < 8; i++) ton(c, 2000 + Math.random() * 2000, 0.7 + i * 0.12, 0.12, "sine", 0.05);
+    }
+  };
+  function cal(ad) {
+    if (!sesAcik) return;
+    var c = sesBaglam();
+    if (c) { try { SESLER[ad](c); } catch (e) { /* ses çalmazsa oyun devam eder */ } }
+  }
+  function sesDugmeleri() {
+    Array.prototype.forEach.call(document.querySelectorAll(".ses-dugme"), function (b) {
+      b.textContent = sesAcik ? "🔊" : "🔇";
+      b.setAttribute("aria-pressed", String(!sesAcik));
+      b.setAttribute("aria-label", sesAcik ? "Sesi kapat" : "Sesi aç");
+      b.title = sesAcik ? "Sesi kapat" : "Sesi aç";
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".ses-dugme"), function (b) {
+    b.addEventListener("click", function () {
+      sesAcik = !sesAcik;
+      var k = oku(); k.ses = sesAcik; yaz(k);
+      sesDugmeleri();
+      if (sesAcik) sesBaglam();
+    });
+  });
+  sesDugmeleri();
+
   function goster(bolum) {
     ["oyun-giris", "oyun-soru", "dy-soru", "oyun-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });
     window.scrollTo(0, 0);
@@ -209,11 +291,13 @@
     var uyari = esik ? esik.uyari : UYARI, kritik = esik ? esik.kritik : KRITIK;
     if (!sure) { el.hidden = true; return; }
     el.hidden = false;
-    var bitis = Date.now() + sure * 1000;
+    var bitis = Date.now() + sure * 1000, sonSn = null;
+    sayacBitis = bitis;
     function guncelle() {
       var kalan = Math.max(0, bitis - Date.now());
       var sn = Math.ceil(kalan / 1000);
       el.textContent = sn;
+      if (sn !== sonSn) { sonSn = sn; if (sn > 0 && sn <= kritik) cal("tik"); }
       el.classList.toggle("az", sn <= kritik);
       el.classList.toggle("uyari", sn > kritik && sn <= uyari);
       if (kalan <= 0) { sayaciDurdur(); sureBitti(); }
@@ -238,7 +322,7 @@
     // 🧭 Calculus'a Hazır mısın?
     var hz = bul(O.konular, HAZIRLIK) || {};
     $("oyun-hazirlik").innerHTML = '<div><strong>Precalculus hazırlık testi</strong><p>' + (hz.aciklama || "") + "</p>" +
-      enIyiYazi(rek[rekorAnahtar(HAZIRLIK)], O.soruSayisi, sevAd) + "</div>" +
+      enIyiYazi(rek[rekorAnahtar(HAZIRLIK)], O.soruSayisi, sevAd) + bonusRozet(kayit, HAZIRLIK) + "</div>" +
       '<button type="button" class="btn big hazirlik-btn" data-konu="' + HAZIRLIK + '">Teste başla →</button>';
     baglan("#oyun-hazirlik", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
 
@@ -255,7 +339,7 @@
     $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK && k.grup !== "yks"; }).map(function (k) {
       var hk = havuz(k.id), ust = (k.id === "karisik" ? "Tüm konular · " : "") + "Puan: " + cozulenSayi(hk, kayit) + " / " + hk.length;
       return '<button type="button" class="sec s2" data-konu="' + k.id + '"><small>' + ust + "</small><strong>" + k.ad + "</strong>" +
-        enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + "</button>";
+        enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
     }).join("");
     baglan("#oyun-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
 
@@ -270,7 +354,8 @@
 
     var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir. Puanların sadece bu cihazda tutulur.";
     var uni = tumSorular();
-    $("oyun-toplam").textContent = "Üniversite toplam puanın: " + cozulenSayi(uni, kayit) + " / " + uni.length + "." + PUAN_NOT;
+    var bu = bonusGrup(kayit, false), by = bonusGrup(kayit, true);
+    $("oyun-toplam").textContent = "Üniversite toplam puanın: " + cozulenSayi(uni, kayit) + " / " + uni.length + (bu ? " · ⭐ Bonus: " + bu : "") + "." + PUAN_NOT;
 
     // 📘 YKS
     if ($("panel-yks")) {
@@ -279,14 +364,14 @@
         var hk = havuz(k.id);
         return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
           '<span class="skor">Puan: ' + cozulenSayi(hk, kayit) + " / " + hk.length + "</span>" +
-          enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + "</button>";
+          enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
       }).join("");
       baglan("#yks-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       $("yks-dy").innerHTML = havuz("dy-yks").length ? '<button type="button" class="sec s3" data-dy="dy-yks"><small>' + havuz("dy-yks").length +
         " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
       var ys = yksSorular();
-      $("yks-toplam").textContent = "YKS toplam puanın: " + cozulenSayi(ys, kayit) + " / " + ys.length + "." + PUAN_NOT;
+      $("yks-toplam").textContent = "YKS toplam puanın: " + cozulenSayi(ys, kayit) + " / " + ys.length + (by ? " · ⭐ Bonus: " + by : "") + "." + PUAN_NOT;
     }
     goster("oyun-giris");
   }
@@ -324,7 +409,8 @@
     durum.konu = konu;
     var t = testBilgi(konu);
     durum.sorular = soruSec(konu, t.sayi);
-    durum.i = 0; durum.puan = 0; durum.kacan = []; durum.yeniPuan = 0;
+    durum.i = 0; durum.puan = 0; durum.kacan = []; durum.yeniPuan = 0; durum.kalan = 0;
+    if (sesAcik) sesBaglam();
     turArtir();
     $("oyun-konu-adi").textContent = t.kisaAd + " · " + seviye().ad;
     soruCiz();
@@ -352,11 +438,13 @@
       // Süre doldu: puan yok, doğrudan sonraki soruya geç; doğru cevap sonuç ekranında gösterilir.
       durum.kacan.push({ q: q, neden: "sure" });
       cevapYaz(q, false);
+      cal("sayfa");
       sonraki();
     }, null, seviye().sure + ek);
   }
 
   function cevapla(btn, secenekler, q) {
+    var kalanSn = Math.max(0, Math.ceil((sayacBitis - Date.now()) / 1000));
     sayaciDurdur();
     $("oyun-sure").classList.remove("az", "uyari");
     Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b, j) {
@@ -364,7 +452,7 @@
       if (secenekler[j].dogru) b.classList.add("dogru");
     });
     var dogru = secenekler[+btn.getAttribute("data-j")].dogru;
-    if (dogru) durum.puan++; else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis" }); }
+    if (dogru) { durum.puan++; durum.kalan += kalanSn; } else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis" }); }
     var yeniPuan = cevapYaz(q, dogru);
     if (yeniPuan) durum.yeniPuan++;
     $("oyun-puan").textContent = durum.puan;
@@ -387,6 +475,7 @@
   // ---- ⚡ Doğru / Yanlış ----
   function dyBasla(id) {
     sayaciDurdur();
+    if (sesAcik) sesBaglam();
     var n = (DY && DY.soruSayisi) || 5;
     var liste = soruSec(id, n);
     // En az bir doğru ve bir yanlış ifade olsun
@@ -418,7 +507,7 @@
     $("dy-not").textContent = ""; $("dy-not").className = "dy-not";
     $("dy-dogru").disabled = false; $("dy-yanlis").disabled = false;
     $("dy-dogru").classList.remove("secildi"); $("dy-yanlis").classList.remove("secildi");
-    sayaciBaslat(function () { dyCevapla(null); }, "dy-sure", (DY && DY.sure) || 5,
+    sayaciBaslat(function () { cal("sayfa"); dyCevapla(null); }, "dy-sure", (DY && DY.sure) || 5,
       { uyari: DY && DY.uyari != null ? DY.uyari : 4, kritik: DY && DY.kritik != null ? DY.kritik : 2 });
   }
   function dyCevapla(cevap) {
@@ -515,6 +604,15 @@
     if (yeniRekor) kayit.rekor[anahtar] = p;
     delete kayit.toplam;
     kayit.oyun = (kayit.oyun || 0) + 1;
+    // ⭐ Tam doğru bonusu (sadece 10 soruluk testler; chapter testleri 5 soru olduğu için hariç)
+    var bonus = null;
+    if (p === n && n >= (O.soruSayisi || 10) && !testBilgi(durum.konu).bolum) {
+      bonus = bonusHesap(seviye().id, durum.kalan);
+      kayit.bonus = kayit.bonus || {};
+      bonus.eski = kayit.bonus[anahtar] || 0;
+      bonus.eklenen = Math.max(0, bonus.toplam - bonus.eski);
+      if (bonus.toplam > bonus.eski) kayit.bonus[anahtar] = bonus.toplam;
+    }
     yaz(kayit);
 
     var enZor = seviye().id === SEVIYELER[SEVIYELER.length - 1].id;
@@ -534,7 +632,8 @@
     var topP = konuBilgi.yks ? cozulenSayi(yksSorular(), kayit) : cozulenSayi(tumSorular(), kayit);
     $("oyun-rekor").textContent = (yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
       : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
-      "Bu turda " + durum.yeniPuan + " yeni puan · " + (konuBilgi.yks ? "YKS" : "Üniversite") + " toplam puanın: " + topP;
+      "Bu turda " + durum.yeniPuan + " yeni puan · " + (konuBilgi.yks ? "YKS" : "Üniversite") + " toplam puanın: " + topP +
+      (bonusGrup(kayit, konuBilgi.yks) ? " · ⭐ Bonus: " + bonusGrup(kayit, konuBilgi.yks) : "");
 
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
@@ -554,6 +653,71 @@
     $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : "Tekrar oyna";
     $("oyun-bar-dolu").style.width = "100%";
     goster("oyun-sonuc");
+    if (bonus) kutla(bonus);
+  }
+
+  // ---- 🎆 Kutlama penceresi: büyük yazı, havai fişek ve yıldızlar ----
+  function kutla(b) {
+    var eski = $("kutlama"); if (eski) eski.remove();
+    var detay = b.saniyeli
+      ? "+" + b.sabit + " tam doğru · +" + b.hiz + " hız bonusu (" + durum.kalan + " sn artırdın)"
+      : seviye().ad + " seviyesinde tam doğru";
+    var not = b.eklenen === b.toplam ? ""
+      : b.eklenen > 0 ? "Önceki en iyi bonusun " + b.eski + " idi; toplamına +" + b.eklenen + " eklendi."
+      : "Bu konu ve seviyede daha önce " + b.eski + " bonus almıştın; en iyisi sayılır.";
+    var d = document.createElement("div");
+    d.id = "kutlama"; d.className = "kutlama";
+    d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-labelledby", "kutlama-baslik");
+    d.innerHTML = '<canvas class="kutlama-fisek" aria-hidden="true"></canvas>' +
+      '<div class="kutlama-kutu"><div class="kutlama-yildiz" aria-hidden="true">⭐ 🌟 ⭐</div>' +
+      '<h2 id="kutlama-baslik">Tebrikler!</h2><p class="kutlama-metin">Tüm soruları doğru cevapladın.</p>' +
+      '<p class="kutlama-bonus">+' + b.toplam + ' bonus</p><p class="kutlama-detay">' + detay + "</p>" +
+      (not ? '<p class="kutlama-not">' + not + "</p>" : "") +
+      '<button type="button" class="btn primary big" id="kutlama-kapat">Harika! →</button></div>';
+    document.body.appendChild(d);
+    var kapat = function () { d.remove(); document.removeEventListener("keydown", tus); };
+    var tus = function (e) { if (e.key === "Escape") kapat(); };
+    $("kutlama-kapat").addEventListener("click", kapat);
+    d.addEventListener("click", function (e) { if (e.target === d || e.target.tagName === "CANVAS") kapat(); });
+    document.addEventListener("keydown", tus);
+    $("kutlama-kapat").focus();
+    cal("kutlama");
+    if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) fisekler(d.querySelector("canvas"));
+  }
+  function fisekler(cv) {
+    var ctx = cv.getContext && cv.getContext("2d"); if (!ctx) return;
+    var dpr = window.devicePixelRatio || 1, W, H, parca = [], bas = Date.now(), SURE = 3200;
+    function boyut() { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    boyut();
+    var renkler = ["#f5b700", "#e67e22", "#e74c3c", "#2ecc71", "#3498db", "#9b59b6", "#ff6fb5"];
+    function patlat() {
+      var x = W * (0.15 + Math.random() * 0.7), y = H * (0.12 + Math.random() * 0.35);
+      var r = renkler[Math.floor(Math.random() * renkler.length)], adet = 46;
+      for (var i = 0; i < adet; i++) {
+        var a = (Math.PI * 2 * i) / adet, h = 2 + Math.random() * 3.2;
+        parca.push({ x: x, y: y, vx: Math.cos(a) * h, vy: Math.sin(a) * h, omur: 1, renk: Math.random() < 0.25 ? "#fff6c2" : r, yildiz: Math.random() < 0.12 });
+      }
+    }
+    var zamanlar = [0, 350, 700, 1100, 1500, 1900, 2300], z = 0;
+    function yildizCiz(x, y, r) {
+      ctx.beginPath();
+      for (var i = 0; i < 10; i++) { var a = Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r / 2.4 : r; ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+      ctx.closePath(); ctx.fill();
+    }
+    (function kare() {
+      if (!cv.isConnected) return;
+      var g = Date.now() - bas;
+      while (z < zamanlar.length && g >= zamanlar[z]) { patlat(); z++; }
+      ctx.clearRect(0, 0, W, H);
+      parca = parca.filter(function (q) { return q.omur > 0.02; });
+      parca.forEach(function (q) {
+        q.x += q.vx; q.y += q.vy; q.vy += 0.05; q.vx *= 0.985; q.vy *= 0.985; q.omur *= 0.975;
+        ctx.globalAlpha = q.omur; ctx.fillStyle = q.renk;
+        if (q.yildiz) yildizCiz(q.x, q.y, 6); else { ctx.beginPath(); ctx.arc(q.x, q.y, 2.4, 0, Math.PI * 2); ctx.fill(); }
+      });
+      ctx.globalAlpha = 1;
+      if (g < SURE || parca.length) requestAnimationFrame(kare); else ctx.clearRect(0, 0, W, H);
+    })();
   }
 
   $("oyun-tekrar").addEventListener("click", function () {

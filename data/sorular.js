@@ -50,6 +50,8 @@ window.KK_OYUN = {
     { id: "orta", ad: "Orta", sure: 20 },
     { id: "zor", ad: "Zor", sure: 12 }
   ],
+  // ⭐ 10 soruluk testlerde tüm sorular doğruysa bonus. saniye: toplam kalan saniyenin bu sayıya bölümü kadar ek bonus (yuvarlanır).
+  tamBonus: { kolay: { puan: 1 }, orta: { puan: 2 }, zor: { puan: 3, saniye: 10 } },
   ekSure: 5,  // grafikli ve parçalı fonksiyonlu sorulara her seviyede eklenen saniye
   uyari: 5,   // son kaç saniyede sayaç turuncu yanıp söner
   kritik: 3,  // son kaç saniyede sayaç kırmızı yanıp söner
