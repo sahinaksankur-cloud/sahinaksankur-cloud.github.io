@@ -27,6 +27,7 @@
     var acik = {}; (YKS.konular || []).forEach(function (k) { acik[k.id] = true; });
     // 🔁 Konu Tekrarı: kendi sorusu yok; öğrencinin seçtiği konuların sorularından karma 10 soru (havuz → tekrarHavuz)
     O.konular.push({ id: "yks-tekrar", ad: "Konu Tekrarı", grup: "yks", gizli: true });
+    O.konular.push({ id: "yks-tumtekrar", ad: "Tüm konuların tekrarı", grup: "yks", gizli: true });
     if (DY) DY.ifadeler = DY.ifadeler.concat((YKS.dogruYanlis || []).filter(function (q) { return acik[q.k]; })
       .map(function (q) { q.b = "yks"; return q; }));
   }
@@ -74,7 +75,7 @@
     var no = bolumNo(id);
     if (no) return tumSorular().filter(function (q) { return String(q.b).split(".")[0] === String(no); });
     if (id === "karisik") return tumSorular();
-    if (id === TEKRAR) return tekrarHavuz();
+    if (tekrarMi(id)) return tekrarHavuz(id);
     return O.sorular[id] || [];
   }
   // ∫ ve Σ işaretlerinin alt/üst sınırlarını ders kitabındaki gibi alt alta yazar.
@@ -174,22 +175,25 @@
     return karistir(liste).sort(function (a, b) { return c[anahtar(a)][1] - c[anahtar(b)][1]; }).slice(0, m);
   }
   // ---- 🔁 Konu Tekrarı ----
-  var TEKRAR = "yks-tekrar", TEKRAR_EN_AZ = 3, TEKRAR_EN_COK = 5;
+  // TEKRAR: öğrencinin seçtiği 3–5 konu · TUM_TEKRAR: Konu Testi'ndeki bütün konular
+  var TEKRAR = "yks-tekrar", TUM_TEKRAR = "yks-tumtekrar", TEKRAR_EN_AZ = 3, TEKRAR_EN_COK = 5;
+  function tekrarMi(id) { return id === TEKRAR || id === TUM_TEKRAR; }
+  function yksKonuIdleri() { return O.konular.filter(function (k) { return k.grup === "yks" && !k.gizli; }).map(function (k) { return k.id; }); }
   function tekrarSecim() {
     var k = oku().tekrar || {};
     return { k: (k.k || []).filter(function (id) { return O.sorular[id] && id !== TEKRAR; }), c: k.c === true };
   }
   function cozulduMu(q, c) { var x = (c || cevaplar(oku()))[anahtar(q)]; return !!(x && x[0] === 1); }
   // c: true → çözdüğü sorular da gelir (puansız); false → sadece çözmedikleri (görmediği + kaçırdığı)
-  function tekrarHavuz() {
+  function tekrarHavuz(tid) {
     var s = tekrarSecim(), c = cevaplar(oku()), h = [];
-    s.k.forEach(function (id) { (O.sorular[id] || []).forEach(function (q) { if (s.c || !cozulduMu(q, c)) h.push(q); }); });
+    (tid === TUM_TEKRAR ? yksKonuIdleri() : s.k).forEach(function (id) { (O.sorular[id] || []).forEach(function (q) { if (s.c || !cozulduMu(q, c)) h.push(q); }); });
     return h;
   }
   // Seçilen konulardan sırayla birer soru alarak dengeli bir karma kurar
-  function tekrarSec(n) {
+  function tekrarSec(n, tid) {
     var c = cevaplar(oku()), gr = {}, sira = [], sec = [];
-    karistir(tekrarHavuz()).forEach(function (q) { if (!gr[q.k]) { gr[q.k] = []; sira.push(q.k); } gr[q.k].push(q); });
+    karistir(tekrarHavuz(tid)).forEach(function (q) { if (!gr[q.k]) { gr[q.k] = []; sira.push(q.k); } gr[q.k].push(q); });
     if (!tekrarSecim().c) sira.forEach(function (k) { gr[k].sort(function (a, b) { return (c[anahtar(a)] ? 1 : 0) - (c[anahtar(b)] ? 1 : 0); }); });
     while (sec.length < n) {
       var eklendi = false;
@@ -199,7 +203,7 @@
     return karistir(sec);
   }
   function soruSec(id, n) {
-    if (id === TEKRAR) return tekrarSec(n);
+    if (tekrarMi(id)) return tekrarSec(n, id);
     var kayit = oku(), c = cevaplar(kayit), h = havuz(id), yay = !!bolumNo(id);
     var yeni = h.filter(function (q) { return !c[anahtar(q)]; });
     var kacan = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 0; });
@@ -401,7 +405,14 @@
         return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
           '<span class="skor">Puan: ' + cozulenSayi(hk, kayit) + " / " + hk.length + "</span>" +
           enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
-      }).join("");
+      }).join("") + (function () {
+        var hepsi = [], c = cevaplar(kayit);
+        yk.forEach(function (k) { hepsi = hepsi.concat(O.sorular[k.id] || []); });
+        var kalan = hepsi.filter(function (q) { return !cozulduMu(q, c); }).length;
+        return '<button type="button" class="sec s1 tum-tekrar" data-konu="' + TUM_TEKRAR + '"><small>🔁 Konu tekrarı · ' + yk.length + " konu</small>" +
+          "<strong>Yukarıdaki konuların hepsinden karışık 10 soru</strong>" +
+          '<span class="skor">' + (kalan ? "Çözmediğin: " + kalan + " / " + hepsi.length : "✓ Hepsini çözdün") + bonusRozet(kayit, TUM_TEKRAR) + "</span></button>";
+      })();
       baglan("#yks-konular", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       $("yks-dy").innerHTML = havuz("dy-yks").length ? '<button type="button" class="sec s3" data-dy="dy-yks"><small>' + havuz("dy-yks").length +
         " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
@@ -417,10 +428,24 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
-    $("seviye-aciklama").textContent = (id === TEKRAR ? Math.min(t.sayi, havuz(id).length) : t.sayi) + " soru. Her soru için ne kadar süre istersin?";
+    // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
+    $("yks-tekrar-secenek").hidden = !tekrarMi(id);
+    var aciklamaYaz = function () {
+      var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
+      $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
+        : n + " soru. Her soru için ne kadar süre istersin?";
+      Array.prototype.forEach.call(document.querySelectorAll("#oyun-seviyeler button"), function (b) { b.disabled = !n; });
+    };
+    if (tekrarMi(id)) {
+      var sc = tekrarSecim().c;
+      Array.prototype.forEach.call(document.querySelectorAll("#yks-tekrar-secenek input"), function (r) {
+        r.checked = (r.value === "hepsi") === sc;
+        r.onchange = function () { var s = tekrarSecim(); s.c = r.value === "hepsi"; tekrarKaydet(s); aciklamaYaz(); };
+      });
+    }
     $("oyun-seviyeler").innerHTML = SEVIYELER.map(function (s) {
       var secili = s.id === durum.seviye;
       return '<button type="button" class="oyun-seviye' + (secili ? " secili" : "") + '" data-seviye="' + s.id +
@@ -431,6 +456,7 @@
       var k = oku(); k.seviye = durum.seviye; yaz(k);
       var h = seviyeHedef; seviyeKapat(); basla(h);
     });
+    aciklamaYaz();
     $("seviye-perde").hidden = false;
     var sec = document.querySelector("#oyun-seviyeler .secili") || document.querySelector("#oyun-seviyeler button");
     if (sec) sec.focus();
@@ -664,8 +690,8 @@
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
       : konuBilgi.yks ? "Kaçırdığın soruların cevapları aşağıda. Çözemediğin sorular, yeni sorular bitince tekrar karşına çıkacak."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
-    var hk = havuz(durum.konu), bitti = durum.konu !== TEKRAR && hk.length && cozulenSayi(hk, kayit) === hk.length;
-    $("oyun-rekor").textContent = (durum.konu === TEKRAR ? "" : yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
+    var hk = havuz(durum.konu), bitti = !tekrarMi(durum.konu) && hk.length && cozulenSayi(hk, kayit) === hk.length;
+    $("oyun-rekor").textContent = (tekrarMi(durum.konu) ? "" : yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
       : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
       "Bu turda " + durum.yeniPuan + " yeni puan" + (bonus && bonus.eklendi ? " + " + bonus.toplam + " bonus" : "") + " · " +
       toplamYazi(konuBilgi.yks ? "YKS" : "Üniversite", konuBilgi.yks ? yksSorular() : tumSorular(), kayit, konuBilgi.yks) +
@@ -781,17 +807,13 @@
         "<small>" + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
         '<span class="skor">' + (kalan ? "Çözmediğin: " + kalan : "✓ Hepsini çözdün") + "</span></button>";
     }).join("");
-    Array.prototype.forEach.call(document.querySelectorAll("#yks-tekrar-secenek input"), function (r) { r.checked = (r.value === "hepsi") === s.c; });
     tekrarDurum();
   }
   function tekrarKaydet(s) { var k = oku(); k.tekrar = { k: s.k, c: s.c }; yaz(k); }
   function tekrarDurum() {
-    var s = tekrarSecim(), n = s.k.length, h = havuz(TEKRAR).length, not = $("yks-tekrar-not"), dugme = $("yks-tekrar-basla");
-    var hazir = n >= TEKRAR_EN_AZ && n <= TEKRAR_EN_COK && h > 0;
-    dugme.disabled = !hazir;
-    not.textContent = n < TEKRAR_EN_AZ ? "En az " + TEKRAR_EN_AZ + " konu seç (" + n + " seçili)."
-      : !h ? "Seçtiğin konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
-      : n + " konu seçili · " + Math.min(O.soruSayisi, h) + " soru gelecek" + (s.c ? " (daha önce çözdüklerin puansız)." : ".");
+    var s = tekrarSecim(), n = s.k.length, not = $("yks-tekrar-not"), dugme = $("yks-tekrar-basla");
+    dugme.disabled = !(n >= TEKRAR_EN_AZ && n <= TEKRAR_EN_COK);
+    not.textContent = n < TEKRAR_EN_AZ ? "En az " + TEKRAR_EN_AZ + " konu seç (" + n + " seçili)." : n + " konu seçili.";
   }
   if ($("yks-tekrar-konular")) {
     $("yks-tekrar-konular").addEventListener("click", function (e) {
@@ -803,9 +825,6 @@
       tekrarKaydet(s);
       b.classList.toggle("secili", i < 0); b.setAttribute("aria-pressed", String(i < 0));
       tekrarDurum();
-    });
-    Array.prototype.forEach.call(document.querySelectorAll("#yks-tekrar-secenek input"), function (r) {
-      r.addEventListener("change", function () { var s = tekrarSecim(); s.c = r.value === "hepsi"; tekrarKaydet(s); tekrarDurum(); });
     });
     $("yks-tekrar-basla").addEventListener("click", function () { if (!this.disabled) seviyeSor(TEKRAR); });
   }

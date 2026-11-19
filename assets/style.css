@@ -516,3 +516,8 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .oyun-tekrar-not { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--accent-soft); font-size: 0.92rem; line-height: 1.5; }
 .once-not { margin: 4px 0; color: #b7791f; font-size: 0.88rem; font-weight: 600; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .once-not { color: #f5c451; } }
+.sec.tum-tekrar { grid-column: 1 / -1; min-height: 0; border-left-color: #2e7d5b; background: color-mix(in srgb, #2e7d5b 7%, var(--surface)); }
+.sec.tum-tekrar strong { font-size: 1.02rem; }
+.panel .tekrar-secenek { flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); }
+.panel .tekrar-secenek[hidden] { display: none; }
+.oyun-seviyeler button:disabled { opacity: 0.45; cursor: not-allowed; }
