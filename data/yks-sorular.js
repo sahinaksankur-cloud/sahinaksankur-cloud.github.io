@@ -266,7 +266,18 @@ window.KK_YKS = {
       { s: "−2 · (−3/5) − 1/5 = ?", c: ["1", "−7/5", "7/5"], a: "Önce çarpma: (−2) · (−3/5) = 6/5. Sonra 6/5 − 1/5 = 5/5 = 1." },
       { s: "1/7 + 2/7 · 3 = ?", c: ["1", "9/7", "6/7"], a: "Önce çarpma: 2/7 · 3 = 6/7. Sonra 1/7 + 6/7 = 7/7 = 1." },
       { s: "(1/7 + 2/7) · 3 = ?", c: ["9/7", "1", "9/21"], a: "Önce parantez: 3/7. Sonra 3/7 · 3 = 9/7. Paydayı da çarpmak (9/21) hata." },
-      { s: "5/8 − (1/8 − 3/8) = ?", c: ["7/8", "3/8", "1/8"], a: "Önce parantez: 1/8 − 3/8 = −2/8. Sonra 5/8 − (−2/8) = 5/8 + 2/8 = 7/8." }
+      { s: "5/8 − (1/8 − 3/8) = ?", c: ["7/8", "3/8", "1/8"], a: "Önce parantez: 1/8 − 3/8 = −2/8. Sonra 5/8 − (−2/8) = 5/8 + 2/8 = 7/8." },
+      // Kesirler (paydalar farklı, küçük sayılar)
+      { s: "1/2 + 1/4 = ?", c: ["3/4", "2/6", "1/8"], a: "Paydalar eşitlenir: 2/4 + 1/4 = 3/4. Payları ve paydaları ayrı ayrı toplamak (2/6) hata." },
+      { s: "2/3 + 1/6 = ?", c: ["5/6", "3/9", "1/2"], a: "4/6 + 1/6 = 5/6." },
+      { s: "3/4 − 1/2 = ?", c: ["1/4", "1", "1/2"], a: "3/4 − 2/4 = 1/4." },
+      { s: "1/2 − 1/3 = ?", c: ["1/6", "0", "−1/6"], a: "3/6 − 2/6 = 1/6." },
+      { s: "1/3 − 1/2 = ?", c: ["−1/6", "1/6", "0"], a: "2/6 − 3/6 = −1/6. Küçükten büyük çıktı: sonuç negatif." },
+      { s: "1 − 1/3 = ?", c: ["2/3", "0", "1/3"], a: "1 = 3/3: 3/3 − 1/3 = 2/3." },
+      { s: "−1/2 + 1/4 = ?", c: ["−1/4", "1/4", "−3/4"], a: "−2/4 + 1/4 = −1/4." },
+      { s: "−1/3 − 1/6 = ?", c: ["−1/2", "−1/6", "1/6"], a: "−2/6 − 1/6 = −3/6 = −1/2." },
+      { s: "−(1/4 − 1/2) = ?", c: ["1/4", "−1/4", "3/4"], a: "Önce parantez: 1/4 − 2/4 = −1/4. Önündeki eksi: 1/4." },
+      { s: "1/2 − (1/4 − 1/2) = ?", c: ["3/4", "1/4", "−1/4"], a: "Parantez: 1/4 − 2/4 = −1/4. Sonra 1/2 − (−1/4) = 2/4 + 1/4 = 3/4." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -368,6 +379,8 @@ window.KK_YKS = {
     { k: "yks-islem", s: "2/7 + 3/7 = 5/14", d: false, n: "Payda aynı kalır: 5/7" },
     { k: "yks-islem", s: "−(3/7 − 5/7) = 2/7", d: true },
     { k: "yks-islem", s: "3 · (5/7 − 3/7) = 15/7 − 3/7", d: false, n: "3 · 5/7 − 3 · 3/7 = 6/7" },
+    { k: "yks-islem", s: "1/2 + 1/4 = 2/6", d: false, n: "Payda eşitlenir: 2/4 + 1/4 = 3/4" },
+    { k: "yks-islem", s: "1/3 − 1/2 negatif bir sayıdır.", d: true },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
