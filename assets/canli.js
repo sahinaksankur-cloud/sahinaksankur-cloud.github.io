@@ -149,7 +149,8 @@
     $("lobi-katil").hidden = true; $("lobi-katildin").hidden = false;
   }
   $("lobi-katil").addEventListener("click", katil);
-  document.addEventListener("pointerdown", function () { A.sesBaglam(); if (!katildi && !YAYIN) katil(); }, { once: true });
+  document.addEventListener("pointerdown", function () { A.sesBaglam(); }, { once: true });
+  var BASLIK = document.title, uyariCalindi = null;
   document.addEventListener("visibilitychange", function () { uyanik(); if (document.visibilityState === "visible") saatAyarla(); });
 
   function goster(bolum) {
@@ -272,6 +273,7 @@
     }
     if (simdiki) {
       aktif = simdiki; sonucAcik = null;
+      document.title = "🔴 Soru " + (canliAdim(simdiki, t).i + 1) + "/" + simdiki.adim.length + " – " + BASLIK;
       var d = canliAdim(simdiki, t), o2 = kayitAl(simdiki.y);
       isle(simdiki, t);
       if (ekran.anahtar !== simdiki.y.anahtar || ekran.i !== d.i) {
@@ -295,7 +297,7 @@
       }
       return;
     }
-    if (sonucAcik) return;
+    if (sonucAcik) { document.title = BASLIK; return; }
     lobi(l, t);
   }
 
@@ -307,6 +309,15 @@
     $("lobi-qr").hidden = !YAYIN;
     $("lobi-katil").hidden = katildi || YAYIN;
     $("lobi-katildin").hidden = !katildi || YAYIN;
+    // Son 60 saniye: sayfada uyarı, sekme başlığında geri sayım, bir kez kısa ses (ekranı kapatan bir pencere açılmaz)
+    var yakin = sira && sira.bas - t <= 60e3;
+    $("lobi-uyari").hidden = !yakin;
+    if (yakin) {
+      var sn = Math.ceil((sira.bas - t) / 1000);
+      $("lobi-uyari").textContent = "⏰ Yarışma " + sn + " saniye sonra başlıyor!" + (katildi || YAYIN ? "" : " Sesin açılması için “Yarışmaya katıl”a dokun.");
+      document.title = "⏰ " + sn + " sn – " + BASLIK;
+      if (uyariCalindi !== sira.anahtar) { uyariCalindi = sira.anahtar; A.cal("tik"); }
+    } else document.title = BASLIK;
     if (sira) {
       $("lobi-baslik").textContent = adi(sira) + " yarışması";
       var yarin = sira.gun !== T.gunAnahtar(t);

@@ -620,3 +620,9 @@ body.yayin .oyun-grafik { max-width: 560px; }
 @media (max-width: 520px) { .canli-serit-durum { align-items: flex-start; } }
 .canli-geri-etiket { margin: 4px 0 -4px; color: var(--muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .canli-geri { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.canli-uyari[hidden] { display: none; }
+.canli-uyari { margin: 0; padding: 10px 14px; border-radius: 10px; background: #fff1e0; color: #a35400; font-weight: 700; border: 2px solid #e67e22; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .canli-uyari { background: #3a2a14; color: #f5b971; } }
+.canli-serit.yakin { border-color: #e67e22; background: #fff4e5; }
+.canli-serit.yakin .canli-saat-etiket { color: #a35400; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .canli-serit.yakin { background: #3a2a14; } :root:not([data-theme="light"]) .canli-serit.yakin .canli-saat-etiket { color: #f5b971; } }

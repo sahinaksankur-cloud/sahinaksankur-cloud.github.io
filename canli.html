@@ -34,8 +34,9 @@
         <p class="canli-alt" id="lobi-alt"></p>
         <p class="canli-geri-etiket">Başlamasına kalan süre</p>
         <p class="canli-geri" id="lobi-geri" role="timer" aria-live="off"></p>
+        <p class="canli-uyari" id="lobi-uyari" role="status" hidden></p>
         <button type="button" class="btn primary big canli-katil" id="lobi-katil">Yarışmaya katıl</button>
-        <p class="canli-katildin" id="lobi-katildin" hidden>✓ Hazırsın. Sorular başlayınca ekranına gelecek; bu sayfayı açık tut.</p>
+        <p class="canli-katildin" id="lobi-katildin" hidden>✓ Hazırsın. Yarışma başlayınca sorular bu sayfada kendiliğinden açılacak; sayfayı açık tut.</p>
         <p class="canli-seri" id="lobi-seri" hidden></p>
         <div class="canli-qr" id="lobi-qr" hidden><img src="assets/canli-qr.svg" alt="Canlı Yarışma sayfasının QR kodu" width="160" height="160"><span>kuzeykampuscalculus.com/canli.html</span></div>
       </div>
@@ -52,6 +53,7 @@
             <li>Yarışma saatinde herkesin ekranına aynı anda aynı soru gelir. 10 soru var.</li>
             <li>Her soru için <strong id="kural-sure">20</strong> saniyen var. İlk dokunuşun geçerli, cevap değiştirilemez.</li>
             <li>Cevap verdikten sonra süre bitene kadar beklersin. Doğru cevap herkese aynı anda gösterilir, sonra sıradaki soru gelir.</li>
+            <li>Başlamadan 1 dakika önce sayfada ve sekme başlığında uyarı görünür. Saat gelince sorular bu sayfada kendiliğinden açılır.</li>
             <li>Son 3 saniyede ses çalar. Sesin açık olsun, “Yarışmaya katıl”a dokun.</li>
             <li>Geç kalırsan o an hangi soru açıksa oradan katılırsın.</li>
           </ul>

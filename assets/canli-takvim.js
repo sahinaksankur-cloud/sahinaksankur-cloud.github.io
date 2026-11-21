@@ -60,12 +60,15 @@
     var simdi = Date.now(), bugun = gunun(gunAnahtar(simdi));
     var canli = aralik(simdi - GUN, simdi).filter(function (y) { return y.bas <= simdi && simdi < y.bas + tahminiSure(); })[0];
     var sira = aralik(simdi, simdi + 2 * GUN).filter(function (y) { return y.bas > simdi; })[0];
+    var yakin = !canli && sira && sira.bas - simdi <= 60e3;
     var durum = canli ? "🔴 Şimdi canlı: " + canli.ad + " " + canli.saat + " · Katıl →"
+      : yakin ? '<span class="canli-saat-etiket">⏰ ' + sira.ad + " " + sira.saat + ' 1 dakikadan az kaldı · Katıl →</span><span class="canli-saat" role="timer">' + saat(sira.bas - simdi) + "</span>"
       : sira ? '<span class="canli-saat-etiket">Sıradaki yarışmaya (' + sira.ad + " " + sira.saat + (sira.gun !== gunAnahtar(simdi) ? ", yarın" : "") +
         ') kalan süre</span><span class="canli-saat" role="timer">' + saat(sira.bas - simdi) + "</span>" : "";
     Array.prototype.forEach.call(seritler, function (el) {
       el.hidden = false;
       el.classList.toggle("simdi", !!canli);
+      el.classList.toggle("yakin", !!yakin);
       el.innerHTML = '<span class="canli-nokta" aria-hidden="true"></span>' +
         '<span class="canli-serit-ic"><strong>Canlı Yarışma</strong>' +
         '<span class="canli-serit-program">Bugün · ' + (bugun.length ? programYazi(bugun) : "Bugün yarışma yok") + "</span></span>" +
