@@ -18,6 +18,25 @@ window.KK_CONFIG = {
   iletisimEposta: "iletisim@kuzeykampuscalculus.com",
   whatsapp: "",         // örnek: "905xxxxxxxxx" (boş bırakılırsa WhatsApp düğmesi görünmez)
 
+  // 🔴 Canlı Yarışma (canli.html): her gün aynı saatlerde, herkese aynı anda aynı 10 soru.
+  // Saatler Türkiye saatidir. gunler: 1 Pazartesi … 5 Cuma, 6 Cumartesi, 0 Pazar (yazılmazsa her gün).
+  canli: {
+    aktif: true,          // false: ana sayfa ve Testler'deki Canlı Yarışma şeridi gizlenir
+    soruSayisi: 10,
+    soruSure: 20,         // her soru (saniye); grafikli ve parçalı fonksiyonlu sorulara +5 sn
+    cevapSure: 8,         // süre bitince doğru cevabın ekranda kalma süresi (saniye)
+    program: [
+      { grup: "yks", saat: "10:00", gunler: [6, 0] },
+      { grup: "yks", saat: "17:30", gunler: [1, 2, 3, 4, 5] },
+      { grup: "yks", saat: "20:00" },
+      { grup: "calculus", saat: "21:00" }
+    ],
+    // Yarışmanın yapılmayacağı günler: "2026-12-31" (o günün tüm yarışmaları) ya da "2026-12-31 20:00" (sadece o saat)
+    iptal: [],
+    // Calculus yarışmasının soruları bu konulardan gelir (data/sorular.js)
+    calculusKonular: ["limit", "turev", "integral", "uygulama"]
+  },
+
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.
   dersler: [
     {

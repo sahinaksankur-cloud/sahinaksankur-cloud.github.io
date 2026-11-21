@@ -530,3 +530,84 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 .panel .tekrar-secenek { flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); }
 .panel .tekrar-secenek[hidden] { display: none; }
 .oyun-seviyeler button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* 🔴 Canlı Yarışma (canli.html, assets/canli.js) ve ana sayfa / Testler şeridi */
+.canli-serit[hidden] { display: none !important; }
+.canli-serit {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 18px; padding: 12px 16px;
+  background: var(--surface); border: 2px solid #d64545; border-radius: var(--radius); color: var(--text); box-shadow: var(--shadow);
+}
+.canli-serit:hover { text-decoration: none; border-color: #b83232; }
+.canli-serit-ic { display: flex; flex-direction: column; flex: 1 1 220px; min-width: 0; }
+.canli-serit-ic strong { font-size: 1.05rem; }
+.canli-serit-program { color: var(--muted); font-size: 0.9rem; }
+.canli-serit-durum { font-weight: 700; color: #c0392b; font-size: 0.95rem; }
+.canli-serit.simdi { background: #c0392b; border-color: #c0392b; color: #fff; }
+.canli-serit.simdi .canli-serit-program, .canli-serit.simdi .canli-serit-durum { color: #fff; }
+.canli-serit.simdi .canli-nokta { background: #fff; }
+.canli-nokta { width: 12px; height: 12px; border-radius: 50%; background: #d64545; flex: none; display: inline-block; animation: canli-nabiz 1.4s ease-in-out infinite; }
+@keyframes canli-nabiz { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.8); } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .canli-serit-durum { color: #ff8a80; } }
+
+.canli { padding-bottom: 48px; }
+.canli-lobi-kart {
+  margin: 28px auto 20px; max-width: 720px; text-align: center; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 20px; display: grid; gap: 10px; justify-items: center;
+}
+.canli-lobi-kart h1 { margin: 0; font-family: var(--serif); font-size: clamp(1.5rem, 5vw, 2.1rem); line-height: 1.2; }
+.canli-etiket { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #c0392b; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .canli-etiket { color: #ff8a80; } }
+.canli-alt { margin: 0; color: var(--muted); }
+.canli-geri { margin: 6px 0; font-size: clamp(2.6rem, 12vw, 4.2rem); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent); line-height: 1; }
+.canli-geri:empty { display: none; }
+.canli-geri.yakin { color: #c0392b; }
+.canli-lobi-kart .canli-katil { justify-self: center; font-size: 1.1rem; padding: 14px 28px; }
+.canli-katildin { margin: 0; font-weight: 600; color: #2e8b57; }
+.canli-seri { margin: 0; font-weight: 700; color: #c96a10; }
+.canli-qr[hidden] { display: none; }
+.canli-qr { display: grid; justify-items: center; gap: 6px; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+.canli-qr img { background: #fff; padding: 6px; border-radius: 10px; width: 160px; height: 160px; }
+.canli-bilgi { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 920px; margin: 0 auto; }
+.canli-kutu { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+.canli-kutu h2 { margin: 0 0 10px; font-size: 1.1rem; }
+.canli-program { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.canli-program li { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 10px; background: var(--surface-2); }
+.canli-program li.sira { outline: 2px solid #d64545; }
+.canli-program li.bitti { opacity: 0.85; }
+.canli-program .saat { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.canli-program .ad { flex: 1; display: flex; flex-direction: column; font-weight: 600; }
+.canli-program .ad small { color: var(--muted); font-weight: 400; }
+.canli-program .btn { padding: 6px 14px; }
+.canli-kurallar { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--muted); line-height: 1.5; }
+.canli-kucuk { margin: 10px 0 0; color: var(--muted); font-size: 0.88rem; }
+.canli-kucuk:empty { display: none; }
+.canli-not { max-width: 720px; margin: 28px auto 0; text-align: center; color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+#canli-soru, #canli-sonuc { max-width: 720px; margin: 0 auto; padding-top: 28px; position: relative; }
+.canli-rozet { font-weight: 700; color: #c0392b; }
+.canli-rozet.tekrar { color: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .canli-rozet:not(.tekrar) { color: #ff8a80; } }
+.canli-kart { position: relative; }
+.canli-secenek { display: flex; align-items: center; gap: 12px; }
+.canli-secenek .harf { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); font-weight: 700; font-size: 0.95rem; }
+.canli-secenek.secildi { opacity: 1; border-color: var(--accent); border-width: 3px; }
+.canli-secenek.secildi .harf { background: var(--accent); color: var(--accent-text); }
+.canli-durum { margin: 0; min-height: 1.5em; font-weight: 600; color: var(--muted); }
+.canli-durum.alindi { color: var(--accent); }
+.canli-durum.iyi { color: #2e8b57; } .canli-durum.kotu { color: #c0392b; }
+.canli-fisek { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.canli-qr.kose { position: fixed; right: 18px; bottom: 18px; background: var(--surface); padding: 10px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.75rem; }
+.canli-qr.kose img { width: 110px; height: 110px; }
+@media (max-width: 760px) { .canli-bilgi { grid-template-columns: 1fr; } }
+
+/* Canlı yayın ekranı (canli.html?ekran=yayin): menü ve alt bilgi gizli, yazılar büyük */
+body.yayin .topbar, body.yayin footer, body.yayin .canli-not, body.yayin .ses-dugme { display: none; }
+body.yayin #canli-soru, body.yayin #canli-sonuc { max-width: 1100px; }
+body.yayin .oyun-metin { font-size: clamp(1.6rem, 3.2vw, 2.6rem); }
+body.yayin .canli-secenek { font-size: 1.5rem; padding: 16px 18px; }
+body.yayin .canli-secenek:disabled { opacity: 1; }
+body.yayin .canli-secenek .harf { width: 42px; height: 42px; font-size: 1.3rem; }
+body.yayin .oyun-sure { min-width: 72px; height: 72px; font-size: 2.2rem; }
+body.yayin .oyun-ust { font-size: 1.25rem; }
+body.yayin .oyun-aciklama { font-size: 1.25rem; }
+body.yayin .oyun-grafik { max-width: 560px; }
+@media (min-width: 1200px) { body.yayin #canli-soru { padding-right: 150px; } }

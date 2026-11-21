@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var O = window.KK_OYUN;
-  if (!O || !document.getElementById("oyun-giris")) return;
+  if (!O) return;
 
   var DEPO = "kk-oyun-v1";
   var $ = function (id) { return document.getElementById(id); };
@@ -253,7 +253,7 @@
     return ad + " toplam puanın: " + (c + b) + " (" + c + " / " + liste.length + " soru" + (b ? " + " + b + " bonus" : "") + ")";
   }
 
-  if (O.ad) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
+  if (O.ad && $("oyun-ad")) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
   // ---- Sesler (Web Audio; ses dosyası yok). Öğrenci 🔊 düğmesiyle kapatabilir; seçim cihazda hatırlanır. ----
   var sesAcik = oku().ses !== false, actx = null;
   function sesBaglam() {
@@ -315,6 +315,13 @@
     });
   });
   sesDugmeleri();
+
+  // 🔴 Canlı Yarışma (assets/canli.js) bu yardımcıları kullanır: aynı soru görünümü, puan kaydı, sesler ve havai fişek.
+  window.KK_ARAC = {
+    bicim: bicim, soruHtml: soruHtml, anahtar: anahtar, cevapYaz: cevapYaz, cozulduMu: cozulduMu,
+    cal: cal, sesBaglam: sesBaglam, fisekler: fisekler, oku: oku, yaz: yaz, ekSure: O.ekSure == null ? 5 : O.ekSure
+  };
+  if (!$("oyun-giris")) return;
 
   function goster(bolum) {
     ["oyun-giris", "oyun-soru", "dy-soru", "oyun-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });

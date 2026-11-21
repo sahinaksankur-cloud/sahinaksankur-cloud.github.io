@@ -30,6 +30,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Testler (menüde "Testler"; eski adı Calculus Oyunu). Üstte iki sekme: 🎓 Üniversite ve 📘 YKS (son açılan sekme cihazda hatırlanır; `#yks` linki YKS'yi açar). Üniversite'de dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
+| `canli.html` | 🔴 Canlı Yarışma (bkz. Oyun → Canlı Yarışma). Menüde yok; ana sayfadaki ve Testler'deki kırmızı şeritten (`data-canli-serit`) açılır |
 | `kampus.html` | Kampüsün İçinden: ODTÜ, Boğaziçi, İTÜ kartları (sınav hazırlık ve öğrenci paylaşımları için), her kartta "📤 … sınavı gönder" düğmesi (`iletisim.html?konu=kampus-sinav&okul=odtu|bogazici|itu`: konu, okul ve mesaj kendiliğinden dolar; öğrenci dosyayı e-postaya ekler), "Bize yaz" ve "Okulumu ekleyin" kutuları (`?konu=kampus` / `?konu=kampus-okul`), resmî bağ olmadığı notu. Üniversite logosu kullanılmaz |
 | `makaleler.html`, `makaleler/` | Makaleler; `araclar/makaleleri-olustur.py` ile üretilir (bkz. README) |
 | `yazilar.html`, `yazilar/` | Eski adresler; makalelere yönlendirir |
@@ -38,6 +39,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `assets/pdfjs/` | PDF.js (PDF'leri sayfa içinde, telefonda da göstermek için) |
 | `data/videos.csv` | Tüm videolar ve PDF'leri |
 | `data/sorular.js`, `data/dogru-yanlis.js`, `assets/oyun.js` | Oyunun soru bankası, Doğru/Yanlış ifadeleri ve kodu |
+| `assets/canli.js`, `assets/canli-takvim.js`, `assets/canli-qr.svg` | Canlı Yarışma kodu, yarışma takvimi ve şeridi, yayın ekranındaki QR kod (`https://kuzeykampuscalculus.com/canli.html`) |
 | `data/yks-sorular.js` | 📘 YKS sekmesinin konuları, soruları ve Doğru/Yanlış ifadeleri (`window.KK_YKS`) |
 | `pdf/<liste>/` | Sitedeki PDF dosyaları |
 
@@ -46,6 +48,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - `whatsappKanal`: WhatsApp duyuru kanalı linki. Boşsa sitedeki tüm kanal bağlantıları gizlenir.
 - `pdfIndirme`: `false` yapılırsa PDF'lerin yanındaki "⬇ İndir" düğmesi kalkar.
 - `whatsapp`: Birebir iletişim numarası. **Boş kalmalı** (kişisel numara gösterilmiyor).
+- `canli`: Canlı Yarışma ayarları: `aktif` (false → şeritler gizlenir), `soruSayisi` 10, `soruSure` 20, `cevapSure` 8, `program` (Türkiye saati; `gunler` 1 Pzt … 6 Cmt, 0 Paz), `iptal` (`"2026-12-31"` ya da `"2026-12-31 20:00"`), `calculusKonular`. Şu an: YKS hafta içi 17:30, hafta sonu 10:00, her gün 20:00; Calculus her gün 21:00.
 - `sheetCsvUrl`: Doluysa video listesi `data/videos.csv` yerine bu Google E-Tablo'dan okunur. Şu an boş.
 
 ### `data/videos.csv`
@@ -82,6 +85,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
+- **🔴 Canlı Yarışma** (`canli.html`, `assets/canli.js`): sunucu yok. Soruları her cihaz kendisi seçer ama tohum yarışmanın tarih-saati (`"2026-11-21 20:00 yks"`) olduğu için herkes aynı 10 soruyu, aynı sırayla ve aynı şık sırasıyla (A/B/C) görür. YKS: açık YKS konuları; Calculus: `canli.calculusKonular`. Konulardan sırayla birer soru alınır; aynı gruptaki son 6 yarışmanın soruları mümkünse gelmez. Akış saate bağlı: her soru `soruSure` (grafikli/parçalı +`ekSure`), sonra `cevapSure` sn doğru cevap (doğru bilene ve yayın ekranında yıldızlar). Erken geçiş yok, ilk dokunuş geçerli (cevap değiştirilemez); doğru/yanlış süre bitince herkese aynı anda gösterilir. Saat, sitenin `Date` başlığıyla düzeltilir (fark > 1 sn ise). Geç gelen açık sorudan katılır. "Yarışmaya katıl" dokunuşu sesi açar ve ekranın kararmasını engeller (Wake Lock). Cevaplar `kk-oyun-v1` → `canli[anahtar] = { s: seçilen şık (0 = doğru), g: gördüğü sorular, k: puana işlenenler, p }` (7 günden eskiler silinir); gördüğü sorular süre bitince `cevapYaz` ile normal puana işlenir (erken bitirme bonusu yok). 🔥 Seri: `canliSeri = { son: gün, n }` (cevap verdiği her gün). Biten yarışmalar programda "Çöz" ile kendi hızında çözülür. Sonuçta "Sonucumu paylaş" (Web Share, yoksa WhatsApp). Yayın ekranı: `canli.html?ekran=yayin` (menü yok, büyük yazı, QR kod, cevap verilmez). Deneme: `canli.html?deneme=1` (`&grup=calculus`): bir sonraki tam dakikada başlar, adres çubuğuna `bas=` yazılır (aynı linki açan cihazlar aynı denemeyi görür); puan ve seri yazılmaz. Sayfanın altında not: "Bu yarışmalar, her gün biraz daha ileri gitmen için var. Ödül yok, kayıt yok; …". Ödül konulmaz (izne tabi). Oyun yardımcıları `oyun.js` → `window.KK_ARAC` ile paylaşılır.
 - Menü sırası (Dersler → `dersler.html`): Dersler, Testler, Kampüsün İçinden/Kampüs, Makaleler, Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
 - Menü tüm sayfalarda elle yazılı (index, dersler, ders, iletisim, oyun, kampus); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
 
