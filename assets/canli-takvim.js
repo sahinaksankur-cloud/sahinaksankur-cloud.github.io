@@ -38,6 +38,11 @@
     var sa = Math.floor(dk / 60), kalan = dk % 60;
     return sa + " sa" + (kalan ? " " + kalan + " dk" : "") + " sonra";
   }
+  // Dijital saat: 02:35:14
+  function saat(ms) {
+    var s = Math.max(0, Math.ceil(ms / 1000)), iki = function (n) { return ("0" + n).slice(-2); };
+    return iki(Math.floor(s / 3600)) + ":" + iki(Math.floor(s % 3600 / 60)) + ":" + iki(s % 60);
+  }
   // "YKS 17:30 · 20:00 · Calculus 21:00"
   function programYazi(liste) {
     var gr = [], s = {};
@@ -45,7 +50,7 @@
     return gr.map(function (g) { return (AD[g] || g) + " " + s[g].join(" · "); }).join(" · ");
   }
 
-  window.KK_TAKVIM = { CFG: CFG, AD: AD, TR: TR, gunAnahtar: gunAnahtar, gunun: gunun, aralik: aralik, programYazi: programYazi, sure: sure, tahminiSure: tahminiSure };
+  window.KK_TAKVIM = { CFG: CFG, AD: AD, TR: TR, gunAnahtar: gunAnahtar, gunun: gunun, aralik: aralik, programYazi: programYazi, sure: sure, saat: saat, tahminiSure: tahminiSure };
 
   // ---- Şerit: [data-canli-serit] (ana sayfa, Testler) ----
   var seritler = document.querySelectorAll("[data-canli-serit]");
@@ -56,7 +61,8 @@
     var canli = aralik(simdi - GUN, simdi).filter(function (y) { return y.bas <= simdi && simdi < y.bas + tahminiSure(); })[0];
     var sira = aralik(simdi, simdi + 2 * GUN).filter(function (y) { return y.bas > simdi; })[0];
     var durum = canli ? "🔴 Şimdi canlı: " + canli.ad + " " + canli.saat + " · Katıl →"
-      : sira ? "Sıradaki: " + sira.ad + " " + sira.saat + (sira.gun !== gunAnahtar(simdi) ? " (yarın)" : "") + " · " + sure(sira.bas - simdi) : "";
+      : sira ? '<span class="canli-saat-etiket">Sıradaki yarışmaya (' + sira.ad + " " + sira.saat + (sira.gun !== gunAnahtar(simdi) ? ", yarın" : "") +
+        ') kalan süre</span><span class="canli-saat" role="timer">' + saat(sira.bas - simdi) + "</span>" : "";
     Array.prototype.forEach.call(seritler, function (el) {
       el.hidden = false;
       el.classList.toggle("simdi", !!canli);
@@ -67,5 +73,5 @@
     });
   }
   ciz();
-  setInterval(ciz, 20e3);
+  setInterval(ciz, 1000);
 })();

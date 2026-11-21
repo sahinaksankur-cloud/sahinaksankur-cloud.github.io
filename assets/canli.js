@@ -155,11 +155,6 @@
   function goster(bolum) {
     ["canli-lobi", "canli-soru", "canli-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });
   }
-  function ikiHane(n) { return ("0" + n).slice(-2); }
-  function geriSayim(ms) {
-    var s = Math.max(0, Math.ceil(ms / 1000)), sa = Math.floor(s / 3600), dk = Math.floor(s % 3600 / 60), sn = s % 60;
-    return (sa ? sa + ":" + ikiHane(dk) : dk) + ":" + ikiHane(sn);
-  }
 
   // ---- Soru ekranı ----
   var ekran = { anahtar: null, i: -1, faz: null, mod: null }, sonSn = null;
@@ -316,7 +311,7 @@
       $("lobi-baslik").textContent = adi(sira) + " yarışması";
       var yarin = sira.gun !== T.gunAnahtar(t);
       $("lobi-alt").textContent = (yarin ? "Yarın saat " : "Bugün saat ") + sira.saat + "'de başlıyor · " + N + " soru · her soru " + SORU + " sn";
-      $("lobi-geri").textContent = geriSayim(sira.bas - t);
+      $("lobi-geri").textContent = T.saat(sira.bas - t);
       $("lobi-geri").classList.toggle("yakin", sira.bas - t <= 10e3);
     } else {
       $("lobi-baslik").textContent = "Canlı Yarışma";
@@ -327,15 +322,17 @@
     $("lobi-seri").textContent = seriYazi(seri); $("lobi-seri").hidden = !seri || YAYIN;
     // Bugünün programı (dakikada bir değişir; her saniye yeniden çizmeye gerek yok)
     var bugun = T.gunAnahtar(t), gunL = l.filter(function (y) { return y.gun === bugun; });
+    Array.prototype.forEach.call(document.querySelectorAll("#lobi-program [data-bas]"), function (el) { el.textContent = T.saat(+el.getAttribute("data-bas") - t); });
     var imza = bugun + "|" + gunL.map(function (y) { return y.anahtar + (y.bas <= t ? "b" : ""); }).join(",");
     if (imza === lobiImza) return;
     lobiImza = imza;
     $("lobi-program").innerHTML = gunL.length ? gunL.map(function (y) {
       var p = plan(y), bitti = p.bit <= t, o = kayitAl(y), gordu = Object.keys(o.r.g).length;
       var dogru = Object.keys(o.r.s).filter(function (i) { return o.r.s[i] === 0; }).length;
-      var durum = bitti ? (gordu ? "Katıldın · " + dogru + " / " + gordu + " doğru" : "Bitti") : y === sira ? "Sıradaki" : "Bekliyor";
+      var durum = bitti ? (gordu ? "Katıldın · " + dogru + " / " + gordu + " doğru" : "Bitti") : y.bas <= t ? "Şimdi canlı" : (y === sira ? "Sıradaki · " : "") + "kalan süre";
+      var kalan = !bitti && y.bas > t ? '<span class="canli-saat kucuk" data-bas="' + y.bas + '">' + T.saat(y.bas - t) + "</span>" : "";
       return '<li class="' + (bitti ? "bitti" : y === sira ? "sira" : "") + '"><span class="saat">' + y.saat + "</span>" +
-        '<span class="ad">' + (y.deneme ? "Deneme · " : "") + y.ad + '<small>' + durum + "</small></span>" +
+        '<span class="ad">' + (y.deneme ? "Deneme · " : "") + y.ad + '<small>' + durum + "</small></span>" + kalan +
         (bitti && !YAYIN ? '<button type="button" class="btn" data-coz="' + y.anahtar + '">Çöz</button>' : "") + "</li>";
     }).join("") : "<li>Bugün yarışma yok.</li>";
     $("lobi-program-not").textContent = gunL.some(function (y) { return plan(y).bit <= t; }) && !YAYIN

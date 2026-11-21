@@ -611,3 +611,12 @@ body.yayin .oyun-ust { font-size: 1.25rem; }
 body.yayin .oyun-aciklama { font-size: 1.25rem; }
 body.yayin .oyun-grafik { max-width: 560px; }
 @media (min-width: 1200px) { body.yayin #canli-soru { padding-right: 150px; } }
+/* Kalan süre: dijital saat */
+.canli-saat { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; font-weight: 700; font-size: 1.35rem; letter-spacing: 0.04em; background: #1d1f24; color: #ff5a4e; padding: 4px 10px; border-radius: 8px; display: inline-block; }
+.canli-saat.kucuk { font-size: 0.95rem; padding: 3px 8px; }
+.canli-serit-durum { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.canli-saat-etiket { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.canli-serit.simdi .canli-saat-etiket { color: #fff; }
+@media (max-width: 520px) { .canli-serit-durum { align-items: flex-start; } }
+.canli-geri-etiket { margin: 4px 0 -4px; color: var(--muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.canli-geri { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
