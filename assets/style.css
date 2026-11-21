@@ -637,3 +637,9 @@ body.yayin .oyun-grafik { max-width: 560px; }
 @media (max-width: 520px) { .canli-hatirlat { right: 16px; max-width: none; } }
 .canli-hatirlat { padding-right: 38px; }
 .canli-hatirlat-kapat { position: absolute; top: 4px; right: 4px; }
+/* Canlı Yarışma: sonucu paylaş penceresi */
+.paylas-panel { max-height: calc(100vh - 32px); overflow-y: auto; }
+.paylas-onizleme { display: block; width: 100%; max-width: 220px; aspect-ratio: 9 / 16; margin: 0 auto; border-radius: 14px; background: var(--surface-2); object-fit: contain; }
+.paylas-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.paylas-dugmeler .btn { justify-content: center; font-weight: 600; margin: 0; align-self: stretch; }
+.paylas-dugmeler #paylas-sistem { grid-column: 1 / -1; }

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=202611211457">
+  <link rel="stylesheet" href="assets/style.css?v=202611211507">
 </head>
 <body class="canli-sayfa">
   <header class="topbar">
@@ -96,6 +96,23 @@
       <div class="oyun-kacan" id="sonuc-kacan" hidden></div>
     </section>
 
+    <!-- Sonucu paylaş: resim kartı + seçenekler -->
+    <div class="perde" id="paylas-perde" hidden>
+      <div class="panel paylas-panel" role="dialog" aria-modal="true" aria-labelledby="paylas-baslik">
+        <h3 id="paylas-baslik">Sonucunu paylaş</h3>
+        <img class="paylas-onizleme" id="paylas-resim" alt="Paylaşım kartı: yarışma sonucun">
+        <div class="paylas-dugmeler">
+          <button type="button" class="btn primary" id="paylas-sistem" hidden>📲 Paylaş (Instagram, WhatsApp…)</button>
+          <a class="btn wa" id="paylas-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn" id="paylas-fb" href="#" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn" id="paylas-indir" href="#" download="kuzey-kampus-canli-yarisma.png">⬇ Resmi indir</a>
+          <button type="button" class="btn" id="paylas-kopyala">🔗 Linki kopyala</button>
+        </div>
+        <p class="panel-not" id="paylas-not">Instagram için: “Paylaş”a dokunup Instagram'ı seç ya da resmi indirip hikâyene ekle.</p>
+        <button type="button" class="btn" id="paylas-kapat">Kapat</button>
+      </div>
+    </div>
+
     <p class="canli-not">Bu yarışmalar, her gün biraz daha ileri gitmen için var. Ödül yok, kayıt yok; sonuçların sadece senin cihazında kalır. Kuzey Kampüs'ün hiçbir kurumla resmî bağı yoktur.</p>
   </main>
 
@@ -108,12 +125,12 @@
     </div>
   </footer>
 
-  <script src="assets/config.js?v=202611211457"></script>
-  <script src="assets/app.js?v=202611211457"></script>
-  <script src="data/sorular.js?v=202611211457"></script>
-  <script src="data/yks-sorular.js?v=202611211457"></script>
-  <script src="assets/oyun.js?v=202611211457"></script>
-  <script src="assets/canli-takvim.js?v=202611211457"></script>
-  <script src="assets/canli.js?v=202611211457"></script>
+  <script src="assets/config.js?v=202611211507"></script>
+  <script src="assets/app.js?v=202611211507"></script>
+  <script src="data/sorular.js?v=202611211507"></script>
+  <script src="data/yks-sorular.js?v=202611211507"></script>
+  <script src="assets/oyun.js?v=202611211507"></script>
+  <script src="assets/canli-takvim.js?v=202611211507"></script>
+  <script src="assets/canli.js?v=202611211507"></script>
 </body>
 </html>

@@ -375,8 +375,8 @@
       (tam ? adi(p.y) + " yarışmasındaki bütün soruları doğru bildin. Harikasın!" : dogru === n ? "Hepsi doğru, harikasın! 🎉" : dogru >= n * 0.7 ? "Çok iyi! Kaçırdıklarının cevapları aşağıda." : "Kaçırdığın soruların cevapları aşağıda. Bir sonraki yarışmada görüşürüz.") +
       (p.y.deneme ? " (Deneme yarışması: puan ve seri yazılmadı.)" : o.r.p ? " Toplam puanına +" + o.r.p + " eklendi." : "");
     $("sonuc-seri").textContent = seriYazi(seriAl());
-    $("sonuc-paylas").setAttribute("data-metin", "Kuzey Kampüs Canlı Yarışma · " + p.y.ad + " " + p.y.saat + ": " + n + " sorudan " + dogru + " doğru" +
-      (seriAl() > 1 ? " · 🔥 " + seriAl() + " gündür yarışıyorum" : "") + ". Sen de katıl:");
+    paylasVeri = { y: p.y, d: dogru, n: n, tum: p.adim.length, tam: tam, seri: p.y.deneme ? 0 : seriAl() };
+    $("sonuc-paylas").textContent = tam ? "📤 Tam puanını paylaş!" : "📤 Sonucumu paylaş";
     var kacan = gor.filter(function (i) { return o.r.s[i] !== 0; });
     $("sonuc-kacan").innerHTML = kacan.length ? "<h3>Kaçırdığın sorular</h3>" + kacan.map(function (i) {
       var q = p.adim[i].q;
@@ -400,10 +400,105 @@
     }
   }
   $("sonuc-tamam").addEventListener("click", function () { sonucAcik = null; lobiImza = null; dongu(); window.scrollTo(0, 0); });
-  $("sonuc-paylas").addEventListener("click", function () {
-    var metin = this.getAttribute("data-metin") || "Kuzey Kampüs Canlı Yarışma";
-    if (navigator.share) { navigator.share({ text: metin, url: URL_SITE }).catch(function () {}); return; }
-    window.open("https://wa.me/?text=" + encodeURIComponent(metin + " " + URL_SITE), "_blank", "noopener");
+  // ---- 📤 Paylaş: sonucun resim kartı (1080×1920, hikâye boyutu) ve paylaşım seçenekleri ----
+  // Telefonda "Paylaş" sistemin paylaşım menüsünü resimle açar (Instagram, WhatsApp, Facebook…);
+  // olmayan cihazlarda WhatsApp / Facebook linkleri, resmi indirme ve link kopyalama var. Kartta isim yok.
+  var paylasVeri = null, paylasDosya = null, paylasUrl = null;
+  var AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  function paylasMetni(v) {
+    return (v.tam ? "Kuzey Kampüs Canlı Yarışma'da tam puan aldım! 🎉 " : "Kuzey Kampüs Canlı Yarışma'da ") +
+      v.y.ad + " " + v.y.saat + (v.sonradan ? " sorularından " : ": ") + v.n + " sorudan " + v.d + " doğru" +
+      (v.seri > 1 ? " · 🔥 " + v.seri + " gündür yarışıyorum" : "") + ". Sen de katıl:";
+  }
+  function kartCiz(v) {
+    var W = 1080, H = 1920, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    var c = cv.getContext("2d"), F = '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', S = '"Source Serif 4", Georgia, serif';
+    var g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, "#12284a"); g.addColorStop(1, "#1f4e8c");
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    function yildiz(x, y, r, renk) {
+      c.fillStyle = renk; c.beginPath();
+      for (var i = 0; i < 10; i++) { var a = Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r / 2.4 : r; c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+      c.closePath(); c.fill();
+    }
+    // Arka planda yıldızlar (aynı sonuç her seferinde aynı görünsün diye sabit konumlar)
+    var renkler = ["#f5b700", "#ff8a80", "#7fd1ae", "#9cc3ff", "#ffd36e"];
+    for (var i = 0, adet = 0; i < 600 && adet < (v.tam ? 28 : 10); i++) {
+      var h = h32("yildiz" + i), x = h % W, y = (h >>> 11) % H;
+      if ((x > 170 && x < 910) || (y > 1400 && y < 1500) || y < 30 || y > H - 30) continue;   // yazıların üstüne gelmesin
+      c.globalAlpha = v.tam ? 0.9 : 0.35; yildiz(x, y, 12 + h % 18, renkler[h % renkler.length]); adet++;
+    }
+    c.globalAlpha = 1; c.textAlign = "center"; c.fillStyle = "#fff";
+    c.font = "700 64px " + S; c.fillText("Kuzey Kampüs", W / 2, 190);
+    c.fillStyle = "#ff8a80"; c.beginPath(); c.arc(W / 2 - 205, 287, 15, 0, Math.PI * 2); c.fill();
+    c.font = "700 44px " + F; c.fillStyle = "#ffd0cc"; c.fillText("CANLI YARIŞMA", W / 2 + 18, 302);
+    var tr = new Date(v.y.bas + T.TR);
+    c.fillStyle = "#dce6f5"; c.font = "600 46px " + F;
+    c.fillText(v.y.ad + " · " + tr.getUTCDate() + " " + AYLAR[tr.getUTCMonth()] + " · " + v.y.saat, W / 2, 400);
+    // Sonuç kutusu
+    c.fillStyle = "rgba(255,255,255,0.10)"; c.beginPath();
+    var kutuH = v.seri > 1 ? 760 : 680;
+    if (c.roundRect) c.roundRect(110, 520, W - 220, kutuH, 48); else c.rect(110, 520, W - 220, kutuH);
+    c.fill();
+    c.fillStyle = v.tam ? "#ffd36e" : "#fff"; c.font = "700 92px " + F;
+    c.fillText(v.tam ? "TAM PUAN!" : v.d >= v.n * 0.7 ? "ÇOK İYİ!" : "YARIŞTIM!", W / 2, 680);
+    c.fillStyle = "#fff"; c.font = "700 300px " + F;
+    var puan = String(v.d), pw = c.measureText(puan).width; c.font = "600 120px " + F;
+    var tw = c.measureText(" / " + v.n).width, x0 = W / 2 - (pw + tw) / 2;
+    c.textAlign = "left"; c.font = "700 300px " + F; c.fillText(puan, x0, 1010);
+    c.font = "600 120px " + F; c.fillStyle = "#b9c9e4"; c.fillText(" / " + v.n, x0 + pw, 1010);
+    c.textAlign = "center"; c.fillStyle = "#dce6f5"; c.font = "500 48px " + F;
+    c.fillText(v.sonradan ? "Yarışma sorularını sonradan çözdüm" : v.n < v.tum ? "Katıldığım " + v.n + " sorudan " + v.d + " doğru" : v.tam ? "Bütün soruları doğru bildim" : v.n + " sorudan " + v.d + " doğru", W / 2, 1120);
+    if (v.seri > 1) { c.fillStyle = "#ffb26b"; c.font = "700 50px " + F; c.fillText(v.seri + " gündür her gün yarışıyorum", W / 2, 1210); }
+    // Davet ve QR kod
+    c.fillStyle = "#fff"; c.font = "700 60px " + F; c.fillText("Sen de katıl!", W / 2, 1400);
+    c.fillStyle = "#dce6f5"; c.font = "500 42px " + F;
+    c.fillText("Her gün YKS ve Calculus canlı yarışmaları", W / 2, 1470);
+    return new Promise(function (bitti) {
+      var img = new Image();
+      img.onload = function () {
+        c.fillStyle = "#fff"; c.fillRect(W / 2 - 130, 1530, 260, 260); c.drawImage(img, W / 2 - 120, 1540, 240, 240);
+        c.fillStyle = "#dce6f5"; c.font = "600 38px " + F; c.fillText("kuzeykampuscalculus.com/canli.html", W / 2, 1855);
+        bitti(cv);
+      };
+      img.onerror = function () { c.fillStyle = "#dce6f5"; c.font = "600 44px " + F; c.fillText("kuzeykampuscalculus.com/canli.html", W / 2, 1660); bitti(cv); };
+      img.src = "assets/canli-qr.svg";
+    });
+  }
+  function paylasAc() {
+    if (!paylasVeri) return;
+    var v = paylasVeri, metin = paylasMetni(v);
+    $("paylas-wa").href = "https://wa.me/?text=" + encodeURIComponent(metin + " " + URL_SITE);
+    $("paylas-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(URL_SITE);
+    $("paylas-sistem").hidden = true; $("paylas-resim").removeAttribute("src");
+    $("paylas-perde").hidden = false;
+    var hazir = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    hazir.then(function () { return kartCiz(v); }).then(function (cv) {
+      cv.toBlob(function (blob) {
+        if (!blob) return;
+        if (paylasUrl) URL.revokeObjectURL(paylasUrl);
+        paylasUrl = URL.createObjectURL(blob);
+        $("paylas-resim").src = paylasUrl; $("paylas-indir").href = paylasUrl;
+        try { paylasDosya = new File([blob], "kuzey-kampus-canli-yarisma.png", { type: "image/png" }); } catch (e) { paylasDosya = null; }
+        var sistem = !!(paylasDosya && navigator.canShare && navigator.canShare({ files: [paylasDosya] }));
+        $("paylas-sistem").hidden = !sistem;
+        $("paylas-not").textContent = sistem ? "Instagram için: “Paylaş”a dokunup Instagram'ı seç (hikâye ya da gönderi)."
+          : "Instagram için: resmi indir, sonra Instagram'da hikâyene ya da gönderine ekle.";
+      }, "image/png");
+    });
+  }
+  function paylasKapat() { $("paylas-perde").hidden = true; }
+  $("sonuc-paylas").addEventListener("click", paylasAc);
+  $("paylas-kapat").addEventListener("click", paylasKapat);
+  $("paylas-perde").addEventListener("click", function (e) { if (e.target === this) paylasKapat(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("paylas-perde").hidden) paylasKapat(); });
+  $("paylas-sistem").addEventListener("click", function () {
+    if (!paylasDosya) return;
+    navigator.share({ files: [paylasDosya], text: paylasMetni(paylasVeri) + " " + URL_SITE }).catch(function () {});
+  });
+  $("paylas-kopyala").addEventListener("click", function () {
+    var b = this, metin = paylasMetni(paylasVeri) + " " + URL_SITE;
+    var tamam = function () { b.textContent = "✓ Kopyalandı"; setTimeout(function () { b.textContent = "🔗 Linki kopyala"; }, 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(metin).then(tamam).catch(function () {}); else { window.prompt("Kopyala:", metin); }
   });
 
   // ---- Biten yarışmayı sonradan çözme (kendi hızında; süre yine 20 sn) ----
@@ -439,7 +534,8 @@
     $("sonuc-puan").textContent = d; $("sonuc-toplam").textContent = n;
     $("sonuc-mesaj").textContent = d === n ? "Hepsi doğru! Bir dahaki sefere canlı yarışmada görüşelim. 🎉" : "Kaçırdığın soruların cevapları aşağıda. Bir dahaki yarışmayı canlı yakala!";
     $("sonuc-seri").textContent = "";
-    $("sonuc-paylas").setAttribute("data-metin", "Kuzey Kampüs Canlı Yarışma · " + p.y.ad + " " + p.y.saat + " sorularından " + d + "/" + n + " yaptım. Sen de dene:");
+    paylasVeri = { y: p.y, d: d, n: n, tum: n, tam: d === n, seri: 0, sonradan: true };
+    $("sonuc-paylas").textContent = d === n ? "📤 Tam puanını paylaş!" : "📤 Sonucumu paylaş";
     $("sonuc-kacan").innerHTML = kacan.length ? "<h3>Kaçırdığın sorular</h3>" + kacan.map(function (k) {
       return '<div class="oyun-kacan-soru"><p class="s">' + A.soruHtml(k.q) + '</p><p class="c">Doğru cevap: <strong>' + A.bicim(k.q.c[0]) + "</strong>" +
         (k.sure ? ' <span class="etiket">süre doldu</span>' : "") + '</p><p class="a">' + A.bicim(k.q.a || "") + "</p></div>";
