@@ -350,11 +350,12 @@
     sonucAcik = p;
     var o = kayitAl(p.y), gor = Object.keys(o.r.g).map(Number).sort(function (a, b) { return a - b; });
     var dogru = gor.filter(function (i) { return o.r.s[i] === 0; }).length, n = gor.length;
-    $("sonuc-baslik").textContent = adi(p.y) + " · Canlı Yarışma";
+    var tam = n === p.adim.length && dogru === n;
+    $("sonuc-baslik").textContent = tam ? "Tebrikler! " + n + " üzerinden " + n + " tam puan aldın 🎉" : adi(p.y) + " · Canlı Yarışma";
     $("sonuc-puan").textContent = dogru;
     $("sonuc-toplam").textContent = n;
     $("sonuc-mesaj").textContent = (n < p.adim.length ? "Katıldığın " + n + " sorudan " + dogru + " tanesini doğru bildin. " : "") +
-      (dogru === n ? "Hepsi doğru, harikasın! 🎉" : dogru >= n * 0.7 ? "Çok iyi! Kaçırdıklarının cevapları aşağıda." : "Kaçırdığın soruların cevapları aşağıda. Bir sonraki yarışmada görüşürüz.") +
+      (tam ? adi(p.y) + " yarışmasındaki bütün soruları doğru bildin. Harikasın!" : dogru === n ? "Hepsi doğru, harikasın! 🎉" : dogru >= n * 0.7 ? "Çok iyi! Kaçırdıklarının cevapları aşağıda." : "Kaçırdığın soruların cevapları aşağıda. Bir sonraki yarışmada görüşürüz.") +
       (p.y.deneme ? " (Deneme yarışması: puan ve seri yazılmadı.)" : o.r.p ? " Toplam puanına +" + o.r.p + " eklendi." : "");
     $("sonuc-seri").textContent = seriYazi(seriAl());
     $("sonuc-paylas").setAttribute("data-metin", "Kuzey Kampüs Canlı Yarışma · " + p.y.ad + " " + p.y.saat + ": " + n + " sorudan " + dogru + " doğru" +
@@ -372,6 +373,14 @@
     $("soru-bar").style.width = "100%";
     goster("canli-sonuc");
     window.scrollTo(0, 0);
+    var eskiF = document.querySelector("#sonuc-kart canvas"); if (eskiF) eskiF.remove();
+    if (tam) {
+      A.cal("kutlama");
+      if (!azHareket) {
+        var cv = document.createElement("canvas"); cv.className = "canli-fisek"; cv.setAttribute("aria-hidden", "true");
+        $("sonuc-kart").appendChild(cv); A.fisekler(cv);
+      }
+    }
   }
   $("sonuc-tamam").addEventListener("click", function () { sonucAcik = null; lobiImza = null; dongu(); window.scrollTo(0, 0); });
   $("sonuc-paylas").addEventListener("click", function () {
