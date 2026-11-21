@@ -52,10 +52,44 @@
 
   window.KK_TAKVIM = { CFG: CFG, AD: AD, TR: TR, gunAnahtar: gunAnahtar, gunun: gunun, aralik: aralik, programYazi: programYazi, sure: sure, saat: saat, tahminiSure: tahminiSure };
 
+  if (CFG.aktif === false) return;
+
+  // ---- Kaydolan öğrenciye küçük uyarı: 5 dakika ve 1 dakika kala (yarışma sayfası dışındaki tüm sayfalarda).
+  // Ekranı kapatmaz; köşede durur, ✕ ile kapanır. Kapatılan uyarı o aşama için bir daha çıkmaz.
+  function depo() { try { return JSON.parse(localStorage.getItem("kk-oyun-v1")) || {}; } catch (e) { return {}; } }
+  function depoYaz(k) { try { localStorage.setItem("kk-oyun-v1", JSON.stringify(k)); } catch (e) { /* özel pencere */ } }
+  var kok = /\/makaleler\//.test(location.pathname) ? "../" : "";
+  function hatirlat() {
+    if (document.getElementById("canli-lobi")) return;
+    var k = depo(), anah = k.canliKayit, simdi = Date.now();
+    var y = anah && aralik(simdi - GUN, simdi + 2 * GUN).filter(function (x) { return x.anahtar === anah; })[0];
+    var el = document.getElementById("canli-hatirlat");
+    var kalan = y ? y.bas - simdi : -1;
+    var asama = kalan > 0 && kalan <= 60e3 ? "1" : kalan > 60e3 && kalan <= 5 * 60e3 ? "5" : null;
+    var kapali = k.canliHatirlat && k.canliHatirlat[anah + "|" + asama];
+    if (!asama || kapali) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "canli-hatirlat"; el.className = "canli-hatirlat"; el.setAttribute("role", "status");
+      document.body.appendChild(el);
+    }
+    var metin = "⏰ " + y.ad + " " + y.saat + " yarışması " + (asama === "1" ? Math.ceil(kalan / 1000) + " saniye" : Math.ceil(kalan / 60e3) + " dakika") + " sonra başlıyor.";
+    if (el.getAttribute("data-asama") !== asama) {
+      el.setAttribute("data-asama", asama);
+      el.innerHTML = '<span class="canli-hatirlat-metin"></span><a class="btn primary" href="' + kok + 'canli.html">Yarışmaya git</a>' +
+        '<button type="button" class="canli-hatirlat-kapat" aria-label="Uyarıyı kapat">✕</button>';
+      el.querySelector("button").addEventListener("click", function () {
+        var k2 = depo(); k2.canliHatirlat = {}; k2.canliHatirlat[anah + "|" + asama] = 1; depoYaz(k2); el.remove();
+      });
+    }
+    el.querySelector(".canli-hatirlat-metin").textContent = metin;
+  }
+  hatirlat();
+  setInterval(hatirlat, 1000);
+
   // ---- Şerit: [data-canli-serit] (ana sayfa, Testler) ----
   var seritler = document.querySelectorAll("[data-canli-serit]");
   if (!seritler.length) return;
-  if (CFG.aktif === false) return;
   function ciz() {
     var simdi = Date.now(), bugun = gunun(gunAnahtar(simdi));
     var canli = aralik(simdi - GUN, simdi).filter(function (y) { return y.bas <= simdi && simdi < y.bas + tahminiSure(); })[0];

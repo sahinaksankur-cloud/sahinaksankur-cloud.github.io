@@ -144,11 +144,17 @@
       kilit = l; l.addEventListener("release", function () { kilit = null; });
     }).catch(function () { /* desteklenmiyorsa sorun değil */ });
   }
+  // Katılan öğrenci sıradaki yarışmaya kaydolur (kk-oyun-v1 → canliKayit = yarışma anahtarı):
+  // sitenin diğer sayfalarında 5 ve 1 dakika kala küçük bir uyarı görür (canli-takvim.js)
+  function sirdaki() { var t = simdi(); return yarismalar(t - GUN, t + 2 * GUN).filter(function (y) { return plan(y).bit > t; })[0]; }
   function katil() {
     katildi = true; A.sesBaglam(); uyanik();
+    var y = sirdaki();
+    if (y) { var k = A.oku(); k.canliKayit = y.anahtar; A.yaz(k); }
     $("lobi-katil").hidden = true; $("lobi-katildin").hidden = false;
   }
   $("lobi-katil").addEventListener("click", katil);
+  (function () { var y = sirdaki(); if (y && A.oku().canliKayit === y.anahtar) { katildi = true; uyanik(); } })();
   document.addEventListener("pointerdown", function () { A.sesBaglam(); }, { once: true });
   var BASLIK = document.title, uyariCalindi = null;
   document.addEventListener("visibilitychange", function () { uyanik(); if (document.visibilityState === "visible") saatAyarla(); });
