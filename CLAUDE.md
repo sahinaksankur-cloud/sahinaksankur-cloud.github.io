@@ -82,7 +82,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - Konu alanları: `etiket` (kartta rozet), `ders` (tur sonundaki "Konu anlatımını izle" linki), `sonuc` (puana göre mesaj: `iyi` ≥ %80, `orta` ≥ %50, `zayif`). Hepsi isteğe bağlı.
 - Yeni konu eklemek kod değişikliği gerektirmez: `konular`'a bir satır ve aynı id ile bir soru listesi eklenir.
 - Matematik HTML ile yazılır (`<sup>`, `<sub>`, `−`). `∫<sub>a</sub><sup>b</sup>` ve `Σ<sub>..</sub><sup>..</sup>` sınırları `oyun.js` içindeki `bicim()` ile otomatik olarak alt alta gösterilir. Soruların matematiğini mutlaka kontrol et; site sahibinin adıyla yayınlanıyor.
-- Menü sırası (Dersler → `dersler.html`): Kampüsün İçinden/Kampüs, Dersler, Testler, Makaleler, Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
+- Menü sırası (Dersler → `dersler.html`): Dersler, Testler, Kampüsün İçinden/Kampüs, Makaleler, Birebir Ders, YouTube. Uzun adlar (`.nav-uzun`) 840 px'ten genişte, kısa adlar (`.nav-kisa`) 840 px ve altında görünür. 700 px ve altında menüdeki YouTube gizlenir (`.nav-yt`). Menü 350–1300 px arasında tek satıra sığıyor; yeni menü öğesi eklerken tüm genişliklerde dene.
 - Menü tüm sayfalarda elle yazılı (index, dersler, ders, iletisim, oyun, kampus); makale sayfaları `araclar/makaleleri-olustur.py` ile üretilir, menü listesi o dosyada. Menüyü değiştirince betiği çalıştır.
 
 ## Kullanıcıya dosya gönderirken (Mac)

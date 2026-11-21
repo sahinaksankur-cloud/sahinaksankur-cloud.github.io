@@ -95,7 +95,7 @@ def oku(yol):
 
 
 def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
-    nav = [("kampus.html", '<span class="nav-uzun">Kampüsün İçinden</span><span class="nav-kisa">Kampüs</span>', "kampus"), ("dersler.html", "Dersler", "dersler"), ("oyun.html", 'Testler', "oyun"), ("makaleler.html", "Makaleler", "makaleler"),
+    nav = [("dersler.html", "Dersler", "dersler"), ("oyun.html", 'Testler', "oyun"), ("kampus.html", '<span class="nav-uzun">Kampüsün İçinden</span><span class="nav-kisa">Kampüs</span>', "kampus"), ("makaleler.html", "Makaleler", "makaleler"),
            ("iletisim.html", "Birebir Ders", "iletisim")]
     linkler = "\n        ".join(
         f'<a href="{kok}{h}"{" class=\"active\"" if k == aktif else ""}>{ad}</a>' for h, ad, k in nav)
@@ -114,7 +114,7 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
 {ek_head}  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{kok}assets/style.css?v=202611210802">
+  <link rel="stylesheet" href="{kok}assets/style.css?v=202611211358">
 </head>
 <body>
   <header class="topbar">
@@ -137,8 +137,8 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
     </div>
   </footer>
 
-  <script src="{kok}assets/config.js?v=202611210802"></script>
-  <script src="{kok}assets/app.js?v=202611210802"></script>
+  <script src="{kok}assets/config.js?v=202611211358"></script>
+  <script src="{kok}assets/app.js?v=202611211358"></script>
 </body>
 </html>
 """
