@@ -659,6 +659,14 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .en-grup.bitti strong { color: #2e8b57; }
 .en-grup-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
 .en-grup-dugmeler .btn { justify-content: center; padding: 8px 6px; font-size: 0.9rem; font-weight: 600; }
+.en-grup-dugmeler .en-ez-btn { grid-column: 1 / -1; }
+.en-ez-puan { color: var(--muted); font-weight: 400; font-size: 0.85em; }
+.en-ez-satir { display: none; }
+@media (max-width: 760px) { .en-ez-puan { display: none; } .en-ez-satir { display: block; color: var(--muted); font-size: 0.8rem; font-weight: 600; } .en-ez-btn { white-space: nowrap; } }
+.en-es { color: #2e8b57; } .en-zit { color: #c0392b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .en-es { color: #6fcf97; } :root:not([data-theme="light"]) .en-zit { color: #f08a7e; } }
+.kk-ez { font-size: 0.95rem; font-weight: 600; color: var(--text); background: var(--surface-2); border-radius: 999px; padding: 4px 12px; }
+.kk-ez[hidden] { display: none; }
 @media (max-width: 760px) {
   .en-gruplar { gap: 8px; }
   .en-grup { padding: 8px; }
