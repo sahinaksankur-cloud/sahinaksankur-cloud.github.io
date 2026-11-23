@@ -23,7 +23,8 @@ window.KK_YKS = {
     { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -933,8 +934,25 @@ window.KK_YKS = {
       { s: "2<sup>3</sup> · 3<sup>3</sup> = ?", c: ["6<sup>3</sup>", "6<sup>6</sup>", "5<sup>3</sup>"], a: "(2 · 2 · 2)(3 · 3 · 3) = (2 · 3)(2 · 3)(2 · 3) = 6<sup>3</sup>. Üsler aynı olunca tabanlar çarpılır, üs değişmez." },
       { s: "3<sup>2</sup> · 3<sup>3</sup> = 9<sup>5</sup> yazımındaki hata nedir?", c: ["Taban çarpılmaz; 3<sup>5</sup> olmalı", "Üsler çarpılmalı", "Hata yok"], a: "Beş tane 3 çarpılır: 3<sup>5</sup>. Taban 3 olarak kalır." }
     ],
-    // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
+    // Köklü Sayılar: sıra tanım (√x = karesi x olan pozitif sayı; x² = 9 ile √9 farkı; √a = a^(1/2))
+    // → √(a²) = |a| → kök dışına çıkarma → toplama → çarpma/bölme → paydayı rasyonel yapma → sıralama → iç içe kök (üssün üssü).
     "yks-koklu": [
+      { s: "√4 ne demektir?", c: ["Karesi 4 olan pozitif sayı", "4'ün yarısı", "Karesi 4 olan bütün sayılar"], a: "√4: kendisiyle çarpıldığında 4 veren pozitif sayı. 2 · 2 = 4, yani √4 = 2." },
+      { s: "√4 = ?", c: ["2", "±2", "16"], a: "Kendisiyle çarpılınca 4 veren pozitif sayı 2. Kök tek bir sayı verir: ±2 değil." },
+      { s: "√16 = ?", c: ["4", "±4", "8"], a: "4 · 4 = 16 ve 4 pozitif: √16 = 4." },
+      { s: "Kendisiyle çarpıldığında 25 veren pozitif sayı hangisidir?", c: ["√25 = 5", "25/2", "−5"], a: "Bu, √25'in tanımıdır: 5 · 5 = 25. −5 de 25 verir ama pozitif değil." },
+      { s: "√x = 3 ise x kaçtır?", c: ["9", "3", "√3"], a: "Karesi x olan pozitif sayı 3: x = 3 · 3 = 9." },
+      { s: "√((−5)<sup>2</sup>) = ?", c: ["5", "−5", "±5"], a: "Önce içi: (−5)<sup>2</sup> = 25. Sonra √25 = 5. Kök negatif sonuç vermez." },
+      { s: "x<sup>2</sup> = 9 denkleminin çözümleri hangileridir?", c: ["3 ve −3", "Sadece 3", "Sadece −3"], a: "Karesi 9 olan iki sayı var: 3<sup>2</sup> = 9 ve (−3)<sup>2</sup> = 9. Denklem bütün çözümleri ister." },
+      { s: "x<sup>2</sup> = 9 ile √9 için hangisi doğrudur?", c: ["x<sup>2</sup> = 9'un iki çözümü var (±3); √9 = 3", "İkisi de ±3'tür", "İkisi de 3'tür"], a: "√9 bir sayıdır: karesi 9 olan pozitif sayı, 3. x<sup>2</sup> = 9 bir denklemdir: karesi 9 olan bütün sayılar, 3 ve −3." },
+      { s: "x<sup>2</sup> = 25 ise x kaç farklı değer alabilir?", c: ["2", "1", "0"], a: "x = 5 ya da x = −5: iki değer." },
+      { s: "x<sup>2</sup> = 16 ise x'in alabileceği değerlerin toplamı kaçtır?", c: ["0", "8", "4"], a: "x = 4 ya da x = −4: toplam 0." },
+      { s: "√(−9) = ?", c: ["Tanımsız", "−3", "3"], a: "Hiçbir reel sayının karesi negatif değildir: √(−9) reel sayılarda tanımsız." },
+      { s: "∛8 ne demektir?", c: ["Küpü 8 olan sayı", "8'in üçte biri", "Karesi 8 olan sayı"], a: "∛8: kendisiyle üç kez çarpılınca 8 veren sayı. 2 · 2 · 2 = 8, ∛8 = 2." },
+      { s: "√a ifadesi üslü olarak nasıl yazılır?", c: ["a<sup>1/2</sup>", "a<sup>2</sup>", "a<sup>−2</sup>"], a: "Köklü sayı, üslü sayının bir biçimidir: √a = a<sup>1/2</sup>. Çünkü (a<sup>1/2</sup>)<sup>2</sup> = a." },
+      { s: "9<sup>1/2</sup> = ?", c: ["3", "4,5", "9<sup>2</sup>"], a: "9<sup>1/2</sup> = √9 = 3." },
+      { s: "8<sup>1/3</sup> = ?", c: ["2", "8/3", "24"], a: "8<sup>1/3</sup> = ∛8 = 2." },
+      { s: "(√7)<sup>2</sup> = ?", c: ["7", "49", "√14"], a: "√7 kendisiyle çarpılınca 7 verir (tanım). Üslü yazımla: (7<sup>1/2</sup>)<sup>2</sup> = 7<sup>1</sup> = 7." },
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
       { s: "√9 = ?", c: ["3", "±3", "−3"], a: "√9 tek bir sayıdır: 3. x<sup>2</sup> = 9 denkleminin çözümleri ±3'tür; bu ikisi farklı şeyler." },
       { s: "√2 · √2 = ?", c: ["2", "4", "2√2"], a: "√a · √a = a: kök kendisiyle çarpılınca kalkar." },
@@ -1172,6 +1190,10 @@ window.KK_YKS = {
     { k: "yks-uslu", s: "(0,2)<sup>2</sup> = 0,4", d: false, n: "0,2 · 0,2 = 0,04" },
     { k: "yks-uslu", s: "(2/3)<sup>2</sup> = 4/9", d: true },
     { k: "yks-uslu", s: "(−3)<sup>−2</sup> = −1/9", d: false, n: "Üs çift: (−3)<sup>−2</sup> = 1/9" },
+    { k: "yks-koklu", s: "√9 = ±3", d: false, n: "√9 = 3; ±3, x<sup>2</sup> = 9 denkleminin çözümleridir" },
+    { k: "yks-koklu", s: "x<sup>2</sup> = 9 ise x = 3 ya da x = −3'tür.", d: true },
+    { k: "yks-koklu", s: "√((−5)<sup>2</sup>) = −5", d: false, n: "√25 = 5; kök negatif sonuç vermez" },
+    { k: "yks-koklu", s: "√a = a<sup>1/2</sup>", d: true },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
