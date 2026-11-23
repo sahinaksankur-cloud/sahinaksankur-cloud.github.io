@@ -286,6 +286,25 @@
       g.gain.setValueAtTime(0.5, t0);
       src.connect(f); f.connect(g); g.connect(c.destination); src.start(t0);
     },
+    // Doğru cevap: kısa, neşeli yükselen iki nota ve hafif bir parıltı
+    dogru: function (c) {
+      ton(c, 784, 0, 0.16, "triangle", 0.22);
+      ton(c, 1175, 0.09, 0.28, "triangle", 0.2);
+      ton(c, 2349, 0.12, 0.2, "sine", 0.04);
+    },
+    // Yanlış cevap: alçalan, boğuk bir "küt" (çarpma) ve kısa bir gürültü darbesi
+    yanlis: function (c) {
+      var t0 = c.currentTime, o = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
+      o.type = "sawtooth"; o.frequency.setValueAtTime(190, t0); o.frequency.exponentialRampToValueAtTime(55, t0 + 0.28);
+      f.type = "lowpass"; f.frequency.setValueAtTime(900, t0);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.35, t0 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.32);
+      o.connect(f); f.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + 0.35);
+      var n = Math.floor(c.sampleRate * 0.09), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+      var src = c.createBufferSource(), f2 = c.createBiquadFilter(), g2 = c.createGain();
+      src.buffer = buf; f2.type = "lowpass"; f2.frequency.value = 600; g2.gain.value = 0.6;
+      src.connect(f2); f2.connect(g2); g2.connect(c.destination); src.start(t0);
+    },
     // Kutlama: yükselen kısa bir melodi ve parıltılar
     kutlama: function (c) {
       [523, 659, 784, 1047].forEach(function (fr, i) { ton(c, fr, i * 0.11, 0.3, "triangle", 0.22); });
@@ -528,6 +547,7 @@
     var dogru = secenekler[+btn.getAttribute("data-j")].dogru;
     var onceCozulmus = cozulduMu(q);
     if (dogru) { durum.puan++; durum.kalan += kalanSn; if (onceCozulmus) durum.puansiz++; } else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis", once: onceCozulmus }); }
+    cal(dogru ? "dogru" : "yanlis");
     var yeniPuan = cevapYaz(q, dogru);
     if (yeniPuan) durum.yeniPuan++;
     $("oyun-puan").textContent = durum.puan;
@@ -594,6 +614,7 @@
     if (cevap !== null) $(cevap ? "dy-dogru" : "dy-yanlis").classList.add("secildi");
     var q = dy.liste[dy.i], dogru = cevap !== null && cevap === q.d;
     var not = $("dy-not");
+    if (cevap !== null) cal(dogru ? "dogru" : "yanlis");
     if (dogru) {
       cevapYaz(q, true);
       dy.puan++; dy.seri++; dy.enSeri = Math.max(dy.enSeri, dy.seri);
