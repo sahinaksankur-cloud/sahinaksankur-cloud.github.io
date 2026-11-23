@@ -22,7 +22,8 @@ window.KK_YKS = {
     { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -794,6 +795,29 @@ window.KK_YKS = {
       { s: "20 ve 30 dakikada bir çalan iki saat 15.00'te birlikte çaldı. Bir sonraki birlikte çalış saat kaçtadır?", c: ["16.00", "15.50", "15.30"], a: "EKOK(20, 30) = 60 dakika = 1 saat. 15.00 + 1 saat = 16.00." },
       { s: "2 cm × 3 cm boyutundaki dikdörtgen levhalar yan yana konularak en küçük kare yapılacak. Kaç levha gerekir?", c: ["6", "5", "36"], a: "Kare kenarı 2'nin ve 3'ün katı olmalı: EKOK = 6. 6 / 2 = 3, 6 / 3 = 2: 3 · 2 = 6 levha." }
     ],
+    // Üslü Sayılar: önce tanım; parantezsiz −2³'te üs sadece 2'nin (eksi dışarıda), (−2)³'te −2'nin.
+    // Negatif tabanın çift üssü pozitif, tek üssü negatif; (−1)ⁿ ile işlemler.
+    "yks-uslu": [
+      { s: "2<sup>3</sup> neye eşittir?", c: ["2 · 2 · 2", "2 · 3", "3 · 3"], a: "Üs, tabanın kaç kez çarpılacağını söyler: 3 tane 2 çarpılır." },
+      { s: "2<sup>3</sup> kaçtır?", c: ["8", "6", "9"], a: "2 · 2 · 2 = 8. (2 · 3 = 6 değil.)" },
+      { s: "5<sup>4</sup> ifadesinde kaç tane 5 çarpılır?", c: ["4", "5", "20"], a: "Üs 4: 5 · 5 · 5 · 5." },
+      { s: "−2<sup>3</sup> ifadesinin açık hâli hangisidir?", c: ["−(2 · 2 · 2)", "(−2) · (−2) · (−2)", "−2 · 3"], a: "Parantez yok: üs sadece 2'nin. Eksi işareti en sonda başa gelir." },
+      { s: "(−2)<sup>3</sup> ifadesinin açık hâli hangisidir?", c: ["(−2) · (−2) · (−2)", "−(2 · 2 · 2)", "(−2) · 3"], a: "Parantez var: üs −2'nin tamamına ait. −2 üç kez çarpılır." },
+      { s: "−3<sup>2</sup> ifadesinde üs hangi sayıya aittir?", c: ["Sadece 3'e; eksi dışarıda", "−3'e", "Eksi işaretine"], a: "Parantez olmadıkça üs sadece hemen önündeki sayıya aittir: −3<sup>2</sup> = −(3 · 3)." },
+      { s: "−3<sup>2</sup> = ?", c: ["−9", "9", "−6"], a: "Önce 3<sup>2</sup> = 9, sonra eksi: −9." },
+      { s: "(−3)<sup>2</sup> = ?", c: ["9", "−9", "6"], a: "(−3) · (−3) = 9. Eksi ile eksinin çarpımı artı." },
+      { s: "(−2)<sup>2</sup> − 2<sup>2</sup> = ?", c: ["0", "8", "−8"], a: "(−2)<sup>2</sup> = 4 ve 2<sup>2</sup> = 4: 4 − 4 = 0." },
+      { s: "−2<sup>2</sup> · (−2)<sup>2</sup> = ?", c: ["−16", "16", "0"], a: "−2<sup>2</sup> = −4 ve (−2)<sup>2</sup> = 4: −4 · 4 = −16." },
+      { s: "−2<sup>4</sup> pozitif mi, negatif mi?", c: ["Negatif: −16", "Pozitif: 16", "Negatif: −8"], a: "Parantez yok: −(2<sup>4</sup>) = −16." },
+      { s: "(−2)<sup>4</sup> pozitif mi, negatif mi?", c: ["Pozitif: 16", "Negatif: −16", "Pozitif: 8"], a: "Negatif sayının çift üssü pozitiftir: (−2)<sup>4</sup> = 16." },
+      { s: "(−3)<sup>3</sup> pozitif mi, negatif mi?", c: ["Negatif: −27", "Pozitif: 27", "Negatif: −9"], a: "Negatif sayının tek üssü negatiftir: (−3) · (−3) · (−3) = −27." },
+      { s: "−3<sup>4</sup> + (−3)<sup>4</sup> = ?", c: ["0", "−162", "162"], a: "−3<sup>4</sup> = −81 ve (−3)<sup>4</sup> = 81: toplam 0." },
+      { s: "(−1)<sup>10</sup> + (−1)<sup>7</sup> = ?", c: ["0", "2", "−2"], a: "−1'in çift üssü 1, tek üssü −1: 1 + (−1) = 0." },
+      { s: "(−1)<sup>2026</sup> − (−1)<sup>2025</sup> = ?", c: ["2", "0", "−2"], a: "2026 çift → 1, 2025 tek → −1: 1 − (−1) = 2." },
+      { s: "(−1)<sup>3</sup> · (−1)<sup>6</sup> = ?", c: ["−1", "1", "0"], a: "(−1)<sup>3</sup> = −1, (−1)<sup>6</sup> = 1: çarpım −1." },
+      { s: "−1<sup>4</sup> = ?", c: ["−1", "1", "4"], a: "Parantez yok: −(1<sup>4</sup>) = −1. (−1)<sup>4</sup> olsaydı 1 olurdu." },
+      { s: "(−1)<sup>1</sup> + (−1)<sup>2</sup> + (−1)<sup>3</sup> + (−1)<sup>4</sup> = ?", c: ["0", "4", "−4"], a: "−1 + 1 − 1 + 1 = 0. Terimler ikişer ikişer birbirini götürür." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -1000,6 +1024,15 @@ window.KK_YKS = {
     { k: "yks-ebob", s: "İki pozitif sayının EKOK'u, sayıların büyüğünden küçük olabilir.", d: false, n: "EKOK büyük sayının katıdır: EBOB ≤ a ≤ b ≤ EKOK" },
     { k: "yks-ebob", s: "Aralarında asal iki sayının ikisi de asal sayıdır.", d: false, n: "8 ve 15 aralarında asaldır ama asal değildir" },
     { k: "yks-ebob", s: "Bir şeyi eşit ve en büyük parçalara bölme sorularında EKOK kullanılır.", d: false, n: "EBOB kullanılır" },
+    { k: "yks-uslu", s: "−2<sup>4</sup> = 16", d: false, n: "−2<sup>4</sup> = −(2<sup>4</sup>) = −16" },
+    { k: "yks-uslu", s: "(−5)<sup>2</sup> = 25", d: true },
+    { k: "yks-uslu", s: "Negatif bir sayının tek kuvveti negatiftir.", d: true },
+    { k: "yks-uslu", s: "−3<sup>2</sup> ile (−3)<sup>2</sup> birbirine eşittir.", d: false, n: "−3<sup>2</sup> = −9, (−3)<sup>2</sup> = 9" },
+    { k: "yks-uslu", s: "(−1)<sup>100</sup> = 1", d: true },
+    { k: "yks-uslu", s: "(−1)<sup>99</sup> = 1", d: false, n: "Üs tek: (−1)<sup>99</sup> = −1" },
+    { k: "yks-uslu", s: "−1<sup>2</sup> = 1", d: false, n: "Parantez yok: −(1<sup>2</sup>) = −1" },
+    { k: "yks-uslu", s: "n çift ise (−1)<sup>n</sup> = 1, n tek ise (−1)<sup>n</sup> = −1'dir.", d: true },
+    { k: "yks-uslu", s: "(−1)<sup>3</sup> + (−1)<sup>4</sup> = 0", d: true },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
