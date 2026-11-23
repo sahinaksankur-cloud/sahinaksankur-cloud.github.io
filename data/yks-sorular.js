@@ -20,7 +20,8 @@ window.KK_YKS = {
     { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -694,6 +695,43 @@ window.KK_YKS = {
       { s: "Bir sayı 7'ye bölündüğünde bölüm ile kalan eşit ise bu sayı en çok kaçtır?", c: ["48", "49", "42"], a: "Kalan en çok 6, bölüm de 6: 7 · 6 + 6 = 48." },
       { s: "Bir sayının 12 ile bölümünden kalan 7 ise aynı sayının 4 ile bölümünden kalan kaçtır?", c: ["3", "7", "1"], a: "Sayı = 12k + 7 = 4 · 3k + 4 + 3 = 4 · (3k + 1) + 3. Kalan 3. Örnek: 19 = 4 · 4 + 3." }
     ],
+    // Bölünebilme Kuralları: 2, 3, 4, 5, 9, 11; sonra 6, 10 ve çarpım biçimindeki sayılar (15, 12, 18, 36:
+    // aralarında asal çarpanlar); toplamın ve çarpımın kalanı.
+    "yks-bolunebilme": [
+      { s: "Bir sayının 2'ye bölünüp bölünmediğini anlamak için nereye bakılır?", c: ["Birler basamağına", "Rakamlar toplamına", "Son iki basamağa"], a: "10, 100, 1000 … hepsi 2'ye bölünür; geriye sadece birler basamağı kalır. Birler basamağı çiftse sayı çifttir." },
+      { s: "3457 sayısının 2 ile bölümünden kalan kaçtır?", c: ["1", "0", "7"], a: "Birler basamağı 7, tek: kalan 1." },
+      { s: "10, 100 ve 1000 sayılarının 3 ile bölümünden kalanlar kaçtır?", c: ["Hepsinde 1", "Hepsinde 0", "Sırasıyla 1, 2, 3"], a: "10 = 9 + 1, 100 = 99 + 1, 1000 = 999 + 1. Bu yüzden her rakam 3'e bölümde kendi değeri kadar kalan bırakır; 3 kuralında rakamlar toplanır." },
+      { s: "3 ile bölünebilme kuralı hangisidir?", c: ["Rakamlar toplamı 3'ün katı olmalı", "Birler basamağı 3 olmalı", "Son iki basamak 3'ün katı olmalı"], a: "Örnek: 2451 → 2 + 4 + 5 + 1 = 12, 3'ün katı: 2451 3'e bölünür." },
+      { s: "2451, 3452 ve 1003 sayılarından hangisi 3'e tam bölünür?", c: ["2451", "3452", "1003"], a: "Rakamlar toplamı: 2451 → 12 ✓, 3452 → 14, 1003 → 4." },
+      { s: "1234 sayısının 3 ile bölümünden kalan kaçtır?", c: ["1", "4", "0"], a: "1 + 2 + 3 + 4 = 10. 10'un 3 ile bölümünden kalan 1." },
+      { s: "4a7 üç basamaklı sayısı 3'e tam bölünüyorsa a kaç farklı değer alabilir?", c: ["3", "4", "2"], a: "4 + a + 7 = 11 + a, 3'ün katı olmalı: 12, 15, 18 → a = 1, 4, 7." },
+      { s: "4 ile bölünebilme için nereye bakılır?", c: ["Son iki basamağa", "Birler basamağına", "Rakamlar toplamına"], a: "100 = 4 · 25, yani yüzler ve daha büyük basamaklar 4'e bölünür. Geriye son iki basamak kalır." },
+      { s: "1316, 1318 ve 1322 sayılarından hangisi 4'e tam bölünür?", c: ["1316", "1318", "1322"], a: "Son iki basamak: 16 = 4 · 4 ✓, 18 ve 22 4'ün katı değil." },
+      { s: "5734 sayısının 4 ile bölümünden kalan kaçtır?", c: ["2", "0", "3"], a: "Son iki basamak 34 = 4 · 8 + 2: kalan 2." },
+      { s: "Hangi sayılar 5'e tam bölünür?", c: ["Birler basamağı 0 ya da 5 olanlar", "Rakamlar toplamı 5 olanlar", "Son iki basamağı 5 olanlar"], a: "10 = 2 · 5 olduğu için onlar ve büyük basamaklar 5'e bölünür; birler basamağı 0 ya da 5 olmalı." },
+      { s: "2348 sayısının 5 ile bölümünden kalan kaçtır?", c: ["3", "0", "8"], a: "Birler basamağı 8. 8'in 5 ile bölümünden kalan 3." },
+      { s: "4518 sayısının 9 ile bölümünden kalan kaçtır?", c: ["0", "8", "9"], a: "4 + 5 + 1 + 8 = 18, 9'un katı: kalan 0. (3 kuralıyla aynı neden: 10 = 9 + 1.)" },
+      { s: "52a1 dört basamaklı sayısı 9'a tam bölünüyorsa a kaçtır?", c: ["1", "0", "9"], a: "5 + 2 + a + 1 = 8 + a, 9'un katı olmalı: 9 → a = 1. (18 için a = 10 olurdu, rakam değil.)" },
+      { s: "11 ile bölünebilme kuralı hangisidir?", c: ["Sağdan +, −, +, − ile toplam 11'in katı", "Rakamlar toplamı 11'in katı", "Son iki basamak 11'in katı"], a: "Örnek: 2563 → 3 − 6 + 5 − 2 = 0, 11'in katı: 2563 = 11 · 233." },
+      { s: "2563, 2564 ve 2536 sayılarından hangisi 11'e tam bölünür?", c: ["2563", "2564", "2536"], a: "Sağdan +, −, +, −: 2563 → 3 − 6 + 5 − 2 = 0 ✓; 2564 → 1; 2536 → 6." },
+      { s: "3527 sayısının 11 ile bölümünden kalan kaçtır?", c: ["7", "6", "0"], a: "Sağdan +, −, +, −: 7 − 2 + 5 − 3 = 7. Kalan 7." },
+      { s: "abba dört basamaklı sayısı her zaman hangi sayıya bölünür?", c: ["11", "9", "10"], a: "Sağdan +, −, +, −: a − b + b − a = 0, 11'in katı. Örnek: 4774 = 11 · 434." },
+      { s: "6 ile bölünebilmek için hangisi gerekir?", c: ["Hem 2'ye hem 3'e bölünmek", "2'ye ya da 3'e bölünmek", "Birler basamağının 6 olması"], a: "6 = 2 · 3. Sayı hem çift olmalı hem rakamlar toplamı 3'ün katı olmalı." },
+      { s: "1234, 2346 ve 3333 sayılarından hangisi 6'ya tam bölünür?", c: ["2346", "1234", "3333"], a: "2346 çift ve 2 + 3 + 4 + 6 = 15 ✓. 1234 çift ama toplam 10; 3333 tek." },
+      { s: "3a4 üç basamaklı sayısı 6'ya tam bölünüyorsa a kaç farklı değer alabilir?", c: ["3", "4", "2"], a: "Birler basamağı 4, sayı çift ✓. 3 + a + 4 = 7 + a, 3'ün katı: a = 2, 5, 8." },
+      { s: "10 ile bölünebilme kuralı hangisidir?", c: ["Birler basamağı 0 olmalı", "Birler basamağı 0 ya da 5 olmalı", "Rakamlar toplamı 10 olmalı"], a: "10 = 2 · 5: hem çift hem 5'in katı olmalı. Birler basamağı 0." },
+      { s: "5736 sayısının 10 ile bölümünden kalan kaçtır?", c: ["6", "3", "0"], a: "10'a bölümden kalan birler basamağıdır: 6." },
+      { s: "15 ile bölünebilmek için hangisi gerekir?", c: ["Hem 3'e hem 5'e bölünmek", "Birler basamağının 5 olması", "Rakamlar toplamının 15 olması"], a: "15 = 3 · 5: rakamlar toplamı 3'ün katı ve birler basamağı 0 ya da 5." },
+      { s: "2145, 2154 ve 2155 sayılarından hangisi 15'e tam bölünür?", c: ["2145", "2154", "2155"], a: "2145: sonu 5 ✓, toplam 12 ✓. 2154 sonu 4; 2155 toplamı 13." },
+      { s: "4a5 üç basamaklı sayısı 15'e tam bölünüyorsa a kaç farklı değer alabilir?", c: ["4", "3", "10"], a: "Sonu 5, 5'e bölünür ✓. 4 + a + 5 = 9 + a, 3'ün katı: a = 0, 3, 6, 9." },
+      { s: "12 ile bölünebilme için hangi iki kural birlikte kullanılır?", c: ["3 ve 4", "2 ve 6", "1 ve 12"], a: "12 = 3 · 4 ve 3 ile 4'ün ortak böleni yok. 2 ve 6 olmaz: 18 hem 2'ye hem 6'ya bölünür ama 12'ye bölünmez." },
+      { s: "18 ile bölünebilme için hangi iki kural birlikte kullanılır?", c: ["2 ve 9", "3 ve 6", "2 ve 3"], a: "18 = 2 · 9, ortak bölenleri yok. 3 ve 6 olmaz: 6 ikisine de bölünür ama 18'e bölünmez." },
+      { s: "36 ile bölünebilme için hangi iki kural birlikte kullanılır?", c: ["4 ve 9", "6 ve 6", "3 ve 12"], a: "36 = 4 · 9, ortak bölenleri yok. 3 ve 12 olmaz: 12 ikisine de bölünür ama 36'ya bölünmez." },
+      { s: "a'nın 7 ile bölümünden kalan 3, b'nin 7 ile bölümünden kalan 5 ise a + b'nin 7 ile bölümünden kalan kaçtır?", c: ["1", "8", "2"], a: "Kalanları topla: 3 + 5 = 8. 8 yine 7'den büyük: 8 = 7 + 1, kalan 1." },
+      { s: "a'nın 7 ile bölümünden kalan 3, b'nin 7 ile bölümünden kalan 4 ise a · b'nin 7 ile bölümünden kalan kaçtır?", c: ["5", "12", "0"], a: "Kalanları çarp: 3 · 4 = 12. 12 = 7 + 5, kalan 5." },
+      { s: "a'nın 5 ile bölümünden kalan 3 ise 2a'nın 5 ile bölümünden kalan kaçtır?", c: ["1", "6", "3"], a: "2 · 3 = 6 ve 6 = 5 + 1: kalan 1. Örnek: a = 8, 2a = 16, 16'nın kalanı 1." },
+      { s: "a'nın 9 ile bölümünden kalan 4 ise a<sup>2</sup>'nin 9 ile bölümünden kalan kaçtır?", c: ["7", "16", "4"], a: "4 · 4 = 16 ve 16 = 9 + 7: kalan 7. Örnek: a = 13, 169 = 9 · 18 + 7." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -887,6 +925,12 @@ window.KK_YKS = {
     { k: "yks-bolme", s: "Bir sayı 5'e bölündüğünde kalan 5 olabilir.", d: false, n: "Kalan 0, 1, 2, 3 ya da 4 olabilir" },
     { k: "yks-bolme", s: "Bir bölmede bölen 0 olamaz.", d: true },
     { k: "yks-bolme", s: "Bir sayının 6 ile bölümünden kalan x² ise x negatif olamaz.", d: false, n: "x = −1 ya da −2 de olur: (−2)² = 4 &lt; 6" },
+    { k: "yks-bolunebilme", s: "9'a bölünen her sayı 3'e de bölünür.", d: true },
+    { k: "yks-bolunebilme", s: "3'e bölünen her sayı 9'a da bölünür.", d: false, n: "12, 3'e bölünür ama 9'a bölünmez" },
+    { k: "yks-bolunebilme", s: "2'ye ve 6'ya bölünen her sayı 12'ye bölünür.", d: false, n: "18 ikisine de bölünür ama 12'ye bölünmez" },
+    { k: "yks-bolunebilme", s: "3'e ve 4'e bölünen her sayı 12'ye bölünür.", d: true },
+    { k: "yks-bolunebilme", s: "Bir sayının 5 ile bölümünden kalan, birler basamağının 5 ile bölümünden kalana eşittir.", d: true },
+    { k: "yks-bolunebilme", s: "Rakamları toplamı 11 olan bir sayı 11'e bölünür.", d: false, n: "29: 2 + 9 = 11 ama 29 11'e bölünmez; 11 kuralı +, − işaretleriyle" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
