@@ -17,7 +17,8 @@ window.KK_YKS = {
     { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" },
-    { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -549,6 +550,42 @@ window.KK_YKS = {
       { s: "Bir sayının asal çarpanlarına ayrılışı için hangisi doğrudur?", c: ["Çarpanların sırası dışında tek türlüdür", "Her sayı için birçok farklı biçimi vardır", "Sadece çift sayılar ayrılabilir"], a: "Hangi yoldan ayırırsan ayır aynı asallara ulaşırsın: 60 = 2 · 30 = 6 · 10 ama sonunda hep 2<sup>2</sup> · 3 · 5." },
       { s: "48 · k bir tam sayının karesi ise k en az kaçtır?", c: ["3", "2", "12"], a: "48 = 2<sup>4</sup> · 3. Bir tam karede her asalın üssü çifttir: 3'ün üssünü 2 yapmak için k = 3. 48 · 3 = 144 = 12<sup>2</sup>." }
     ],
+    // Faktöriyel: 5! = 5 · 4! = 5 · 4 · 3! … biçimleri (sadeleştirme bunlarla yapılır),
+    // sonuçlar çarpım olarak bırakılır: (n + 2) · (n + 1). 0! = 1, 3! = 4!/4 … zinciriyle gösterilir.
+    "yks-faktoriyel": [
+      { s: "5! neye eşittir?", c: ["5 · 4 · 3 · 2 · 1", "5 + 4 + 3 + 2 + 1", "5 · 5"], a: "n!, 1'den n'ye kadar bütün doğal sayıların çarpımıdır: 5! = 5 · 4 · 3 · 2 · 1 = 120." },
+      { s: "5 · 4!, 5 · 4 · 3! ve 5 · 4 · 3 ifadelerinden hangisi 5!'e eşit değildir?", c: ["5 · 4 · 3", "5 · 4!", "5 · 4 · 3!"], a: "5! = 5 · 4! = 5 · 4 · 3! = 5 · 4 · 3 · 2!. 5 · 4 · 3'te 2 · 1 eksik kalmış." },
+      { s: "7 · 6 · 5! hangisine eşittir?", c: ["7!", "42!", "6!"], a: "7! = 7 · 6 · 5 · 4 · 3 · 2 · 1 = 7 · 6 · 5!." },
+      { s: "10! hangi biçimde yazılabilir?", c: ["10 · 9 · 8!", "10 · 8!", "10 · 9 · 8"], a: "10! = 10 · 9! = 10 · 9 · 8!. Hiçbir çarpan atlanmaz." },
+      { s: "n! = n · ?", c: ["(n − 1)!", "(n + 1)!", "n − 1"], a: "5! = 5 · 4! gibi: n! = n · (n − 1)!." },
+      { s: "(n + 1)! hangisine eşittir?", c: ["(n + 1) · n!", "(n + 1) · n", "n! + 1"], a: "En büyük çarpanı ayır, gerisi n!: (n + 1)! = (n + 1) · n · (n − 1) · … · 1 = (n + 1) · n!." },
+      { s: "(n + 2)! = (n + 2) · (n + 1) · ?", c: ["n!", "(n − 1)!", "(n + 1)!"], a: "(n + 2)'den başlayıp birer azalarak çarp: (n + 2) · (n + 1) · n · … = (n + 2) · (n + 1) · n!." },
+      { s: "n! ifadesi (n − 2)! kullanılarak nasıl yazılır?", c: ["n · (n − 1) · (n − 2)!", "n · (n − 2)!", "(n − 1) · (n − 2)!"], a: "n'den birer azalarak (n − 2)!'ye kadar in: n · (n − 1) · (n − 2)!. (n − 1) atlanamaz." },
+      { s: "<span class=\"kesir\"><span>6!</span><span>5!</span></span> = ?", c: ["6", "1", "120"], a: "6! = 6 · 5!. 5! sadeleşir, 6 kalır." },
+      { s: "<span class=\"kesir\"><span>12!</span><span>10!</span></span> = ?", c: ["12 · 11", "2", "12"], a: "12! = 12 · 11 · 10!. 10! sadeleşir: 12 · 11 = 132." },
+      { s: "<span class=\"kesir\"><span>10!</span><span>8!</span></span> = ?", c: ["90", "2", "80"], a: "10! = 10 · 9 · 8!. 8! sadeleşir: 10 · 9 = 90." },
+      { s: "<span class=\"kesir\"><span>8!</span><span>6! · 2!</span></span> = ?", c: ["28", "56", "4"], a: "8! = 8 · 7 · 6!. 6! sadeleşir: 8 · 7 / 2! = 56 / 2 = 28." },
+      { s: "<span class=\"kesir\"><span>5! + 4!</span><span>4!</span></span> = ?", c: ["6", "5", "2"], a: "5! = 5 · 4!. Pay: 5 · 4! + 4! = 6 · 4!. 4! sadeleşir: 6." },
+      { s: "7! − 6! = ?", c: ["6 · 6!", "1!", "7"], a: "7! = 7 · 6!. 7 · 6! − 1 · 6! = 6 · 6!. (7 elmadan 1 elma çıkarınca 6 elma kalır; burada elma 6!.)" },
+      { s: "0! = ?", c: ["1", "0", "Tanımsız"], a: "0! = 1. Nedeni: 1! = 1 · 0! olmalı; 1 = 1 · 0! ise 0! = 1." },
+      { s: "1! = ?", c: ["1", "0", "2"], a: "1! = 1." },
+      { s: "0! + 1! = ?", c: ["2", "1", "0"], a: "0! = 1 ve 1! = 1: toplam 2." },
+      { s: "3! = <span class=\"kesir\"><span>4!</span><span>4</span></span>, 2! = <span class=\"kesir\"><span>3!</span><span>3</span></span>, 1! = <span class=\"kesir\"><span>2!</span><span>2</span></span> … Bu şekilde devam edilirse 0! neye eşit olur?", c: ["<span class=\"kesir\"><span>1!</span><span>1</span></span> = 1", "0", "<span class=\"kesir\"><span>1!</span><span>0</span></span>, tanımsız"], a: "Her adımda bir öncekini kendi sayısına bölüyoruz: 0! = 1! / 1 = 1. Matematikçiler bunu kafalarına göre seçmedi; kural kendiliğinden bunu veriyor." },
+      { s: "0! = 1 olması nereden gelir?", c: ["1! = 1 · 0! eşitliğinden", "Rastgele verilmiş bir karardan", "0 · 1 = 0 olmasından"], a: "n! = n · (n − 1)! kuralı n = 1 için de geçerli: 1! = 1 · 0!, yani 1 = 0!." },
+      { s: "<span class=\"kesir\"><span>(n + 2)!</span><span>n!</span></span> = ?", c: ["(n + 2) · (n + 1)", "n + 2", "2"], a: "(n + 2)! = (n + 2) · (n + 1) · n!. n! sadeleşir: (n + 2) · (n + 1)." },
+      { s: "<span class=\"kesir\"><span>(n + 1)!</span><span>n!</span></span> = ?", c: ["n + 1", "n", "1"], a: "(n + 1)! = (n + 1) · n!. n! sadeleşir: n + 1." },
+      { s: "<span class=\"kesir\"><span>n!</span><span>(n − 1)!</span></span> = ?", c: ["n", "n − 1", "1"], a: "n! = n · (n − 1)!. (n − 1)! sadeleşir: n." },
+      { s: "<span class=\"kesir\"><span>(n + 1)!</span><span>(n − 1)!</span></span> = ?", c: ["(n + 1) · n", "n + 1", "2"], a: "(n + 1)! = (n + 1) · n · (n − 1)!. (n − 1)! sadeleşir: (n + 1) · n." },
+      { s: "<span class=\"kesir\"><span>(n + 1)! − n!</span><span>n!</span></span> = ?", c: ["n", "1", "n + 1"], a: "(n + 1)! = (n + 1) · n!. Pay: (n + 1) · n! − n! = n · n!. n! sadeleşir: n." },
+      { s: "<span class=\"kesir\"><span>(n + 1)!</span><span>n!</span></span> = 8 ise n kaçtır?", c: ["7", "8", "9"], a: "Sol taraf n + 1'e eşit: n + 1 = 8, n = 7." },
+      { s: "(n + 1)! = 6 · n! ise n kaçtır?", c: ["5", "6", "7"], a: "(n + 1)! = (n + 1) · n!. O hâlde n + 1 = 6, n = 5." },
+      { s: "<span class=\"kesir\"><span>n!</span><span>(n − 2)!</span></span> = 20 ise n kaçtır?", c: ["5", "4", "10"], a: "Sadeleşince n · (n − 1) = 20. Ardışık iki sayının çarpımı 20: 5 · 4. n = 5." },
+      { s: "17! sayısının kaç farklı asal çarpanı vardır?", c: ["7", "17", "6"], a: "17! = 17 · 16 · … · 2 · 1. İçinde 17'ye kadar bütün asallar var: 2, 3, 5, 7, 11, 13, 17 → 7 tane." },
+      { s: "10! sayısının asal çarpanları hangileridir?", c: ["2, 3, 5 ve 7", "2, 3, 5, 7 ve 9", "1'den 10'a kadar tüm sayılar"], a: "10!'in çarpanları 1'den 10'a kadar sayılar; bunların asal yapıtaşları 2, 3, 5, 7. 9 = 3 · 3 asal değil." },
+      { s: "20! sayısının en büyük asal çarpanı kaçtır?", c: ["19", "20", "17"], a: "20 asal değil (2<sup>2</sup> · 5). 20'den küçük en büyük asal 19." },
+      { s: "13! sayısı 11, 13 ve 17 sayılarından hangisine bölünmez?", c: ["17", "13", "11"], a: "13! = 13 · 12 · … · 1. 11 ve 13 çarpanlar arasında; 17 asal ve 13'ten büyük, hiçbir çarpanın içinde yok." },
+      { s: "k! sayısı 11'e bölünüyorsa k en az kaçtır?", c: ["11", "10", "12"], a: "11 asal: 11'e bölünmesi için çarpanlar arasında 11 olmalı. 10! = 1 · 2 · … · 10'da yok, 11!'de var." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -715,6 +752,14 @@ window.KK_YKS = {
     { k: "yks-asal", s: "Asal ve prime kelimelerinin ikisi de “temel, asıl” anlamı taşır.", d: true },
     { k: "yks-asal", s: "12 = 2 · 6 yazımı, 12'nin asal çarpanlarına ayrılmış hâlidir.", d: false, n: "6 asal değil: 12 = 2<sup>2</sup> · 3" },
     { k: "yks-asal", s: "Bir asal sayının tek asal çarpanı kendisidir.", d: true },
+    { k: "yks-faktoriyel", s: "0! = 0", d: false, n: "0! = 1" },
+    { k: "yks-faktoriyel", s: "0! = 1!", d: true },
+    { k: "yks-faktoriyel", s: "5! = 5 · 4!", d: true },
+    { k: "yks-faktoriyel", s: "6! = 6 · 5 · 4", d: false, n: "6! = 6 · 5 · 4!" },
+    { k: "yks-faktoriyel", s: "(n + 1)! = (n + 1) · n!", d: true },
+    { k: "yks-faktoriyel", s: "10! / 5! = 2!", d: false, n: "10 · 9 · 8 · 7 · 6; faktöriyelde sayılar bölünüp sadeleşmez" },
+    { k: "yks-faktoriyel", s: "2! + 3! = 5!", d: false, n: "2 + 6 = 8, ama 5! = 120" },
+    { k: "yks-faktoriyel", s: "17! sayısı 19'a bölünür.", d: false, n: "19 asal ve 17'den büyük; 17!'in çarpanları arasında yok" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
