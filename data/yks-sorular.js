@@ -1164,7 +1164,7 @@ window.KK_YKS = {
     { k: "yks-kesir", s: "<span class=\"kesir\"><span>3</span><span>4</span></span> ÷ <span class=\"kesir\"><span>1</span><span>4</span></span> · 2 = <span class=\"kesir\"><span>3</span><span>2</span></span>", d: false, n: "Soldan sağa: 3 · 2 = 6" },
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
-    { k: "yks-koklu", s: "√5 · √5 = 5", d: true },
+    { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
     { k: "yks-ardisik", s: "Ardışık sayılar azalan sırada da yazılabilir.", d: true },
     { k: "yks-ardisik", s: "3, 6, 9, 12 sayılarına kısaca “ardışık sayılar” denir.", d: false, n: "Bunlar 3'ün ardışık katlarıdır; “ardışık sayılar” birer artar" },
     { k: "yks-ardisik", s: "−2, −1, 0, 1 sayıları ardışık tam sayılardır.", d: true },
