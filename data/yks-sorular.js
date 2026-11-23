@@ -16,7 +16,8 @@ window.KK_YKS = {
     { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" }
+    { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" },
+    { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -494,6 +495,39 @@ window.KK_YKS = {
       { s: "1'den 100'e kadar kaç tane 3'ün katı vardır?", c: ["33", "34", "30"], a: "3, 6, …, 99. 3'e böl: 1, 2, …, 33. Toplam 33." },
       { s: "Bir kitabın 15. sayfasından 40. sayfasına kadar (ikisi dahil) kaç sayfa okunur?", c: ["26", "25", "24"], a: "40 − 15 = 25 adım, ama sayfa sayısı adımdan bir fazladır: 15'i de sayınca 26." }
     ],
+    // Asal Sayılar: asal sayılar diğer sayıların yapıtaşlarıdır. Sorular özelliklerden gelir:
+    // tanım (1 ve kendisi), tek çift asal 2, ardışık tek asal çifti 2 ve 3; asal çarpanlara ayırma.
+    // Bölen sayısı burada yok (sayma konusundan sonra).
+    "yks-asal": [
+      { s: "Asal sayının tanımı hangisidir?", c: ["1 ve kendisinden başka pozitif böleni olmayan, 1'den büyük doğal sayı", "Sadece kendisine bölünebilen sayı", "Hiçbir sayıya bölünemeyen tek sayı"], a: "Asal sayı 1'den büyüktür ve sadece 1'e ve kendisine bölünür: 2, 3, 5, 7, 11, …" },
+      { s: "Asal sayılara neden sayıların yapıtaşları denir?", c: ["1'den büyük her doğal sayı asal sayıların çarpımı olarak yazılabildiği için", "Asal sayılar en küçük sayılar olduğu için", "Asal sayılar hep tek olduğu için"], a: "Atomlar maddeyi oluşturur; asal sayılar da çarpılarak diğer sayıları oluşturur: 12 = 2 · 2 · 3, 35 = 5 · 7." },
+      { s: "En küçük asal sayı kaçtır?", c: ["2", "1", "3"], a: "1 asal değildir: tek bir böleni var. 2'nin iki böleni var (1 ve 2), en küçük asal sayıdır." },
+      { s: "En küçük tek asal sayı kaçtır?", c: ["3", "1", "5"], a: "1 asal değildir. 3 hem tek hem asal." },
+      { s: "−5, 1 ve 7 sayılarından hangisi asaldır?", c: ["7", "−5", "1"], a: "Asal sayılar negatif olamaz, 1 de asal değildir. 7 sadece 1'e ve 7'ye bölünür." },
+      { s: "87, 89 ve 91 sayılarından hangisi asaldır?", c: ["89", "87", "91"], a: "87 = 3 · 29 ve 91 = 7 · 13. 91 asal gibi görünür ama değildir; dikkat." },
+      { s: "51, 53 ve 57 sayılarından hangisi asaldır?", c: ["53", "51", "57"], a: "51 = 3 · 17 ve 57 = 3 · 19 (rakamları toplamı 3'ün katı). 53 asal." },
+      { s: "37, 47 ve 49 sayılarından hangisi asal değildir?", c: ["49", "37", "47"], a: "49 = 7 · 7." },
+      { s: "40 ile 50 arasında kaç asal sayı vardır?", c: ["3", "4", "2"], a: "41, 43, 47. (49 = 7 · 7, asal değil.)" },
+      { s: "1 ile 100 arasında kaç asal sayı vardır?", c: ["25", "20", "30"], a: "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97: 25 tane." },
+      { s: "Kaç tane çift asal sayı vardır?", c: ["1", "0", "Sonsuz"], a: "Sadece 2. Diğer çift sayıların hepsi 2'ye de bölünür; asal olamazlar." },
+      { s: "Toplamı 33 olan iki asal sayının büyüğü kaçtır?", c: ["31", "29", "23"], a: "İki tek asalın toplamı çift olur. Toplam tek ise biri 2'dir: 33 − 2 = 31." },
+      { s: "a ve b asal sayılar, a · b çift ve a + b = 15 ise a · b kaçtır?", c: ["26", "36", "50"], a: "Çarpım çift ise biri 2'dir. Öbürü 15 − 2 = 13: 2 · 13 = 26." },
+      { s: "p ve p + 9 sayılarının ikisi de asal ise p kaçtır?", c: ["2", "3", "11"], a: "p tek olsaydı p + 9 çift olurdu (2'den büyük çift sayı asal değil). Demek ki p = 2; 2 + 9 = 11 de asal." },
+      { s: "a ve b farklı asal sayılar ve a + b tek ise a · b kesinlikle hangi sayıya bölünür?", c: ["2", "3", "5"], a: "Toplam tek ise biri 2'dir; çarpım 2'ye bölünür." },
+      { s: "p ve p + 1 sayılarının ikisi de asal ise p kaçtır?", c: ["2", "3", "1"], a: "Ardışık iki sayıdan biri çifttir. Çift asal sadece 2: sayılar 2 ve 3." },
+      { s: "a ve b asal sayılar ve a − b = 1 ise a · b kaçtır?", c: ["6", "2", "12"], a: "Farkı 1 olan asal sayılar sadece 3 ve 2: 3 · 2 = 6." },
+      { s: "a, b, c asal sayılar ve c · (a − b) = 17 ise a + b + c kaçtır?", c: ["22", "20", "19"], a: "17 asal; çarpanlardan biri 1 olmalı. c asal olduğu için 1 olamaz: a − b = 1, yani a = 3, b = 2. c = 17. Toplam 22." },
+      { s: "Asal çarpanlara ayırmada 12 = 4 · 3 yazımı neden yeterli değildir?", c: ["4 asal değildir; 2 · 2 diye ayrılmalıdır", "3 asal değildir", "Çarpanlar büyükten küçüğe yazılmalıdır"], a: "Bütün çarpanlar asal olana kadar ayrılır: 12 = 2 · 2 · 3 = 2<sup>2</sup> · 3." },
+      { s: "60 sayısının asal çarpanlarına ayrılmış hâli hangisidir?", c: ["2<sup>2</sup> · 3 · 5", "4 · 3 · 5", "2 · 3 · 10"], a: "60 = 2 · 30 = 2 · 2 · 15 = 2 · 2 · 3 · 5. 4 ve 10 asal değildir." },
+      { s: "72 sayısının asal çarpanlarına ayrılmış hâli hangisidir?", c: ["2<sup>3</sup> · 3<sup>2</sup>", "2<sup>2</sup> · 3<sup>3</sup>", "8 · 9"], a: "72 → 36 → 18 → 9 (üç kez 2'ye böl), 9 → 3 → 1 (iki kez 3'e böl): 2<sup>3</sup> · 3<sup>2</sup>." },
+      { s: "90 sayısının asal çarpanları hangileridir?", c: ["2, 3 ve 5", "2, 5 ve 9", "3 ve 10"], a: "90 = 2 · 3<sup>2</sup> · 5. 9 ve 10 asal değildir." },
+      { s: "100 sayısının kaç farklı asal çarpanı vardır?", c: ["2", "4", "3"], a: "100 = 2<sup>2</sup> · 5<sup>2</sup>: farklı asal çarpanlar 2 ve 5." },
+      { s: "2<sup>3</sup> · 3 · 5 hangi sayının asal çarpanlarına ayrılmış hâlidir?", c: ["120", "90", "30"], a: "8 · 3 · 5 = 120." },
+      { s: "Asal çarpanları sadece 2 ve 7 olan sayı hangisidir?", c: ["28", "42", "21"], a: "28 = 2<sup>2</sup> · 7. 42 = 2 · 3 · 7 (3 de var), 21 = 3 · 7 (2 yok)." },
+      { s: "3 farklı asal çarpanı olan en küçük doğal sayı kaçtır?", c: ["30", "60", "24"], a: "En küçük üç asal: 2 · 3 · 5 = 30. 24 = 2<sup>3</sup> · 3'ün sadece 2 farklı asal çarpanı var." },
+      { s: "Bir sayının asal çarpanlarına ayrılışı için hangisi doğrudur?", c: ["Çarpanların sırası dışında tek türlüdür", "Her sayı için birçok farklı biçimi vardır", "Sadece çift sayılar ayrılabilir"], a: "Hangi yoldan ayırırsan ayır aynı asallara ulaşırsın: 60 = 2 · 30 = 6 · 10 ama sonunda hep 2<sup>2</sup> · 3 · 5." },
+      { s: "48 · k bir tam sayının karesi ise k en az kaçtır?", c: ["3", "2", "12"], a: "48 = 2<sup>4</sup> · 3. Bir tam karede her asalın üssü çifttir: 3'ün üssünü 2 yapmak için k = 3. 48 · 3 = 144 = 12<sup>2</sup>." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -646,6 +680,15 @@ window.KK_YKS = {
     { k: "yks-ardisik", s: "Ardışık 5 tam sayının ortalaması, ortadaki sayıya eşittir.", d: true },
     { k: "yks-ardisik", s: "İlk 10 tek sayının toplamı 100'dür.", d: true },
     { k: "yks-ardisik", s: "Ardışık 10 tam sayının en büyüğü, en küçüğünden 10 fazladır.", d: false, n: "10 sayı arasında 9 adım var: 9 fazladır" },
+    { k: "yks-asal", s: "1 bir asal sayıdır.", d: false, n: "1'in tek böleni var; asal sayılar 2'den başlar" },
+    { k: "yks-asal", s: "−3 bir asal sayıdır.", d: false, n: "Asal sayılar negatif olamaz" },
+    { k: "yks-asal", s: "Bütün asal sayılar tektir.", d: false, n: "2 hem çift hem asal" },
+    { k: "yks-asal", s: "İki asal sayının toplamı her zaman çifttir.", d: false, n: "2 + 3 = 5 tek" },
+    { k: "yks-asal", s: "Farkı 1 olan tek asal sayı çifti 2 ve 3'tür.", d: true },
+    { k: "yks-asal", s: "91 bir asal sayıdır.", d: false, n: "91 = 7 · 13" },
+    { k: "yks-asal", s: "Asal ve prime kelimelerinin ikisi de “temel, asıl” anlamı taşır.", d: true },
+    { k: "yks-asal", s: "12 = 2 · 6 yazımı, 12'nin asal çarpanlarına ayrılmış hâlidir.", d: false, n: "6 asal değil: 12 = 2<sup>2</sup> · 3" },
+    { k: "yks-asal", s: "Bir asal sayının tek asal çarpanı kendisidir.", d: true },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
