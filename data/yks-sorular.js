@@ -21,7 +21,8 @@ window.KK_YKS = {
     { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -768,6 +769,45 @@ window.KK_YKS = {
       { s: "a'nın 5 ile bölümünden kalan 3 ise 2a'nın 5 ile bölümünden kalan kaçtır?", c: ["1", "6", "3"], a: "2 · 3 = 6 ve 6 = 5 + 1: kalan 1. Örnek: a = 8, 2a = 16, 16'nın kalanı 1." },
       { s: "a'nın 9 ile bölümünden kalan 4 ise a<sup>2</sup>'nin 9 ile bölümünden kalan kaçtır?", c: ["7", "16", "4"], a: "4 · 4 = 16 ve 16 = 9 + 7: kalan 7. Örnek: a = 13, 169 = 9 · 18 + 7." }
     ],
+    // EBOB – EKOK: EBOB bölen listeleriyle, EKOK kat listeleriyle tanımlanır; asal çarpanlarla hesap;
+    // ardışık sayılar, EBOB · EKOK = a · b, aralarında asal; kalanlı EKOK; basit EBOB / EKOK problemleri.
+    "yks-ebob": [
+      { s: "İki sayının EBOB'u nedir?", c: ["Ortak bölenlerinin en büyüğü", "Ortak katlarının en küçüğü", "Bölenlerinin toplamı"], a: "EBOB: En Büyük Ortak Bölen. İki sayıyı da bölen sayıların en büyüğü." },
+      { s: "İki sayının EKOK'u nedir?", c: ["Ortak katlarının en küçüğü", "Ortak bölenlerinin en büyüğü", "İki sayının toplamı"], a: "EKOK: En Küçük Ortak Kat. İki sayıya da bölünebilen pozitif sayıların en küçüğü." },
+      { s: "36 ve 48'in ortak bölenleri hangileridir?", c: ["1, 2, 3, 4, 6, 12", "1, 2, 3, 4, 6, 8, 12", "2, 3, 4, 6, 12"], a: "36: 1, 2, 3, 4, 6, 9, 12, 18, 36. 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48. Ortaklar 1, 2, 3, 4, 6, 12 (8, 36'yı bölmez; 1 de ortak bölendir)." },
+      { s: "36 ve 48'in EBOB'u kaçtır?", c: ["12", "6", "144"], a: "Ortak bölenler 1, 2, 3, 4, 6, 12; en büyüğü 12." },
+      { s: "36 ve 48'in EKOK'u kaçtır?", c: ["144", "12", "1728"], a: "36'nın katları: 36, 72, 108, 144 … 48'in katları: 48, 96, 144 … İlk ortak kat 144." },
+      { s: "48 ve 64 sayılarını bölen en büyük sayı kaçtır?", c: ["16", "8", "4"], a: "48 = 2<sup>4</sup> · 3, 64 = 2<sup>6</sup>. Ortak kısım 2<sup>4</sup> = 16." },
+      { s: "80 ve 120 sayılarına bölünebilen en küçük pozitif sayı kaçtır?", c: ["240", "120", "9600"], a: "80'in katları: 80, 160, 240 … 240 = 120 · 2. EKOK 240. (9600 ortak kat ama en küçüğü değil.)" },
+      { s: "Asal çarpanlarla EBOB bulunurken hangisi alınır?", c: ["Ortak asal çarpanların küçük üslüleri", "Bütün asal çarpanların büyük üslüleri", "Bütün asal çarpanların küçük üslüleri"], a: "EBOB iki sayıyı da bölmeli: sadece ortak asallar, ikisinin de içinde olan kadar (küçük üs)." },
+      { s: "Asal çarpanlarla EKOK bulunurken hangisi alınır?", c: ["Bütün asal çarpanların büyük üslüleri", "Ortak asal çarpanların küçük üslüleri", "Sadece ortak asal çarpanlar"], a: "EKOK iki sayıya da bölünmeli: her asal, en çok hangi sayıda varsa o kadar (büyük üs)." },
+      { s: "A = 2<sup>4</sup> · 3<sup>2</sup> · 5 ve B = 2<sup>3</sup> · 3<sup>5</sup> · 5<sup>2</sup> ise EBOB(A, B) hangisidir?", c: ["2<sup>3</sup> · 3<sup>2</sup> · 5", "2<sup>4</sup> · 3<sup>5</sup> · 5<sup>2</sup>", "2 · 3 · 5"], a: "Her ortak asalın küçük üssü: 2<sup>3</sup>, 3<sup>2</sup>, 5<sup>1</sup>. EBOB = 360." },
+      { s: "A = 2<sup>4</sup> · 3<sup>2</sup> · 5 ve B = 2<sup>3</sup> · 3<sup>5</sup> · 5<sup>2</sup> ise EKOK(A, B) hangisidir?", c: ["2<sup>4</sup> · 3<sup>5</sup> · 5<sup>2</sup>", "2<sup>3</sup> · 3<sup>2</sup> · 5", "2<sup>7</sup> · 3<sup>7</sup> · 5<sup>3</sup>"], a: "Her asalın büyük üssü: 2<sup>4</sup>, 3<sup>5</sup>, 5<sup>2</sup>. (Üsler toplanmaz; o çarpım olurdu.)" },
+      { s: "12 ve 36 sayılarının EBOB'u kaçtır?", c: ["12", "36", "6"], a: "12, 36'yı böler. Küçük sayı büyüğü bölüyorsa EBOB küçük sayıdır." },
+      { s: "5! · 6! ile 6! · 7! sayılarının EBOB'u hangisidir?", c: ["5! · 6!", "6!", "6! · 7!"], a: "6! · 7! = 6! · 7 · 6 · 5! = 42 · (5! · 6!). Yani 5! · 6! öbürünü böler; EBOB odur." },
+      { s: "Ardışık iki doğal sayının EBOB'u kaçtır?", c: ["1", "2", "Küçük olan sayı"], a: "İkisini birden bölen sayı farklarını da böler; farkları 1. Örnek: EBOB(12, 13) = 1." },
+      { s: "Ardışık iki pozitif sayının EKOK'u neye eşittir?", c: ["Çarpımlarına", "Toplamlarına", "Büyük olan sayıya"], a: "Ortak bölenleri yok (EBOB 1): EKOK = çarpım. Örnek: EKOK(4, 5) = 20." },
+      { s: "İki sayının EBOB'u ile EKOK'unun çarpımı neye eşittir?", c: ["İki sayının çarpımına", "İki sayının toplamına", "Büyük sayının karesine"], a: "EBOB · EKOK = a · b. Örnek: 12 ve 18 → 6 · 36 = 216 = 12 · 18." },
+      { s: "EBOB'u 12, EKOK'u 180 olan iki sayının çarpımı kaçtır?", c: ["2160", "192", "15"], a: "a · b = EBOB · EKOK = 12 · 180 = 2160." },
+      { s: "8 ve 15 sayıları için hangisi doğrudur?", c: ["Aralarında asaldırlar", "İkisi de asaldır", "EBOB'ları 8'dir"], a: "Ortak bölenleri sadece 1: aralarında asal. Ama ikisi de asal değil (8 = 2<sup>3</sup>, 15 = 3 · 5)." },
+      { s: "Ardışık iki sayının EKOK'u 600 ise bu sayıların toplamı kaçtır?", c: ["49", "50", "48"], a: "Ardışık sayıların EKOK'u çarpımlarıdır: 24 · 25 = 600. Toplam 49." },
+      { s: "EBOB'ları 24 olan birbirinden farklı en küçük üç pozitif sayının toplamı kaçtır?", c: ["144", "72", "24"], a: "Hepsi 24'ün katı olmalı: 24, 48, 72. EBOB'ları 24 ✓. Toplam 144." },
+      { s: "12 ve 15'e bölünebilen sayılar hangi sayının katlarıdır?", c: ["60", "180", "3"], a: "Hem 12'ye hem 15'e bölünenler, EKOK(12, 15) = 60'ın katlarıdır: 60, 120, 180 …" },
+      { s: "12 ve 15'e bölünebilen en küçük üç basamaklı sayı kaçtır?", c: ["120", "180", "100"], a: "60'ın katları: 60, 120, … Üç basamaklı ilki 120." },
+      { s: "12 ve 15'e bölünebilen kaç tane üç basamaklı sayı vardır?", c: ["15", "16", "14"], a: "60'ın katları: 120, 180, …, 960. 60'a böl: 2, 3, …, 16. 2'den 16'ya 15 sayı (1 de dahil olsaydı 16 olurdu)." },
+      { s: "3'e, 5'e ve 6'ya bölündüğünde her seferinde 1 kalanını veren 1'den büyük en küçük doğal sayı kaçtır?", c: ["31", "30", "29"], a: "Sayıdan 1 çıkarılırsa üçüne de bölünür: sayı − 1 = EKOK(3, 5, 6) = 30. Sayı 31." },
+      { s: "15'e bölününce 11, 20'ye bölününce 16, 24'e bölününce 20 kalanını veren en küçük doğal sayı kaçtır?", c: ["116", "124", "120"], a: "Her seferinde kalan, bölenden 4 eksik: sayı + 4 üçüne de bölünür. sayı + 4 = EKOK = 120 → sayı 116." },
+      { s: "Bilyeler 6'şar, 8'er ve 10'ar sayıldığında her seferinde 4 bilye artıyor. Bilye sayısı 4'ten fazla ise en az kaçtır?", c: ["124", "120", "244"], a: "Bilye − 4, EKOK(6, 8, 10) = 120'nin katı. En az 120 + 4 = 124." },
+      { s: "496 sayısından en az kaç çıkarılırsa sonuç 8'e, 10'a ve 12'ye tam bölünür?", c: ["16", "6", "4"], a: "EKOK(8, 10, 12) = 120. 496'dan küçük en büyük katı 480: 496 − 480 = 16." },
+      { s: "Bir şeyi artan olmadan eşit ve en büyük parçalara bölme sorularında hangisi kullanılır?", c: ["EBOB", "EKOK", "İki sayının çarpımı"], a: "Parça boyu her iki uzunluğu da bölmeli ve en büyük olmalı: ortak bölenlerin en büyüğü, EBOB." },
+      { s: "“Yeniden birlikte olma” ya da küçük parçaları birleştirip bütün yapma sorularında hangisi kullanılır?", c: ["EKOK", "EBOB", "İki sayının farkı"], a: "Süre ya da uzunluk hepsinin katı olmalı ve en küçük olmalı: EKOK." },
+      { s: "120 cm ve 140 cm uzunluğundaki iki çubuk artan olmadan eşit ve en uzun parçalara bölünecek. Bir parça kaç cm olur?", c: ["20", "10", "40"], a: "Parça boyu 120'yi ve 140'ı bölmeli, en büyük olmalı: EBOB(120, 140) = 20." },
+      { s: "120 cm ve 140 cm uzunluğundaki iki çubuk artan olmadan eşit ve en uzun parçalara bölünürse kaç parça elde edilir?", c: ["13", "11", "12"], a: "Parça 20 cm: 120 / 20 = 6 ve 140 / 20 = 7. Toplam 13 parça." },
+      { s: "80 cm × 64 cm boyutundaki dikdörtgen, en büyük eş karelere bölünürse kaç kare elde edilir?", c: ["20", "16", "80"], a: "Kare kenarı EBOB(80, 64) = 16. 80 / 16 = 5, 64 / 16 = 4: 5 · 4 = 20 kare." },
+      { s: "6, 8 ve 10 günde bir sefere çıkan üç otobüs bugün birlikte çıktı. En az kaç gün sonra yine birlikte çıkarlar?", c: ["120", "24", "480"], a: "Gün sayısı üçünün de katı olmalı: EKOK(6, 8, 10) = 120." },
+      { s: "40, 36 ve 30 dakikada bir çalan üç saat 15.00'te birlikte çaldı. Bir sonraki birlikte çalış saat kaçtadır?", c: ["21.00", "17.00", "18.00"], a: "EKOK(40, 36, 30) = 360 dakika = 6 saat. 15.00 + 6 saat = 21.00." },
+      { s: "9 cm × 12 cm boyutundaki dikdörtgen levhalar yan yana konularak en küçük kare yapılacak. Kaç levha gerekir?", c: ["12", "36", "108"], a: "Karenin kenarı 9'un ve 12'nin katı olmalı: EKOK = 36. 36 / 9 = 4, 36 / 12 = 3: 4 · 3 = 12 levha." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -968,6 +1008,12 @@ window.KK_YKS = {
     { k: "yks-bolunebilme", s: "3'e ve 4'e bölünen her sayı 12'ye bölünür.", d: true },
     { k: "yks-bolunebilme", s: "Bir sayının 5 ile bölümünden kalan, birler basamağının 5 ile bölümünden kalana eşittir.", d: true },
     { k: "yks-bolunebilme", s: "Rakamları toplamı 11 olan bir sayı 11'e bölünür.", d: false, n: "29: 2 + 9 = 11 ama 29 11'e bölünmez; 11 kuralı +, − işaretleriyle" },
+    { k: "yks-ebob", s: "Ardışık iki doğal sayının EBOB'u 1'dir.", d: true },
+    { k: "yks-ebob", s: "Ardışık iki pozitif sayının EKOK'u toplamlarına eşittir.", d: false, n: "Çarpımlarına eşittir: EKOK(4, 5) = 20" },
+    { k: "yks-ebob", s: "İki sayının EBOB'u ile EKOK'unun çarpımı, iki sayının çarpımına eşittir.", d: true },
+    { k: "yks-ebob", s: "İki pozitif sayının EKOK'u, sayıların büyüğünden küçük olabilir.", d: false, n: "EKOK büyük sayının katıdır: EBOB ≤ a ≤ b ≤ EKOK" },
+    { k: "yks-ebob", s: "Aralarında asal iki sayının ikisi de asal sayıdır.", d: false, n: "8 ve 15 aralarında asaldır ama asal değildir" },
+    { k: "yks-ebob", s: "Bir şeyi eşit ve en büyük parçalara bölme sorularında EKOK kullanılır.", d: false, n: "EBOB kullanılır" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
