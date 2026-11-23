@@ -718,3 +718,16 @@ body.yayin .oyun-grafik { max-width: 560px; }
 #kart-bil:hover { background: rgba(46, 139, 87, 0.1); }
 #kart-son { margin-top: 8px; }
 .en-anlam { display: block; margin-top: 4px; }
+
+/* ℹ️ Puan kuralları: teste başlarken kısa liste ve "Puanlar nasıl işler?" penceresi */
+.kural-ac { font: inherit; font-size: 0.9em; font-weight: 600; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.kural-ac:hover { text-decoration-thickness: 2px; }
+.panel-kurallar { margin: 0; padding: 10px 12px 10px 12px; list-style: none; background: var(--surface-2); border-radius: 10px; display: grid; gap: 6px; font-size: 0.88rem; line-height: 1.45; color: var(--text); }
+.panel-kurallar:empty { display: none; }
+.kural-panel { max-width: 560px; max-height: min(88vh, 760px); grid-template-rows: auto minmax(0, 1fr) auto; }
+.kural-icerik { overflow-y: auto; padding-right: 4px; }
+.kural-icerik h4 { margin: 14px 0 6px; font-size: 1rem; }
+.kural-icerik h4:first-child { margin-top: 0; }
+.kural-icerik ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--muted); line-height: 1.5; font-size: 0.93rem; }
+.kural-icerik strong { color: var(--text); }
+#kural-perde { z-index: 60; }

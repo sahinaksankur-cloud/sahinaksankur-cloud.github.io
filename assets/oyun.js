@@ -552,6 +552,7 @@
         r.onchange = function () { var s = tekrarSecim(); s.c = r.value === "hepsi"; tekrarKaydet(s); aciklamaYaz(); };
       });
     }
+    $("seviye-kurallar").innerHTML = kisaKurallar(id).map(function (k) { return "<li>" + k + "</li>"; }).join("");
     $("oyun-seviyeler").innerHTML = SEVIYELER.map(function (s) {
       var secili = s.id === durum.seviye;
       return '<button type="button" class="oyun-seviye' + (secili ? " secili" : "") + '" data-seviye="' + s.id +
@@ -568,12 +569,75 @@
     if (sec) sec.focus();
   }
   function seviyeKapat() { $("seviye-perde").hidden = true; seviyeHedef = null; }
+
+  // ---- ℹ️ Puan kuralları: teste başlarken kısa hâli, "Puanlar nasıl işler?" penceresinde tamamı ----
+  function bonusOlur(id) { var t = testBilgi(id); return !t.bolum && t.sayi >= (O.soruSayisi || 10); }
+  function bonusYazi() {
+    return SEVIYELER.map(function (sv) {
+      var b = TAM_BONUS[sv.id] || {};
+      return sv.ad + " +" + (b.puan || 0) + (b.hiz ? " ve hız bonusu" : "");
+    }).join(" · ");
+  }
+  function kisaKurallar(id) {
+    var k = [];
+    if (tekrarMi(id) && tekrarSecim().c) k.push("⭐ Daha önce çözdüğün sorular da gelir; onlar puan getirmez, sadece yeni çözdüklerin 1 puan getirir.");
+    else k.push("⭐ Her soru, <strong>ilk kez doğru</strong> çözdüğünde 1 puan getirir. Süre dolarsa puan yok.");
+    if (bonusOlur(id)) k.push("🎯 Hepsini doğru yaparsan bonus: " + bonusYazi() + ".");
+    else if (testBilgi(id).bolum) k.push("🎯 5 soruluk chapter testlerinde bonus yok; bonus 10 soruluk testlerde.");
+    if (!tekrarMi(id) && !ozelListe) k.push("🔁 Önce hiç görmediğin sorular, sonra kaçırdıkların gelir.");
+    return k;
+  }
+  function kuralCiz() {
+    var sureler = SEVIYELER.map(function (sv) { return sv.ad + " " + sv.sure + " sn"; }).join(", ");
+    var ek = O.ekSure == null ? 5 : O.ekSure;
+    var b = function (baslik, maddeler) { return "<h4>" + baslik + "</h4><ul>" + maddeler.map(function (m) { return "<li>" + m + "</li>"; }).join("") + "</ul>"; };
+    $("kural-icerik").innerHTML =
+      b("⭐ Puan nasıl kazanılır?", [
+        "Her soru, <strong>ilk kez doğru</strong> çözdüğünde 1 puan getirir. Aynı soruyu sonra yine doğru yaparsan puan tekrar eklenmez.",
+        "Daha önce doğru çözdüğün bir soruyu sonra kaçırırsan puanın silinmez.",
+        "Süre dolarsa o soru puan getirmez ve sonraki turlarda yine karşına çıkar.",
+        "Toplam puanın = çözdüğün soru sayısı + bonusların. Üniversite, YKS ve İngilizce puanları ayrı tutulur; kartlarda “Puan: 12 / 50” o konuda kaç soruyu çözdüğünü gösterir."
+      ]) +
+      b("🎯 Tam doğru bonusu", [
+        "10 soruluk testlerde hepsini doğru yaparsan: " + bonusYazi() + ".",
+        "Hız bonusu: soru başına ortalama kaç saniye erken bitirdiysen o kadar puan (12 saniyelik soruyu 9 saniyede çözersen +3).",
+        "Bonus, o turda en az bir yeni puan aldıysan eklenir. Bir konunun bütün sorularını çözdüysen kutlama yapılır ama bonus eklenmez.",
+        "5 soruluk “Sınava Hazır mısın?” testlerinde bonus yok."
+      ]) +
+      b("⏱ Süre ve seviye", [
+        "Seviye sadece süreyi değiştirir, sorular aynıdır: " + sureler + ". Grafikli sorularda " + ek + " saniye ek süre var.",
+        "En iyi skorun her seviye için ayrı tutulur."
+      ]) +
+      b("🔁 Sorular hangi sırayla gelir?", [
+        "Önce hiç görmediğin sorular gelir.",
+        "Onlar bitince kaçırdıkların gelir (en önce kaçırdığın önce).",
+        "Hepsini çözünce çözdüğün sorular yine gelir ama artık puan getirmez."
+      ]) +
+      b("⚡ Puan getirmeyenler", [
+        "⚡ Doğru / Yanlış turları ve 📇 kelime kartları puan getirmez; hızlı tekrar ve ezber içindir. Doğru / Yanlış'ta en iyi skorun kaydedilir.",
+        "🔴 Canlı Yarışma'da gördüğün sorular, süre bitince normal puanına işlenir (orada bonus yok)."
+      ]) +
+      b("📱 Kayıt", [
+        "Kayıt yok. Puanların sadece bu cihazda, bu tarayıcıda tutulur. Başka bir cihazda ya da tarayıcının verileri silinirse görünmez."
+      ]);
+  }
+  function kuralAc() { kuralCiz(); $("kural-perde").hidden = false; $("kural-kapat").focus(); }
+  function kuralKapat() {
+    $("kural-perde").hidden = true;
+    var k = oku(); if (!k.kuralGoruldu) { k.kuralGoruldu = true; yaz(k); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-kural-ac]"), function (b) { b.addEventListener("click", kuralAc); });
+  $("kural-kapat").addEventListener("click", kuralKapat);
+  $("kural-perde").addEventListener("click", function (e) { if (e.target === this) kuralKapat(); });
   // Kartlardan teste geçerken (ozelListe) test, çalışılan kelimelerle kurulur; pencere kapatılırsa liste unutulur.
   var ozelListe = null;
   function seviyeVazgec() { ozelListe = null; seviyeKapat(); }
   $("seviye-vazgec").addEventListener("click", seviyeVazgec);
   $("seviye-perde").addEventListener("click", function (e) { if (e.target === this) seviyeVazgec(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("seviye-perde").hidden) seviyeVazgec(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!$("kural-perde").hidden) kuralKapat(); else if (!$("seviye-perde").hidden) seviyeVazgec();
+  });
 
   // ---- Oyun ----
   function basla(konu) {
@@ -753,6 +817,8 @@
     } else { liste.hidden = true; }
     $("oyun-test-gec").hidden = d === "tum" || d === "yks";
     $("oyun-test-gec").textContent = "📝 5 Soruya geç";
+    $("oyun-tekrar-not").innerHTML = "⚡ Doğru / Yanlış turları toplam puanına eklenmez; hızlı tekrar içindir. En iyi skorun ve serin kaydedilir.";
+    $("oyun-tekrar-not").hidden = false;
     $("oyun-tekrar").classList.add("primary");
     $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
     $("oyun-tekrar").textContent = "⚡ Yeni ifadelerle tekrar";
@@ -823,6 +889,13 @@
     var notlar = [];
     if (durum.puansiz) notlar.push("Daha önce çözüp puan aldığın " + durum.puansiz + " soruyu yine doğru yaptın; bu soruların puanı toplamına tekrar eklenmedi.");
     if (kayipSayi) notlar.push("Daha önce doğru çözdüğün " + kayipSayi + " soruyu bu sefer kaçırdın (aşağıda işaretli). Puanın silinmedi.");
+    var yeniKacan = durum.kacan.filter(function (k) { return !k.once; }), sureSayi = yeniKacan.filter(function (k) { return k.neden === "sure"; }).length;
+    if (yeniKacan.length) notlar.push("Kaçırdığın " + yeniKacan.length + " soru" + (sureSayi ? " (" + (sureSayi === yeniKacan.length ? "hepsinde" : sureSayi + " tanesinde") + " süre doldu)" : "") +
+      " puan getirmedi. " + (yeniKacan.length > 1 ? "Bu sorular" : "Bu soru") + " yeni sorular bitince yine karşına çıkacak; o zaman doğru yaparsan puanını alırsın.");
+    if (p === n - 1 && bonusOlur(durum.konu)) {
+      var yb = TAM_BONUS[seviye().id] || {};
+      notlar.push("🎯 Bir soru kaldı! Hepsini doğru yapsaydın " + seviye().ad + " seviyede +" + (yb.puan || 0) + " bonus" + (yb.hiz ? " ve hız bonusu" : "") + " alacaktın.");
+    }
     $("oyun-tekrar-not").innerHTML = notlar.join("<br>");
     $("oyun-tekrar-not").hidden = !notlar.length;
 
@@ -1067,4 +1140,5 @@
   sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
   if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
   else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
+  else if (!oku().kuralGoruldu) kuralAc();   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
 })();
