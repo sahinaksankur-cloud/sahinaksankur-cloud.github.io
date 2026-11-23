@@ -522,6 +522,7 @@ window.KK_YKS = {
       { s: "90'dan küçük en büyük asal sayı kaçtır?", c: ["89", "87", "83"], a: "89 asal; 87 = 3 · 29." },
       { s: "90 ile 100 arasında kaç asal sayı vardır?", c: ["1", "2", "3"], a: "Sadece 97. 91 = 7 · 13, 93 = 3 · 31, 99 = 9 · 11." },
       { s: "100'den küçük en büyük asal sayı kaçtır?", c: ["97", "99", "91"], a: "99 = 9 · 11 ve 91 = 7 · 13 asal değil; 97 asal." },
+      { s: "Farkı 2 olan asal sayı çiftlerine ne ad verilir?", c: ["İkiz asallar", "Ardışık asallar", "Çift asallar"], a: "(3, 5), (11, 13), (41, 43) gibi farkı 2 olan asal çiftlerine ikiz asallar denir. Farkı 1 olan tek asal çifti ise 2 ve 3'tür." },
       { s: "Farkı 2 olan asal sayı çiftlerine <b>ikiz asallar</b> denir. Hangisi bir ikiz asal çiftidir?", c: ["41 ve 43", "23 ve 25", "31 ve 37"], a: "41 ve 43 asal, farkları 2. 25 = 5 · 5 asal değil; 31 ile 37'nin farkı 6." },
       { s: "Farkı 2 olan asal sayı çiftlerine <b>ikiz asallar</b> denir. 100'den küçük kaç ikiz asal çifti vardır?", c: ["8", "10", "6"], a: "(3, 5), (5, 7), (11, 13), (17, 19), (29, 31), (41, 43), (59, 61), (71, 73): 8 çift." },
       { s: "Farkı 2 olan asal sayı çiftlerine <b>ikiz asallar</b> denir. Hangi asal sayı iki farklı ikiz asal çiftinde yer alır?", c: ["5", "3", "7"], a: "5 hem (3, 5) hem (5, 7) çiftinde. 3'ün 2 eksiği 1, 7'nin 2 fazlası 9: ikisi de asal değil." },
