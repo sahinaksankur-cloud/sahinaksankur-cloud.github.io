@@ -693,6 +693,15 @@ window.KK_YKS = {
       { s: "Bir sayı 6'ya bölündüğünde bölüm 4 ise bu sayı en çok kaçtır?", c: ["29", "30", "24"], a: "Kalan en çok 5: 6 · 4 + 5 = 29. 30 olsaydı bölüm 5 olurdu." },
       { s: "Bir sayı 6'ya bölündüğünde bölüm 4 ise bu sayı en az kaçtır?", c: ["24", "25", "20"], a: "Kalan en az 0: 6 · 4 + 0 = 24." },
       { s: "Bir sayı 7'ye bölündüğünde bölüm ile kalan eşit ise bu sayı en çok kaçtır?", c: ["48", "49", "42"], a: "Kalan en çok 6, bölüm de 6: 7 · 6 + 6 = 48." },
+      { s: "2323 sayısı 23'e bölünürse bölüm kaçtır?", c: ["101", "11", "1001"], a: "2323 = 2300 + 23 = 23 · 100 + 23 = 23 · 101. Bölüm 101, kalan 0." },
+      { s: "12012 sayısı 12'ye bölünürse bölüm kaçtır?", c: ["1001", "101", "11"], a: "12012 = 12000 + 12 = 12 · 1001. Bölüm 1001, kalan 0." },
+      { s: "ab00ab altı basamaklı sayısı ab'ye bölünürse bölüm kaçtır?", c: ["10001", "1001", "101"], a: "ab00ab = ab0000 + ab = ab · 10000 + ab = ab · 10001. Kalan 0." },
+      { s: "abab4 beş basamaklı sayısı ab'ye bölünürse kalan kaçtır?", c: ["4", "0", "1"], a: "abab4 = abab0 + 4 = ab · 1010 + 4. Bölüm 1010, kalan 4 (ab ≥ 10 &gt; 4)." },
+      { s: "Bir bölmede bölen B + 1, kalan 17 ise B en az kaçtır?", c: ["17", "16", "18"], a: "Bölen kalandan büyük: B + 1 &gt; 17 → B &gt; 16. En küçük tam sayı 17." },
+      { s: "Bölen 30, bölüm x, kalan x² olan bir bölmede bölünen en çok kaçtır?", c: ["175", "150", "181"], a: "x² &lt; 30 → x en çok 5. Bölünen = 30 · 5 + 25 = 175." },
+      { s: "Çift bir sayı 16'ya bölündüğünde kalan iki basamaklı ise kalan kaç farklı değer alabilir?", c: ["3", "6", "4"], a: "Sayı çift, 16 çift: kalan da çift olmalı. Kalan &lt; 16 ve iki basamaklı: 10, 12, 14 → 3 değer." },
+      { s: "Bir sayının 32 ile bölümünden kalan 5 ise aynı sayının 8 ile bölümünden kalan kaçtır?", c: ["5", "0", "3"], a: "Sayı = 32k + 5 = 8 · 4k + 5. 5 &lt; 8 olduğu için kalan 5." },
+      { s: "17! + 15 sayısı 16!'e bölünürse kalan kaçtır?", c: ["15", "0", "17"], a: "17! = 17 · 16!. Sayı = 16! · 17 + 15: bölüm 17, kalan 15 (15 &lt; 16!)." },
       { s: "Bir sayının 12 ile bölümünden kalan 7 ise aynı sayının 4 ile bölümünden kalan kaçtır?", c: ["3", "7", "1"], a: "Sayı = 12k + 7 = 4 · 3k + 4 + 3 = 4 · (3k + 1) + 3. Kalan 3. Örnek: 19 = 4 · 4 + 3." }
     ],
     // Bölünebilme Kuralları: 2, 3, 4, 5, 9, 11; sonra 6, 10 ve çarpım biçimindeki sayılar (15, 12, 18, 36:
