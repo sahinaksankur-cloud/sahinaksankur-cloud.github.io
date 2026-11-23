@@ -1052,7 +1052,15 @@ window.KK_YKS = {
       { s: "2 &lt; √x &lt; 3 ise x kaç farklı tam sayı değeri alabilir?", c: ["4", "1", "5"], a: "Kareleri al: 4 &lt; x &lt; 9. x: 5, 6, 7, 8 → 4 değer." },
       { s: "∛(−8) = ?", c: ["−2", "2", "Tanımsız"], a: "(−2)<sup>3</sup> = −8. Küpkökün içi negatif olabilir." },
       { s: "Hangisi reel sayılarda tanımsızdır?", c: ["√(−8)", "∛(−8)", "−√8"], a: "Karekökün içi negatif olamaz: hiçbir reel sayının karesi negatif değildir. ∛(−8) = −2 ve −√8 = −2√2 tanımlıdır." },
-      { s: "∛(−27) + √9 = ?", c: ["0", "6", "Tanımsız"], a: "∛(−27) = −3 ve √9 = 3: toplam 0." }
+      { s: "∛(−27) + √9 = ?", c: ["0", "6", "Tanımsız"], a: "∛(−27) = −3 ve √9 = 3: toplam 0." },
+      { s: "√(√a) hangisine eşittir?", c: ["(a<sup>1/2</sup>)<sup>1/2</sup>", "a<sup>1/2</sup> + a<sup>1/2</sup>", "a<sup>2</sup>"], a: "İçteki kök: √a = a<sup>1/2</sup>. Dıştaki kök onun kareköküdür: (a<sup>1/2</sup>)<sup>1/2</sup>." },
+      { s: "√(√a) = a<sup>?</sup>", c: ["1/4", "1", "1/2"], a: "Üssün üssü: üsler çarpılır. 1/2 · 1/2 = 1/4. Yani √(√a) = a<sup>1/4</sup>." },
+      { s: "√(√a) hangi köke eşittir?", c: ["⁴√a", "√a", "∛a"], a: "a<sup>1/4</sup> = ⁴√a: iki karekök iç içe, dördüncü dereceden kök eder." },
+      { s: "√(√16) = ?", c: ["2", "4", "8"], a: "İçten başla: √16 = 4, sonra √4 = 2. Ya da 16<sup>1/4</sup> = 2." },
+      { s: "∛(√a) = a<sup>?</sup>", c: ["1/6", "5/6", "3/2"], a: "(a<sup>1/2</sup>)<sup>1/3</sup>: 1/2 · 1/3 = 1/6. Üsler toplanmaz, çarpılır." },
+      { s: "√(∛64) = ?", c: ["2", "4", "8"], a: "İçten başla: ∛64 = 4, √4 = 2. Ya da 64<sup>1/6</sup> = 2." },
+      { s: "√(√(√a)) = a<sup>?</sup>", c: ["1/8", "1/6", "3/2"], a: "Üç karekök iç içe: 1/2 · 1/2 · 1/2 = 1/8." },
+      { s: "√(2√2) = 2<sup>?</sup>", c: ["3/4", "1/2", "3/2"], a: "Önce içi: 2√2 = 2<sup>1</sup> · 2<sup>1/2</sup> = 2<sup>3/2</sup>. Sonra karekök: (2<sup>3/2</sup>)<sup>1/2</sup> = 2<sup>3/4</sup>." }
     ]
   },
 
@@ -1297,6 +1305,9 @@ window.KK_YKS = {
     { k: "yks-koklu", s: "2√3 &gt; 3", d: true },
     { k: "yks-koklu", s: "3√2 &lt; 2√3", d: false, n: "3√2 = √18 &gt; √12 = 2√3" },
     { k: "yks-koklu", s: "√80 sayısı 8 ile 9 arasındadır.", d: true },
+    { k: "yks-koklu", s: "√(√a) = a<sup>1/4</sup>", d: true },
+    { k: "yks-koklu", s: "√(√81) = 9", d: false, n: "√81 = 9, sonra √9 = 3" },
+    { k: "yks-koklu", s: "∛(√a) = ⁶√a", d: true },
     { k: "yks-koklu", s: "(√3 − √2) · (√3 + √2) = 1", d: true },
     { k: "yks-koklu", s: "√3 + √2 ifadesinin eşleniği √2 + √3'tür.", d: false, n: "Eşlenikte aradaki işaret değişir: √3 − √2" },
     { k: "yks-koklu", s: "3√2 = √6", d: false, n: "3 içeri karesi olarak girer: √18" },
