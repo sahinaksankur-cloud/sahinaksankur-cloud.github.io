@@ -18,7 +18,8 @@ window.KK_YKS = {
     { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" },
     { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -328,6 +329,8 @@ window.KK_YKS = {
 
 
     "yks-reel": [
+      { s: "10'dan büyük en küçük reel sayı kaçtır?", c: ["Yoktur", "11", "10,1"], a: "10,1'den küçük 10,01; ondan küçük 10,001 … 10'a ne kadar yaklaşırsan yaklaş, arada hep başka bir reel sayı var. 11 cevabı tam sayılar için doğru olurdu." },
+      { s: "10'dan büyük en küçük tam sayı ile 10'dan büyük en küçük reel sayı için hangisi doğrudur?", c: ["Tam sayı 11'dir, reel sayı yoktur", "İkisi de 11'dir", "İkisi de yoktur"], a: "Tam sayılar birer birer gider: 10'dan sonra 11 gelir. Reel sayılarda 10'dan hemen sonra gelen bir sayı yoktur." },
       // Kümeler ve kapsama
       { s: "Reel sayılar kümesi hangi sayılardan oluşur?", c: ["Rasyoneller ve irrasyoneller", "Sadece rasyonel sayılar", "Tam sayılar ve doğal sayılar"], a: "ℝ = rasyoneller ∪ irrasyoneller. Sayı doğrusundaki her sayı bu ikisinden birine girer." },
       { s: "Hem rasyonel hem irrasyonel olan kaç sayı vardır?", c: ["Hiç yoktur", "Bir tane: 0", "Sonsuz tane"], a: "Bir sayı ya iki tam sayının bölümü olarak yazılır (rasyonel) ya da yazılamaz (irrasyonel); ikisi birden olamaz." },
@@ -611,6 +614,45 @@ window.KK_YKS = {
       { s: "13! sayısı 11, 13 ve 17 sayılarından hangisine bölünmez?", c: ["17", "13", "11"], a: "13! = 13 · 12 · … · 1. 11 ve 13 çarpanlar arasında; 17 asal ve 13'ten büyük, hiçbir çarpanın içinde yok." },
       { s: "k! sayısı 11'e bölünüyorsa k en az kaçtır?", c: ["11", "10", "12"], a: "11 asal: 11'e bölünmesi için çarpanlar arasında 11 olmalı. 10! = 1 · 2 · … · 10'da yok, 11!'de var." }
     ],
+    // Sayı Basamakları: 0 basamak tutucudur; sayı değeri / basamak değeri; çözümleme (ab = 10a + b);
+    // basamak değişince sayının değişimi; tam sayı / doğal sayı ayrımına dikkat; iki sayılı en büyük / en küçük.
+    "yks-basamak": [
+      { s: "305 sayısındaki 0'ın görevi nedir?", c: ["Onlar basamağının boş olduğunu gösterir", "Sayıya değer katar", "Sayıyı çift yapar"], a: "0 burada basamak tutucudur: onlar basamağında hiç onluk olmadığını gösterir ve 3'ü yüzler basamağında tutar." },
+      { s: "305 sayısından 0 silinirse sayı nasıl değişir?", c: ["35 olur; 3 yüzlerden onlara kayar", "Değişmez; 0'ın değeri yoktur", "30 olur; 5 silinmiş olur"], a: "0 kalkınca 3 bir basamak sağa kayar: 300 yerine 30 değerinde olur. Sayı 305'ten 35'e düşer." },
+      { s: "“Üç yüz dört” sayısı rakamla nasıl yazılır?", c: ["304", "34", "3004"], a: "3 yüz, 0 onluk, 4 birlik: 304. Onlar basamağı boş olduğu için oraya 0 yazılır." },
+      { s: "“İki bin yedi” sayısı rakamla nasıl yazılır?", c: ["2007", "207", "2070"], a: "2 bin, 0 yüz, 0 onluk, 7 birlik: 2007. Boş basamaklara 0 yazılır." },
+      { s: "4 · 1000 + 7 · 10 + 5 hangi sayıdır?", c: ["4075", "475", "4705"], a: "Yüzler basamağı yok, oraya 0 gelir: 4 bin, 0 yüz, 7 onluk, 5 birlik = 4075." },
+      { s: "4725 sayısında 7'nin basamak değeri kaçtır?", c: ["700", "7", "70"], a: "7 yüzler basamağında: 7 · 100 = 700." },
+      { s: "4725 sayısında 7'nin sayı değeri kaçtır?", c: ["7", "700", "70"], a: "Sayı değeri rakamın kendisidir: 7. Nerede durduğu sayı değerini değiştirmez." },
+      { s: "3608 sayısında 0'ın basamak değeri kaçtır?", c: ["0", "10", "100"], a: "0 onlar basamağında: 0 · 10 = 0. 0'ın basamak değeri her yerde 0'dır." },
+      { s: "5555 sayısında yüzler basamağındaki 5'in basamak değeri, birler basamağındaki 5'in basamak değerinden kaç fazladır?", c: ["495", "0", "500"], a: "Sayı değerleri aynı (5) ama basamak değerleri farklı: 500 − 5 = 495." },
+      { s: "6403 sayısında sayı değeri en büyük olan rakamın basamak değeri kaçtır?", c: ["6000", "6", "400"], a: "En büyük rakam 6, binler basamağında: 6 · 1000 = 6000." },
+      { s: "2468 sayısının rakamlarının sayı değerleri toplamı kaçtır?", c: ["20", "2468", "8"], a: "2 + 4 + 6 + 8 = 20. Basamak değerleri toplansaydı sayının kendisi (2468) çıkardı." },
+      { s: "839 sayısında basamak değerlerinin toplamı neye eşittir?", c: ["Sayının kendisine", "Rakamlarının toplamına", "0'a"], a: "800 + 30 + 9 = 839. Bir sayı, basamak değerlerinin toplamıdır." },
+      { s: "352 sayısının çözümlenmiş hâli hangisidir?", c: ["3 · 100 + 5 · 10 + 2", "3 + 5 + 2", "300 · 50 · 2"], a: "Her rakam kendi basamağının değeriyle çarpılıp toplanır: 300 + 50 + 2." },
+      { s: "ab iki basamaklı bir sayı ise ab neye eşittir?", c: ["10a + b", "a + b", "a · b"], a: "a onlar basamağında (a tane 10), b birler basamağında: 10a + b. Örnek: 37 = 10 · 3 + 7." },
+      { s: "abc üç basamaklı bir sayı ise abc neye eşittir?", c: ["100a + 10b + c", "a + b + c", "10a + 10b + c"], a: "a yüzler, b onlar, c birler basamağında: 100a + 10b + c." },
+      { s: "ab ve ba iki basamaklı sayılar ise ab + ba neye eşittir?", c: ["11 · (a + b)", "10 · (a + b)", "a + b"], a: "(10a + b) + (10b + a) = 11a + 11b = 11 · (a + b). Örnek: 37 + 73 = 110 = 11 · 10." },
+      { s: "ab ve ba iki basamaklı sayılar ise ab − ba her zaman hangi sayıya bölünür?", c: ["9", "11", "10"], a: "(10a + b) − (10b + a) = 9a − 9b = 9 · (a − b). Örnek: 73 − 37 = 36 = 9 · 4." },
+      { s: "Üç basamaklı bir sayının onlar basamağı 1 artırılır, birler basamağı 3 azaltılırsa sayı nasıl değişir?", c: ["7 artar", "2 azalır", "13 artar"], a: "Onlar basamağında 1 artış = +10, birlerde 3 azalış = −3. Toplam +7." },
+      { s: "Üç basamaklı bir sayının yüzler basamağı 2 azaltılır, onlar basamağı 5 artırılırsa sayı nasıl değişir?", c: ["150 azalır", "3 artar", "250 azalır"], a: "Yüzlerde −2 = −200, onlarda +5 = +50. Toplam −150." },
+      { s: "Dört basamaklı bir sayının binler basamağı 1 artırılır, yüzler basamağı 9 azaltılırsa sayı nasıl değişir?", c: ["100 artar", "8 azalır", "1900 artar"], a: "Binlerde +1 = +1000, yüzlerde −9 = −900. Toplam +100." },
+      { s: "Dört basamaklı bir sayının birler basamağı 4 artırılır, onlar basamağı 2 azaltılırsa sayı nasıl değişir?", c: ["16 azalır", "2 artar", "24 artar"], a: "Birlerde +4, onlarda −2 = −20. Toplam −16." },
+      { s: "Üç basamaklı en küçük tam sayı kaçtır?", c: ["−999", "100", "−100"], a: "Tam sayılar negatif de olabilir. Negatiflerde basamak sayısı aynıyken en küçüğü, mutlak değeri en büyük olanıdır: −999." },
+      { s: "Rakamları farklı iki basamaklı en küçük tam sayı kaçtır?", c: ["−98", "10", "−99"], a: "Negatif ve mutlak değeri en büyük olmalı; rakamlar farklı olduğu için 99 olmaz, 98: −98." },
+      { s: "Rakamları farklı üç basamaklı en küçük doğal sayı kaçtır?", c: ["102", "100", "123"], a: "Yüzler basamağına 0 gelemez: 1. Kalan basamaklara kullanılmamış en küçük rakamlar: 0 ve 2. Sayı 102." },
+      { s: "Rakamları farklı üç basamaklı en büyük doğal sayı kaçtır?", c: ["987", "999", "980"], a: "Soldan başlayarak en büyük ve farklı rakamlar: 9, 8, 7." },
+      { s: "İki basamaklı en büyük negatif tam sayı kaçtır?", c: ["−10", "−99", "−1"], a: "Negatiflerde sıfıra en yakın olan en büyüktür. İki basamaklı olanlar −10'dan −99'a: en büyüğü −10." },
+      { s: "İki basamaklı iki farklı doğal sayının toplamı en az kaçtır?", c: ["21", "20", "19"], a: "En küçük iki basamaklı iki farklı doğal sayı 10 ve 11: 21. (20 için 10 iki kez kullanılmalı.)" },
+      { s: "İki basamaklı iki farklı tam sayının toplamı en az kaçtır?", c: ["−197", "−198", "21"], a: "Tam sayılarda en küçükler negatif: −99 ve −98. Toplam −197. (−198 için −99 iki kez kullanılmalı.)" },
+      { s: "Üç basamaklı iki farklı doğal sayının toplamı en az kaçtır?", c: ["201", "200", "101"], a: "En küçük iki farklı üç basamaklı doğal sayı 100 ve 101: 201." },
+      { s: "İki basamaklı iki doğal sayının farkı en çok kaçtır?", c: ["89", "90", "99"], a: "Büyüğü en büyük (99), küçüğü en küçük (10) seç: 99 − 10 = 89." },
+      { s: "İki basamaklı iki tam sayının farkı en çok kaçtır?", c: ["198", "89", "0"], a: "Tam sayılarda en küçük iki basamaklı sayı −99: 99 − (−99) = 198." },
+      { s: "Üç basamaklı iki doğal sayının toplamı 456 ise büyük olan en çok kaçtır?", c: ["356", "456", "355"], a: "Büyük olanı büyütmek için küçüğü en küçük seç: 100. 456 − 100 = 356." },
+      { s: "Üç basamaklı iki doğal sayının toplamı 456 ise küçük olan en çok kaçtır?", c: ["228", "227", "356"], a: "Küçük olan, büyük olanı geçemez; en çok ikisi eşit olunca büyür: 456 / 2 = 228." },
+      { s: "Üç basamaklı iki doğal sayının toplamı 1500 ise küçük olan en az kaçtır?", c: ["501", "100", "500"], a: "Büyük olan en çok 999 olabilir. Küçük olan en az 1500 − 999 = 501. 100 seçilirse diğeri 1400 olur, dört basamaklı." },
+      { s: "İki basamaklı iki doğal sayının toplamı 150 ise küçük olan en az kaçtır?", c: ["51", "10", "50"], a: "Büyük olan en çok 99 olabilir: 150 − 99 = 51." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -789,6 +831,13 @@ window.KK_YKS = {
     { k: "yks-faktoriyel", s: "(−1)! tanımlıdır.", d: false, n: "Faktöriyel sadece doğal sayılar için tanımlı" },
     { k: "yks-faktoriyel", s: "(3!)! = 720", d: true },
     { k: "yks-faktoriyel", s: "17! sayısı 19'a bölünür.", d: false, n: "19 asal ve 17'den büyük; 17!'in çarpanları arasında yok" },
+    { k: "yks-basamak", s: "Bir sayıdaki 0, basamak tutucu görevi görür.", d: true },
+    { k: "yks-basamak", s: "Bir rakamın sayı değeri, bulunduğu basamağa göre değişir.", d: false, n: "Basamak değeri değişir; sayı değeri aynı kalır" },
+    { k: "yks-basamak", s: "Bir sayıda 0'ın basamak değeri her zaman 0'dır.", d: true },
+    { k: "yks-basamak", s: "Rakamları farklı üç basamaklı en küçük doğal sayı 123'tür.", d: false, n: "102; 0 da bir rakamdır, yüzler basamağı dışında kullanılabilir" },
+    { k: "yks-basamak", s: "ab iki basamaklı sayısı a · b'ye eşittir.", d: false, n: "ab = 10a + b" },
+    { k: "yks-basamak", s: "İki basamaklı en küçük tam sayı 10'dur.", d: false, n: "−99; tam sayılar negatif de olabilir" },
+    { k: "yks-reel", s: "10'dan büyük en küçük reel sayı 10,1'dir.", d: false, n: "Yoktur: 10,01, 10,001 … hep daha küçüğü var" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
