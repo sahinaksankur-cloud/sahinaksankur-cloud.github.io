@@ -408,7 +408,8 @@
       var yk = O.konular.filter(function (k) { return k.grup === "yks" && !k.gizli; });
       $("yks-konular").innerHTML = yk.map(function (k) {
         var hk = havuz(k.id);
-        return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
+        return (k.baslik ? '<h3 class="yks-kisim">' + k.baslik + "</h3>" : "") +
+          '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || k.sinav || "") + "</small><strong>" + k.ad + "</strong>" +
           '<span class="skor">Puan: ' + cozulenSayi(hk, kayit) + " / " + hk.length + "</span>" +
           enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
       }).join("") + (function () {

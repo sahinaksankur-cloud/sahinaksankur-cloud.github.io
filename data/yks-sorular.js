@@ -1,10 +1,11 @@
 // Kuzey Kampüs – Testler · 📘 YKS soru bankası
 // Her konu: id ("yks-" ile başlar), ad, ust (üst başlık), sinav ("TYT" / "AYT"), sinif (9–12).
+// baslik: isteğe bağlı; o konudan önce kartların üstüne bir bölüm başlığı yazar (ör. "Temel Kavramlar · 2. Kısım").
 // Soru biçimi Üniversite tarafıyla aynı: { s: "soru (HTML)", c: ["DOĞRU", "yanlış", "yanlış"], a: "kısa açıklama" }.
 // İlk seçenek doğru cevaptır, oyunda karıştırılır. Doğru/Yanlış: { k: konu id, s, d: true/false, n: "yanlışsa doğrusu" }.
 window.KK_YKS = {
   konular: [
-    { id: "yks-rakam", ad: "Rakamlar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
+    { id: "yks-rakam", ad: "Rakamlar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 1. Kısım" },
     { id: "yks-dogal", ad: "Doğal Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tam", ad: "Tam Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-rasyonel", ad: "Rasyonel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
@@ -14,7 +15,8 @@ window.KK_YKS = {
     { id: "yks-reel", ad: "Reel Sayılar", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tanimsiz", ad: "Tanımsız ve Belirsiz", ust: "Sayı Kümeleri", sinav: "TYT", sinif: 9 },
     { id: "yks-tekcift", ad: "Tek ve Çift Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-islem", ad: "İşlem Yeteneği", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" }
   ],
 
   sorular: {
@@ -444,6 +446,42 @@ window.KK_YKS = {
       { s: "101/100, 11/10 ve 1/2 sayılarından hangisi 1'e en yakındır?", c: ["101/100", "11/10", "1/2"], a: "101/100 = 1,01 (fark 0,01), 11/10 = 1,1 (fark 0,1), 1/2 (fark 0,5)." },
       { s: "19 · 16, 14 · 21 ve 9 · 33 çarpımlarından hangisi 300'den büyüktür?", c: ["19 · 16", "14 · 21", "9 · 33"], a: "19 · 16 = 304, 14 · 21 = 294, 9 · 33 = 297. İpucu: 20 · 16 = 320'den 16 çıkar." }
     ],
+    // Ardışık Sayılar: terim sayısı ve toplam formülsüz, nedeniyle öğretilir
+    // (diziyi 0'dan başlat, farka böl → 0, 1, 2, …; toplamda düz ve ters yazıp alt alta topla).
+    "yks-ardisik": [
+      { s: "Bir soruda “ardışık üç tam sayı” deniyorsa, sayılar nasıl sıralanmıştır?", c: ["Birer birer", "İkişer ikişer", "Herhangi bir eşit farkla"], a: "Sadece “ardışık tam sayılar” dendiğinde fark 1'dir: 7, 8, 9 gibi. Başka bir fark varsa soruda söylenir." },
+      { s: "3, 6, 9, 12 sayıları için en doğru ad hangisidir?", c: ["3'ün ardışık katları", "Ardışık sayılar", "Ardışık tek sayılar"], a: "Sayılar 3'er artıyor ve hepsi 3'ün katı. Kısaca “ardışık sayılar” denmez; o ad birer artan sayılar içindir." },
+      { s: "11, 13, 15, 17 sayılarına ne ad verilir?", c: ["Ardışık tek sayılar", "Ardışık sayılar", "Ardışık çift sayılar"], a: "Hepsi tek ve ikişer artıyor: ardışık tek sayılar." },
+      { s: "20, 19, 18, 17 sayıları için hangisi doğrudur?", c: ["Azalan ardışık sayılardır", "Azaldığı için ardışık değildir", "Ardışık çift sayılardır"], a: "Ardışık sayılar azalan sırada da yazılabilir; burada birer birer azalıyor." },
+      { s: "4, 8, 12 · 4, 6, 8 · 10, 8, 6 dizilerinden hangisi ardışık çift sayılar değildir?", c: ["4, 8, 12", "4, 6, 8", "10, 8, 6"], a: "Ardışık çift sayılar arasında fark 2'dir. 4, 8, 12'de fark 4: bunlar 4'ün ardışık katları. 10, 8, 6 azalan ardışık çift sayılardır." },
+      { s: "n bir tam sayıdır. n'den hemen sonra gelen iki ardışık tam sayı hangileridir?", c: ["n + 1 ve n + 2", "n + 2 ve n + 4", "2n ve 3n"], a: "Ardışık tam sayılar birer artar: n, n + 1, n + 2." },
+      { s: "n bir tek sayıdır. n'den hemen sonra gelen tek sayı hangisidir?", c: ["n + 2", "n + 1", "2n + 1"], a: "Tek sayılar ikişer artar (5, 7, 9). n + 1 ise çifttir." },
+      { s: "Azalan sırada yazılmış ardışık 4 tam sayının ilki 30 ise sonuncusu kaçtır?", c: ["27", "33", "26"], a: "Birer azalır: 30, 29, 28, 27." },
+      { s: "0, 1, 2, …, 100 dizisinde kaç sayı vardır?", c: ["101", "100", "99"], a: "1'den 100'e kadar 100 sayı var; başta 0 da olduğu için 101." },
+      { s: "0, 3, 6, …, 90 dizisinin bütün terimleri 3'e bölünürse hangi dizi elde edilir?", c: ["0, 1, 2, …, 30", "0, 3, 6, …, 30", "1, 2, 3, …, 90"], a: "Her terim 3'e bölünür: 0 → 0, 3 → 1, 6 → 2, …, 90 → 30. Aradaki fark 3'ten 1'e iner." },
+      { s: "0, 3, 6, …, 90 dizisinde kaç terim vardır?", c: ["31", "30", "90"], a: "3'e bölünce 0, 1, 2, …, 30 olur; terim sayısı değişmez. 1'den 30'a 30 sayı, 0 ile 31." },
+      { s: "0, 4, 8, …, 60 dizisinde kaç terim vardır?", c: ["16", "15", "60"], a: "4'e böl: 0, 1, 2, …, 15. 0 da sayılınca 16 terim." },
+      { s: "5, 8, 11, …, 95 dizisinin her teriminden 5 çıkarılırsa hangi dizi elde edilir?", c: ["0, 3, 6, …, 90", "0, 1, 2, …, 90", "0, 3, 6, …, 95"], a: "5 − 5 = 0, 8 − 5 = 3, …, 95 − 5 = 90. Dizi 0'dan başlar, aradaki fark yine 3 kalır." },
+      { s: "5, 8, 11, …, 95 dizisinde kaç terim vardır?", c: ["31", "30", "33"], a: "Her terimden 5 çıkar: 0, 3, …, 90. 3'e böl: 0, 1, …, 30. Terim sayısı 31." },
+      { s: "12, 13, 14, …, 87 dizisinde kaç sayı vardır?", c: ["76", "75", "77"], a: "Her sayıdan 12 çıkar: 0, 1, …, 75. 0 ile birlikte 76 sayı." },
+      { s: "10, 12, 14, …, 50 ardışık çift sayıları kaç tanedir?", c: ["21", "20", "40"], a: "10 çıkar: 0, 2, …, 40. 2'ye böl: 0, 1, …, 20. Toplam 21 sayı." },
+      { s: "1, 3, 5, …, 49 ardışık tek sayıları kaç tanedir?", c: ["25", "24", "49"], a: "Her birinden 1 çıkar: 0, 2, …, 48. 2'ye böl: 0, 1, …, 24. 0 ile birlikte 25 sayı." },
+      { s: "100, 96, 92, …, 4 azalan dizisinde kaç terim vardır?", c: ["25", "24", "26"], a: "Tersten yaz: 4, 8, …, 100. 4 çıkar: 0, 4, …, 96. 4'e böl: 0, 1, …, 24. 0 ile birlikte 25 terim." },
+      { s: "−10 ile 10 arasında (ikisi dahil) kaç tam sayı vardır?", c: ["21", "20", "19"], a: "Hepsine 10 ekle: 0, 1, …, 20. 0 ile birlikte 21 sayı. 0 sayısını unutma." },
+      { s: "Bir yolun kenarına 0. metreden başlayarak 5 metrede bir, 100. metreye kadar (dahil) fidan dikiliyor. Kaç fidan dikilir?", c: ["21", "20", "25"], a: "0, 5, 10, …, 100. 5'e böl: 0, 1, …, 20. Toplam 21 fidan; baştaki fidanı unutma." },
+      { s: "1 + 2 + … + 100 toplamı için sayılar bir kez düz, bir kez ters sırayla alt alta yazılıyor. Her sütunun toplamı kaçtır?", c: ["101", "100", "50"], a: "1 + 100 = 101, 2 + 99 = 101, 3 + 98 = 101, … Her sütunda biri 1 artarken öbürü 1 azalır; toplam hep 101." },
+      { s: "1'den 100'e kadar sayılar düz ve ters sırayla alt alta yazılıp sütunlar toplanıyor. Kaç sütun toplamı elde edilir?", c: ["100", "101", "50"], a: "Her terim bir sütun oluşturur: terim sayısı kadar, yani 100 sütun." },
+      { s: "Alt alta toplamada 100 tane 101 elde edildi. Buna göre 1 + 2 + … + 100 kaçtır?", c: ["5050", "10 100", "5000"], a: "100 · 101 = 10 100, ama her sayı iki kez (düz ve ters) yazıldı. İkiye böl: 5050." },
+      { s: "Ardışık sayıların toplamı neden (terim sayısı) · (ilk + son) / 2 ile bulunur?", c: ["Düz ve ters yazılınca her sütun ilk + son olur ve toplam iki kez sayılmış olur", "Bu bir ezber kuraldır, nedeni yoktur", "Sayıların yarısı tek, yarısı çift olduğu için"], a: "Düz ve ters yazıp alt alta topla: her sütun ilk + son, sütun sayısı terim sayısı kadar. Her sayı iki kez yazıldığı için ikiye bölünür." },
+      { s: "1 + 2 + 3 + … + 20 = ?", c: ["210", "220", "200"], a: "Düz ve ters yaz: her sütun 1 + 20 = 21, 20 sütun var. 20 · 21 = 420, ikiye böl: 210." },
+      { s: "2 + 4 + 6 + … + 40 = ?", c: ["420", "440", "400"], a: "Terim sayısı: 2 çıkar, 2'ye böl → 0, 1, …, 19: 20 terim. Her sütun 2 + 40 = 42. 20 · 42 / 2 = 420." },
+      { s: "1 + 3 + 5 + … + 19 = ?", c: ["100", "110", "90"], a: "1 çıkar, 2'ye böl → 0, 1, …, 9: 10 terim. Her sütun 1 + 19 = 20. 10 · 20 / 2 = 100." },
+      { s: "5 + 8 + 11 + … + 95 = ?", c: ["1550", "1500", "1600"], a: "Terim sayısı 31 (5 çıkar, 3'e böl: 0, …, 30). Her sütun 5 + 95 = 100. 31 · 100 / 2 = 1550." },
+      { s: "50 + 49 + 48 + … + 41 = ?", c: ["455", "450", "460"], a: "41'den 50'ye 10 sayı. Her sütun 50 + 41 = 91. 10 · 91 / 2 = 455. Azalan sıra toplamı değiştirmez." },
+      { s: "Ardışık üç tam sayının toplamı 48 ise en büyüğü kaçtır?", c: ["17", "16", "18"], a: "Ortadaki sayı ortalamadır: 48 / 3 = 16. Sayılar 15, 16, 17." },
+      { s: "Ardışık 7 tam sayının toplamı 91 ise en küçüğü kaçtır?", c: ["10", "13", "7"], a: "Ortadaki (4.) sayı 91 / 7 = 13. Ondan 3 geri: 10. Sayılar 10, 11, …, 16." },
+      { s: "Ardışık üç çift sayının toplamı 66 ise en küçüğü kaçtır?", c: ["20", "22", "24"], a: "Ortadaki 66 / 3 = 22. Çift sayılar ikişer: 20, 22, 24." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -582,6 +620,19 @@ window.KK_YKS = {
     // Köklü Sayılar (konu açılınca görünür)
     { k: "yks-koklu", s: "√((−3)<sup>2</sup>) = −3", d: false, n: "√9 = 3; karekök negatif sonuç vermez" },
     { k: "yks-koklu", s: "√3 · √3 = 3", d: true },
+    { k: "yks-ardisik", s: "Ardışık sayılar azalan sırada da yazılabilir.", d: true },
+    { k: "yks-ardisik", s: "3, 6, 9, 12 sayılarına kısaca “ardışık sayılar” denir.", d: false, n: "Bunlar 3'ün ardışık katlarıdır; “ardışık sayılar” birer artar" },
+    { k: "yks-ardisik", s: "−2, −1, 0, 1 sayıları ardışık tam sayılardır.", d: true },
+    { k: "yks-ardisik", s: "Ardışık iki çift sayı arasındaki fark 2'dir.", d: true },
+    { k: "yks-ardisik", s: "Ardışık iki tek sayı arasındaki fark 1'dir.", d: false, n: "Fark 2'dir: 5, 7, 9" },
+    { k: "yks-ardisik", s: "0'dan 100'e kadar (ikisi dahil) 100 tam sayı vardır.", d: false, n: "101 sayı vardır; 0 da sayılır" },
+    { k: "yks-ardisik", s: "0, 5, 10, …, 50 dizisinde 10 terim vardır.", d: false, n: "5'e böl: 0, 1, …, 10 → 11 terim" },
+    { k: "yks-ardisik", s: "Bir dizinin her teriminden aynı sayıyı çıkarmak terim sayısını değiştirmez.", d: true },
+    { k: "yks-ardisik", s: "Bir dizinin her terimini 3'e bölmek terim sayısını değiştirir.", d: false, n: "Terimler küçülür ama sayıları aynı kalır" },
+    { k: "yks-ardisik", s: "1 + 2 + … + 100 düz ve ters yazılıp alt alta toplanınca her sütunun toplamı 100 olur.", d: false, n: "Her sütun 1 + 100 = 101 olur" },
+    { k: "yks-ardisik", s: "1 + 2 + … + 10 = 55", d: true },
+    { k: "yks-ardisik", s: "Ardışık 5 tam sayının ortalaması, ortadaki sayıya eşittir.", d: true },
+    { k: "yks-ardisik", s: "İlk 10 tek sayının toplamı 100'dür.", d: true },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
