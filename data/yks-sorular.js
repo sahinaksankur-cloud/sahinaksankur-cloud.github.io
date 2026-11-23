@@ -853,6 +853,8 @@ window.KK_YKS = {
       { s: "(−2)<sup>−3</sup> = ?", c: ["−1/8", "1/8", "8"], a: "1 / (−2)<sup>3</sup> = 1 / (−8) = −1/8. Taban negatif ve üs tek olduğu için sonuç negatif." },
       { s: "−2<sup>−2</sup> = ?", c: ["−1/4", "1/4", "4"], a: "Parantez yok: üs sadece 2'nin. −(2<sup>−2</sup>) = −(1/4) = −1/4." },
       { s: "(−1/3)<sup>−2</sup> = ?", c: ["9", "−9", "1/9"], a: "Ters çevir: −3. Kare: (−3)<sup>2</sup> = 9." },
+      { s: "1 / 3<sup>5</sup> hangisine eşittir?", c: ["3<sup>−5</sup>", "−3<sup>5</sup>", "3<sup>5</sup>"], a: "3<sup>5</sup> paydadan paya geçince üssü işaret değiştirir: 1 / 3<sup>5</sup> = 3<sup>−5</sup>." },
+      { s: "Bir üslü ifade paydadan paya (ya da paydan paydaya) geçince üssü nasıl değişir?", c: ["İşaret değiştirir", "Değişmez", "İki katına çıkar"], a: "1 / a<sup>n</sup> = a<sup>−n</sup> ve a<sup>−n</sup> = 1 / a<sup>n</sup>. Taban aynı kalır, üssün işareti değişir." },
       { s: "1/16 sayısı 2'nin kaçıncı kuvvetidir?", c: ["−4", "4", "−8"], a: "16 = 2<sup>4</sup>, 1/16 = 1 / 2<sup>4</sup> = 2<sup>−4</sup>." },
       { s: "2<sup>−1</sup> + 2<sup>−1</sup> = ?", c: ["1", "1/4", "2<sup>−2</sup>"], a: "1/2 + 1/2 = 1. Üsler toplanmaz." },
       { s: "5<sup>−1</sup> + 5<sup>0</sup> = ?", c: ["6/5", "4/5", "1/5"], a: "5<sup>−1</sup> = 1/5 ve 5<sup>0</sup> = 1: 1/5 + 1 = 6/5." },
