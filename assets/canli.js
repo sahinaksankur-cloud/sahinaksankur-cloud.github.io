@@ -4,7 +4,7 @@
 // Saat, telefonun saatinden değil sitenin sunucusundan (Date başlığı) alınır.
 // Kayıt yok; cevaplar ve seri sadece bu cihazda (kk-oyun-v1 → canli, canliSeri).
 // canli.html?ekran=yayin → canlı yayın için büyük ekran (cevap verilmez, QR kod görünür)
-// canli.html?deneme=1 (&grup=calculus) → 1 dakika içinde başlayan deneme yarışması (puan ve seri yazılmaz)
+// canli.html?deneme=1 (&grup=calculus | &grup=ingilizce) → 1 dakika içinde başlayan deneme yarışması (puan ve seri yazılmaz)
 (function () {
   "use strict";
   var O = window.KK_OYUN, A = window.KK_ARAC, T = window.KK_TAKVIM;
@@ -45,6 +45,7 @@
 
   // ---- Soru havuzu: YKS → açık YKS konuları; Calculus → config'teki konular ----
   function konular(grup) {
+    if (grup === "ingilizce") return O.konular.filter(function (k) { return k.grup === "en" && !k.ez && (O.sorular[k.id] || []).length; }).map(function (k) { return k.id; });
     if (grup === "yks") return O.konular.filter(function (k) { return k.grup === "yks" && !k.gizli && (O.sorular[k.id] || []).length; }).map(function (k) { return k.id; });
     return (CFG.calculusKonular || ["limit", "turev", "integral"]).filter(function (id) { return (O.sorular[id] || []).length; });
   }
@@ -100,7 +101,7 @@
   var DENEME = null;
   if (q_.get("deneme")) {
     var dbas = +q_.get("bas") || Math.ceil((Date.now() + 30e3) / 60e3) * 60e3;
-    var grp = q_.get("grup") === "calculus" ? "calculus" : "yks";
+    var grp = q_.get("grup") === "calculus" ? "calculus" : q_.get("grup") === "ingilizce" ? "ingilizce" : "yks";
     var tr = new Date(dbas + T.TR);
     DENEME = { grup: grp, ad: T.AD[grp], saat: ("0" + tr.getUTCHours()).slice(-2) + ":" + ("0" + tr.getUTCMinutes()).slice(-2),
       gun: T.gunAnahtar(dbas), bas: dbas, anahtar: "deneme " + dbas + " " + grp, deneme: true };

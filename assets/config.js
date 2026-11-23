@@ -29,12 +29,14 @@ window.KK_CONFIG = {
       { grup: "yks", saat: "10:00", gunler: [6, 0] },
       { grup: "yks", saat: "17:30", gunler: [1, 2, 3, 4, 5] },
       { grup: "yks", saat: "20:00" },
-      { grup: "calculus", saat: "21:00" }
+      { grup: "calculus", saat: "21:00" },
+      { grup: "ingilizce", saat: "12:30" }   // öğle arası: öğrenciler okuldayken (deneme)
     ],
     // Yarışmanın yapılmayacağı günler: "2026-12-31" (o günün tüm yarışmaları) ya da "2026-12-31 20:00" (sadece o saat)
     iptal: [],
     // Calculus yarışmasının soruları bu konulardan gelir (data/sorular.js)
     calculusKonular: ["limit", "turev", "integral", "uygulama"]
+    // İngilizce yarışmasının soruları data/ingilizce.js'teki bütün kelime gruplarından gelir (A1–C1 karışık; Eş / Zıt hariç)
   },
 
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.

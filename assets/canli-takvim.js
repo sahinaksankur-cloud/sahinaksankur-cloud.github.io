@@ -5,7 +5,7 @@
   var CFG = (window.KK_CONFIG && window.KK_CONFIG.canli) || null;
   if (!CFG) return;
   var TR = 3 * 3600e3, GUN = 86400e3;
-  var AD = { yks: "YKS", calculus: "Calculus" };
+  var AD = { yks: "YKS", calculus: "Calculus", ingilizce: "İngilizce" };
 
   function gunAnahtar(ms) { return new Date(ms + TR).toISOString().slice(0, 10); }
   function gunBasi(anahtar) { return Date.parse(anahtar + "T00:00:00Z") - TR; }
