@@ -831,7 +831,20 @@ window.KK_YKS = {
       { s: "(x + 5)<sup>0</sup> = 1 eşitliği hangi x değeri için sağlanmaz?", c: ["−5", "0", "5"], a: "x = −5 için taban 0 olur ve 0<sup>0</sup> tanımsızdır. Diğer bütün x'ler için sonuç 1." },
       { s: "a<sup>b</sup> = 1 olması için hangi durumlar düşünülmelidir?", c: ["b = 0 (a ≠ 0), a = 1, a = −1 ve b çift", "Sadece b = 0", "Sadece a = 1"], a: "Üs 0 ise (taban 0 değilse) 1; taban 1 ise her zaman 1; taban −1 ise üs çiftse 1." },
       { s: "(x − 2)<sup>x + 5</sup> = 1 eşitliğini sağlayan x değerleri hangileridir?", c: ["−5, 1 ve 3", "Sadece −5", "−5 ve 3"], a: "Üs 0: x = −5 (taban −7 ✓). Taban 1: x = 3. Taban −1: x = 1, üs 6 çift ✓. Üç değer." },
-      { s: "(x + 3)<sup>x − 1</sup> = 1 ise x kaç farklı değer alabilir?", c: ["2", "3", "1"], a: "Üs 0: x = 1 (taban 4 ✓). Taban 1: x = −2 ✓. Taban −1: x = −4, ama üs −5 tek → (−1)<sup>−5</sup> = −1 ✗. İki değer." }
+      { s: "(x + 3)<sup>x − 1</sup> = 1 ise x kaç farklı değer alabilir?", c: ["2", "3", "1"], a: "Üs 0: x = 1 (taban 4 ✓). Taban 1: x = −2 ✓. Taban −1: x = −4, ama üs −5 tek → (−1)<sup>−5</sup> = −1 ✗. İki değer." },
+      { s: "a ≠ 0 olmak üzere a<sup>−n</sup> neye eşittir?", c: ["1 / a<sup>n</sup>", "−a<sup>n</sup>", "−n · a"], a: "Negatif üs sayıyı ters çevirir: a<sup>−n</sup> = 1 / a<sup>n</sup>. Örnek: 2<sup>−3</sup> = 1/8." },
+      { s: "2<sup>−3</sup> = ?", c: ["1/8", "−8", "−6"], a: "2<sup>−3</sup> = 1 / 2<sup>3</sup> = 1/8. Negatif üs sonucu negatif yapmaz." },
+      { s: "3<sup>−2</sup> pozitif mi, negatif mi?", c: ["Pozitif: 1/9", "Negatif: −9", "Negatif: −1/9"], a: "3<sup>−2</sup> = 1 / 9. Taban pozitif olduğu için sonuç pozitif; eksi üs sadece ters çevirir." },
+      { s: "10<sup>−1</sup> = ?", c: ["0,1", "−10", "0,01"], a: "10<sup>−1</sup> = 1/10 = 0,1." },
+      { s: "(1/2)<sup>−1</sup> = ?", c: ["2", "−2", "1/2"], a: "Kesrin negatif üssü kesri ters çevirir: 1/2 → 2/1 = 2." },
+      { s: "(2/3)<sup>−2</sup> = ?", c: ["9/4", "4/9", "−4/9"], a: "Önce ters çevir: 3/2. Sonra kare: 9/4." },
+      { s: "(1/5)<sup>−2</sup> = ?", c: ["25", "1/25", "−25"], a: "Ters çevir: 5. Kare: 25." },
+      { s: "(−2)<sup>−3</sup> = ?", c: ["−1/8", "1/8", "8"], a: "1 / (−2)<sup>3</sup> = 1 / (−8) = −1/8. Taban negatif ve üs tek olduğu için sonuç negatif." },
+      { s: "−2<sup>−2</sup> = ?", c: ["−1/4", "1/4", "4"], a: "Parantez yok: üs sadece 2'nin. −(2<sup>−2</sup>) = −(1/4) = −1/4." },
+      { s: "(−1/3)<sup>−2</sup> = ?", c: ["9", "−9", "1/9"], a: "Ters çevir: −3. Kare: (−3)<sup>2</sup> = 9." },
+      { s: "1/16 sayısı 2'nin kaçıncı kuvvetidir?", c: ["−4", "4", "−8"], a: "16 = 2<sup>4</sup>, 1/16 = 1 / 2<sup>4</sup> = 2<sup>−4</sup>." },
+      { s: "2<sup>−1</sup> + 2<sup>−1</sup> = ?", c: ["1", "1/4", "2<sup>−2</sup>"], a: "1/2 + 1/2 = 1. Üsler toplanmaz." },
+      { s: "5<sup>−1</sup> + 5<sup>0</sup> = ?", c: ["6/5", "4/5", "1/5"], a: "5<sup>−1</sup> = 1/5 ve 5<sup>0</sup> = 1: 1/5 + 1 = 6/5." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -1052,6 +1065,10 @@ window.KK_YKS = {
     { k: "yks-uslu", s: "−7<sup>0</sup> = 1", d: false, n: "Parantez yok: −(7<sup>0</sup>) = −1" },
     { k: "yks-uslu", s: "0<sup>−1</sup> tanımsızdır.", d: true },
     { k: "yks-uslu", s: "1<sup>100</sup> = 100", d: false, n: "1<sup>100</sup> = 1" },
+    { k: "yks-uslu", s: "2<sup>−3</sup> = −8", d: false, n: "2<sup>−3</sup> = 1/8; negatif üs ters çevirir" },
+    { k: "yks-uslu", s: "Pozitif bir sayının negatif kuvveti pozitiftir.", d: true },
+    { k: "yks-uslu", s: "(1/2)<sup>−2</sup> = 4", d: true },
+    { k: "yks-uslu", s: "(−3)<sup>−2</sup> = −1/9", d: false, n: "Üs çift: (−3)<sup>−2</sup> = 1/9" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
