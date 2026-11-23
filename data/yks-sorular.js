@@ -480,7 +480,19 @@ window.KK_YKS = {
       { s: "50 + 49 + 48 + … + 41 = ?", c: ["455", "450", "460"], a: "41'den 50'ye 10 sayı. Her sütun 50 + 41 = 91. 10 · 91 / 2 = 455. Azalan sıra toplamı değiştirmez." },
       { s: "Ardışık üç tam sayının toplamı 48 ise en büyüğü kaçtır?", c: ["17", "16", "18"], a: "Ortadaki sayı ortalamadır: 48 / 3 = 16. Sayılar 15, 16, 17." },
       { s: "Ardışık 7 tam sayının toplamı 91 ise en küçüğü kaçtır?", c: ["10", "13", "7"], a: "Ortadaki (4.) sayı 91 / 7 = 13. Ondan 3 geri: 10. Sayılar 10, 11, …, 16." },
-      { s: "Ardışık üç çift sayının toplamı 66 ise en küçüğü kaçtır?", c: ["20", "22", "24"], a: "Ortadaki 66 / 3 = 22. Çift sayılar ikişer: 20, 22, 24." }
+      { s: "Ardışık üç çift sayının toplamı 66 ise en küçüğü kaçtır?", c: ["20", "22", "24"], a: "Ortadaki 66 / 3 = 22. Çift sayılar ikişer: 20, 22, 24." },
+      { s: "Ardışık 5 tam sayının toplamı 60 ise ortadaki sayı kaçtır?", c: ["12", "10", "14"], a: "Ortadaki sayı ortalamadır: 60 / 5 = 12. Sayılar 10, 11, 12, 13, 14." },
+      { s: "Ardışık iki tam sayının toplamı 45 ise büyüğü kaçtır?", c: ["23", "22", "24"], a: "Ortalama 45 / 2 = 22,5: sayılar bunun iki yanındaki 22 ve 23." },
+      { s: "Ardışık 15 tam sayının en büyüğü, en küçüğünden kaç fazladır?", c: ["14", "15", "16"], a: "15 sayı arasında 14 adım vardır; her adım 1. Örnek: 1, 2, …, 15'te 15 − 1 = 14." },
+      { s: "Ardışık 7 tam sayının en büyüğü, ortadaki sayıdan kaç fazladır?", c: ["3", "4", "7"], a: "Ortadaki 4. sayıdır; ondan sonra 3 sayı daha gelir: 3 adım, 3 fazla." },
+      { s: "3'er artan 10 terimli bir dizide en büyük terim, en küçükten kaç fazladır?", c: ["27", "30", "24"], a: "10 terim arasında 9 adım var, her adım 3: 9 · 3 = 27." },
+      { s: "3'er artan 5 sayının toplamı 45 ise en büyüğü kaçtır?", c: ["15", "12", "18"], a: "Ortadaki 45 / 5 = 9. Ondan 2 adım ileri: 9 + 6 = 15. Sayılar 3, 6, 9, 12, 15." },
+      { s: "5'er artan 7 sayının toplamı 140 ise en küçüğü kaçtır?", c: ["5", "20", "15"], a: "Ortadaki 140 / 7 = 20. Ondan 3 adım geri: 20 − 15 = 5. Sayılar 5, 10, …, 35." },
+      { s: "5'er azalan 9 terimli bir dizinin ilk terimi 50 ise son terimi kaçtır?", c: ["10", "5", "15"], a: "9 terim arasında 8 adım var: 50 − 8 · 5 = 10." },
+      { s: "0, 3, 6, … dizisinin 20. terimi kaçtır?", c: ["57", "60", "63"], a: "1. terim 0'dır; 20. terime gelene kadar 19 adım atılır: 19 · 3 = 57." },
+      { s: "5, 8, 11, … dizisinin 10. terimi kaçtır?", c: ["32", "35", "30"], a: "Önce 5 çıkar: 0, 3, 6, … olur; 10. terimi 9 · 3 = 27. 5'i geri ekle: 32." },
+      { s: "1'den 100'e kadar kaç tane 3'ün katı vardır?", c: ["33", "34", "30"], a: "3, 6, …, 99. 3'e böl: 1, 2, …, 33. Toplam 33." },
+      { s: "Bir kitabın 15. sayfasından 40. sayfasına kadar (ikisi dahil) kaç sayfa okunur?", c: ["26", "25", "24"], a: "40 − 15 = 25 adım, ama sayfa sayısı adımdan bir fazladır: 15'i de sayınca 26." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -633,6 +645,7 @@ window.KK_YKS = {
     { k: "yks-ardisik", s: "1 + 2 + … + 10 = 55", d: true },
     { k: "yks-ardisik", s: "Ardışık 5 tam sayının ortalaması, ortadaki sayıya eşittir.", d: true },
     { k: "yks-ardisik", s: "İlk 10 tek sayının toplamı 100'dür.", d: true },
+    { k: "yks-ardisik", s: "Ardışık 10 tam sayının en büyüğü, en küçüğünden 10 fazladır.", d: false, n: "10 sayı arasında 9 adım var: 9 fazladır" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
