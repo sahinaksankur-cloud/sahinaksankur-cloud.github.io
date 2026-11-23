@@ -221,7 +221,7 @@
     var ac = $("soru-aciklama");
     ac.innerHTML = A.bicim(q.a || ""); ac.className = "oyun-aciklama " + (dogru || YAYIN ? "iyi" : "kotu"); ac.hidden = !q.a;
     if (ses) {
-      A.cal(dogru ? "kutlama" : "sayfa");
+      A.cal(YAYIN || dogru ? "dogru" : secilen == null ? "sayfa" : "yanlis");
       if (!azHareket && (dogru || YAYIN)) {
         var cv = document.createElement("canvas"); cv.className = "canli-fisek"; cv.setAttribute("aria-hidden", "true");
         $("soru-kart").appendChild(cv); A.fisekler(cv);
