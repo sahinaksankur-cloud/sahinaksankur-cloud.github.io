@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Testler – Kuzey Kampüs</title>
-  <meta name="description" content="Limit ve türev bilgini 10 soruluk kısa turlarla oynayarak tekrar et. Kayıt gerekmez.">
+  <meta name="description" content="Calculus, YKS ve İngilizce kelime testleri. Kısa turlarla kendini dene, kelime kartlarıyla ezberle. Kayıt gerekmez.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=202611231304">
+  <link rel="stylesheet" href="assets/style.css?v=202611231833">
 </head>
 <body>
   <header class="topbar">
@@ -37,6 +37,7 @@
       <div class="sekmeler" role="tablist" aria-label="Test grubu">
         <button type="button" role="tab" id="sekme-uni" aria-controls="panel-uni" aria-selected="true">🎓 Üniversite</button>
         <button type="button" role="tab" id="sekme-yks" aria-controls="panel-yks" aria-selected="false">📘 YKS</button>
+        <button type="button" role="tab" id="sekme-en" aria-controls="panel-en" aria-selected="false">🔤 İngilizce</button>
       </div>
 
       <div id="panel-uni" role="tabpanel" aria-labelledby="sekme-uni">
@@ -93,6 +94,20 @@
         </div>
       </div>
       </div>
+
+      <div id="panel-en" role="tabpanel" aria-labelledby="sekme-en" hidden>
+      <section class="serit">
+        <div class="tur t0"><h2>📇 Kelime Kartları</h2><p>Kartın önünde İngilizce kelime var. Dokun, anlamını ve örnek cümlesini gör. Bildiğin kart desteden çıkar, bilmediğin yine gelir.</p><span class="ozellik">10 kart · ezber</span></div>
+        <div class="secenekler" id="en-kartlar"></div>
+      </section>
+
+      <section class="serit">
+        <div class="tur t1"><h2>📝 Kelime Testi</h2><p>Kelimeyi gör, üç anlamdan doğrusunu seç. Önce hiç görmediğin kelimeler, sonra bilemediklerin gelir.</p><span class="ozellik">10 kelime · puanlı</span></div>
+        <div class="secenekler" id="en-testler"></div>
+      </section>
+
+      <p class="oyun-toplam" id="en-toplam"></p>
+      </div>
     </section>
 
     <div class="perde" id="seviye-perde" hidden>
@@ -143,6 +158,35 @@
       <p class="dy-alt">Puan: <strong id="dy-puan">0</strong> · Her ifade için <span id="dy-sn">5</span> saniye</p>
     </section>
 
+    <section id="kart-ekran" hidden>
+      <div class="oyun-ust">
+        <span><span id="kart-ad"></span> · <span id="kart-ilerleme"></span></span>
+        <button type="button" class="kart-kapat" id="kart-kapat" aria-label="Kartları bırak" title="Kartları bırak">✕</button>
+      </div>
+      <div class="oyun-bar"><div id="kart-bar"></div></div>
+      <div id="kart-alan">
+        <button type="button" class="kelime-kart" id="kelime-kart">
+          <span class="kk-yuz kk-on"><small id="kart-tur"></small><strong id="kart-kelime" lang="en"></strong><span class="kk-ipucu">Anlamını görmek için dokun</span></span>
+          <span class="kk-yuz kk-arka"><small><span id="kart-kelime2" lang="en"></span> · <span id="kart-tur2"></span></small><strong id="kart-anlam"></strong><em id="kart-ornek" lang="en"></em><span class="kk-ceviri" id="kart-ceviri"></span></span>
+        </button>
+        <div class="kart-araclar"><button type="button" class="btn" id="kart-dinle" hidden>🔈 Dinle</button></div>
+        <div class="kart-dugmeler">
+          <button type="button" id="kart-tekrar">↻ Tekrar göster</button>
+          <button type="button" id="kart-bil">✓ Biliyorum</button>
+        </div>
+        <p class="dy-alt">Bildiğin kart desteden çıkar; “Tekrar göster” dediğin kart destenin sonuna eklenir.</p>
+      </div>
+      <div class="oyun-kart oyun-sonuc" id="kart-son" hidden>
+        <p class="oyun-sonuc-baslik">🎉 Desteyi bitirdin!</p>
+        <p id="kart-son-mesaj"></p>
+        <div class="oyun-dugmeler">
+          <button class="btn primary big" id="kart-teste" type="button">📝 Bu kelimelerle teste geç</button>
+          <button class="btn big" id="kart-yeni" type="button">📇 Yeni 10 kart</button>
+          <button class="btn big" id="kart-don" type="button">Geri dön</button>
+        </div>
+      </div>
+    </section>
+
     <section id="oyun-sonuc" hidden>
       <div class="oyun-kart oyun-sonuc">
         <p class="oyun-sonuc-baslik" id="oyun-sonuc-baslik"></p>
@@ -170,12 +214,13 @@
     </div>
   </footer>
 
-  <script src="assets/config.js?v=202611231304"></script>
-  <script src="assets/app.js?v=202611231304"></script>
-  <script src="data/sorular.js?v=202611231304"></script>
-  <script src="data/dogru-yanlis.js?v=202611231304"></script>
-  <script src="data/yks-sorular.js?v=202611231304"></script>
-  <script src="assets/oyun.js?v=202611231304"></script>
-  <script src="assets/canli-takvim.js?v=202611231304"></script>
+  <script src="assets/config.js?v=202611231833"></script>
+  <script src="assets/app.js?v=202611231833"></script>
+  <script src="data/sorular.js?v=202611231833"></script>
+  <script src="data/dogru-yanlis.js?v=202611231833"></script>
+  <script src="data/yks-sorular.js?v=202611231833"></script>
+  <script src="data/ingilizce.js?v=202611231833"></script>
+  <script src="assets/oyun.js?v=202611231833"></script>
+  <script src="assets/canli-takvim.js?v=202611231833"></script>
 </body>
 </html>

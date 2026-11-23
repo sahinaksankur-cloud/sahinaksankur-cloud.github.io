@@ -6,6 +6,11 @@
 
   var DEPO = "kk-oyun-v1";
   var $ = function (id) { return document.getElementById(id); };
+  function karistir(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
   var SEVIYELER = O.seviyeler || [{ id: "orta", ad: "Orta", sure: 15 }];
   var UYARI = O.uyari == null ? 5 : O.uyari;   // turuncu yanıp sönme başlar
   var KRITIK = O.kritik == null ? 3 : O.kritik; // kırmızı yanıp sönme başlar
@@ -33,28 +38,46 @@
   }
   function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
+  // 🔤 İngilizce kelimeler (data/ingilizce.js): her seviye bir konu ("en-a1" …); sorular kelimelerden kurulur.
+  // Soru: İngilizce kelime → üç Türkçe anlam. Yanlış şıklar aynı seviyedeki aynı türden kelimelerin anlamları.
+  var EN = window.KK_EN || null;
+  var EN_TUR = { i: "isim", f: "fiil", s: "sıfat", z: "zarf", b: "bağlaç" };
+  function enMi(id) { return /^en-/.test(id || ""); }
+  function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : "uni"; }
+  if (EN) {
+    (EN.seviyeler || []).forEach(function (sv) {
+      var liste = (EN.kelimeler[sv.id] || []).map(function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; });
+      var tg = function (t) { return t === "b" ? "z" : t; };   // zarf ve bağlaçlar şık için aynı grupta
+      O.konular.push({ id: sv.id, ad: sv.ad, ust: sv.ust, aciklama: sv.aciklama, grup: "en" });
+      O.sorular[sv.id] = liste.map(function (x) {
+        var es = liste.filter(function (y) { return y !== x && tg(y.tur) === tg(x.tur); });
+        if (es.length < 2) es = liste.filter(function (y) { return y !== x; });
+        var yanlis = karistir(es).slice(0, 2).map(function (y) { return y.t; });
+        return {
+          b: "en", k: sv.id, w: x.w, tur: x.tur, t: x.t, o: x.o, ot: x.ot,
+          s: '<span class="en-soru"><strong lang="en">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + "</small></span> ne demek?",
+          c: [x.t].concat(yanlis),
+          a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
+        };
+      });
+    });
+  }
+
   function oku() {
     try { return JSON.parse(localStorage.getItem(DEPO)) || {}; } catch (e) { return {}; }
   }
   function yaz(v) {
     try { localStorage.setItem(DEPO, JSON.stringify(v)); } catch (e) { /* özel pencere vb. */ }
   }
-  function karistir(a) {
-    a = a.slice();
-    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a;
-  }
   var BOLUMLER = O.bolumler || [];
   function bolumNo(id) { var m = /^bolum-(\d+)$/.exec(id || ""); return m ? +m[1] : null; }
-  // Üniversite (Calculus) soruları; YKS listeleri hariç.
-  function tumSorular() {
-    return Object.keys(O.sorular).filter(function (k) { return !/^yks-/.test(k); })
+  // Bir grubun soruları: "uni" (Calculus), "yks", "en" (İngilizce kelimeler). Gruplar birbirine karışmaz.
+  function grupSorular(g) {
+    return Object.keys(O.sorular).filter(function (k) { return grupAdi(k) === g; })
       .reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
   }
-  function yksSorular() {
-    return Object.keys(O.sorular).filter(function (k) { return /^yks-/.test(k); })
-      .reduce(function (h, k) { return h.concat(O.sorular[k]); }, []);
-  }
+  function tumSorular() { return grupSorular("uni"); }
+  function yksSorular() { return grupSorular("yks"); }
   // Bir testin (konu turu ya da bölüm sonu testi) bilgileri
   function testBilgi(id) {
     var no = bolumNo(id);
@@ -63,7 +86,7 @@
       return { id: id, bolum: true, ad: "Chapter " + no + " · " + b.ad, kisaAd: "Chapter " + no, ders: b.ders, sayi: O.bolumSoruSayisi || 5 };
     }
     var k = bul(O.konular, id) || {};
-    return { id: id, bolum: false, yks: k.grup === "yks", ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
+    return { id: id, bolum: false, yks: k.grup === "yks", en: k.grup === "en", ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
   function havuz(id) {
     var d = dyId(id);
@@ -241,16 +264,16 @@
     Object.keys(b).forEach(function (k) { if (k.slice(0, k.lastIndexOf(":")) === konu) top += b[k]; });
     return top;
   }
-  function bonusGrup(kayit, yks) {
+  function bonusGrup(kayit, grup) {
     var b = kayit.bonus || {}, top = 0;
-    Object.keys(b).forEach(function (k) { if (/^yks-/.test(k) === !!yks) top += b[k]; });
+    Object.keys(b).forEach(function (k) { if (grupAdi(k) === grup) top += b[k]; });
     return top;
   }
   function bonusRozet(kayit, konu) { var b = bonusKonu(kayit, konu); return b ? '<span class="skor bonus-rozet">⭐ Bonus: +' + b + "</span>" : ""; }
   // "YKS toplam puanın: 52 (40 / 120 soru + 12 bonus)"
-  function toplamYazi(ad, liste, kayit, yks) {
-    var c = cozulenSayi(liste, kayit), b = bonusGrup(kayit, yks);
-    return ad + " toplam puanın: " + (c + b) + " (" + c + " / " + liste.length + " soru" + (b ? " + " + b + " bonus" : "") + ")";
+  function toplamYazi(ad, liste, kayit, grup) {
+    var c = cozulenSayi(liste, kayit), b = bonusGrup(kayit, grup);
+    return ad + " toplam puanın: " + (c + b) + " (" + c + " / " + liste.length + (grup === "en" ? " kelime" : " soru") + (b ? " + " + b + " bonus" : "") + ")";
   }
 
   if (O.ad && $("oyun-ad")) { $("oyun-ad").textContent = O.ad; document.title = O.ad + " – Kuzey Kampüs"; }
@@ -343,7 +366,7 @@
   if (!$("oyun-giris")) return;
 
   function goster(bolum) {
-    ["oyun-giris", "oyun-soru", "dy-soru", "oyun-sonuc"].forEach(function (b) { $(b).hidden = b !== bolum; });
+    ["oyun-giris", "oyun-soru", "dy-soru", "oyun-sonuc", "kart-ekran"].forEach(function (b) { $(b).hidden = b !== bolum; });
     window.scrollTo(0, 0);
   }
 
@@ -380,6 +403,7 @@
   }
   function girisCiz() {
     sayaciDurdur();
+    ozelListe = null;
     seviyeKapat();
     var kayit = oku(), rek = kayit.rekor || {};
     durum.seviye = bul(SEVIYELER, durum.seviye) ? durum.seviye : (bul(SEVIYELER, kayit.seviye) ? kayit.seviye : SEVIYELER[0].id);
@@ -402,7 +426,7 @@
     baglan("#oyun-bolumler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
 
     // 🎯 Konu turları (hazırlık testi hariç)
-    $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK && k.grup !== "yks"; }).map(function (k) {
+    $("oyun-konular").innerHTML = O.konular.filter(function (k) { return k.id !== HAZIRLIK && !k.grup; }).map(function (k) {
       var hk = havuz(k.id), ust = (k.id === "karisik" ? "Tüm konular · " : "") + "Puan: " + cozulenSayi(hk, kayit) + " / " + hk.length;
       return '<button type="button" class="sec s2" data-konu="' + k.id + '"><small>' + ust + "</small><strong>" + k.ad + "</strong>" +
         enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
@@ -420,7 +444,7 @@
 
     var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir; 10 soruluk bir testin hepsini doğru yaparsan ⭐ bonus da kazanırsın. Puanların sadece bu cihazda tutulur.";
     var uni = tumSorular();
-    $("oyun-toplam").textContent = toplamYazi("Üniversite", uni, kayit, false) + "." + PUAN_NOT;
+    $("oyun-toplam").textContent = toplamYazi("Üniversite", uni, kayit, "uni") + "." + PUAN_NOT;
 
     // 📘 YKS
     if ($("panel-yks")) {
@@ -448,7 +472,27 @@
         " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
       var ys = yksSorular();
-      $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, true) + "." + PUAN_NOT;
+      $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, "yks") + "." + PUAN_NOT;
+    }
+
+    // 🔤 İngilizce: her seviye için 📇 kart destesi ve 📝 kelime testi
+    if ($("panel-en")) {
+      var ek = O.konular.filter(function (k) { return k.grup === "en"; });
+      $("en-kartlar").innerHTML = ek.map(function (k) {
+        var hk = havuz(k.id), c = cozulenSayi(hk, kayit);
+        return '<button type="button" class="sec s0" data-kart="' + k.id + '"><small>' + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
+          '<span class="skor">' + hk.length + " kelime" + (c ? " · Bildiğin: " + c : "") + "</span></button>";
+      }).join("");
+      baglan("#en-kartlar", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
+      $("en-testler").innerHTML = ek.map(function (k) {
+        var hk = havuz(k.id), c = cozulenSayi(hk, kayit);
+        return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
+          '<span class="skor">' + (c === hk.length && c ? "✓ Tamamlandı · " : "") + "Puan: " + c + " / " + hk.length + "</span>" +
+          enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
+      }).join("");
+      baglan("#en-testler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+      $("en-toplam").textContent = toplamYazi("İngilizce", grupSorular("en"), kayit, "en") +
+        ". Her kelime, testte ilk kez doğru bildiğinde 1 puan getirir; bir seviyenin puanı tamsa o seviyenin bütün kelimelerini biliyorsun. Puanların sadece bu cihazda tutulur.";
     }
     goster("oyun-giris");
   }
@@ -458,7 +502,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.en ? "🔤 İngilizce · 📝 Kelime Testi" : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
@@ -466,6 +510,7 @@
     var aciklamaYaz = function () {
       var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
       $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
+        : t.en ? (ozelListe ? "Kartlarda çalıştığın " + ozelListe.length + " kelime." : n + " kelime.") + " Her kelime için ne kadar süre istersin?"
         : n + " soru. Her soru için ne kadar süre istersin?";
       Array.prototype.forEach.call(document.querySelectorAll("#oyun-seviyeler button"), function (b) { b.disabled = !n; });
     };
@@ -492,16 +537,20 @@
     if (sec) sec.focus();
   }
   function seviyeKapat() { $("seviye-perde").hidden = true; seviyeHedef = null; }
-  $("seviye-vazgec").addEventListener("click", seviyeKapat);
-  $("seviye-perde").addEventListener("click", function (e) { if (e.target === this) seviyeKapat(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("seviye-perde").hidden) seviyeKapat(); });
+  // Kartlardan teste geçerken (ozelListe) test, çalışılan kelimelerle kurulur; pencere kapatılırsa liste unutulur.
+  var ozelListe = null;
+  function seviyeVazgec() { ozelListe = null; seviyeKapat(); }
+  $("seviye-vazgec").addEventListener("click", seviyeVazgec);
+  $("seviye-perde").addEventListener("click", function (e) { if (e.target === this) seviyeVazgec(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("seviye-perde").hidden) seviyeVazgec(); });
 
   // ---- Oyun ----
   function basla(konu) {
     if (secimModu) tekrarModu(false);
     durum.konu = konu;
     var t = testBilgi(konu);
-    durum.sorular = soruSec(konu, t.sayi);
+    var ozel = ozelListe; ozelListe = null;
+    durum.sorular = ozel ? karistir(ozel) : soruSec(konu, t.sayi);
     durum.i = 0; durum.puan = 0; durum.kacan = []; durum.yeniPuan = 0; durum.kalan = 0; durum.puansiz = 0;
     if (sesAcik) sesBaglam();
     turArtir();
@@ -672,6 +721,8 @@
       liste.hidden = false;
     } else { liste.hidden = true; }
     $("oyun-test-gec").hidden = d === "tum" || d === "yks";
+    $("oyun-test-gec").textContent = "📝 5 Soruya geç";
+    $("oyun-tekrar").classList.add("primary");
     $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
     $("oyun-tekrar").textContent = "⚡ Yeni ifadelerle tekrar";
     $("oyun-tekrar").classList.toggle("primary", d === "tum" || d === "yks");
@@ -682,13 +733,18 @@
     $("dy-bar").style.width = "100%";
     goster("oyun-sonuc");
   }
-  $("oyun-test-gec").addEventListener("click", function () { seviyeSor(this.getAttribute("data-hedef")); });
+  $("oyun-test-gec").addEventListener("click", function () {
+    var h = this.getAttribute("data-hedef");
+    if (/^kart:/.test(h)) kartBasla(h.slice(5)); else seviyeSor(h);
+  });
 
   // ---- Sonuç ----
   function bitir() {
     sayaciDurdur();
-    $("oyun-test-gec").hidden = true;
-    $("oyun-tekrar").classList.add("primary");
+    var enTest = enMi(durum.konu);
+    $("oyun-test-gec").hidden = !enTest;
+    if (enTest) { $("oyun-test-gec").textContent = "📇 Kartlarla çalış"; $("oyun-test-gec").setAttribute("data-hedef", "kart:" + durum.konu); }
+    $("oyun-tekrar").classList.toggle("primary", !enTest);
     $("oyun-tekrar").setAttribute("data-hedef", durum.konu);
     $("oyun-konu-degis").textContent = "Konu değiştir";
     var n = durum.sorular.length, p = durum.puan;
@@ -718,16 +774,18 @@
     if (konuBilgi.bolum) $("oyun-sonuc-baslik").textContent = konuBilgi.ad;
     $("oyun-sonuc-mesaj").textContent = konuBilgi.bolum
       ? (p === n ? bs.tam : p >= n * 0.8 ? bs.iyi : p >= n * 0.6 ? bs.orta : bs.zayif)
+      : konuBilgi.en && p === n ? "Hepsini doğru bildin! Kartlarla yeni kelimelere geç."
       : oz ? (p >= n * 0.8 ? oz.iyi : p >= n * 0.5 ? oz.orta : oz.zayif) : p === n
       ? (enZor ? "Hepsini doğru bildin. Başka bir konuya geçmeye ne dersin?" : "Hepsini doğru bildin. Bir üst seviyeyi dene!")
       : p >= n * 0.7 ? "Temelin sağlam. Kaçırdığın soruların cevapları aşağıda."
+      : konuBilgi.en ? "Kaçırdığın kelimeler aşağıda. Kartlarla çalış; bilemediğin kelimeler, yeni kelimeler bitince testte yine karşına çıkacak."
       : konuBilgi.yks ? "Kaçırdığın soruların cevapları aşağıda. Çözemediğin sorular, yeni sorular bitince tekrar karşına çıkacak."
       : "Kaçırdığın soruların cevapları aşağıda. Konu anlatımını izleyip tekrar dene.";
     var hk = havuz(durum.konu), bitti = !tekrarMi(durum.konu) && hk.length && cozulenSayi(hk, kayit) === hk.length;
     $("oyun-rekor").textContent = (tekrarMi(durum.konu) ? "" : yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
       : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
       "Bu turda " + durum.yeniPuan + " yeni puan" + (bonus && bonus.eklendi ? " + " + bonus.toplam + " bonus" : "") + " · " +
-      toplamYazi(konuBilgi.yks ? "YKS" : "Üniversite", konuBilgi.yks ? yksSorular() : tumSorular(), kayit, konuBilgi.yks) +
+      toplamYazi(konuBilgi.yks ? "YKS" : konuBilgi.en ? "İngilizce" : "Üniversite", grupSorular(grupAdi(durum.konu)), kayit, grupAdi(durum.konu)) +
       (bitti ? " · ✓ Bu konudaki tüm soruları çözdün! Sorular yine gelir ama artık puan ve bonus eklenmez." : "");
 
     var kayipSayi = durum.kacan.filter(function (k) { return k.once; }).length;
@@ -739,7 +797,7 @@
 
     var liste = $("oyun-kacan");
     if (durum.kacan.length) {
-      liste.innerHTML = "<h3>Kaçırdığın sorular</h3>" + durum.kacan.map(function (k) {
+      liste.innerHTML = "<h3>Kaçırdığın " + (enTest ? "kelimeler" : "sorular") + "</h3>" + durum.kacan.map(function (k) {
         return '<div class="oyun-kacan-soru"><p class="s">' + soruHtml(k.q) + "</p>" +
           '<p class="c">Doğru cevap: <strong>' + bicim(k.q.c[0]) + "</strong>" +
           (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p>" +
@@ -750,10 +808,10 @@
     } else {
       liste.hidden = true;
     }
-    $("oyun-ders-link").hidden = !konuBilgi.ders && (konuBilgi.bolum || konuBilgi.yks);
+    $("oyun-ders-link").hidden = !konuBilgi.ders && (konuBilgi.bolum || konuBilgi.yks || konuBilgi.en);
     $("oyun-ders-link").href = konuBilgi.ders || "ders.html?liste=calc1";
     $("oyun-ders-link").textContent = konuBilgi.bolum ? "Chapter'ın derslerine dön" : "Konu anlatımını izle";
-    $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : "Tekrar oyna";
+    $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : konuBilgi.en ? "Yeni kelimelerle test" : "Tekrar oyna";
     $("oyun-bar-dolu").style.width = "100%";
     goster("oyun-sonuc");
     if (bonus) kutla(bonus);
@@ -872,23 +930,107 @@
     $("yks-tekrar-basla").addEventListener("click", function () { if (!this.disabled) seviyeSor(TEKRAR); });
   }
 
-  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS ----
+  // ---- 📇 Kelime kartları (🔤 İngilizce) ----
+  // Deste: seviyeden 10 kelime, testteki sırayla (önce hiç görülmemiş, sonra bilinemeyen, en son bilinen).
+  // Kartın önünde İngilizce kelime; dokununca anlamı, örnek cümle ve Türkçesi. "Biliyorum" kartı desteden çıkarır,
+  // "Tekrar göster" sona ekler. Kartlar puan getirmez; deste bitince aynı kelimelerle teste geçilir.
+  var KART_SAYI = 10;
+  var kart = { id: null, deste: [], calisilan: [], bilinen: 0, cevrildi: false };
+  var konusma = "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance === "function";
+  function kartBasla(id) {
+    sayaciDurdur();
+    seviyeKapat();
+    if (secimModu) tekrarModu(false);
+    kart.id = id;
+    kart.deste = soruSec(id, KART_SAYI);
+    kart.calisilan = kart.deste.slice();
+    kart.bilinen = 0;
+    $("kart-ad").textContent = "📇 " + ((bul(O.konular, id) || {}).ad || "");
+    $("kart-alan").hidden = false;
+    $("kart-son").hidden = true;
+    $("kart-dinle").hidden = !konusma;
+    kartCiz();
+    goster("kart-ekran");
+  }
+  function kartCiz() {
+    var q = kart.deste[0];
+    kart.cevrildi = false;
+    var tur = EN_TUR[q.tur] || "";
+    $("kart-tur").textContent = tur; $("kart-tur2").textContent = tur;
+    $("kart-kelime").textContent = q.w;
+    $("kart-kelime2").textContent = q.w;
+    $("kart-anlam").textContent = q.t;
+    $("kart-ornek").textContent = q.o;
+    $("kart-ceviri").textContent = q.ot;
+    $("kelime-kart").classList.remove("cevrildi");
+    $("kelime-kart").setAttribute("aria-label", q.w + ": anlamını görmek için dokun");
+    $("kart-ilerleme").textContent = "Kalan: " + kart.deste.length + " · Bildiğin: " + kart.bilinen + " / " + kart.calisilan.length;
+    $("kart-bar").style.width = (kart.bilinen / kart.calisilan.length * 100) + "%";
+  }
+  function kartCevir() {
+    kart.cevrildi = !kart.cevrildi;
+    var k = $("kelime-kart");
+    k.classList.toggle("cevrildi", kart.cevrildi);
+    k.setAttribute("aria-label", kart.cevrildi ? kart.deste[0].w + " = " + kart.deste[0].t : kart.deste[0].w + ": anlamını görmek için dokun");
+  }
+  function kartIlerle(biliyor) {
+    if ($("kart-ekran").hidden || $("kart-alan").hidden) return;
+    var q = kart.deste.shift();
+    if (biliyor) kart.bilinen++; else kart.deste.push(q);
+    if (kart.deste.length) kartCiz(); else kartBitti();
+  }
+  function kartBitti() {
+    $("kart-bar").style.width = "100%";
+    $("kart-ilerleme").textContent = "Bitti";
+    $("kart-alan").hidden = true;
+    $("kart-son").hidden = false;
+    $("kart-son-mesaj").textContent = "Bu destedeki " + kart.calisilan.length + " kelimeyi çalıştın. Şimdi aynı kelimelerle teste geç: doğru bildiğin her kelime 1 puan getirir.";
+    cal("dogru");
+    $("kart-teste").focus();
+  }
+  $("kelime-kart").addEventListener("click", kartCevir);
+  $("kart-bil").addEventListener("click", function () { kartIlerle(true); });
+  $("kart-tekrar").addEventListener("click", function () { kartIlerle(false); });
+  $("kart-dinle").addEventListener("click", function () {
+    if (!konusma || !kart.deste[0]) return;
+    var u = new SpeechSynthesisUtterance(kart.deste[0].w);
+    u.lang = "en-US"; u.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  });
+  $("kart-kapat").addEventListener("click", girisCiz);
+  $("kart-don").addEventListener("click", girisCiz);
+  $("kart-yeni").addEventListener("click", function () { kartBasla(kart.id); });
+  $("kart-teste").addEventListener("click", function () { ozelListe = kart.calisilan.slice(); seviyeSor(kart.id); });
+  document.addEventListener("keydown", function (e) {
+    if ($("kart-ekran").hidden || $("kart-alan").hidden || !$("seviye-perde").hidden) return;
+    if (e.key === "ArrowRight") kartIlerle(true);
+    else if (e.key === "ArrowLeft") kartIlerle(false);
+    else if ((e.key === " " || e.key === "Enter") && e.target === document.body) { e.preventDefault(); kartCevir(); }
+  });
+
+  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🔤 İngilizce ----
+  var SEKMELER = ["uni", "yks", "en"];
   function sekmeAc(ad) {
     if (!$("panel-yks")) return;
-    ["uni", "yks"].forEach(function (x) {
+    if (SEKMELER.indexOf(ad) < 0) ad = "uni";
+    SEKMELER.forEach(function (x) {
       $("panel-" + x).hidden = x !== ad;
       $("sekme-" + x).setAttribute("aria-selected", String(x === ad));
     });
     var k = oku(); k.sekme = ad; yaz(k);
     if (ad !== "yks" && secimModu) tekrarModu(false);
   }
-  ["uni", "yks"].forEach(function (x) {
+  SEKMELER.forEach(function (x) {
     if ($("sekme-" + x)) $("sekme-" + x).addEventListener("click", function () { sekmeAc(x); });
   });
 
   girisCiz();
-  // oyun.html#bolum-2, #limit, #yks, #yks-rakam gibi linkler ilgili sekmeyi açar ve testi başlatır
+  // oyun.html#bolum-2, #limit, #yks, #yks-rakam, #ingilizce, #en-a1 (test), #kart-en-a1 (kartlar) gibi linkler
+  // ilgili sekmeyi açar ve testi başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
-  sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedef ? "uni" : (oku().sekme === "yks" ? "yks" : "uni"));
-  if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
+  var kartHedef = /^kart-(en-.+)$/.exec(hedef);
+  sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
+  if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
+  else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
 })();
