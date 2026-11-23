@@ -648,7 +648,27 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .paylas-dugmeler #paylas-sistem { grid-column: 1 / -1; }
 
 /* 🔤 İngilizce: kelime kartları ve kelime testi */
-.s0 { border-left: 5px solid #6c4ab6; }
+.en-giris { color: var(--muted); max-width: 820px; line-height: 1.55; margin: 0 0 18px; }
+.en-r1 { background: #2e7d5b; } .en-r2 { background: #0f7385; } .en-r3 { background: #1f4e8c; } .en-r4 { background: #6c4ab6; } .en-r5 { background: #b4581a; }
+.en-gruplar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.en-grup { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.en-grup small { color: var(--muted); font-size: 0.78rem; font-weight: 600; }
+.en-grup strong { font-size: 0.98rem; line-height: 1.3; }
+.en-grup .skor { color: var(--muted); font-size: 0.78rem; display: block; }
+.en-grup.bitti { border-color: #2e8b57; }
+.en-grup.bitti strong { color: #2e8b57; }
+.en-grup-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
+.en-grup-dugmeler .btn { justify-content: center; padding: 8px 6px; font-size: 0.9rem; font-weight: 600; }
+@media (max-width: 760px) {
+  .en-gruplar { gap: 8px; }
+  .en-grup { padding: 8px; }
+  .en-grup strong { font-size: 1rem; }
+  .en-uzun, .en-grup .skor { display: none; }
+  .en-grup-dugmeler { grid-template-columns: 1fr; }
+  .en-grup-dugmeler .btn { padding: 7px 4px; font-size: 0.85rem; }
+}
+.sekmeler button { white-space: nowrap; }
+@media (max-width: 460px) { .sekmeler { gap: 2px; } .sekmeler button { padding: 10px 8px; font-size: 0.95rem; } }
 .en-soru { display: block; }
 .en-soru strong { font-size: 1.45em; }
 .en-soru small { font-size: 0.6em; font-weight: 600; color: var(--muted); margin-left: 4px; }

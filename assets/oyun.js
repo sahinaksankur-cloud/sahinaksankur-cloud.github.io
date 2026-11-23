@@ -38,18 +38,22 @@
   }
   function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
-  // 🔤 İngilizce kelimeler (data/ingilizce.js): her seviye bir konu ("en-a1" …); sorular kelimelerden kurulur.
-  // Soru: İngilizce kelime → üç Türkçe anlam. Yanlış şıklar aynı seviyedeki aynı türden kelimelerin anlamları.
+  // 🔤 İngilizce kelimeler (data/ingilizce.js): her seviyede 50'şer kelimelik gruplar; her grup bir konu ("en-a1-1" …).
+  // Soru: İngilizce kelime → üç Türkçe anlam. Yanlış şıklar aynı gruptaki aynı türden kelimelerin anlamları.
   var EN = window.KK_EN || null;
   var EN_TUR = { i: "isim", f: "fiil", s: "sıfat", z: "zarf", b: "bağlaç" };
   function enMi(id) { return /^en-/.test(id || ""); }
   function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : "uni"; }
   if (EN) {
     (EN.seviyeler || []).forEach(function (sv) {
-      var liste = (EN.kelimeler[sv.id] || []).map(function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; });
+     sv.gruplar = [];
+     for (var gn = 1; EN.kelimeler[sv.id + "-" + gn]; gn++) {
+      var gid = sv.id + "-" + gn;
+      sv.gruplar.push(gid);
+      var liste = EN.kelimeler[gid].map(function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; });
       var tg = function (t) { return t === "b" ? "z" : t; };   // zarf ve bağlaçlar şık için aynı grupta
-      O.konular.push({ id: sv.id, ad: sv.ad, ust: sv.ust, aciklama: sv.aciklama, grup: "en" });
-      O.sorular[sv.id] = liste.map(function (x) {
+      O.konular.push({ id: gid, ad: sv.ad.split(" · ")[0] + " · " + gn + ". Grup", seviye: sv.id, no: gn, grup: "en" });
+      O.sorular[gid] = liste.map(function (x) {
         var es = liste.filter(function (y) { return y !== x && tg(y.tur) === tg(x.tur); });
         if (es.length < 2) es = liste.filter(function (y) { return y !== x; });
         var yanlis = karistir(es).slice(0, 2).map(function (y) { return y.t; });
@@ -60,6 +64,7 @@
           a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
         };
       });
+     }
     });
   }
 
@@ -475,24 +480,27 @@
       $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, "yks") + "." + PUAN_NOT;
     }
 
-    // 🔤 İngilizce: her seviye için 📇 kart destesi ve 📝 kelime testi
-    if ($("panel-en")) {
-      var ek = O.konular.filter(function (k) { return k.grup === "en"; });
-      $("en-kartlar").innerHTML = ek.map(function (k) {
-        var hk = havuz(k.id), c = cozulenSayi(hk, kayit);
-        return '<button type="button" class="sec s0" data-kart="' + k.id + '"><small>' + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
-          '<span class="skor">' + hk.length + " kelime" + (c ? " · Bildiğin: " + c : "") + "</span></button>";
+    // 🔤 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
+    if ($("panel-en") && EN) {
+      $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(function (sv, si) {
+        var toplamK = 0, toplamC = 0;
+        var kartlar = sv.gruplar.map(function (gid) {
+          var hk = havuz(gid), c = cozulenSayi(hk, kayit), k = bul(O.konular, gid);
+          toplamK += hk.length; toplamC += c;
+          return '<div class="en-grup' + (c === hk.length && c ? " bitti" : "") + '"><small>' + k.no + '. Grup<span class="en-uzun"> · ' + hk.length + " kelime</span></small>" +
+            "<strong>" + (c === hk.length && c ? '✓<span class="en-uzun"> Tamamlandı ·</span> ' : "") + '<span class="en-uzun">Puan: </span>' + c + " / " + hk.length + "</strong>" +
+            enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) +
+            '<div class="en-grup-dugmeler"><button type="button" class="btn" data-kart="' + gid + '">📇 Kartlar</button>' +
+            '<button type="button" class="btn primary" data-konu="' + gid + '">📝 Test</button></div></div>';
+        }).join("");
+        return '<section class="serit en-serit"><div class="tur en-r' + (si + 1) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
+          '<span class="ozellik">' + (sv.ust ? sv.ust + " · " : "") + toplamC + " / " + toplamK + " kelime</span></div>" +
+          '<div class="secenekler en-gruplar">' + kartlar + "</div></section>";
       }).join("");
-      baglan("#en-kartlar", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
-      $("en-testler").innerHTML = ek.map(function (k) {
-        var hk = havuz(k.id), c = cozulenSayi(hk, kayit);
-        return '<button type="button" class="sec s1" data-konu="' + k.id + '"><small>' + (k.ust || "") + "</small><strong>" + k.ad + "</strong>" +
-          '<span class="skor">' + (c === hk.length && c ? "✓ Tamamlandı · " : "") + "Puan: " + c + " / " + hk.length + "</span>" +
-          enIyiYazi(rek[rekorAnahtar(k.id)], O.soruSayisi, sevAd) + bonusRozet(kayit, k.id) + "</button>";
-      }).join("");
-      baglan("#en-testler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+      baglan("#en-seviyeler", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
+      baglan("#en-seviyeler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       $("en-toplam").textContent = toplamYazi("İngilizce", grupSorular("en"), kayit, "en") +
-        ". Her kelime, testte ilk kez doğru bildiğinde 1 puan getirir; bir seviyenin puanı tamsa o seviyenin bütün kelimelerini biliyorsun. Puanların sadece bu cihazda tutulur.";
+        ". Her kelime, testte ilk kez doğru bildiğinde 1 puan getirir; bir grubun puanı tamsa o gruptaki bütün kelimeleri biliyorsun. Puanların sadece bu cihazda tutulur.";
     }
     goster("oyun-giris");
   }
