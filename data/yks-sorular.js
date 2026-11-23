@@ -19,7 +19,8 @@ window.KK_YKS = {
     { id: "yks-ardisik", ad: "Ardışık Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 2. Kısım" },
     { id: "yks-asal", ad: "Asal Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-faktoriyel", ad: "Faktöriyel", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-basamak", ad: "Sayı Basamakları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-bolme", ad: "Bölme", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -663,6 +664,36 @@ window.KK_YKS = {
       { s: "Üç basamaklı iki doğal sayının toplamı 1500 ise küçük olan en az kaçtır?", c: ["501", "100", "500"], a: "Büyük olan en çok 999 olabilir. Küçük olan en az 1500 − 999 = 501. 100 seçilirse diğeri 1400 olur, dört basamaklı." },
       { s: "İki basamaklı iki doğal sayının toplamı 150 ise küçük olan en az kaçtır?", c: ["51", "10", "50"], a: "Büyük olan en çok 99 olabilir: 150 − 99 = 51." }
     ],
+    // Bölme: bölünen = bölen · bölüm + kalan; 0 ≤ kalan < bölen. Kalan x² ise x negatif de olabilir.
+    // Sayıyı bulma: her seferinde farklı parça (bölünen, bölen, bölüm, kalan) bilinmeyen.
+    "yks-bolme": [
+      { s: "Bölme bağıntısı hangisidir?", c: ["Bölünen = bölen · bölüm + kalan", "Bölen = bölünen · bölüm + kalan", "Bölünen = bölen + bölüm · kalan"], a: "Örnek: 17'yi 5'e böl: 17 = 5 · 3 + 2. Bölen 5, bölüm 3, kalan 2." },
+      { s: "Bir bölme işleminde kalan için hangisi doğrudur?", c: ["0 ≤ kalan &lt; bölen", "0 &lt; kalan ≤ bölen", "kalan &lt; bölüm"], a: "Kalan bölene eşit ya da büyük olsaydı bir kez daha bölebilirdik. Kalan 0 olabilir, bölen kadar olamaz." },
+      { s: "0, 1 ve 100 sayılarından hangisi bölen olamaz?", c: ["0", "1", "100"], a: "0'a bölme tanımsızdır. 1 ve 100 bölen olabilir." },
+      { s: "Bir bölmede kalan 0 ise ne denir?", c: ["Bölünen bölene tam bölünür", "Bölme yapılamaz", "Bölüm 0 olur"], a: "Kalan 0: bölünen = bölen · bölüm. Örnek: 20 = 5 · 4, 20 5'e tam bölünür." },
+      { s: "Bir sayı 7'ye bölündüğünde kalan en çok kaç olabilir?", c: ["6", "7", "0"], a: "Kalan bölenden küçük olmalı: en çok 7 − 1 = 6." },
+      { s: "Bir sayı 7'ye bölündüğünde kaç farklı kalan çıkabilir?", c: ["7", "6", "8"], a: "0, 1, 2, 3, 4, 5, 6: 7 farklı kalan. 0'ı unutma." },
+      { s: "Bir sayı 10'a bölündüğünde kalan kaç farklı değer alabilir?", c: ["10", "9", "11"], a: "Kalan 0'dan 9'a kadar olabilir: 0, 1, …, 9 → 10 değer. 10 olamaz, çünkü kalan bölenden küçüktür." },
+      { s: "Bölen n ise kalan kaç farklı değer alabilir?", c: ["n", "n − 1", "n + 1"], a: "Kalan 0, 1, …, n − 1 olabilir. 0'dan n − 1'e kadar n sayı var." },
+      { s: "Bir sayı 12'ye tam bölünmüyorsa, 12 ile bölümünden kalan kaç farklı değer alabilir?", c: ["11", "12", "10"], a: "Tam bölünmüyorsa kalan 0 olamaz: 1, 2, …, 11 → 11 değer." },
+      { s: "Bir sayı 10'a bölündüğünde çıkabilecek bütün kalanların toplamı kaçtır?", c: ["45", "55", "36"], a: "Kalanlar 0, 1, …, 9. Düz ve ters yazıp topla: her sütun 9, 10 sütun → 10 · 9 / 2 = 45." },
+      { s: "Bir bölmede kalan 5 ise bölen en az kaçtır?", c: ["6", "5", "4"], a: "Bölen kalandan büyük olmalı: 5'ten büyük en küçük sayı 6." },
+      { s: "Bir bölmede bölen 2x + 1, kalan 7 ise x doğal sayısı en az kaçtır?", c: ["4", "3", "7"], a: "Bölen &gt; kalan: 2x + 1 &gt; 7 → x &gt; 3. En küçük doğal sayı 4 (bölen 9)." },
+      { s: "Bir sayının 8 ile bölümünden kalan x + 3 ise x en çok kaçtır?", c: ["4", "5", "7"], a: "Kalan en çok 7 olabilir: x + 3 ≤ 7 → x ≤ 4." },
+      { s: "Bir sayının 6 ile bölümünden kalan x² ise x kaç farklı tam sayı değeri alabilir?", c: ["5", "3", "2"], a: "x² &lt; 6 olmalı: x² = 0, 1 ya da 4. x: −2, −1, 0, 1, 2 → 5 değer. Negatifleri unutma: (−2)² = 4." },
+      { s: "Bir sayının 10 ile bölümünden kalan x² ise x tam sayısının en küçük değeri kaçtır?", c: ["−3", "0", "3"], a: "x² &lt; 10: x² en çok 9. x = 3 ya da x = −3 olabilir. En küçüğü −3; kalan yine (−3)² = 9." },
+      { s: "Bölen 7, bölüm 12, kalan 3 ise bölünen kaçtır?", c: ["87", "84", "22"], a: "Bölünen = 7 · 12 + 3 = 84 + 3 = 87." },
+      { s: "Bir sayı 9'a bölündüğünde bölüm 5, kalan 4 ise bu sayı kaçtır?", c: ["49", "45", "18"], a: "9 · 5 + 4 = 49." },
+      { s: "A sayısı 5'e bölündüğünde bölüm B, kalan 3 ise A neye eşittir?", c: ["5B + 3", "3B + 5", "B + 8"], a: "Bölünen = bölen · bölüm + kalan: A = 5 · B + 3." },
+      { s: "100 sayısı 7'ye bölünürse kalan kaçtır?", c: ["2", "14", "7"], a: "7 · 14 = 98, 100 − 98 = 2. 100 = 7 · 14 + 2." },
+      { s: "100 sayısı 7'ye bölünürse bölüm kaçtır?", c: ["14", "2", "15"], a: "7 · 14 = 98 ≤ 100 &lt; 105 = 7 · 15. Bölüm 14, kalan 2." },
+      { s: "Bölünen 58, bölüm 7, kalan 2 ise bölen kaçtır?", c: ["8", "7", "9"], a: "58 = bölen · 7 + 2 → bölen · 7 = 56 → bölen 8. (Kalan 2, bölen 8'den küçük: uygun.)" },
+      { s: "Bölünen 75, bölen 8, bölüm 9 ise kalan kaçtır?", c: ["3", "8", "9"], a: "75 = 8 · 9 + kalan = 72 + kalan → kalan 3." },
+      { s: "Bir sayı 6'ya bölündüğünde bölüm 4 ise bu sayı en çok kaçtır?", c: ["29", "30", "24"], a: "Kalan en çok 5: 6 · 4 + 5 = 29. 30 olsaydı bölüm 5 olurdu." },
+      { s: "Bir sayı 6'ya bölündüğünde bölüm 4 ise bu sayı en az kaçtır?", c: ["24", "25", "20"], a: "Kalan en az 0: 6 · 4 + 0 = 24." },
+      { s: "Bir sayı 7'ye bölündüğünde bölüm ile kalan eşit ise bu sayı en çok kaçtır?", c: ["48", "49", "42"], a: "Kalan en çok 6, bölüm de 6: 7 · 6 + 6 = 48." },
+      { s: "Bir sayının 12 ile bölümünden kalan 7 ise aynı sayının 4 ile bölümünden kalan kaçtır?", c: ["3", "7", "1"], a: "Sayı = 12k + 7 = 4 · 3k + 4 + 3 = 4 · (3k + 1) + 3. Kalan 3. Örnek: 19 = 4 · 4 + 3." }
+    ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
       { s: "√((−2)<sup>2</sup>) = ?", c: ["2", "−2", "±2"], a: "Önce içi: (−2)<sup>2</sup> = 4, sonra √4 = 2. Karekök negatif bir sonuç vermez." },
@@ -850,6 +881,12 @@ window.KK_YKS = {
     { k: "yks-basamak", s: "ab iki basamaklı sayısı a · b'ye eşittir.", d: false, n: "ab = 10a + b" },
     { k: "yks-basamak", s: "İki basamaklı en küçük tam sayı 10'dur.", d: false, n: "−99; tam sayılar negatif de olabilir" },
     { k: "yks-reel", s: "10'dan büyük en küçük reel sayı 10,1'dir.", d: false, n: "Yoktur: 10,01, 10,001 … hep daha küçüğü var" },
+    { k: "yks-bolme", s: "Bir bölmede kalan bölenden büyük olabilir.", d: false, n: "0 ≤ kalan &lt; bölen" },
+    { k: "yks-bolme", s: "Bir bölmede kalan 0 olabilir.", d: true },
+    { k: "yks-bolme", s: "Bir sayı 10'a bölündüğünde kalan 10 farklı değer alabilir.", d: true },
+    { k: "yks-bolme", s: "Bir sayı 5'e bölündüğünde kalan 5 olabilir.", d: false, n: "Kalan 0, 1, 2, 3 ya da 4 olabilir" },
+    { k: "yks-bolme", s: "Bir bölmede bölen 0 olamaz.", d: true },
+    { k: "yks-bolme", s: "Bir sayının 6 ile bölümünden kalan x² ise x negatif olamaz.", d: false, n: "x = −1 ya da −2 de olur: (−2)² = 4 &lt; 6" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
