@@ -816,7 +816,22 @@ window.KK_YKS = {
       { s: "(−1)<sup>2026</sup> − (−1)<sup>2025</sup> = ?", c: ["2", "0", "−2"], a: "2026 çift → 1, 2025 tek → −1: 1 − (−1) = 2." },
       { s: "(−1)<sup>3</sup> · (−1)<sup>6</sup> = ?", c: ["−1", "1", "0"], a: "(−1)<sup>3</sup> = −1, (−1)<sup>6</sup> = 1: çarpım −1." },
       { s: "−1<sup>4</sup> = ?", c: ["−1", "1", "4"], a: "Parantez yok: −(1<sup>4</sup>) = −1. (−1)<sup>4</sup> olsaydı 1 olurdu." },
-      { s: "(−1)<sup>1</sup> + (−1)<sup>2</sup> + (−1)<sup>3</sup> + (−1)<sup>4</sup> = ?", c: ["0", "4", "−4"], a: "−1 + 1 − 1 + 1 = 0. Terimler ikişer ikişer birbirini götürür." }
+      { s: "(−1)<sup>1</sup> + (−1)<sup>2</sup> + (−1)<sup>3</sup> + (−1)<sup>4</sup> = ?", c: ["0", "4", "−4"], a: "−1 + 1 − 1 + 1 = 0. Terimler ikişer ikişer birbirini götürür." },
+      { s: "7<sup>0</sup> = ?", c: ["1", "0", "7"], a: "Sıfırdan farklı her sayının sıfırıncı kuvveti 1'dir." },
+      { s: "0<sup>5</sup> = ?", c: ["0", "1", "Tanımsız"], a: "0 · 0 · 0 · 0 · 0 = 0. 0'ın pozitif kuvvetleri 0'dır." },
+      { s: "0<sup>0</sup> = ?", c: ["Tanımsız", "0", "1"], a: "0<sup>0</sup> tanımsızdır. a<sup>0</sup> = 1 kuralı sadece a ≠ 0 için geçerli." },
+      { s: "0<sup>−2</sup> = ?", c: ["Tanımsız", "0", "1"], a: "0<sup>−2</sup> = 1 / 0<sup>2</sup> = 1 / 0: sıfıra bölme tanımsız." },
+      { s: "9<sup>1</sup> = ?", c: ["9", "1", "0"], a: "Birinci kuvvet sayının kendisidir: a<sup>1</sup> = a." },
+      { s: "1<sup>2026</sup> = ?", c: ["1", "2026", "0"], a: "1 kaç kez çarpılırsa çarpılsın 1'dir." },
+      { s: "(−5)<sup>0</sup> = ?", c: ["1", "−1", "0"], a: "Parantez var: −5 sıfırdan farklı, sıfırıncı kuvveti 1." },
+      { s: "−5<sup>0</sup> = ?", c: ["−1", "1", "0"], a: "Parantez yok: üs sadece 5'in. −(5<sup>0</sup>) = −1. 1 diye atlama!" },
+      { s: "−5<sup>0</sup> + (−5)<sup>0</sup> = ?", c: ["0", "2", "−2"], a: "−5<sup>0</sup> = −1 ve (−5)<sup>0</sup> = 1: toplam 0." },
+      { s: "7<sup>x − 3</sup> = 1 ise x kaçtır?", c: ["3", "0", "4"], a: "7 ne 1 ne −1: 1 olması için üs 0 olmalı. x − 3 = 0 → x = 3." },
+      { s: "2<sup>x + 4</sup> = 1 ise x kaçtır?", c: ["−4", "4", "0"], a: "Üs 0 olmalı: x + 4 = 0 → x = −4." },
+      { s: "(x + 5)<sup>0</sup> = 1 eşitliği hangi x değeri için sağlanmaz?", c: ["−5", "0", "5"], a: "x = −5 için taban 0 olur ve 0<sup>0</sup> tanımsızdır. Diğer bütün x'ler için sonuç 1." },
+      { s: "a<sup>b</sup> = 1 olması için hangi durumlar düşünülmelidir?", c: ["b = 0 (a ≠ 0), a = 1, a = −1 ve b çift", "Sadece b = 0", "Sadece a = 1"], a: "Üs 0 ise (taban 0 değilse) 1; taban 1 ise her zaman 1; taban −1 ise üs çiftse 1." },
+      { s: "(x − 2)<sup>x + 5</sup> = 1 eşitliğini sağlayan x değerleri hangileridir?", c: ["−5, 1 ve 3", "Sadece −5", "−5 ve 3"], a: "Üs 0: x = −5 (taban −7 ✓). Taban 1: x = 3. Taban −1: x = 1, üs 6 çift ✓. Üç değer." },
+      { s: "(x + 3)<sup>x − 1</sup> = 1 ise x kaç farklı değer alabilir?", c: ["2", "3", "1"], a: "Üs 0: x = 1 (taban 4 ✓). Taban 1: x = −2 ✓. Taban −1: x = −4, ama üs −5 tek → (−1)<sup>−5</sup> = −1 ✗. İki değer." }
     ],
     // Köklü Sayılar: konu henüz "konular" listesinde değil, sorular hazır bekliyor (oyunda görünmez).
     "yks-koklu": [
@@ -1033,6 +1048,10 @@ window.KK_YKS = {
     { k: "yks-uslu", s: "−1<sup>2</sup> = 1", d: false, n: "Parantez yok: −(1<sup>2</sup>) = −1" },
     { k: "yks-uslu", s: "n çift ise (−1)<sup>n</sup> = 1, n tek ise (−1)<sup>n</sup> = −1'dir.", d: true },
     { k: "yks-uslu", s: "(−1)<sup>3</sup> + (−1)<sup>4</sup> = 0", d: true },
+    { k: "yks-uslu", s: "Her sayının sıfırıncı kuvveti 1'dir.", d: false, n: "0<sup>0</sup> tanımsızdır; kural a ≠ 0 için" },
+    { k: "yks-uslu", s: "−7<sup>0</sup> = 1", d: false, n: "Parantez yok: −(7<sup>0</sup>) = −1" },
+    { k: "yks-uslu", s: "0<sup>−1</sup> tanımsızdır.", d: true },
+    { k: "yks-uslu", s: "1<sup>100</sup> = 100", d: false, n: "1<sup>100</sup> = 1" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
     { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
