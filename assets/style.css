@@ -660,6 +660,10 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .en-grup-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
 .en-grup-dugmeler .btn { justify-content: center; padding: 8px 6px; font-size: 0.9rem; font-weight: 600; }
 .en-grup-dugmeler .en-ez-btn { grid-column: 1 / -1; }
+/* Grup düğmeleri renksiz: hiçbiri öne çıkmaz. Fareyle üstüne gelince (yalnız fareli cihazlar) ve dokunurken mavi olur. */
+@media (hover: hover) { .en-grup-dugmeler .btn:hover, .en-grup-dugmeler .btn:hover .en-ez-puan { background: var(--accent); border-color: var(--accent); color: var(--accent-text); } }
+.en-grup-dugmeler .btn:active, .en-grup-dugmeler .btn:active .en-ez-puan { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.en-grup-dugmeler .btn { -webkit-tap-highlight-color: transparent; }
 .en-ez-puan { color: var(--muted); font-weight: 400; font-size: 0.85em; }
 .en-ez-satir { display: none; }
 @media (max-width: 760px) { .en-ez-puan { display: none; } .en-ez-satir { display: block; color: var(--muted); font-size: 0.8rem; font-weight: 600; } .en-ez-btn { white-space: nowrap; } }

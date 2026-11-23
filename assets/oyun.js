@@ -512,8 +512,8 @@
             (ezk ? '<span class="en-ez-satir">🔄 ' + ezc + " / " + ezh.length + "</span>" : "") +
             enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
             '<div class="en-grup-dugmeler"><button type="button" class="btn" data-kart="' + gid + '">📇 Kartlar</button>' +
-            '<button type="button" class="btn primary" data-konu="' + gid + '">📝 Test</button>' +
-            (ezk ? '<button type="button" class="btn en-ez-btn" data-konu="' + ezk.id + '">🔄 Eş<span class="en-uzun"> </span>/<span class="en-uzun"> </span>Zıt<span class="en-ez-puan">' +
+            '<button type="button" class="btn" data-konu="' + gid + '">📝 Test</button>' +
+            (ezk ? '<button type="button" class="btn en-ez-btn" data-konu="' + ezk.id + '"><span>🔄 Eş<span class="en-uzun"> </span>/<span class="en-uzun"> </span>Zıt</span><span class="en-ez-puan">' +
               (ezc === ezh.length ? " ✓" : " · " + ezc + "/" + ezh.length) + "</span></button>" : "") + "</div></div>";
         }).join("");
         return '<section class="serit en-serit"><div class="tur en-r' + (si + 1) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
