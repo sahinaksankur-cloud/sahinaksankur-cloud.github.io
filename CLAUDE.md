@@ -6,6 +6,9 @@ Siteye kalıcı bir değişiklik yaptığında bu dosyayı da güncelle.
 
 Site sahibinin ayrıca verdiği talimat dosyaları varsa onlar bu dosyadan önce gelir.
 
+**Oturum başında:** Bu site daha geniş bir projenin parçası. Projenin notları gizli `sahinaksankur-cloud/kuzey-kampus-proje`
+deposunda. O depoyu `add_repo` ile ekle; önce oradaki `CLAUDE.md`'yi (bölüm 0: oturum düzeni), sonra `SIRADAKI-OTURUM.md`'yi oku.
+
 ## Kurallar
 - Kullanıcıyla **Türkçe** konuş. Teknik adımları tek tek, sade anlat.
 - **Kişisel e-posta adresi hiçbir yerde görünmemeli** (kod, sayfa, commit). Commit kimliği her zaman:
