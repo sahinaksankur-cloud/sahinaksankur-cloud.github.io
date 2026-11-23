@@ -554,6 +554,10 @@ window.KK_YKS = {
     // sonuçlar çarpım olarak bırakılır: (n + 2) · (n + 1). 0! = 1, 3! = 4!/4 … zinciriyle gösterilir.
     "yks-faktoriyel": [
       { s: "5! neye eşittir?", c: ["5 · 4 · 3 · 2 · 1", "5 + 4 + 3 + 2 + 1", "5 · 5"], a: "n!, 1'den n'ye kadar bütün doğal sayıların çarpımıdır: 5! = 5 · 4 · 3 · 2 · 1 = 120." },
+      { s: "3! kaçtır?", c: ["6", "3", "9"], a: "3! = 3 · 2 · 1 = 6." },
+      { s: "4! kaçtır?", c: ["24", "10", "16"], a: "4! = 4 · 3 · 2 · 1 = 24. (10 = 4 + 3 + 2 + 1: toplama değil, çarpma.)" },
+      { s: "5! kaçtır?", c: ["120", "15", "60"], a: "5! = 5 · 4! = 5 · 24 = 120." },
+      { s: "6! kaçtır?", c: ["720", "120", "600"], a: "6! = 6 · 5! = 6 · 120 = 720." },
       { s: "5 · 4!, 5 · 4 · 3! ve 5 · 4 · 3 ifadelerinden hangisi 5!'e eşit değildir?", c: ["5 · 4 · 3", "5 · 4!", "5 · 4 · 3!"], a: "5! = 5 · 4! = 5 · 4 · 3! = 5 · 4 · 3 · 2!. 5 · 4 · 3'te 2 · 1 eksik kalmış." },
       { s: "7 · 6 · 5! hangisine eşittir?", c: ["7!", "42!", "6!"], a: "7! = 7 · 6 · 5 · 4 · 3 · 2 · 1 = 7 · 6 · 5!." },
       { s: "10! hangi biçimde yazılabilir?", c: ["10 · 9 · 8!", "10 · 8!", "10 · 9 · 8"], a: "10! = 10 · 9! = 10 · 9 · 8!. Hiçbir çarpan atlanmaz." },
@@ -580,6 +584,8 @@ window.KK_YKS = {
       { s: "<span class=\"kesir\"><span>(n + 1)!</span><span>n!</span></span> = 8 ise n kaçtır?", c: ["7", "8", "9"], a: "Sol taraf n + 1'e eşit: n + 1 = 8, n = 7." },
       { s: "(n + 1)! = 6 · n! ise n kaçtır?", c: ["5", "6", "7"], a: "(n + 1)! = (n + 1) · n!. O hâlde n + 1 = 6, n = 5." },
       { s: "<span class=\"kesir\"><span>n!</span><span>(n − 2)!</span></span> = 20 ise n kaçtır?", c: ["5", "4", "10"], a: "Sadeleşince n · (n − 1) = 20. Ardışık iki sayının çarpımı 20: 5 · 4. n = 5." },
+      { s: "17! sayısının birler basamağı kaçtır?", c: ["0", "7", "5"], a: "17! = 17 · 16 · … · 5 · … · 2 · 1. Çarpanlar arasında 2 ve 5 var: 2 · 5 = 10. 10 ile çarpılan sayının birler basamağı 0 olur." },
+      { s: "1! + 2! + 3! + … + 10! toplamının birler basamağı kaçtır?", c: ["3", "0", "5"], a: "5!'den itibaren hepsinde 2 · 5 = 10 var, birler basamakları 0. Geriye 1 + 2 + 6 + 24 = 33 kalır: birler basamağı 3." },
       { s: "17! sayısının kaç farklı asal çarpanı vardır?", c: ["7", "17", "6"], a: "17! = 17 · 16 · … · 2 · 1. İçinde 17'ye kadar bütün asallar var: 2, 3, 5, 7, 11, 13, 17 → 7 tane." },
       { s: "10! sayısının asal çarpanları hangileridir?", c: ["2, 3, 5 ve 7", "2, 3, 5, 7 ve 9", "1'den 10'a kadar tüm sayılar"], a: "10!'in çarpanları 1'den 10'a kadar sayılar; bunların asal yapıtaşları 2, 3, 5, 7. 9 = 3 · 3 asal değil." },
       { s: "20! sayısının en büyük asal çarpanı kaçtır?", c: ["19", "20", "17"], a: "20 asal değil (2<sup>2</sup> · 5). 20'den küçük en büyük asal 19." },
@@ -759,6 +765,7 @@ window.KK_YKS = {
     { k: "yks-faktoriyel", s: "(n + 1)! = (n + 1) · n!", d: true },
     { k: "yks-faktoriyel", s: "10! / 5! = 2!", d: false, n: "10 · 9 · 8 · 7 · 6; faktöriyelde sayılar bölünüp sadeleşmez" },
     { k: "yks-faktoriyel", s: "2! + 3! = 5!", d: false, n: "2 + 6 = 8, ama 5! = 120" },
+    { k: "yks-faktoriyel", s: "5'ten büyük veya 5'e eşit her n için n! sayısının birler basamağı 0'dır.", d: true },
     { k: "yks-faktoriyel", s: "17! sayısı 19'a bölünür.", d: false, n: "19 asal ve 17'den büyük; 17!'in çarpanları arasında yok" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
