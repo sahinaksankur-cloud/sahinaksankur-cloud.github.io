@@ -1395,7 +1395,6 @@
   var rota = function () {
     if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
     else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
-    else if (!oku().kuralGoruldu) kuralAc();
   };
   // Bölüme Özel bir gruba link (#en-calc-1, #kart-en-calc-1): bölüm seçilir, dosyası yüklenince test açılır
   var hedefAlan = EN && (EN.alanlar || []).filter(function (a) { return (kartHedef ? kartHedef[1] : hedef).indexOf(a.id + "-") === 0; })[0];
@@ -1403,5 +1402,5 @@
     var ka = oku(); ka.alan = hedefAlan.id; yaz(ka);
     alanYukle(hedefAlan.id, function () { girisCiz(); rota(); });
   } else rota();
-  if (hedef === "en-bolume-ozel") setTimeout(function () { var e = $("en-bolume-ozel"); if (e) e.scrollIntoView({ block: "start" }); }, 50);   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
+  if (hedef === "en-bolume-ozel") setTimeout(function () { var e = $("en-bolume-ozel"); if (e) e.scrollIntoView({ block: "start" }); }, 50);
 })();

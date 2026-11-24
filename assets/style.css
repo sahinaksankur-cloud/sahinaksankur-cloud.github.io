@@ -733,7 +733,7 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .kural-ac:hover { text-decoration-thickness: 2px; }
 .panel-kurallar { margin: 0; padding: 10px 12px 10px 12px; list-style: none; background: var(--surface-2); border-radius: 10px; display: grid; gap: 6px; font-size: 0.88rem; line-height: 1.45; color: var(--text); }
 .panel-kurallar:empty { display: none; }
-.kural-panel { max-width: 560px; max-height: min(88vh, 760px); grid-template-rows: auto minmax(0, 1fr) auto; }
+.kural-panel { max-width: 560px; max-height: min(88vh, 760px); max-height: min(85dvh, 760px); grid-template-rows: auto minmax(0, 1fr) auto; }
 .kural-icerik { overflow-y: auto; padding-right: 4px; }
 .kural-icerik h4 { margin: 14px 0 6px; font-size: 1rem; }
 .kural-icerik h4:first-child { margin-top: 0; }
