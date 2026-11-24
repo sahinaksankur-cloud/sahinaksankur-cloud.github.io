@@ -27,7 +27,9 @@ window.KK_EN = {
     { id: "en-muh", ad: "Mühendislik İngilizcesi", etiket: "Mühendislik", ust: "🎓 Bölüme Özel", aciklama: "Mühendislik derslerinde, laboratuvarda ve İngilizce ders kitaplarında geçen genel terimler.",
       kisa: "Mühendislik", dosya: "data/alan/muhendislik.js", grupAd: ["Mekanik, Malzeme ve Enerji", "Tasarım, Üretim ve Proje"] },
     { id: "en-psi", ad: "Psikoloji İngilizcesi", etiket: "Psikoloji", ust: "🎓 Bölüme Özel", aciklama: "Psikoloji derslerinde, araştırmalarda ve İngilizce ders kitaplarında geçen terimler.",
-      kisa: "Psikoloji", dosya: "data/alan/psikoloji.js", grupAd: ["Zihin, Öğrenme ve Gelişim", "Sosyal ve Klinik Psikoloji, Araştırma"] }
+      kisa: "Psikoloji", dosya: "data/alan/psikoloji.js", grupAd: ["Zihin, Öğrenme ve Gelişim", "Sosyal ve Klinik Psikoloji, Araştırma"] },
+    { id: "en-sis", ad: "Siyaset Bilimi İngilizcesi", etiket: "Siyaset", ust: "🎓 Bölüme Özel", aciklama: "Siyaset bilimi ve uluslararası ilişkiler derslerinde, İngilizce kitaplarda geçen terimler.",
+      kisa: "Siyaset Bilimi", dosya: "data/alan/siyaset.js", grupAd: ["Siyaset Kuramı ve Devlet", "Uluslararası İlişkiler ve Kamu Politikası"] }
   ],
   kelimeler: {
     "en-a1-1": [
