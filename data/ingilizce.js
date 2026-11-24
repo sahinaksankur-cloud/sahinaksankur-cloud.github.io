@@ -23,7 +23,9 @@ window.KK_EN = {
     { id: "en-eko", ad: "Ekonomi İngilizcesi", etiket: "Ekonomi", ust: "🎓 Bölüme Özel", aciklama: "İktisat derslerinde ve İngilizce ders kitaplarında geçen terimler.",
       kisa: "Ekonomi", dosya: "data/alan/ekonomi.js", grupAd: ["Mikroekonomi", "Makroekonomi, Para ve Ticaret"] },
     { id: "en-isl", ad: "İşletme İngilizcesi", etiket: "İşletme", ust: "🎓 Bölüme Özel", aciklama: "İşletme derslerinde, iş hayatında ve İngilizce ders kitaplarında geçen terimler.",
-      kisa: "İşletme", dosya: "data/alan/isletme.js", grupAd: ["Yönetim ve Organizasyon", "Pazarlama, Finans ve Muhasebe"] }
+      kisa: "İşletme", dosya: "data/alan/isletme.js", grupAd: ["Yönetim ve Organizasyon", "Pazarlama, Finans ve Muhasebe"] },
+    { id: "en-muh", ad: "Mühendislik İngilizcesi", etiket: "Mühendislik", ust: "🎓 Bölüme Özel", aciklama: "Mühendislik derslerinde, laboratuvarda ve İngilizce ders kitaplarında geçen genel terimler.",
+      kisa: "Mühendislik", dosya: "data/alan/muhendislik.js", grupAd: ["Mekanik, Malzeme ve Enerji", "Tasarım, Üretim ve Proje"] }
   ],
   kelimeler: {
     "en-a1-1": [
