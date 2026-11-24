@@ -430,7 +430,8 @@
       fetch("https://kuzeykampus.goatcounter.com/counter/TOTAL.json", { cache: "no-store" })
         .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
         .then(function (d) {
-          var n = parseInt(String(d.count_unique != null ? d.count_unique : d.count).replace(/[^\d]/g, ""), 10);
+          var say = function (v) { return parseInt(String(v == null ? "" : v).replace(/[^\d]/g, ""), 10) || 0; };
+          var n = say(d.count_unique) || say(d.count);   // tekil sayı yoksa ya da 0 gelirse toplam görüntüleme
           if (!n) return;
           sayac.querySelector("span").textContent = n.toLocaleString("tr-TR");
           sayac.hidden = false;
