@@ -21,7 +21,9 @@ window.KK_EN = {
     { id: "en-calc", ad: "Calculus İngilizcesi", etiket: "Calculus", ust: "🎓 Bölüme Özel", aciklama: "Calculus derslerinde ve İngilizce ders kitaplarında geçen terimler.",
       kisa: "Calculus", dosya: "data/alan/calculus.js", grupAd: ["Fonksiyonlar, Limit ve Süreklilik", "Türev ve İntegral"] },
     { id: "en-eko", ad: "Ekonomi İngilizcesi", etiket: "Ekonomi", ust: "🎓 Bölüme Özel", aciklama: "İktisat derslerinde ve İngilizce ders kitaplarında geçen terimler.",
-      kisa: "Ekonomi", dosya: "data/alan/ekonomi.js", grupAd: ["Mikroekonomi", "Makroekonomi, Para ve Ticaret"] }
+      kisa: "Ekonomi", dosya: "data/alan/ekonomi.js", grupAd: ["Mikroekonomi", "Makroekonomi, Para ve Ticaret"] },
+    { id: "en-isl", ad: "İşletme İngilizcesi", etiket: "İşletme", ust: "🎓 Bölüme Özel", aciklama: "İşletme derslerinde, iş hayatında ve İngilizce ders kitaplarında geçen terimler.",
+      kisa: "İşletme", dosya: "data/alan/isletme.js", grupAd: ["Yönetim ve Organizasyon", "Pazarlama, Finans ve Muhasebe"] }
   ],
   kelimeler: {
     "en-a1-1": [
