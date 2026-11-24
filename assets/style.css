@@ -685,6 +685,8 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .sekmeler button { white-space: nowrap; }
 @media (max-width: 460px) { .sekmeler { gap: 2px; } .sekmeler button { padding: 10px 8px; font-size: 0.95rem; } }
 .en-soru { display: block; }
+.en-bosluk { display: block; font-size: 1.15em; line-height: 1.5; }
+.en-bosluk-tr { display: block; margin-top: 8px; font-size: 0.85em; font-weight: 400; color: var(--muted); }
 .en-soru strong { font-size: 1.45em; }
 .en-soru small { font-size: 0.6em; font-weight: 600; color: var(--muted); margin-left: 4px; }
 .en-ornek { display: block; margin-top: 6px; color: var(--muted); }

@@ -713,7 +713,7 @@ window.KK_EN = {
       ["umbrella", "i", "şemsiye", "Take an umbrella; it's going to rain.", "Şemsiye al; yağmur yağacak."],
       ["roof", "i", "çatı", "There is a bird on the roof.", "Çatıda bir kuş var."],
       ["corner", "i", "köşe", "The bakery is on the corner of the street.", "Fırın sokağın köşesinde."],
-      ["lesson", "i", "ders (ders saati)", "Our English lesson starts at ten.", "İngilizce dersimiz onda başlıyor."],
+      ["lesson", "i", "ders (ders saati)", "My piano lesson lasts one hour.", "Piyano dersim bir saat sürüyor."],
       ["science", "i", "bilim; fen", "Science is my favourite subject.", "Fen en sevdiğim ders."],
       ["fall", "f", "düşmek", "Be careful, don't fall!", "Dikkat et, düşme!"],
       ["keep", "f", "saklamak; tutmak (bir yerde)", "Keep the milk in the fridge.", "Sütü buzdolabında sakla."],
