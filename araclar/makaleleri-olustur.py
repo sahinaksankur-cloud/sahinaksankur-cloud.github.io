@@ -140,6 +140,8 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
   <script src="{kok}assets/config.js?v=202611240603"></script>
   <script src="{kok}assets/app.js?v=202611240603"></script>
   <script src="{kok}assets/canli-takvim.js?v=202611240603"></script>
+  <!-- Ziyaretçi sayımı: GoatCounter (çerezsiz, kişisel veri yok; yerelde saymaz) -->
+  <script data-goatcounter="https://kuzeykampus.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
 """
