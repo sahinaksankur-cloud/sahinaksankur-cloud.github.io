@@ -45,8 +45,14 @@
   function enMi(id) { return /^en-/.test(id || ""); }
   function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : "uni"; }
   if (EN) {
+    // Şık için anlam parçaları ("ince; zayıf" → ince, zayıf): doğru cevapla ortak parçası olan kelime yanlış şık olmaz.
+    var anlamParca = function (t) { return t.split(";").map(function (p) { return p.trim().split(" (")[0]; }); };
+    var ayriAnlam = function (a, b) { var pa = anlamParca(a); return !anlamParca(b).some(function (p) { return pa.indexOf(p) >= 0; }); };
     (EN.seviyeler || []).forEach(function (sv) {
      sv.gruplar = [];
+     // Grupta aynı türden yeterli kelime yoksa (ör. 2 zarf) şıklar aynı seviyenin diğer gruplarından gelir.
+     var seviyeListe = [];
+     for (var sn = 1; EN.kelimeler[sv.id + "-" + sn]; sn++) EN.kelimeler[sv.id + "-" + sn].forEach(function (r) { seviyeListe.push({ w: r[0], tur: r[1], t: r[2] }); });
      for (var gn = 1; EN.kelimeler[sv.id + "-" + gn]; gn++) {
       var gid = sv.id + "-" + gn;
       sv.gruplar.push(gid);
@@ -54,8 +60,10 @@
       var tg = function (t) { return t === "b" ? "z" : t; };   // zarf ve bağlaçlar şık için aynı grupta
       O.konular.push({ id: gid, ad: sv.ad.split(" · ")[0] + " · " + gn + ". Grup", seviye: sv.id, no: gn, grup: "en" });
       O.sorular[gid] = liste.map(function (x) {
-        var es = liste.filter(function (y) { return y !== x && tg(y.tur) === tg(x.tur); });
-        if (es.length < 2) es = liste.filter(function (y) { return y !== x; });
+        var uygun = function (y) { return y.w !== x.w && ayriAnlam(x.t, y.t); };
+        var es = liste.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
+        if (es.length < 2) es = seviyeListe.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
+        if (es.length < 2) es = liste.filter(uygun);
         var yanlis = karistir(es).slice(0, 2).map(function (y) { return y.t; });
         return {
           b: "en", k: sv.id, w: x.w, tur: x.tur, t: x.t, o: x.o, ot: x.ot,
