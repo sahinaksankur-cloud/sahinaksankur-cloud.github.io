@@ -737,3 +737,14 @@ body.yayin .oyun-grafik { max-width: 560px; }
 p.hata-satir { margin: 0; }
 .hata-bildir { font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 3px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); white-space: nowrap; }
 .hata-bildir:hover, .hata-bildir:focus-visible { color: var(--text); border-color: currentColor; }
+
+/* 🌱 Davet: ana sayfada küçük şerit, test sonucunda tek satır (açılır pencere yok) */
+.davet-serit { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 18px; padding: 7px 8px 7px 14px; border: 1px dashed #8bbf9f; border-radius: 12px; background: rgba(46, 125, 91, 0.07); font-size: 0.9rem; line-height: 1.35; color: var(--text); }
+@media (max-width: 600px) { .davet-serit { justify-content: space-between; font-size: 0.82rem; } }
+.davet-paylas { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; border: 1px solid #2e7d5b; background: transparent; color: #2e7d5b; cursor: pointer; white-space: nowrap; }
+.davet-paylas:hover, .davet-paylas:focus-visible { background: #2e7d5b; color: #fff; }
+.davet-satir { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 10px; margin: 4px 0 0; padding: 8px 12px; border-radius: 10px; background: rgba(46, 125, 91, 0.07); font-size: 0.9rem; color: var(--text); }
+.davet-satir[hidden] { display: none; }
+.davet-kapat { font: inherit; font-size: 0.85rem; line-height: 1; padding: 4px 6px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.davet-kapat:hover { color: var(--text); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .davet-paylas { color: #7cc9a2; border-color: #7cc9a2; } :root:not([data-theme="light"]) .davet-serit { border-color: #3d6b52; } }

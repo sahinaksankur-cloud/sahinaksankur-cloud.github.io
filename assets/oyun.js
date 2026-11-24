@@ -828,6 +828,7 @@
 
   function dyBitir() {
     sayaciDurdur();
+    if ($("oyun-davet")) $("oyun-davet").hidden = true;
     var n = dy.liste.length, p = dy.puan, kayit = oku();
     kayit.rekor = kayit.rekor || {};
     var eski = kayit.rekor[dy.id], yeniRekor = eski == null || p > eski;
@@ -876,6 +877,18 @@
   });
 
   // ---- Sonuç ----
+  // 🌱 Davet satırı: 10 soruda 8 ve üstü (%80) bitince, haftada en fazla bir kez (kk-oyun-v1 → davet: son gösterim zamanı).
+  var DAVET_ARA = 7 * 24 * 3600 * 1000;
+  function davetGoster(oran) {
+    var el = $("oyun-davet");
+    if (!el) return;
+    var k = oku(), simdi = Date.now();
+    var goster = oran >= 0.8 && !(k.davet && simdi - k.davet < DAVET_ARA);
+    if (goster) { k.davet = simdi; yaz(k); }
+    el.hidden = !goster;
+  }
+  if ($("oyun-davet-kapat")) $("oyun-davet-kapat").addEventListener("click", function () { $("oyun-davet").hidden = true; });
+
   function bitir() {
     sayaciDurdur();
     var enTest = enMi(durum.konu);
@@ -885,6 +898,7 @@
     $("oyun-tekrar").setAttribute("data-hedef", durum.konu);
     $("oyun-konu-degis").textContent = "Konu değiştir";
     var n = durum.sorular.length, p = durum.puan;
+    davetGoster(n ? p / n : 0);
     var kayit = oku();
     kayit.rekor = kayit.rekor || {};
     var anahtar = rekorAnahtar(durum.konu);

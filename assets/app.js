@@ -402,6 +402,27 @@
         el.hidden = false;
       });
     }
+    // 📤 Paylaş düğmeleri (data-paylas="adres"): telefonda sistemin paylaşım menüsü, bilgisayarda link kopyalanır.
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest && e.target.closest("[data-paylas]");
+      if (!btn) return;
+      e.preventDefault();
+      var url = btn.getAttribute("data-paylas") || "https://kuzeykampuscalculus.com/";
+      var metin = btn.getAttribute("data-paylas-metin") || "Kuzey Kampüs: matematiği ezberlemeden, anlayarak öğren.";
+      var dokunmatik = window.matchMedia && matchMedia("(pointer: coarse)").matches;
+      if (navigator.share && dokunmatik) {
+        navigator.share({ title: "Kuzey Kampüs", text: metin, url: url }).catch(function () {});
+        return;
+      }
+      var eski = btn.getAttribute("data-eski") || btn.innerHTML;
+      btn.setAttribute("data-eski", eski);
+      var tamam = function () {
+        btn.textContent = "✓ Link kopyalandı";
+        setTimeout(function () { btn.innerHTML = eski; }, 2200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(tamam, function () { window.prompt("Linki kopyala:", url); });
+      else window.prompt("Linki kopyala:", url);
+    });
     if (document.getElementById("courses")) renderHome();
     if (document.getElementById("ana-dersler")) renderAnaDersler();
     if (document.getElementById("course")) renderCourse();
