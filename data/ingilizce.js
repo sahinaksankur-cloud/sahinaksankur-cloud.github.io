@@ -19,7 +19,9 @@ window.KK_EN = {
   // Canlı Yarışma'ya girmez. Yeni bölüm için buraya bir satır (id, ad, kisa, etiket, aciklama, dosya, grupAd) ve data/alan/ altına dosya eklemek yeter.
   alanlar: [
     { id: "en-calc", ad: "Calculus İngilizcesi", etiket: "Calculus", ust: "🎓 Bölüme Özel", aciklama: "Calculus derslerinde ve İngilizce ders kitaplarında geçen terimler.",
-      kisa: "Calculus", dosya: "data/alan/calculus.js", grupAd: ["Fonksiyonlar, Limit ve Süreklilik", "Türev ve İntegral"] }
+      kisa: "Calculus", dosya: "data/alan/calculus.js", grupAd: ["Fonksiyonlar, Limit ve Süreklilik", "Türev ve İntegral"] },
+    { id: "en-eko", ad: "Ekonomi İngilizcesi", etiket: "Ekonomi", ust: "🎓 Bölüme Özel", aciklama: "İktisat derslerinde ve İngilizce ders kitaplarında geçen terimler.",
+      kisa: "Ekonomi", dosya: "data/alan/ekonomi.js", grupAd: ["Mikroekonomi", "Makroekonomi, Para ve Ticaret"] }
   ],
   kelimeler: {
     "en-a1-1": [
