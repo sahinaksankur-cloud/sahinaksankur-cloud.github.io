@@ -764,3 +764,7 @@ p.hata-satir { margin: 0; }
 .en-zor-serit span { color: var(--muted); font-size: 0.9rem; }
 .en-zor-dugmeler { display: flex; gap: 8px; }
 .en-zor-bos { margin: 0 0 16px; color: var(--muted); font-size: 0.92rem; }
+
+/* 👁 Ana sayfa altındaki küçük, etiketsiz sayaç */
+.sayac { color: var(--muted); font-size: 0.8rem; opacity: 0.75; font-variant-numeric: tabular-nums; }
+.sayac[hidden] { display: none; }

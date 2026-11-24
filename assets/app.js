@@ -423,6 +423,19 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(tamam, function () { window.prompt("Linki kopyala:", url); });
       else window.prompt("Linki kopyala:", url);
     });
+    // 👁 Ana sayfanın altındaki küçük sayaç (etiketsiz): GoatCounter'dan toplam ziyaretçi (tekil varsa o, yoksa görüntüleme).
+    // GoatCounter ayarlarında "Allow adding visitor counts on your website" açık olmalı; alınamazsa hiç görünmez.
+    var sayac = document.querySelector("[data-sayac]");
+    if (sayac && window.fetch) {
+      fetch("https://kuzeykampus.goatcounter.com/counter/TOTAL.json", { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function (d) {
+          var n = parseInt(String(d.count_unique != null ? d.count_unique : d.count).replace(/[^\d]/g, ""), 10);
+          if (!n) return;
+          sayac.querySelector("span").textContent = n.toLocaleString("tr-TR");
+          sayac.hidden = false;
+        }).catch(function () {});
+    }
     if (document.getElementById("courses")) renderHome();
     if (document.getElementById("ana-dersler")) renderAnaDersler();
     if (document.getElementById("course")) renderCourse();
