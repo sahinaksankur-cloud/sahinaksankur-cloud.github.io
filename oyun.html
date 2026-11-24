@@ -37,13 +37,13 @@
       <div class="sekmeler" role="tablist" aria-label="Test grubu">
         <button type="button" role="tab" id="sekme-uni" aria-controls="panel-uni" aria-selected="true">🎓 Üniversite</button>
         <button type="button" role="tab" id="sekme-yks" aria-controls="panel-yks" aria-selected="false">📘 YKS</button>
-        <span class="sekme-dil-kap"><button type="button" role="tab" id="sekme-en" aria-controls="panel-en" aria-selected="false" aria-haspopup="true" aria-expanded="false"><span id="sekme-dil">🇬🇧 İngilizce</span> <span class="ok" aria-hidden="true">▾</span></button>
-          <span class="dil-menu" id="dil-menu" hidden>
-            <button type="button" data-dil="en">🇬🇧 İngilizce</button>
-            <button type="button" data-dil="de">🇩🇪 Almanca</button>
-            <button type="button" data-dil="fr">🇫🇷 Fransızca</button>
-            <button type="button" data-dil="ja">🇯🇵 Japonca</button>
-          </span></span>
+        <button type="button" role="tab" id="sekme-en" aria-controls="panel-en" aria-selected="false">🌍 Diller</button>
+      </div>
+      <div class="dil-secici" id="dil-secici" role="group" aria-label="Dil" hidden>
+        <button type="button" data-dil="en" aria-pressed="false">🇬🇧 İngilizce</button>
+        <button type="button" data-dil="de" aria-pressed="false">🇩🇪 Almanca</button>
+        <button type="button" data-dil="fr" aria-pressed="false">🇫🇷 Fransızca</button>
+        <button type="button" data-dil="ja" aria-pressed="false">🇯🇵 Japonca</button>
       </div>
 
       <div id="panel-uni" role="tabpanel" aria-labelledby="sekme-uni">

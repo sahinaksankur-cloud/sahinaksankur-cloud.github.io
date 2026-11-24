@@ -799,16 +799,13 @@ p.hata-satir { margin: 0; }
 .ipucu strong { margin-right: 4px; }
 .oyun-sonuc .ipucu { margin: 4px 0 0; text-align: left; }
 
-/* 🔤 İngilizce ▾ sekmesi: dokununca altında dil listesi (İngilizce, Japonca) */
-.sekme-dil-kap { position: relative; display: inline-flex; }
-.sekmeler .ok { font-size: 0.8em; }
-.dil-menu { position: absolute; top: 100%; left: 0; z-index: 30; min-width: 170px; display: flex; flex-direction: column; padding: 6px; margin-top: 4px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
-.dil-menu[hidden] { display: none; }
-.sekmeler .dil-menu button { border: 0; margin: 0; border-radius: 6px; text-align: left; padding: 10px 12px; color: var(--text); }
-.sekmeler .dil-menu button:hover { background: var(--bg); }
-.sekmeler .dil-menu button[aria-current="true"] { color: var(--accent); }
-@media (max-width: 460px) { .dil-menu { left: auto; right: 0; } }
+/* 🌍 Diller sekmesi: altında bayraklı dil düğmeleri (İngilizce, Almanca, Fransızca, Japonca) */
+.dil-secici { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 18px; }
+.dil-secici[hidden] { display: none; }
+.dil-secici button { font: inherit; font-size: 0.95rem; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+.dil-secici button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+@media (hover: hover) { .dil-secici button:not([aria-pressed="true"]):hover { border-color: var(--accent); } }
+@media (max-width: 460px) { .dil-secici { gap: 6px; } .dil-secici button { padding: 7px 10px; font-size: 0.88rem; } }
 
 /* 🗾 Japonca */
 .ja-r1 { background: #b3263a; } .de-r1 { background: #5c4a12; }

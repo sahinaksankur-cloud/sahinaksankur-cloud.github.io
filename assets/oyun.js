@@ -1452,43 +1452,31 @@
     else if ((e.key === " " || e.key === "Enter") && e.target === document.body) { e.preventDefault(); kartCevir(); }
   });
 
-  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🇬🇧 İngilizce ▾ ----
-  // Dil sekmesine dokununca altında dil listesi açılır (İngilizce, Japonca); seçilen dilin paneli gösterilir.
-  // Panel "ja" ile sekme düğmesi "en" aynıdır; düğmenin yazısı seçilen dili gösterir.
+  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🌍 Diller ----
+  // 🌍 Diller sekmesinin altında bayraklı dil düğmeleri (#dil-secici: İngilizce, Almanca, Fransızca, Japonca);
+  // seçilen dilin paneli gösterilir. Sekmeye dokununca son seçilen dil açılır (kk-oyun-v1 → dil).
   var SEKMELER = ["uni", "yks", "en"].concat(DIL_SIRA);
-  var DIL_AD = { en: "🇬🇧 İngilizce" };
-  DIL_SIRA.forEach(function (kod) { DIL_AD[kod] = DILLER[kod].ikon + " " + DILLER[kod].ad; });
-  function dilMenu(ac) {
-    if (!$("dil-menu")) return;
-    $("dil-menu").hidden = !ac;
-    $("sekme-en").setAttribute("aria-expanded", String(ac));
-  }
   function sekmeAc(ad) {
     if (!$("panel-yks")) return;
     if (SEKMELER.indexOf(ad) < 0) ad = "uni";
+    var dilde = ad === "en" || !!DILLER[ad];
     SEKMELER.forEach(function (x) { if ($("panel-" + x)) $("panel-" + x).hidden = x !== ad; });
     ["uni", "yks", "en"].forEach(function (x) {
-      $("sekme-" + x).setAttribute("aria-selected", String(x === ad || (x === "en" && !!DILLER[ad])));
+      $("sekme-" + x).setAttribute("aria-selected", String(x === ad || (x === "en" && dilde)));
     });
-    if ($("sekme-dil")) $("sekme-dil").textContent = DIL_AD[DILLER[ad] ? ad : "en"];
-    Array.prototype.forEach.call(document.querySelectorAll("#dil-menu [data-dil]"), function (b) {
-      b.setAttribute("aria-current", String(b.getAttribute("data-dil") === ad));
+    if ($("dil-secici")) $("dil-secici").hidden = !dilde;
+    Array.prototype.forEach.call(document.querySelectorAll("#dil-secici [data-dil]"), function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-dil") === ad));
     });
-    dilMenu(false);
-    var k = oku(); k.sekme = ad; yaz(k);
+    var k = oku(); k.sekme = ad; if (dilde) k.dil = ad; yaz(k);
     if (ad !== "yks" && secimModu) tekrarModu(false);
     if (DILLER[ad] && !DILLER[ad].yuklendi) dilYukle(ad, girisYenile);
   }
   ["uni", "yks"].forEach(function (x) {
     if ($("sekme-" + x)) $("sekme-" + x).addEventListener("click", function () { sekmeAc(x); });
   });
-  if ($("sekme-en")) $("sekme-en").addEventListener("click", function (e) {
-    e.stopPropagation();
-    dilMenu($("dil-menu").hidden);
-  });
-  baglan("#dil-menu", "[data-dil]", function (b) { sekmeAc(b.getAttribute("data-dil")); });
-  document.addEventListener("click", function (e) { if ($("dil-menu") && !$("dil-menu").hidden && !$("dil-menu").contains(e.target)) dilMenu(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && $("dil-menu") && !$("dil-menu").hidden) { dilMenu(false); $("sekme-en").focus(); } });
+  if ($("sekme-en")) $("sekme-en").addEventListener("click", function () { sekmeAc(oku().dil || "en"); });
+  baglan("#dil-secici", "[data-dil]", function (b) { sekmeAc(b.getAttribute("data-dil")); });
 
   girisCiz();
   // oyun.html#bolum-2, #limit, #yks, #yks-rakam, #ingilizce, #en-a1 (test), #kart-en-a1 (kartlar) gibi linkler
