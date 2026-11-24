@@ -798,3 +798,21 @@ p.hata-satir { margin: 0; }
 .ipucu[hidden] { display: none; }
 .ipucu strong { margin-right: 4px; }
 .oyun-sonuc .ipucu { margin: 4px 0 0; text-align: left; }
+
+/* 🔤 İngilizce ▾ sekmesi: dokununca altında dil listesi (İngilizce, Japonca) */
+.sekme-dil-kap { position: relative; display: inline-flex; }
+.sekmeler .ok { font-size: 0.8em; }
+.dil-menu { position: absolute; top: 100%; left: 0; z-index: 30; min-width: 170px; display: flex; flex-direction: column; padding: 6px; margin-top: 4px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+.dil-menu[hidden] { display: none; }
+.sekmeler .dil-menu button { border: 0; margin: 0; border-radius: 6px; text-align: left; padding: 10px 12px; color: var(--text); }
+.sekmeler .dil-menu button:hover { background: var(--bg); }
+.sekmeler .dil-menu button[aria-current="true"] { color: var(--accent); }
+@media (max-width: 460px) { .dil-menu { left: auto; right: 0; } }
+
+/* 🗾 Japonca */
+.ja-r1 { background: #b3263a; }
+.ja-okunus { display: block; font-weight: 400; font-size: 0.95em; color: var(--muted); margin: 2px 0 6px; }
+.kk-okunus { display: block; font-size: 1rem; color: var(--muted); margin-top: 4px; }
+.kelime-kart [lang="ja"] { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif; }
+.kelime-kart [hidden] { display: none !important; }

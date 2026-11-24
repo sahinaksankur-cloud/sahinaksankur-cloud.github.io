@@ -37,7 +37,11 @@
       <div class="sekmeler" role="tablist" aria-label="Test grubu">
         <button type="button" role="tab" id="sekme-uni" aria-controls="panel-uni" aria-selected="true">🎓 Üniversite</button>
         <button type="button" role="tab" id="sekme-yks" aria-controls="panel-yks" aria-selected="false">📘 YKS</button>
-        <button type="button" role="tab" id="sekme-en" aria-controls="panel-en" aria-selected="false">🔤 İngilizce</button>
+        <span class="sekme-dil-kap"><button type="button" role="tab" id="sekme-en" aria-controls="panel-en" aria-selected="false" aria-haspopup="true" aria-expanded="false"><span id="sekme-dil">🔤 İngilizce</span> <span class="ok" aria-hidden="true">▾</span></button>
+          <span class="dil-menu" id="dil-menu" hidden>
+            <button type="button" data-dil="en">🔤 İngilizce</button>
+            <button type="button" data-dil="ja">🗾 Japonca</button>
+          </span></span>
       </div>
 
       <div id="panel-uni" role="tabpanel" aria-labelledby="sekme-uni">
@@ -101,6 +105,12 @@
       <div id="en-seviyeler"></div>
 
       <p class="oyun-toplam" id="en-toplam"></p>
+      </div>
+
+      <div id="panel-ja" role="tabpanel" aria-labelledby="sekme-en" hidden>
+      <p class="en-giris">🗾 <strong>Japonca kelime ezberi.</strong> Her kelimenin altında okunuşu var: önce hiragana, sonra Latin harfleriyle (sh = ş, ch = ç, j = c, ō = uzun o). Önce <strong>📇 Kartlar</strong> ile kelimeleri ezberle; kartta <strong>🔈 Dinle</strong> ile telaffuzunu duy. Sonra <strong>📝 Test</strong> ile kendini dene: her kelime ilk kez doğru bildiğinde 1 puan getirir.</p>
+      <div id="ja-seviyeler"></div>
+      <p class="oyun-toplam" id="ja-toplam"></p>
       </div>
     </section>
 
@@ -169,8 +179,8 @@
       <div class="oyun-bar"><div id="kart-bar"></div></div>
       <div id="kart-alan">
         <button type="button" class="kelime-kart" id="kelime-kart">
-          <span class="kk-yuz kk-on"><small id="kart-tur"></small><strong id="kart-kelime" lang="en"></strong><span class="kk-ipucu">Anlamını görmek için dokun</span></span>
-          <span class="kk-yuz kk-arka"><small><span id="kart-kelime2" lang="en"></span> · <span id="kart-tur2"></span></small><strong id="kart-anlam"></strong><em id="kart-ornek" lang="en"></em><span class="kk-ceviri" id="kart-ceviri"></span><span class="kk-ez" id="kart-ez" lang="en" hidden></span></span>
+          <span class="kk-yuz kk-on"><small id="kart-tur"></small><strong id="kart-kelime" lang="en"></strong><span class="kk-okunus" id="kart-okunus" hidden></span><span class="kk-ipucu">Anlamını görmek için dokun</span></span>
+          <span class="kk-yuz kk-arka"><small><span id="kart-kelime2" lang="en"></span> · <span id="kart-tur2"></span></small><span class="kk-okunus" id="kart-okunus2" hidden></span><strong id="kart-anlam"></strong><em id="kart-ornek" lang="en"></em><span class="kk-ceviri" id="kart-ceviri"></span><span class="kk-ez" id="kart-ez" lang="en" hidden></span></span>
         </button>
         <div class="kart-araclar"><button type="button" class="btn" id="kart-dinle" hidden>🔈 Dinle</button></div>
         <div class="kart-dugmeler">
