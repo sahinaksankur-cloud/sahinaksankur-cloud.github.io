@@ -47,9 +47,10 @@
   // Diğer diller (İngilizce'nin altındaki dil listesi; sıra listede bu sırayla): sadece kelime ezberi (📇 Kartlar + 📝 Test)
   var DILLER = {
     de: { ad: "Almanca", ikon: "🇩🇪", dosya: "data/almanca.js", veri: "KK_DE", ses: "de-DE", renk: "de-r1", bicim: "cumle" },
+    fr: { ad: "Fransızca", ikon: "🇫🇷", dosya: "data/fransizca.js", veri: "KK_FR", ses: "fr-FR", renk: "fr-r1", bicim: "cumle" },
     ja: { ad: "Japonca", ikon: "🇯🇵", dosya: "data/japonca.js", veri: "KK_JA", ses: "ja-JP", renk: "ja-r1", bicim: "okunus" }
   };
-  var DIL_SIRA = ["de", "ja"];
+  var DIL_SIRA = ["de", "fr", "ja"];
   function dilKod(id) { var m = /^([a-z]{2})-/.exec(id || ""); return m && DILLER[m[1]] ? m[1] : null; }
   function dilMi(id) { return enMi(id) || !!dilKod(id); }   // kelime testleri (İngilizce ve diğer diller)
   function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : dilKod(id) || "uni"; }
@@ -1493,8 +1494,8 @@
   // oyun.html#bolum-2, #limit, #yks, #yks-rakam, #ingilizce, #en-a1 (test), #kart-en-a1 (kartlar) gibi linkler
   // ilgili sekmeyi açar ve testi başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
-  var kartHedef = /^kart-((?:en|de|ja)-.+)$/.exec(hedef);
-  var hedefDil = { almanca: "de", japonca: "ja" }[hedef] || dilKod(kartHedef ? kartHedef[1] : hedef);
+  var kartHedef = /^kart-((?:en|de|fr|ja)-.+)$/.exec(hedef);
+  var hedefDil = { almanca: "de", fransizca: "fr", japonca: "ja" }[hedef] || dilKod(kartHedef ? kartHedef[1] : hedef);
   sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedefDil ? hedefDil : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
   var rota = function () {
     if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);

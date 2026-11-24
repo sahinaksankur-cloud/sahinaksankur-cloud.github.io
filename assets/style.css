@@ -813,6 +813,7 @@ p.hata-satir { margin: 0; }
 /* 🗾 Japonca */
 .ja-r1 { background: #b3263a; } .de-r1 { background: #5c4a12; }
 .ja-r2 { background: #8c1d4a; } .ja-r3 { background: #6e1f6b; } .ja-r4 { background: #4a2470; } .ja-r5 { background: #2b2f6b; }
+.fr-r1 { background: #1d4f91; } .fr-r2 { background: #2b3f8c; } .fr-r3 { background: #49308a; } .fr-r4 { background: #6a2b7a; } .fr-r5 { background: #7a2445; }
 .de-r2 { background: #3f5a1c; } .de-r3 { background: #1f5a4f; } .de-r4 { background: #2a3f66; } .de-r5 { background: #4a2f5c; }
 .ja-okunus { display: block; font-weight: 400; font-size: 0.95em; color: var(--muted); margin: 2px 0 6px; }
 .kk-okunus { display: block; font-size: 1rem; color: var(--muted); margin-top: 4px; }
