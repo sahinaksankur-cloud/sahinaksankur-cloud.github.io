@@ -181,8 +181,16 @@
       var l = a.bekleyen; a.bekleyen = null;
       l.forEach(function (f) { if (f) f(); });
     };
-    sc.onerror = function () { a.bekleyen = null; a.hata = true; if ($("oyun-giris") && !$("oyun-giris").hidden) girisCiz(); };
+    sc.onerror = function () { a.bekleyen = null; a.hata = true; girisYenile(); };
     document.head.appendChild(sc);
+  }
+  // Bölüm dosyası arkada yüklenince giriş ekranı yeniden çizilir; ama seviye penceresi açıksa (ör. bir test linkiyle gelindiyse)
+  // pencere kapanmasın diye çizim, pencere kapatılınca yapılır.
+  var cizimBekliyor = false;
+  function girisYenile() {
+    if (!$("oyun-giris") || $("oyun-giris").hidden) return;
+    if (!$("seviye-perde").hidden) { cizimBekliyor = true; return; }
+    cizimBekliyor = false; girisCiz();
   }
   var BOLUMLER = O.bolumler || [];
   function bolumNo(id) { var m = /^bolum-(\d+)$/.exec(id || ""); return m ? +m[1] : null; }
@@ -657,7 +665,7 @@
         : '<p class="en-zor-bos">📌 <strong>Zorlandıklarım</strong>: testlerde kaçırdığın kelimeler burada toplanır. Şu an boş.</p>';
       baglan("#en-zor", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
       baglan("#en-zor", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
-      var seritHtml = function (sv, si) {
+      var seritHtml = function (sv, si, ic) {
         var toplamK = 0, toplamC = 0;
         var kartlar = sv.gruplar.map(function (gid) {
           var hk = havuz(gid), c = cozulenSayi(hk, kayit), k = bul(O.konular, gid);
@@ -682,20 +690,27 @@
             (bdk ? ekDugme(bdk, "🧩", "Boşluk", bdc, bdh.length) : "") + (tyk ? ekDugme(tyk, "🔁", "Ters yön", tyc, tyh.length) : "") +
             (yzk ? ekDugme(yzk, "✍️", "Yazarak", yzc, yzh.length) : "") + (ezk ? ekDugme(ezk, "🔄", "Eş / Zıt", ezc, ezh.length) : "") + "</div></div>";
         }).join("");
+        // ic: Bölüme Özel şeridinin içinde (renkli kutu yok; bölüm adı ve puanı küçük başlık olarak)
+        if (ic) return '<p class="en-alan-ust"><strong>' + sv.ad + "</strong> · " + toplamC + " / " + toplamK + " kelime" + (sv.aciklama ? '<span class="en-uzun"> · ' + sv.aciklama + "</span>" : "") + "</p>" +
+          '<div class="secenekler en-gruplar">' + kartlar + "</div>";
         return '<section class="serit en-serit"><div class="tur ' + (sv.alanMi ? "en-alan" : "en-r" + (si + 1)) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
           '<span class="ozellik">' + (sv.ust ? sv.ust + " · " : "") + toplamC + " / " + toplamK + " kelime</span></div>" +
           '<div class="secenekler en-gruplar">' + kartlar + "</div></section>";
       };
       // Bölüme Özel: tek satır seçici; sadece seçilen bölüm açılır (seçim kk-oyun-v1 → alan).
       var alanlar = EN.alanlar || [], secAlan = bul(alanlar, kayit.alan);
-      if (secAlan && !secAlan.yuklendi && !secAlan.hata) alanYukle(secAlan.id, function () { if (!$("oyun-giris").hidden) girisCiz(); });
-      var alanHtml = alanlar.length ? '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3>' +
-        '<p class="en-alan-not">Bölümünü seç: derslerde ve İngilizce kitaplarda geçen terimler. Seçimin bu cihazda hatırlanır; Canlı Yarışma\'ya girmez.</p>' +
+      if (secAlan && !secAlan.yuklendi && !secAlan.hata) alanYukle(secAlan.id, girisYenile);
+      // Bölüme Özel İngilizce, seviyeler gibi kendi renkli şeridinde: solda renkli kutu, sağda seçici ve seçilen bölümün grupları
+      var alanHtml = alanlar.length ? '<section class="serit en-serit en-alan-serit" id="en-bolume-ozel"><div class="tur en-alan"><h2>🎓 Bölüme Özel İngilizce</h2>' +
+        "<p>Üniversitede bölümünün İngilizcesi: derslerde ve İngilizce kitaplarda geçen terimler.</p>" +
+        '<span class="ozellik">' + alanlar.length + " bölüm · Canlı Yarışma'ya girmez</span></div>" +
+        '<div class="en-alan-icerik"><p class="en-alan-not">' + (secAlan ? "Bölümün seçili; başka bölüme geçebilirsin. Seçimin bu cihazda hatırlanır." : "👇 Bölümünü seç; seçimin bu cihazda hatırlanır.") + "</p>" +
         '<div class="en-alan-sec" role="group" aria-label="Bölüm">' + alanlar.map(function (a) {
           var sec = secAlan === a;
           return '<button type="button" class="en-alan-btn' + (sec ? " secili" : "") + '" data-alan="' + a.id + '" aria-pressed="' + sec + '">' + (a.kisa || a.ad) + "</button>";
         }).join("") + "</div>" +
-        (secAlan ? (secAlan.yuklendi ? seritHtml(secAlan, 0) : '<p class="en-alan-not">' + (secAlan.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>") : "") : "";
+        (secAlan ? (secAlan.yuklendi ? seritHtml(secAlan, 0, true) : '<p class="en-alan-not">' + (secAlan.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>") : "") +
+        "</div></section>" : "";
       $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(seritHtml).join("") + alanHtml;
       baglan("#en-seviyeler", "[data-alan]", function (b) {
         var k = oku(), id = b.getAttribute("data-alan");
@@ -816,7 +831,7 @@
   $("kural-perde").addEventListener("click", function (e) { if (e.target === this) kuralKapat(); });
   // Kartlardan teste geçerken (ozelListe) test, çalışılan kelimelerle kurulur; pencere kapatılırsa liste unutulur.
   var ozelListe = null;
-  function seviyeVazgec() { ozelListe = null; seviyeKapat(); }
+  function seviyeVazgec() { ozelListe = null; seviyeKapat(); if (cizimBekliyor) girisYenile(); }
   $("seviye-vazgec").addEventListener("click", seviyeVazgec);
   $("seviye-perde").addEventListener("click", function (e) { if (e.target === this) seviyeVazgec(); });
   document.addEventListener("keydown", function (e) {
@@ -1082,6 +1097,7 @@
     $("oyun-konu-degis").textContent = "Konu değiştir";
     var n = durum.sorular.length, p = durum.puan;
     davetGoster(n ? p / n : 0);
+    if (window.KK_IPUCU) window.KK_IPUCU.ciz($("oyun-ipucu"));
     var kayit = oku();
     kayit.rekor = kayit.rekor || {};
     var anahtar = rekorAnahtar(durum.konu);
@@ -1386,5 +1402,6 @@
   if (hedefAlan && !hedefAlan.yuklendi) {
     var ka = oku(); ka.alan = hedefAlan.id; yaz(ka);
     alanYukle(hedefAlan.id, function () { girisCiz(); rota(); });
-  } else rota();   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
+  } else rota();
+  if (hedef === "en-bolume-ozel") setTimeout(function () { var e = $("en-bolume-ozel"); if (e) e.scrollIntoView({ block: "start" }); }, 50);   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
 })();

@@ -437,6 +437,29 @@
           sayac.hidden = false;
         }).catch(function () {});
     }
+    // 💡 Biliyor muydun?: [data-ipucu] olan yere sitedeki bir özelliği tanıtan kısa satır (her açılışta rastgele, açılır pencere değil).
+    // "sakla": o sayfada gösterilmez (öğrenci zaten oradadır). oyun.js test sonucunda KK_IPUCU.ciz() ile yeniler.
+    var IPUCLARI = [
+      { m: 'İngilizce\'de <a href="oyun.html#en-bolume-ozel">🎓 Bölüme Özel İngilizce</a> var: Calculus, Ekonomi, İşletme, Mühendislik, Psikoloji ve Siyaset Bilimi terimleri.' },
+      { m: 'Her gün <a href="canli.html">🔴 Canlı Yarışma</a> var: herkes aynı anda aynı soruları çözer. Saatleri Testler\'deki kırmızı şeritte.', sakla: "canli" },
+      { m: 'İngilizce\'de kaçırdığın kelimeler <a href="oyun.html#ingilizce">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },
+      { m: 'İngilizce kelimeleri <a href="oyun.html#ingilizce">✍️ klavyeyle yazarak</a> da çalışabilirsin; her grupta Boşluk, Ters yön ve Eş / Zıt testleri de var.' },
+      { m: 'Testler\'de <a href="oyun.html#yks">📘 YKS</a> sekmesi var: Temel Kavramlar\'ın bütün konuları, 🔁 Konu Tekrarı ve ⚡ Doğru / Yanlış.' },
+      { m: 'Okulunun vize–final sınavını <a href="kampus.html">🏛 Kampüsün İçinden</a>\'den gönderebilirsin; okuluna özel hazırlık birlikte büyüyor.', sakla: "kampus" },
+      { m: '🚩 Bir soruda hata görürsen cevaptan sonra çıkan "Hata bildir"e dokun; e-postan kendiliğinden hazırlanır.' },
+      { m: 'Calculus derslerinin <a href="dersler.html">📚 videoları ve PDF notları</a> bir arada; her dersin notu videonun yanında.', sakla: "ders" }
+    ];
+    var sayfaAdi = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "");
+    window.KK_IPUCU = {
+      ciz: function (el) {
+        if (!el) return;
+        var l = IPUCLARI.filter(function (t) { return !t.sakla || sayfaAdi.indexOf(t.sakla) !== 0; });
+        var t = l[Math.floor(Math.random() * l.length)];
+        el.innerHTML = '<strong>💡 Biliyor muydun?</strong> ' + t.m;
+        el.hidden = false;
+      }
+    };
+    Array.prototype.forEach.call(document.querySelectorAll("[data-ipucu]"), function (el) { window.KK_IPUCU.ciz(el); });
     if (document.getElementById("courses")) renderHome();
     if (document.getElementById("ana-dersler")) renderAnaDersler();
     if (document.getElementById("course")) renderCourse();

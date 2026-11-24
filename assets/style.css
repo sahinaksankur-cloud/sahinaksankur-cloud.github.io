@@ -785,3 +785,16 @@ p.hata-satir { margin: 0; }
 .en-alan-btn { font: inherit; font-size: 0.92rem; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
 .en-alan-btn.secili { background: #8c2f4e; border-color: #8c2f4e; color: #fff; }
 @media (hover: hover) { .en-alan-btn:not(.secili):hover { border-color: #8c2f4e; } }
+
+/* 🎓 Bölüme Özel İngilizce şeridi: sağ taraf (seçici + seçilen bölümün grupları) */
+.en-alan-icerik { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.en-alan-icerik .en-alan-not { margin: 0; }
+.en-alan-icerik .en-alan-sec { margin: 0; }
+.en-alan-ust { margin: 4px 0 0; font-size: 0.95rem; color: var(--muted); }
+.en-alan-ust strong { color: var(--text); }
+
+/* 💡 Biliyor muydun? (sayfa içinde küçük satır; açılır pencere değil) */
+.ipucu { margin: 18px 0; padding: 10px 14px; border-left: 4px solid var(--accent); border-radius: 8px; background: var(--surface); font-size: 0.92rem; line-height: 1.5; color: var(--text); }
+.ipucu[hidden] { display: none; }
+.ipucu strong { margin-right: 4px; }
+.oyun-sonuc .ipucu { margin: 4px 0 0; text-align: left; }
