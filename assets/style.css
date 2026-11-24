@@ -663,6 +663,7 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .en-grup-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
 .en-grup-dugmeler .btn { justify-content: center; padding: 8px 6px; font-size: 0.9rem; font-weight: 600; }
 .en-grup-dugmeler .en-ez-btn { grid-column: 1 / -1; }
+.en-grup-dugmeler .en-ek-btn { flex-direction: column; gap: 1px; line-height: 1.2; white-space: nowrap; }
 /* Grup düğmeleri renksiz: hiçbiri öne çıkmaz. Fareyle üstüne gelince (yalnız fareli cihazlar) ve dokunurken mavi olur. */
 @media (hover: hover) { .en-grup-dugmeler .btn:hover, .en-grup-dugmeler .btn:hover .en-ez-puan { background: var(--accent); border-color: var(--accent); color: var(--accent-text); } }
 .en-grup-dugmeler .btn:active, .en-grup-dugmeler .btn:active .en-ez-puan { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
@@ -679,7 +680,10 @@ body.yayin .oyun-grafik { max-width: 560px; }
   .en-grup { padding: 8px; }
   .en-grup strong { font-size: 1rem; }
   .en-uzun, .en-grup .skor { display: none; }
-  .en-grup-dugmeler { grid-template-columns: 1fr; }
+  .en-grup-dugmeler { grid-template-columns: 1fr 1fr 1fr; }
+  .en-grup-dugmeler [data-kart], .en-grup-dugmeler .btn:not(.en-ek-btn) { grid-column: 1 / -1; }
+  .en-grup-dugmeler .en-ek-btn { grid-column: auto; padding: 7px 0; font-size: 1rem; }
+  .en-ek-yazi { display: none; }
   .en-grup-dugmeler .btn { padding: 7px 4px; font-size: 0.85rem; }
 }
 .sekmeler button { white-space: nowrap; }

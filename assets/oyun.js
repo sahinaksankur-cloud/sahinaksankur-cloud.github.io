@@ -49,6 +49,7 @@
     var anlamParca = function (t) { return t.split(";").map(function (p) { return p.trim().split(" (")[0]; }); };
     var ayriAnlam = function (a, b) { var pa = anlamParca(a); return !anlamParca(b).some(function (p) { return pa.indexOf(p) >= 0; }); };
     (EN.alanlar || []).forEach(function (a) { a.alanMi = true; });
+    var tyGorulen = {};
     (EN.seviyeler || []).concat(EN.alanlar || []).forEach(function (sv) {
      sv.gruplar = [];
      // Grupta aynı türden yeterli kelime yoksa (ör. 2 zarf) şıklar aynı seviyenin diğer gruplarından gelir.
@@ -74,12 +75,31 @@
           a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
         };
       });
+      var grupAdTam = sv.alanMi ? sv.ad + " · " + ((sv.grupAd || [])[gn - 1] || gn + ". Grup") : sv.ad.split(" · ")[0] + " · " + gn + ". Grup";
+      // 🔁 Ters yön ("en-a1-1-ty"): Türkçe anlam → İngilizce kelime; şıklar aynı türden, anlamı ayrı kelimeler.
+      O.konular.push({ id: gid + "-ty", ad: grupAdTam + " · Ters Yön", seviye: sv.id, no: gn, grup: "en", ty: true, alan: !!sv.alanMi });
+      O.sorular[gid + "-ty"] = liste.map(function (x) {
+        var uygun = function (y) { return y.w !== x.w && ayriAnlam(x.t, y.t); };
+        var es = liste.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
+        if (es.length < 2) es = seviyeListe.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
+        if (es.length < 2) es = liste.filter(uygun);
+        var etk = (EN_TUR[x.tur] || "") + (sv.etiket ? " · " + sv.etiket : "");
+        var s = '<span class="en-soru"><strong>' + x.t + "</strong> <small>" + etk + "</small></span> İngilizcesi hangisi?";
+        // Aynı Türkçe anlam başka bir grupta da varsa soru metni benzersiz olsun (oyun soruyu metninden tanır)
+        if (tyGorulen[s]) s = s.replace("<small>" + etk, "<small>" + etk + " · " + grupAdTam);
+        tyGorulen[s] = 1;
+        return {
+          b: "en", k: gid + "-ty", w: x.w, tur: x.tur, s: s,
+          c: [x.w].concat(karistir(es).slice(0, 2).map(function (y) { return y.w; })),
+          a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
+        };
+      });
       // 🧩 Boşluk doldurma ("en-a1-1-bd"): örnek cümlede kelimenin yeri boş, altında Türkçesi (tek doğru cevap olsun diye).
       // Sadece kelimenin cümlede aynen geçtiği cümleler; şıklar aynı türden kelimeler (çekimli hâlde şık uymaz).
       var kacis = function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); };
       var bdListe = liste.filter(function (x) { return new RegExp("\\b" + kacis(x.w) + "\\b", "i").test(x.o); });
       if (bdListe.length >= 5) {
-        O.konular.push({ id: gid + "-bd", ad: (sv.alanMi ? sv.ad + " · " + ((sv.grupAd || [])[gn - 1] || gn + ". Grup") : sv.ad.split(" · ")[0] + " · " + gn + ". Grup") + " · Boşluk Doldurma",
+        O.konular.push({ id: gid + "-bd", ad: grupAdTam + " · Boşluk Doldurma",
           seviye: sv.id, no: gn, grup: "en", bd: true, alan: !!sv.alanMi });
         O.sorular[gid + "-bd"] = bdListe.map(function (x) {
           var uygun = function (y) { return y.w !== x.w && ayriAnlam(x.t, y.t) && !new RegExp("\\b" + kacis(y.w) + "\\b", "i").test(x.o); };
@@ -578,18 +598,22 @@
           var hk = havuz(gid), c = cozulenSayi(hk, kayit), k = bul(O.konular, gid);
           var ezk = bul(O.konular, gid + "-ez"), ezh = ezk ? havuz(ezk.id) : [], ezc = ezk ? cozulenSayi(ezh, kayit) : 0;
           var bdk = bul(O.konular, gid + "-bd"), bdh = bdk ? havuz(bdk.id) : [], bdc = bdk ? cozulenSayi(bdh, kayit) : 0;
+          var tyk = bul(O.konular, gid + "-ty"), tyh = tyk ? havuz(tyk.id) : [], tyc = tyk ? cozulenSayi(tyh, kayit) : 0;
+          var ekDugme = function (konu, ikon, yazi, c, n, ek) {
+            return '<button type="button" class="btn en-ek-btn' + (ek || "") + '" data-konu="' + konu.id + '" title="' + ikon + " " + yazi + '"><span>' + ikon +
+              '<span class="en-ek-yazi"> ' + yazi + '</span></span><span class="en-ez-puan">' + (c === n ? "✓ " + n + "/" + n : c + "/" + n) + "</span></button>";
+          };
           toplamK += hk.length; toplamC += c;
           return '<div class="en-grup' + (c === hk.length && c ? " bitti" : "") + '"><small>' + (sv.alanMi && (sv.grupAd || [])[k.no - 1] ? sv.grupAd[k.no - 1] : k.no + ". Grup") + '<span class="en-uzun"> · ' + hk.length + " kelime</span></small>" +
             "<strong>" + (c === hk.length && c ? '✓<span class="en-uzun"> Tamamlandı ·</span> ' : "") + '<span class="en-uzun">Puan: </span>' + c + " / " + hk.length + "</strong>" +
             (bdk ? '<span class="en-ez-satir">🧩 ' + bdc + " / " + bdh.length + "</span>" : "") +
+            (tyk ? '<span class="en-ez-satir">🔁 ' + tyc + " / " + tyh.length + "</span>" : "") +
             (ezk ? '<span class="en-ez-satir">🔄 ' + ezc + " / " + ezh.length + "</span>" : "") +
-            enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (bdk ? bonusRozet(kayit, bdk.id).replace("Bonus", "Boşluk bonus") : "") + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
+            enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (bdk ? bonusRozet(kayit, bdk.id).replace("Bonus", "Boşluk bonus") : "") + (tyk ? bonusRozet(kayit, tyk.id).replace("Bonus", "Ters yön bonus") : "") + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
             '<div class="en-grup-dugmeler"><button type="button" class="btn" data-kart="' + gid + '">📇 Kartlar</button>' +
             '<button type="button" class="btn" data-konu="' + gid + '">📝 Test</button>' +
-            (bdk ? '<button type="button" class="btn en-ez-btn" data-konu="' + bdk.id + '"><span>🧩 Boşluk</span><span class="en-ez-puan">' +
-              (bdc === bdh.length ? " ✓" : " · " + bdc + "/" + bdh.length) + "</span></button>" : "") +
-            (ezk ? '<button type="button" class="btn en-ez-btn" data-konu="' + ezk.id + '"><span>🔄 Eş<span class="en-uzun"> </span>/<span class="en-uzun"> </span>Zıt</span><span class="en-ez-puan">' +
-              (ezc === ezh.length ? " ✓" : " · " + ezc + "/" + ezh.length) + "</span></button>" : "") + "</div></div>";
+            (bdk ? ekDugme(bdk, "🧩", "Boşluk", bdc, bdh.length) : "") + (tyk ? ekDugme(tyk, "🔁", "Ters yön", tyc, tyh.length) : "") +
+            (ezk ? ekDugme(ezk, "🔄", "Eş / Zıt", ezc, ezh.length, " en-ez-btn") : "") + "</div></div>";
         }).join("");
         var bas = "";
         if (sv.alanMi && !alanBaslik) { alanBaslik = true; bas = '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3><p class="en-alan-not">Üniversitede bölümünün İngilizcesi: derslerde ve kitaplarda geçen terimler. Canlı Yarışma\'ya girmez.</p>'; }
@@ -610,7 +634,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
@@ -618,6 +642,7 @@
     var aciklamaYaz = function () {
       var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
       $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
+        : t.en && /-ty$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini seç. " + n + " kelime. Her kelime için ne kadar süre istersin?"
         : t.en && /-bd$/.test(id) ? "Cümledeki boşluğa uyan kelimeyi seç; altında cümlenin Türkçesi var. " + n + " cümle. Her cümle için ne kadar süre istersin?"
         : t.en && !/-ez$/.test(id) ? (ozelListe ? "Kartlarda çalıştığın " + ozelListe.length + " kelime." : n + " kelime.") + " Her kelime için ne kadar süre istersin?"
         : n + " soru. Her soru için ne kadar süre istersin?";
@@ -933,7 +958,7 @@
     sayaciDurdur();
     var enTest = enMi(durum.konu);
     $("oyun-test-gec").hidden = !enTest;
-    if (enTest) { $("oyun-test-gec").textContent = "📇 Kartlarla çalış"; $("oyun-test-gec").setAttribute("data-hedef", "kart:" + durum.konu.replace(/-(ez|bd)$/, "")); }
+    if (enTest) { $("oyun-test-gec").textContent = "📇 Kartlarla çalış"; $("oyun-test-gec").setAttribute("data-hedef", "kart:" + durum.konu.replace(/-(ez|bd|ty)$/, "")); }
     $("oyun-tekrar").classList.toggle("primary", !enTest);
     $("oyun-tekrar").setAttribute("data-hedef", durum.konu);
     $("oyun-konu-degis").textContent = "Konu değiştir";
