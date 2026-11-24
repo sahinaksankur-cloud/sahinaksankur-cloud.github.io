@@ -444,7 +444,7 @@
       { m: 'Her gün <a href="canli.html">🔴 Canlı Yarışma</a> var: herkes aynı anda aynı soruları çözer. Saatleri Testler\'deki kırmızı şeritte.', sakla: "canli" },
       { m: 'İngilizce\'de kaçırdığın kelimeler <a href="oyun.html#ingilizce">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },
       { m: 'İngilizce kelimeleri <a href="oyun.html#ingilizce">✍️ klavyeyle yazarak</a> da çalışabilirsin; her grupta Boşluk, Ters yön ve Eş / Zıt testleri de var.' },
-      { m: 'Testler\'de <a href="oyun.html#almanca">🇩🇪 Almanca</a> ve <a href="oyun.html#japonca">🗾 Japonca</a> da var: İngilizce sekmesine dokun, açılan listeden dili seç. Kelimeleri sesiyle birlikte ezberle.' },
+      { m: 'Testler\'de <a href="oyun.html#almanca">🇩🇪 Almanca</a> ve <a href="oyun.html#japonca">🇯🇵 Japonca</a> da var: İngilizce sekmesine dokun, açılan listeden dili seç. Kelimeleri sesiyle birlikte ezberle.' },
       { m: 'Testler\'de <a href="oyun.html#yks">📘 YKS</a> sekmesi var: Temel Kavramlar\'ın bütün konuları, 🔁 Konu Tekrarı ve ⚡ Doğru / Yanlış.' },
       { m: 'Okulunun vize–final sınavını <a href="kampus.html">🏛 Kampüsün İçinden</a>\'den gönderebilirsin; okuluna özel hazırlık birlikte büyüyor.', sakla: "kampus" },
       { m: '🚩 Bir soruda hata görürsen cevaptan sonra çıkan "Hata bildir"e dokun; e-postan kendiliğinden hazırlanır.' },

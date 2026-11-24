@@ -38,7 +38,7 @@
   }
   function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
-  // 🔤 İngilizce kelimeler (data/ingilizce.js): her seviyede 50'şer kelimelik gruplar; her grup bir konu ("en-a1-1" …).
+  // 🇬🇧 İngilizce kelimeler (data/ingilizce.js): her seviyede 50'şer kelimelik gruplar; her grup bir konu ("en-a1-1" …).
   // Soru: İngilizce kelime → üç Türkçe anlam. Yanlış şıklar aynı gruptaki aynı türden kelimelerin anlamları.
   var EN = window.KK_EN || null;
   var ZOR = "en-zor";
@@ -47,7 +47,7 @@
   // Diğer diller (İngilizce'nin altındaki dil listesi; sıra listede bu sırayla): sadece kelime ezberi (📇 Kartlar + 📝 Test)
   var DILLER = {
     de: { ad: "Almanca", ikon: "🇩🇪", dosya: "data/almanca.js", veri: "KK_DE", ses: "de-DE", renk: "de-r1", bicim: "cumle" },
-    ja: { ad: "Japonca", ikon: "🗾", dosya: "data/japonca.js", veri: "KK_JA", ses: "ja-JP", renk: "ja-r1", bicim: "okunus" }
+    ja: { ad: "Japonca", ikon: "🇯🇵", dosya: "data/japonca.js", veri: "KK_JA", ses: "ja-JP", renk: "ja-r1", bicim: "okunus" }
   };
   var DIL_SIRA = ["de", "ja"];
   function dilKod(id) { var m = /^([a-z]{2})-/.exec(id || ""); return m && DILLER[m[1]] ? m[1] : null; }
@@ -719,7 +719,7 @@
       $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, "yks") + "." + PUAN_NOT;
     }
 
-    // 🔤 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
+    // 🇬🇧 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
     if ($("panel-en") && EN) {
       var zs = havuz(ZOR), zk = zorKelimeler();
       $("en-zor").innerHTML = zs.length
@@ -803,7 +803,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.dil ? DILLER[t.dil].ikon + " " + DILLER[t.dil].ad + " · 📝 Kelime Testi" : t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.dil ? DILLER[t.dil].ikon + " " + DILLER[t.dil].ad + " · 📝 Kelime Testi" : t.en ? "🇬🇧 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
@@ -1362,7 +1362,7 @@
     $("yks-tekrar-basla").addEventListener("click", function () { if (!this.disabled) seviyeSor(TEKRAR); });
   }
 
-  // ---- 📇 Kelime kartları (🔤 İngilizce) ----
+  // ---- 📇 Kelime kartları (🇬🇧 İngilizce) ----
   // Deste: seviyeden 10 kelime, testteki sırayla (önce hiç görülmemiş, sonra bilinemeyen, en son bilinen).
   // Kartın önünde İngilizce kelime; dokununca anlamı, örnek cümle ve Türkçesi. "Biliyorum" kartı desteden çıkarır,
   // "Tekrar göster" sona ekler. Kartlar puan getirmez; deste bitince aynı kelimelerle teste geçilir.
@@ -1451,11 +1451,11 @@
     else if ((e.key === " " || e.key === "Enter") && e.target === document.body) { e.preventDefault(); kartCevir(); }
   });
 
-  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🔤 İngilizce ▾ ----
+  // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🇬🇧 İngilizce ▾ ----
   // Dil sekmesine dokununca altında dil listesi açılır (İngilizce, Japonca); seçilen dilin paneli gösterilir.
   // Panel "ja" ile sekme düğmesi "en" aynıdır; düğmenin yazısı seçilen dili gösterir.
   var SEKMELER = ["uni", "yks", "en"].concat(DIL_SIRA);
-  var DIL_AD = { en: "🔤 İngilizce" };
+  var DIL_AD = { en: "🇬🇧 İngilizce" };
   DIL_SIRA.forEach(function (kod) { DIL_AD[kod] = DILLER[kod].ikon + " " + DILLER[kod].ad; });
   function dilMenu(ac) {
     if (!$("dil-menu")) return;
