@@ -711,7 +711,7 @@
         }).join("") + "</div>" +
         (secAlan ? (secAlan.yuklendi ? seritHtml(secAlan, 0, true) : '<p class="en-alan-not">' + (secAlan.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>") : "") +
         "</div></section>" : "";
-      $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(seritHtml).join("") + alanHtml;
+      $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(function (sv, si) { return seritHtml(sv, si, false); }).join("") + alanHtml;
       baglan("#en-seviyeler", "[data-alan]", function (b) {
         var k = oku(), id = b.getAttribute("data-alan");
         k.alan = k.alan === id ? null : id; yaz(k); girisCiz();
