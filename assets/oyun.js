@@ -54,7 +54,7 @@
     // 📌 Zorlandıklarım: kaçırılıp henüz doğru yapılamamış İngilizce sorular (kk-oyun-v1 → cevap[..][0] === 0).
     // Sorular O.sorular'a yazılmaz (puan iki kez sayılmasın); havuz("en-zor") her seferinde kayıttan kurar.
     O.konular.push({ id: ZOR, ad: "Zorlandıklarım", grup: "en", zor: true });
-    (EN.seviyeler || []).concat(EN.alanlar || []).forEach(function (sv) {
+    var enKur = function (sv) {
      sv.gruplar = [];
      // Grupta aynı türden yeterli kelime yoksa (ör. 2 zarf) şıklar aynı seviyenin diğer gruplarından gelir.
      var seviyeListe = [];
@@ -152,7 +152,8 @@
         });
       }
      }
-    });
+    };
+    (EN.seviyeler || []).forEach(enKur);
   }
 
   function oku() {
@@ -160,6 +161,28 @@
   }
   function yaz(v) {
     try { localStorage.setItem(DEPO, JSON.stringify(v)); } catch (e) { /* özel pencere vb. */ }
+  }
+  // 🎓 Bölüme Özel İngilizce: her bölümün kelimeleri ayrı dosyada (data/alan/*.js), ancak öğrenci o bölümü seçince yüklenir.
+  // Dosya window.KK_EN_ALAN["en-calc"] = { "en-calc-1": [...], ... } yazar; sürüm (?v=) ingilizce.js'inkiyle aynıdır.
+  function alanYukle(id, bitti) {
+    var a = EN && bul(EN.alanlar, id);
+    if (!a) return;
+    if (a.yuklendi) { if (bitti) bitti(); return; }
+    if (a.bekleyen) { a.bekleyen.push(bitti); return; }
+    a.bekleyen = [bitti]; a.hata = false;
+    var kaynak = document.querySelector('script[src*="data/ingilizce.js"]');
+    var v = kaynak && /\?v=[^"'&]*/.exec(kaynak.getAttribute("src"));
+    var sc = document.createElement("script");
+    sc.src = a.dosya + (v ? v[0] : "");
+    sc.onload = function () {
+      var veri = (window.KK_EN_ALAN || {})[id] || {};
+      Object.keys(veri).forEach(function (k) { EN.kelimeler[k] = veri[k]; });
+      enKur(a); a.yuklendi = true;
+      var l = a.bekleyen; a.bekleyen = null;
+      l.forEach(function (f) { if (f) f(); });
+    };
+    sc.onerror = function () { a.bekleyen = null; a.hata = true; if ($("oyun-giris") && !$("oyun-giris").hidden) girisCiz(); };
+    document.head.appendChild(sc);
   }
   var BOLUMLER = O.bolumler || [];
   function bolumNo(id) { var m = /^bolum-(\d+)$/.exec(id || ""); return m ? +m[1] : null; }
@@ -634,8 +657,7 @@
         : '<p class="en-zor-bos">📌 <strong>Zorlandıklarım</strong>: testlerde kaçırdığın kelimeler burada toplanır. Şu an boş.</p>';
       baglan("#en-zor", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
       baglan("#en-zor", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
-      var alanBaslik = false;
-      $("en-seviyeler").innerHTML = (EN.seviyeler || []).concat(EN.alanlar || []).map(function (sv, si) {
+      var seritHtml = function (sv, si) {
         var toplamK = 0, toplamC = 0;
         var kartlar = sv.gruplar.map(function (gid) {
           var hk = havuz(gid), c = cozulenSayi(hk, kayit), k = bul(O.konular, gid);
@@ -660,12 +682,25 @@
             (bdk ? ekDugme(bdk, "🧩", "Boşluk", bdc, bdh.length) : "") + (tyk ? ekDugme(tyk, "🔁", "Ters yön", tyc, tyh.length) : "") +
             (yzk ? ekDugme(yzk, "✍️", "Yazarak", yzc, yzh.length) : "") + (ezk ? ekDugme(ezk, "🔄", "Eş / Zıt", ezc, ezh.length) : "") + "</div></div>";
         }).join("");
-        var bas = "";
-        if (sv.alanMi && !alanBaslik) { alanBaslik = true; bas = '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3><p class="en-alan-not">Üniversitede bölümünün İngilizcesi: derslerde ve kitaplarda geçen terimler. Canlı Yarışma\'ya girmez.</p>'; }
-        return bas + '<section class="serit en-serit"><div class="tur ' + (sv.alanMi ? "en-alan" : "en-r" + (si + 1)) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
+        return '<section class="serit en-serit"><div class="tur ' + (sv.alanMi ? "en-alan" : "en-r" + (si + 1)) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
           '<span class="ozellik">' + (sv.ust ? sv.ust + " · " : "") + toplamC + " / " + toplamK + " kelime</span></div>" +
           '<div class="secenekler en-gruplar">' + kartlar + "</div></section>";
-      }).join("");
+      };
+      // Bölüme Özel: tek satır seçici; sadece seçilen bölüm açılır (seçim kk-oyun-v1 → alan).
+      var alanlar = EN.alanlar || [], secAlan = bul(alanlar, kayit.alan);
+      if (secAlan && !secAlan.yuklendi && !secAlan.hata) alanYukle(secAlan.id, function () { if (!$("oyun-giris").hidden) girisCiz(); });
+      var alanHtml = alanlar.length ? '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3>' +
+        '<p class="en-alan-not">Bölümünü seç: derslerde ve İngilizce kitaplarda geçen terimler. Seçimin bu cihazda hatırlanır; Canlı Yarışma\'ya girmez.</p>' +
+        '<div class="en-alan-sec" role="group" aria-label="Bölüm">' + alanlar.map(function (a) {
+          var sec = secAlan === a;
+          return '<button type="button" class="en-alan-btn' + (sec ? " secili" : "") + '" data-alan="' + a.id + '" aria-pressed="' + sec + '">' + (a.kisa || a.ad) + "</button>";
+        }).join("") + "</div>" +
+        (secAlan ? (secAlan.yuklendi ? seritHtml(secAlan, 0) : '<p class="en-alan-not">' + (secAlan.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>") : "") : "";
+      $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(seritHtml).join("") + alanHtml;
+      baglan("#en-seviyeler", "[data-alan]", function (b) {
+        var k = oku(), id = b.getAttribute("data-alan");
+        k.alan = k.alan === id ? null : id; yaz(k); girisCiz();
+      });
       baglan("#en-seviyeler", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
       baglan("#en-seviyeler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       $("en-toplam").textContent = toplamYazi("İngilizce", grupSorular("en"), kayit, "en") +
@@ -1341,7 +1376,15 @@
   var hedef = decodeURIComponent((location.hash || "").slice(1));
   var kartHedef = /^kart-(en-.+)$/.exec(hedef);
   sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
-  if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
-  else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
-  else if (!oku().kuralGoruldu) kuralAc();   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
+  var rota = function () {
+    if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
+    else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
+    else if (!oku().kuralGoruldu) kuralAc();
+  };
+  // Bölüme Özel bir gruba link (#en-calc-1, #kart-en-calc-1): bölüm seçilir, dosyası yüklenince test açılır
+  var hedefAlan = EN && (EN.alanlar || []).filter(function (a) { return (kartHedef ? kartHedef[1] : hedef).indexOf(a.id + "-") === 0; })[0];
+  if (hedefAlan && !hedefAlan.yuklendi) {
+    var ka = oku(); ka.alan = hedefAlan.id; yaz(ka);
+    alanYukle(hedefAlan.id, function () { girisCiz(); rota(); });
+  } else rota();   // siteye ilk gelişte kurallar bir kez gösterilir; "Anladım" deyince bir daha açılmaz
 })();

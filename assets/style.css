@@ -779,3 +779,9 @@ p.hata-satir { margin: 0; }
 .yaz-girdi.dogru { border-color: #2e8b57; background: rgba(46, 139, 87, 0.08); }
 .yaz-girdi.yanlis { border-color: #c0392b; background: rgba(192, 57, 43, 0.08); text-decoration: line-through; }
 .yaz-dogru { margin: 0; font-size: 1.05rem; color: #2e8b57; }
+
+/* 🎓 Bölüme Özel İngilizce: tek satır bölüm seçici */
+.en-alan-sec { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.en-alan-btn { font: inherit; font-size: 0.92rem; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+.en-alan-btn.secili { background: #8c2f4e; border-color: #8c2f4e; color: #fff; }
+@media (hover: hover) { .en-alan-btn:not(.secili):hover { border-color: #8c2f4e; } }
