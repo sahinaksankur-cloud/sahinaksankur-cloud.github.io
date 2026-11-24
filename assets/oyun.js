@@ -173,8 +173,8 @@
       : function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; };
     D.seviyeler = veri.seviyeler || [];
     var tg = function (t) { return t === "b" ? "z" : t; };
-    D.seviyeler.forEach(function (sv) {
-      sv.gruplar = []; sv.renk = D.renk;
+    D.seviyeler.forEach(function (sv, si) {
+      sv.gruplar = []; sv.renk = D.renk.replace(/1$/, String(Math.min(si + 1, 4)));   // seviye başına ayrı ton
       var seviyeListe = [];
       for (var sn = 1; kel[sv.id + "-" + sn]; sn++) kel[sv.id + "-" + sn].forEach(function (r) { seviyeListe.push(oku_(r)); });
       for (var gn = 1; kel[sv.id + "-" + gn]; gn++) {
