@@ -41,6 +41,7 @@
   // 🔤 İngilizce kelimeler (data/ingilizce.js): her seviyede 50'şer kelimelik gruplar; her grup bir konu ("en-a1-1" …).
   // Soru: İngilizce kelime → üç Türkçe anlam. Yanlış şıklar aynı gruptaki aynı türden kelimelerin anlamları.
   var EN = window.KK_EN || null;
+  var ZOR = "en-zor";
   var EN_TUR = { i: "isim", f: "fiil", s: "sıfat", z: "zarf", b: "bağlaç" };
   function enMi(id) { return /^en-/.test(id || ""); }
   function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : "uni"; }
@@ -50,6 +51,9 @@
     var ayriAnlam = function (a, b) { var pa = anlamParca(a); return !anlamParca(b).some(function (p) { return pa.indexOf(p) >= 0; }); };
     (EN.alanlar || []).forEach(function (a) { a.alanMi = true; });
     var tyGorulen = {};
+    // 📌 Zorlandıklarım: kaçırılıp henüz doğru yapılamamış İngilizce sorular (kk-oyun-v1 → cevap[..][0] === 0).
+    // Sorular O.sorular'a yazılmaz (puan iki kez sayılmasın); havuz("en-zor") her seferinde kayıttan kurar.
+    O.konular.push({ id: ZOR, ad: "Zorlandıklarım", grup: "en", zor: true });
     (EN.seviyeler || []).concat(EN.alanlar || []).forEach(function (sv) {
      sv.gruplar = [];
      // Grupta aynı türden yeterli kelime yoksa (ör. 2 zarf) şıklar aynı seviyenin diğer gruplarından gelir.
@@ -69,7 +73,7 @@
         if (es.length < 2) es = liste.filter(uygun);
         var yanlis = karistir(es).slice(0, 2).map(function (y) { return y.t; });
         return {
-          b: "en", k: sv.id, w: x.w, tur: x.tur, t: x.t, o: x.o, ot: x.ot,
+          b: "en", k: sv.id, grp: gid, w: x.w, tur: x.tur, t: x.t, o: x.o, ot: x.ot,
           s: '<span class="en-soru"><strong lang="en">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + (sv.etiket ? " · " + sv.etiket : "") + "</small></span> ne demek?",
           c: [x.t].concat(yanlis),
           a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
@@ -89,7 +93,7 @@
         if (tyGorulen[s]) s = s.replace("<small>" + etk, "<small>" + etk + " · " + grupAdTam);
         tyGorulen[s] = 1;
         return {
-          b: "en", k: gid + "-ty", w: x.w, tur: x.tur, s: s,
+          b: "en", k: gid + "-ty", grp: gid, w: x.w, tur: x.tur, s: s,
           c: [x.w].concat(karistir(es).slice(0, 2).map(function (y) { return y.w; })),
           a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
         };
@@ -109,7 +113,7 @@
           var bos = x.o.replace(new RegExp("\\b(a|an) (" + kacis(x.w) + ")\\b", "gi"), function (m, a) { return (a[0] === "A" ? "A(n)" : "a(n)") + " " + x.w; })
             .replace(new RegExp("\\b" + kacis(x.w) + "\\b", "gi"), "_____");
           return {
-            b: "en", k: gid + "-bd", w: x.w, tur: x.tur,
+            b: "en", k: gid + "-bd", grp: gid, w: x.w, tur: x.tur,
             s: '<span class="en-bosluk" lang="en">' + bos + '</span><span class="en-bosluk-tr">' + x.ot + "</span>",
             c: [x.w].concat(karistir(es).slice(0, 2).map(function (y) { return y.w; })),
             a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
@@ -126,7 +130,7 @@
           var kq = kelimeQ[e[0]] || { t: "" }, es = e[1] === "e";
           (kq[es ? "es" : "zit"] = kq[es ? "es" : "zit"] || []).push(e[2]);
           return {
-            b: "en", k: gid + "-ez", w: e[0],
+            b: "en", k: gid + "-ez", grp: gid, w: e[0],
             s: '<span class="en-soru"><strong lang="en">' + e[0] + "</strong></span> kelimesinin " +
               (es ? '<span class="en-es">eş anlamlısı</span>' : '<span class="en-zit">zıt anlamlısı</span>') + " hangisi?",
             c: [e[2], e[4], e[5]],
@@ -164,6 +168,25 @@
     var k = bul(O.konular, id) || {};
     return { id: id, bolum: false, yks: k.grup === "yks", en: k.grup === "en", ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
+  function zorSorular() {
+    var c = cevaplar(oku()), l = [];
+    Object.keys(O.sorular).forEach(function (k) {
+      if (grupAdi(k) !== "en") return;
+      O.sorular[k].forEach(function (q) { var x = c[anahtar(q)]; if (x && x[0] === 0) l.push(q); });
+    });
+    return l;
+  }
+  // Kartlar için: zorlanılan soruların kelimeleri (her kelime bir kez, kelime testindeki hâliyle)
+  function zorKelimeler() {
+    var gorulen = {}, l = [];
+    zorSorular().forEach(function (q) {
+      var k = q.grp + "|" + q.w;
+      if (gorulen[k]) return; gorulen[k] = 1;
+      var t = (O.sorular[q.grp] || []).filter(function (x) { return x.w === q.w; })[0];
+      if (t) l.push(t);
+    });
+    return l;
+  }
   function havuz(id) {
     var d = dyId(id);
     if (d) {
@@ -175,6 +198,7 @@
     if (no) return tumSorular().filter(function (q) { return String(q.b).split(".")[0] === String(no); });
     if (id === "karisik") return tumSorular();
     if (tekrarMi(id)) return tekrarHavuz(id);
+    if (id === ZOR) return zorSorular();
     return O.sorular[id] || [];
   }
   // ∫ ve Σ işaretlerinin alt/üst sınırlarını ders kitabındaki gibi alt alta yazar.
@@ -591,6 +615,13 @@
 
     // 🔤 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
     if ($("panel-en") && EN) {
+      var zs = havuz(ZOR), zk = zorKelimeler();
+      $("en-zor").innerHTML = zs.length
+        ? '<div class="en-zor-serit"><div><strong>📌 Zorlandıklarım</strong><span>' + zk.length + " kelime · " + zs.length + " soru. Testlerde kaçırdıkların burada toplanır; doğru yaptığın desteden çıkar.</span></div>" +
+          '<div class="en-zor-dugmeler"><button type="button" class="btn" data-kart="' + ZOR + '">📇 Kartlar</button><button type="button" class="btn primary" data-konu="' + ZOR + '">📝 Test</button></div></div>'
+        : '<p class="en-zor-bos">📌 <strong>Zorlandıklarım</strong>: testlerde kaçırdığın kelimeler burada toplanır. Şu an boş.</p>';
+      baglan("#en-zor", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
+      baglan("#en-zor", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       var alanBaslik = false;
       $("en-seviyeler").innerHTML = (EN.seviyeler || []).concat(EN.alanlar || []).map(function (sv, si) {
         var toplamK = 0, toplamC = 0;
@@ -642,6 +673,7 @@
     var aciklamaYaz = function () {
       var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
       $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
+        : id === ZOR && !ozelListe ? "Daha önce kaçırdığın ve henüz doğru yapamadığın sorular (" + havuz(ZOR).length + " soru). Doğru yaptığın soru desteden çıkar. Her soru için ne kadar süre istersin?"
         : t.en && /-ty$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini seç. " + n + " kelime. Her kelime için ne kadar süre istersin?"
         : t.en && /-bd$/.test(id) ? "Cümledeki boşluğa uyan kelimeyi seç; altında cümlenin Türkçesi var. " + n + " cümle. Her cümle için ne kadar süre istersin?"
         : t.en && !/-ez$/.test(id) ? (ozelListe ? "Kartlarda çalıştığın " + ozelListe.length + " kelime." : n + " kelime.") + " Her kelime için ne kadar süre istersin?"
@@ -1166,7 +1198,7 @@
     seviyeKapat();
     if (secimModu) tekrarModu(false);
     kart.id = id;
-    kart.deste = soruSec(id, KART_SAYI);
+    kart.deste = id === ZOR ? karistir(zorKelimeler()).slice(0, KART_SAYI) : soruSec(id, KART_SAYI);
     kart.calisilan = kart.deste.slice();
     kart.bilinen = 0;
     $("kart-ad").textContent = "📇 " + ((bul(O.konular, id) || {}).ad || "");
