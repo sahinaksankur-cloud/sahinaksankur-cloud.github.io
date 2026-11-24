@@ -25,7 +25,9 @@ window.KK_EN = {
     { id: "en-isl", ad: "İşletme İngilizcesi", etiket: "İşletme", ust: "🎓 Bölüme Özel", aciklama: "İşletme derslerinde, iş hayatında ve İngilizce ders kitaplarında geçen terimler.",
       kisa: "İşletme", dosya: "data/alan/isletme.js", grupAd: ["Yönetim ve Organizasyon", "Pazarlama, Finans ve Muhasebe"] },
     { id: "en-muh", ad: "Mühendislik İngilizcesi", etiket: "Mühendislik", ust: "🎓 Bölüme Özel", aciklama: "Mühendislik derslerinde, laboratuvarda ve İngilizce ders kitaplarında geçen genel terimler.",
-      kisa: "Mühendislik", dosya: "data/alan/muhendislik.js", grupAd: ["Mekanik, Malzeme ve Enerji", "Tasarım, Üretim ve Proje"] }
+      kisa: "Mühendislik", dosya: "data/alan/muhendislik.js", grupAd: ["Mekanik, Malzeme ve Enerji", "Tasarım, Üretim ve Proje"] },
+    { id: "en-psi", ad: "Psikoloji İngilizcesi", etiket: "Psikoloji", ust: "🎓 Bölüme Özel", aciklama: "Psikoloji derslerinde, araştırmalarda ve İngilizce ders kitaplarında geçen terimler.",
+      kisa: "Psikoloji", dosya: "data/alan/psikoloji.js", grupAd: ["Zihin, Öğrenme ve Gelişim", "Sosyal ve Klinik Psikoloji, Araştırma"] }
   ],
   kelimeler: {
     "en-a1-1": [
