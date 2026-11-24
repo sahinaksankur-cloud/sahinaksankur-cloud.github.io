@@ -220,7 +220,9 @@
     else if (secilen == null) { d.textContent = "⏱ Süre doldu, cevap vermedin."; d.className = "canli-durum kotu"; }
     else { d.textContent = dogru ? "✓ Doğru bildin!" : "✗ Bu sefer olmadı. Doğru cevap yeşil."; d.className = "canli-durum " + (dogru ? "iyi" : "kotu"); }
     var ac = $("soru-aciklama");
-    ac.innerHTML = A.bicim(q.a || ""); ac.className = "oyun-aciklama " + (dogru || YAYIN ? "iyi" : "kotu"); ac.hidden = !q.a;
+    var hl = YAYIN || !A.hataLink ? "" : A.hataLink(q, "Canlı Yarışma");
+    ac.innerHTML = A.bicim(q.a || "") + (hl ? '<span class="hata-satir">' + hl + "</span>" : "");
+    ac.className = "oyun-aciklama " + (dogru || YAYIN ? "iyi" : "kotu"); ac.hidden = !q.a && !hl;
     if (ses) {
       A.cal(YAYIN || dogru ? "dogru" : secilen == null ? "sayfa" : "yanlis");
       if (!azHareket && (dogru || YAYIN)) {

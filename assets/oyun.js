@@ -196,6 +196,44 @@
   function soruHtml(q) { return bicim(q.s) + (q.g ? (q.g.pasta ? pastaCiz(q.g.pasta) : grafik(q.g)) : ""); }
   function anahtar(q) { return q.g ? q.s + "#" + JSON.stringify(q.g) : q.s; }
   function bul(liste, id) { return (liste || []).filter(function (x) { return x.id === id; })[0]; }
+  // 🚩 Hata bildir: öğrencinin e-posta uygulamasını açan bağlantı (sunucu yok). Soru metni ve konu kendiliğinden yazılır.
+  function duzYazi(html) {
+    var d = document.createElement("div");
+    d.innerHTML = bicim(html || "");
+    Array.prototype.forEach.call(d.querySelectorAll(".kesir"), function (k) {
+      k.textContent = "(" + Array.prototype.map.call(k.children, function (c) { return c.textContent; }).join(")/(") + ")";
+    });
+    Array.prototype.forEach.call(d.querySelectorAll("sup"), function (s) { s.textContent = "^" + s.textContent; });
+    Array.prototype.forEach.call(d.querySelectorAll("sub"), function (s) { s.textContent = "_" + s.textContent; });
+    return d.textContent.replace(/\s+/g, " ").trim();
+  }
+  function soruKonusu(q) {
+    for (var k in O.sorular) if (O.sorular[k].indexOf(q) >= 0) { var b = bul(O.konular, k); return b ? b.ad : k; }
+    if (q.b && q.b !== "yks") return "Chapter " + String(q.b).split(".")[0] + " (" + q.b + ")";
+    if (q.k) { var y = bul(O.konular, q.k); if (y) return y.ad; }
+    return "";
+  }
+  function hataLink(q, test) {
+    var mail = (window.KK_CONFIG || {}).iletisimEposta;
+    if (!mail || !q) return "";
+    var konu = soruKonusu(q), satir = [];
+    satir.push("Merhaba, bu soruda bir hata olduğunu düşünüyorum.", "");
+    if (test) satir.push("Test: " + test);
+    if (konu && konu !== test) satir.push("Konu: " + konu);
+    if (q.c) {
+      satir.push("Soru: " + duzYazi(q.s) + (q.g ? " [grafikli soru]" : ""));
+      satir.push("Şıklar:");
+      q.c.forEach(function (m) { satir.push("  - " + duzYazi(m)); });
+      satir.push("Sitedeki doğru cevap: " + duzYazi(q.c[0]));
+    } else {
+      satir.push("İfade: " + duzYazi(q.s));
+      satir.push("Sitedeki cevap: " + (q.d ? "Doğru" : "Yanlış") + (q.n ? " (doğrusu: " + duzYazi(q.n) + ")" : ""));
+    }
+    satir.push("Sayfa: " + location.href.split("#")[0], "", "Hata nedir? (kısaca yaz):", "");
+    var href = "mailto:" + mail + "?subject=" + encodeURIComponent("Hata bildirimi" + (konu || test ? ": " + (konu || test) : "")) +
+      "&body=" + encodeURIComponent(satir.join("\n"));
+    return '<a class="hata-bildir" href="' + href.replace(/"/g, "&quot;") + '" title="Bu soruda hata mı var? E-posta ile bize bildir.">🚩 Hata bildir</a>';
+  }
   // Listeden n soru seçer; bölüm testlerinde soruları alt bölümlere (2.1, 2.2…) yayar.
   function dengeliSec(liste, n, yay) {
     liste = karistir(liste);
@@ -385,7 +423,7 @@
   // 🔴 Canlı Yarışma (assets/canli.js) bu yardımcıları kullanır: aynı soru görünümü, puan kaydı, sesler ve havai fişek.
   window.KK_ARAC = {
     bicim: bicim, soruHtml: soruHtml, anahtar: anahtar, cevapYaz: cevapYaz, cozulduMu: cozulduMu,
-    cal: cal, sesBaglam: sesBaglam, fisekler: fisekler, oku: oku, yaz: yaz, ekSure: O.ekSure == null ? 5 : O.ekSure
+    cal: cal, sesBaglam: sesBaglam, fisekler: fisekler, oku: oku, yaz: yaz, hataLink: hataLink, ekSure: O.ekSure == null ? 5 : O.ekSure
   };
   if (!$("oyun-giris")) return;
 
@@ -697,7 +735,8 @@
     $("oyun-puan").textContent = durum.puan;
     var ac = $("oyun-aciklama");
     ac.innerHTML = (dogru ? "<strong>Doğru! " + (yeniPuan ? "+1 puan" : "Bu soruyu daha önce çözüp puan almıştın; puan tekrar eklenmez.") + "</strong> "
-      : "<strong>" + (onceCozulmus ? "Bu soruyu daha önce doğru çözmüştün, bu sefer kaçırdın. " : "") + "Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a);
+      : "<strong>" + (onceCozulmus ? "Bu soruyu daha önce doğru çözmüştün, bu sefer kaçırdın. " : "") + "Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a) +
+      '<span class="hata-satir">' + hataLink(q, testBilgi(durum.konu).ad) + "</span>";
     ac.className = "oyun-aciklama " + (dogru ? "iyi" : "kotu");
     ac.hidden = false;
     var son = durum.i === durum.sorular.length - 1;
@@ -811,7 +850,8 @@
         return '<div class="oyun-kacan-soru"><p class="s">' + bicim(k.q.s) + "</p>" +
           '<p class="c"><strong>' + (k.q.d ? "Doğru" : "Yanlış") + ".</strong>" +
           (!k.q.d && k.q.n ? " Doğrusu: " + k.q.n : "") +
-          (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p></div>";
+          (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p>" +
+          '<p class="hata-satir">' + hataLink(k.q, $("dy-ad").textContent.replace(/^⚡ /, "Doğru / Yanlış · ")) + "</p></div>";
       }).join("");
       liste.hidden = false;
     } else { liste.hidden = true; }
@@ -906,7 +946,8 @@
           '<p class="c">Doğru cevap: <strong>' + bicim(k.q.c[0]) + "</strong>" +
           (k.neden === "sure" ? ' <span class="etiket">süre doldu</span>' : "") + "</p>" +
           (k.once ? '<p class="once-not">Bu soruyu daha önce doğru çözmüştün ama bu sefer ' + (k.neden === "sure" ? "süre doldu" : "yanlış yaptın") + ". (Puanın silinmedi.)</p>" : "") +
-          '<p class="a">' + bicim(k.q.a) + "</p></div>";
+          '<p class="a">' + bicim(k.q.a) + "</p>" +
+          '<p class="hata-satir">' + hataLink(k.q, testBilgi(durum.konu).ad) + "</p></div>";
       }).join("");
       liste.hidden = false;
     } else {

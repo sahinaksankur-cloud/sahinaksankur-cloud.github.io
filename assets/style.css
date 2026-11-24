@@ -731,3 +731,9 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .kural-icerik ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--muted); line-height: 1.5; font-size: 0.93rem; }
 .kural-icerik strong { color: var(--text); }
 #kural-perde { z-index: 60; }
+
+/* 🚩 Hata bildir (soru açıklamasının altında; e-posta uygulamasını açar) */
+.hata-satir { display: block; margin-top: 8px; text-align: right; }
+p.hata-satir { margin: 0; }
+.hata-bildir { font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 3px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); white-space: nowrap; }
+.hata-bildir:hover, .hata-bildir:focus-visible { color: var(--text); border-color: currentColor; }
