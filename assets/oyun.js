@@ -50,7 +50,7 @@
     var anlamParca = function (t) { return t.split(";").map(function (p) { return p.trim().split(" (")[0]; }); };
     var ayriAnlam = function (a, b) { var pa = anlamParca(a); return !anlamParca(b).some(function (p) { return pa.indexOf(p) >= 0; }); };
     (EN.alanlar || []).forEach(function (a) { a.alanMi = true; });
-    var tyGorulen = {};
+    var tyGorulen = {}, yzGorulen = {};
     // 📌 Zorlandıklarım: kaçırılıp henüz doğru yapılamamış İngilizce sorular (kk-oyun-v1 → cevap[..][0] === 0).
     // Sorular O.sorular'a yazılmaz (puan iki kez sayılmasın); havuz("en-zor") her seferinde kayıttan kurar.
     O.konular.push({ id: ZOR, ad: "Zorlandıklarım", grup: "en", zor: true });
@@ -80,6 +80,18 @@
         };
       });
       var grupAdTam = sv.alanMi ? sv.ad + " · " + ((sv.grupAd || [])[gn - 1] || gn + ". Grup") : sv.ad.split(" · ")[0] + " · " + gn + ". Grup";
+      // ✍️ Yazarak hatırla ("en-a1-1-yz"): Türkçe anlam → İngilizcesini klavyeyle yaz (ilk harf + harf sayısı ipucu).
+      O.konular.push({ id: gid + "-yz", ad: grupAdTam + " · Yazarak", seviye: sv.id, no: gn, grup: "en", yz: true, alan: !!sv.alanMi });
+      O.sorular[gid + "-yz"] = liste.map(function (x) {
+        var etk = (EN_TUR[x.tur] || "") + (sv.etiket ? " · " + sv.etiket : "");
+        var s = '<span class="en-soru"><strong>' + x.t + "</strong> <small>" + etk + "</small></span> İngilizcesini yaz.";
+        if (yzGorulen[s]) s = s.replace("<small>" + etk, "<small>" + etk + " · " + grupAdTam);
+        yzGorulen[s] = 1;
+        return {
+          b: "en", k: gid + "-yz", grp: gid, w: x.w, tur: x.tur, yaz: true, s: s, c: [x.w],
+          a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
+        };
+      });
       // 🔁 Ters yön ("en-a1-1-ty"): Türkçe anlam → İngilizce kelime; şıklar aynı türden, anlamı ayrı kelimeler.
       O.konular.push({ id: gid + "-ty", ad: grupAdTam + " · Ters Yön", seviye: sv.id, no: gn, grup: "en", ty: true, alan: !!sv.alanMi });
       O.sorular[gid + "-ty"] = liste.map(function (x) {
@@ -630,6 +642,7 @@
           var ezk = bul(O.konular, gid + "-ez"), ezh = ezk ? havuz(ezk.id) : [], ezc = ezk ? cozulenSayi(ezh, kayit) : 0;
           var bdk = bul(O.konular, gid + "-bd"), bdh = bdk ? havuz(bdk.id) : [], bdc = bdk ? cozulenSayi(bdh, kayit) : 0;
           var tyk = bul(O.konular, gid + "-ty"), tyh = tyk ? havuz(tyk.id) : [], tyc = tyk ? cozulenSayi(tyh, kayit) : 0;
+          var yzk = bul(O.konular, gid + "-yz"), yzh = yzk ? havuz(yzk.id) : [], yzc = yzk ? cozulenSayi(yzh, kayit) : 0;
           var ekDugme = function (konu, ikon, yazi, c, n, ek) {
             return '<button type="button" class="btn en-ek-btn' + (ek || "") + '" data-konu="' + konu.id + '" title="' + ikon + " " + yazi + '"><span>' + ikon +
               '<span class="en-ek-yazi"> ' + yazi + '</span></span><span class="en-ez-puan">' + (c === n ? "✓ " + n + "/" + n : c + "/" + n) + "</span></button>";
@@ -639,12 +652,13 @@
             "<strong>" + (c === hk.length && c ? '✓<span class="en-uzun"> Tamamlandı ·</span> ' : "") + '<span class="en-uzun">Puan: </span>' + c + " / " + hk.length + "</strong>" +
             (bdk ? '<span class="en-ez-satir">🧩 ' + bdc + " / " + bdh.length + "</span>" : "") +
             (tyk ? '<span class="en-ez-satir">🔁 ' + tyc + " / " + tyh.length + "</span>" : "") +
+            (yzk ? '<span class="en-ez-satir">✍️ ' + yzc + " / " + yzh.length + "</span>" : "") +
             (ezk ? '<span class="en-ez-satir">🔄 ' + ezc + " / " + ezh.length + "</span>" : "") +
-            enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (bdk ? bonusRozet(kayit, bdk.id).replace("Bonus", "Boşluk bonus") : "") + (tyk ? bonusRozet(kayit, tyk.id).replace("Bonus", "Ters yön bonus") : "") + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
+            enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (bdk ? bonusRozet(kayit, bdk.id).replace("Bonus", "Boşluk bonus") : "") + (tyk ? bonusRozet(kayit, tyk.id).replace("Bonus", "Ters yön bonus") : "") + (yzk ? bonusRozet(kayit, yzk.id).replace("Bonus", "Yazarak bonus") : "") + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
             '<div class="en-grup-dugmeler"><button type="button" class="btn" data-kart="' + gid + '">📇 Kartlar</button>' +
             '<button type="button" class="btn" data-konu="' + gid + '">📝 Test</button>' +
             (bdk ? ekDugme(bdk, "🧩", "Boşluk", bdc, bdh.length) : "") + (tyk ? ekDugme(tyk, "🔁", "Ters yön", tyc, tyh.length) : "") +
-            (ezk ? ekDugme(ezk, "🔄", "Eş / Zıt", ezc, ezh.length, " en-ez-btn") : "") + "</div></div>";
+            (yzk ? ekDugme(yzk, "✍️", "Yazarak", yzc, yzh.length) : "") + (ezk ? ekDugme(ezk, "🔄", "Eş / Zıt", ezc, ezh.length) : "") + "</div></div>";
         }).join("");
         var bas = "";
         if (sv.alanMi && !alanBaslik) { alanBaslik = true; bas = '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3><p class="en-alan-not">Üniversitede bölümünün İngilizcesi: derslerde ve kitaplarda geçen terimler. Canlı Yarışma\'ya girmez.</p>'; }
@@ -665,7 +679,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
@@ -674,6 +688,7 @@
       var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
       $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
         : id === ZOR && !ozelListe ? "Daha önce kaçırdığın ve henüz doğru yapamadığın sorular (" + havuz(ZOR).length + " soru). Doğru yaptığın soru desteden çıkar. Her soru için ne kadar süre istersin?"
+        : t.en && /-yz$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini klavyeyle yaz; ilk harfi ve harf sayısı ipucu. Yazmak için her soruya " + YAZ_EK + " sn eklenir. " + n + " kelime. Her kelime için ne kadar süre istersin?"
         : t.en && /-ty$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini seç. " + n + " kelime. Her kelime için ne kadar süre istersin?"
         : t.en && /-bd$/.test(id) ? "Cümledeki boşluğa uyan kelimeyi seç; altında cümlenin Türkçesi var. " + n + " cümle. Her cümle için ne kadar süre istersin?"
         : t.en && !/-ez$/.test(id) ? (ozelListe ? "Kartlarda çalıştığın " + ozelListe.length + " kelime." : n + " kelime.") + " Her kelime için ne kadar süre istersin?"
@@ -795,17 +810,33 @@
     $("oyun-puan").textContent = durum.puan;
     $("oyun-bar-dolu").style.width = (durum.i / durum.sorular.length * 100) + "%";
     $("oyun-metin").innerHTML = soruHtml(q);
-    var secenekler = karistir(q.c.map(function (m, j) { return { m: m, dogru: j === 0 }; }));
-    $("oyun-secenekler").innerHTML = secenekler.map(function (s, j) {
-      return '<button type="button" class="oyun-secenek" data-j="' + j + '">' + bicim(s.m) + "</button>";
-    }).join("");
     $("oyun-aciklama").hidden = true;
     $("oyun-sonraki").hidden = true;
-    Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b) {
-      b.addEventListener("click", function () { cevapla(b, secenekler, q); });
-    });
+    if (q.yaz) {
+      // ✍️ Yazarak: şık yok, kutuya yazılır; ipucu ilk harf ve harf sayısı
+      var harf = q.w.replace(/[^A-Za-z]/g, "").length;
+      var ipucu = q.w.split("").map(function (ch, j) { return j === 0 ? ch : /[A-Za-z]/.test(ch) ? "_" : ch === " " ? "\u00a0\u00a0" : ch; }).join(" ");
+      $("oyun-secenekler").innerHTML = '<form class="yaz-form" id="yaz-form" autocomplete="off" novalidate>' +
+        '<p class="yaz-ipucu"><span lang="en">' + ipucu + "</span> <small>(" + harf + " harf)</small></p>" +
+        '<div class="yaz-satir"><input id="yaz-girdi" class="yaz-girdi" type="text" lang="en" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-label="İngilizcesini yaz">' +
+        '<button type="submit" class="btn primary" id="yaz-kontrol">Kontrol et</button></div></form>';
+      $("yaz-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!$("yaz-girdi").value.trim() || $("yaz-girdi").disabled) return;
+        yazCevapla(q);
+      });
+      setTimeout(function () { if ($("yaz-girdi")) $("yaz-girdi").focus(); }, 30);
+    } else {
+      var secenekler = karistir(q.c.map(function (m, j) { return { m: m, dogru: j === 0 }; }));
+      $("oyun-secenekler").innerHTML = secenekler.map(function (s, j) {
+        return '<button type="button" class="oyun-secenek" data-j="' + j + '">' + bicim(s.m) + "</button>";
+      }).join("");
+      Array.prototype.forEach.call(document.querySelectorAll(".oyun-secenek"), function (b) {
+        b.addEventListener("click", function () { cevapla(b, secenekler, q); });
+      });
+    }
     // Grafikli ve parçalı fonksiyonlu sorular daha uzun okunur: her seviyede ek süre.
-    var ek = (q.g || /class="parcali"/.test(q.s)) ? (O.ekSure == null ? 5 : O.ekSure) : 0;
+    var ek = (q.g || /class="parcali"/.test(q.s)) ? (O.ekSure == null ? 5 : O.ekSure) : q.yaz ? YAZ_EK : 0;
     sayaciBaslat(function () {
       // Süre doldu: puan yok, doğrudan sonraki soruya geç; doğru cevap sonuç ekranında gösterilir.
       durum.kacan.push({ q: q, neden: "sure", once: cozulduMu(q) });
@@ -824,15 +855,35 @@
       if (secenekler[j].dogru) b.classList.add("dogru");
     });
     var dogru = secenekler[+btn.getAttribute("data-j")].dogru;
+    if (!dogru) btn.classList.add("yanlis");
+    sonucIsle(q, dogru, kalanSn);
+  }
+  // ✍️ Yazılan cevabı karşılaştırır: büyük/küçük harf, fazla boşluk ve -ise/-ize (-yse/-yze) yazım farkı önemsiz.
+  var YAZ_EK = 10;
+  function yazNorm(t) {
+    return String(t).toLowerCase().replace(/[’`]/g, "'").replace(/[.!?,;:]+$/g, "").replace(/\s+/g, " ").trim()
+      .replace(/is(e|es|ed|ing)\b/g, "iz$1").replace(/ys(e|es|ed|ing)\b/g, "yz$1");
+  }
+  function yazCevapla(q) {
+    var kalanSn = Math.max(0, (sayacBitis - Date.now()) / 1000);
+    sayaciDurdur();
+    $("oyun-sure").classList.remove("az", "uyari");
+    var g = $("yaz-girdi"), dogru = yazNorm(g.value) === yazNorm(q.w);
+    g.disabled = true; $("yaz-kontrol").disabled = true;
+    g.classList.add(dogru ? "dogru" : "yanlis");
+    if (!dogru) $("yaz-form").insertAdjacentHTML("beforeend", '<p class="yaz-dogru">Doğrusu: <strong lang="en">' + q.w + "</strong></p>");
+    sonucIsle(q, dogru, kalanSn);
+  }
+  function sonucIsle(q, dogru, kalanSn) {
     var onceCozulmus = cozulduMu(q);
-    if (dogru) { durum.puan++; durum.kalan += kalanSn; if (onceCozulmus) durum.puansiz++; } else { btn.classList.add("yanlis"); durum.kacan.push({ q: q, neden: "yanlis", once: onceCozulmus }); }
+    if (dogru) { durum.puan++; durum.kalan += kalanSn; if (onceCozulmus) durum.puansiz++; } else { durum.kacan.push({ q: q, neden: "yanlis", once: onceCozulmus }); }
     cal(dogru ? "dogru" : "yanlis");
     var yeniPuan = cevapYaz(q, dogru);
     if (yeniPuan) durum.yeniPuan++;
     $("oyun-puan").textContent = durum.puan;
     var ac = $("oyun-aciklama");
     ac.innerHTML = (dogru ? "<strong>Doğru! " + (yeniPuan ? "+1 puan" : "Bu soruyu daha önce çözüp puan almıştın; puan tekrar eklenmez.") + "</strong> "
-      : "<strong>" + (onceCozulmus ? "Bu soruyu daha önce doğru çözmüştün, bu sefer kaçırdın. " : "") + "Doğru cevap yukarıda yeşil.</strong> ") + bicim(q.a) +
+      : "<strong>" + (onceCozulmus ? "Bu soruyu daha önce doğru çözmüştün, bu sefer kaçırdın. " : "") + (q.yaz ? "Doğrusu yukarıda." : "Doğru cevap yukarıda yeşil.") + "</strong> ") + bicim(q.a) +
       '<span class="hata-satir">' + hataLink(q, testBilgi(durum.konu).ad) + "</span>";
     ac.className = "oyun-aciklama " + (dogru ? "iyi" : "kotu");
     ac.hidden = false;
@@ -990,7 +1041,7 @@
     sayaciDurdur();
     var enTest = enMi(durum.konu);
     $("oyun-test-gec").hidden = !enTest;
-    if (enTest) { $("oyun-test-gec").textContent = "📇 Kartlarla çalış"; $("oyun-test-gec").setAttribute("data-hedef", "kart:" + durum.konu.replace(/-(ez|bd|ty)$/, "")); }
+    if (enTest) { $("oyun-test-gec").textContent = "📇 Kartlarla çalış"; $("oyun-test-gec").setAttribute("data-hedef", "kart:" + durum.konu.replace(/-(ez|bd|ty|yz)$/, "")); }
     $("oyun-tekrar").classList.toggle("primary", !enTest);
     $("oyun-tekrar").setAttribute("data-hedef", durum.konu);
     $("oyun-konu-degis").textContent = "Konu değiştir";

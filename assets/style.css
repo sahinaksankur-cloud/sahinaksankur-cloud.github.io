@@ -662,7 +662,7 @@ body.yayin .oyun-grafik { max-width: 560px; }
 .en-grup.bitti strong { color: #2e8b57; }
 .en-grup-dugmeler { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
 .en-grup-dugmeler .btn { justify-content: center; padding: 8px 6px; font-size: 0.9rem; font-weight: 600; }
-.en-grup-dugmeler .en-ez-btn { grid-column: 1 / -1; }
+
 .en-grup-dugmeler .en-ek-btn { flex-direction: column; gap: 1px; line-height: 1.2; white-space: nowrap; }
 /* Grup düğmeleri renksiz: hiçbiri öne çıkmaz. Fareyle üstüne gelince (yalnız fareli cihazlar) ve dokunurken mavi olur. */
 @media (hover: hover) { .en-grup-dugmeler .btn:hover, .en-grup-dugmeler .btn:hover .en-ez-puan { background: var(--accent); border-color: var(--accent); color: var(--accent-text); } }
@@ -680,7 +680,7 @@ body.yayin .oyun-grafik { max-width: 560px; }
   .en-grup { padding: 8px; }
   .en-grup strong { font-size: 1rem; }
   .en-uzun, .en-grup .skor { display: none; }
-  .en-grup-dugmeler { grid-template-columns: 1fr 1fr 1fr; }
+  .en-grup-dugmeler { grid-template-columns: 1fr 1fr; }
   .en-grup-dugmeler [data-kart], .en-grup-dugmeler .btn:not(.en-ek-btn) { grid-column: 1 / -1; }
   .en-grup-dugmeler .en-ek-btn { grid-column: auto; padding: 7px 0; font-size: 1rem; }
   .en-ek-yazi { display: none; }
@@ -768,3 +768,14 @@ p.hata-satir { margin: 0; }
 /* 👁 Ana sayfa altındaki küçük, etiketsiz sayaç */
 .sayac { color: var(--muted); font-size: 0.8rem; opacity: 0.75; font-variant-numeric: tabular-nums; }
 .sayac[hidden] { display: none; }
+
+/* ✍️ Yazarak hatırla: şıklar yerine yazı kutusu */
+.yaz-form { display: grid; gap: 10px; }
+.yaz-ipucu { margin: 0; font-size: 1.15rem; letter-spacing: 0.08em; font-weight: 600; }
+.yaz-ipucu small { letter-spacing: 0; font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+.yaz-satir { display: flex; gap: 8px; flex-wrap: wrap; }
+.yaz-girdi { flex: 1 1 200px; min-width: 0; font: inherit; font-size: 1.15rem; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); }
+.yaz-girdi:focus { outline: none; border-color: var(--accent); }
+.yaz-girdi.dogru { border-color: #2e8b57; background: rgba(46, 139, 87, 0.08); }
+.yaz-girdi.yanlis { border-color: #c0392b; background: rgba(192, 57, 43, 0.08); text-decoration: line-through; }
+.yaz-dogru { margin: 0; font-size: 1.05rem; color: #2e8b57; }
