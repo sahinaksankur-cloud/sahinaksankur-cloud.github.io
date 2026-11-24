@@ -44,9 +44,15 @@
   var ZOR = "en-zor";
   var EN_TUR = { i: "isim", f: "fiil", s: "sıfat", z: "zarf", b: "bağlaç" };
   function enMi(id) { return /^en-/.test(id || ""); }
-  function jaMi(id) { return /^ja-/.test(id || ""); }
-  function dilMi(id) { return enMi(id) || jaMi(id); }   // kelime testleri (İngilizce, Japonca)
-  function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : jaMi(id) ? "ja" : "uni"; }
+  // Diğer diller (İngilizce'nin altındaki dil listesi; sıra listede bu sırayla): sadece kelime ezberi (📇 Kartlar + 📝 Test)
+  var DILLER = {
+    de: { ad: "Almanca", ikon: "🇩🇪", dosya: "data/almanca.js", veri: "KK_DE", ses: "de-DE", renk: "de-r1", bicim: "cumle" },
+    ja: { ad: "Japonca", ikon: "🗾", dosya: "data/japonca.js", veri: "KK_JA", ses: "ja-JP", renk: "ja-r1", bicim: "okunus" }
+  };
+  var DIL_SIRA = ["de", "ja"];
+  function dilKod(id) { var m = /^([a-z]{2})-/.exec(id || ""); return m && DILLER[m[1]] ? m[1] : null; }
+  function dilMi(id) { return enMi(id) || !!dilKod(id); }   // kelime testleri (İngilizce ve diğer diller)
+  function grupAdi(id) { return /^yks-/.test(id || "") ? "yks" : enMi(id) ? "en" : dilKod(id) || "uni"; }
   if (EN) {
     // Şık için anlam parçaları ("ince; zayıf" → ince, zayıf): doğru cevapla ortak parçası olan kelime yanlış şık olmaz.
     var anlamParca = function (t) { return t.split(";").map(function (p) { return p.trim().split(" (")[0]; }); };
@@ -158,52 +164,58 @@
     (EN.seviyeler || []).forEach(enKur);
   }
 
-  // 🗾 Japonca (data/japonca.js, window.KK_JA): sadece kelime ezberi ve telaffuz (📇 Kartlar + 📝 Test).
-  // Dosya öğrenci Japonca'yı seçince yüklenir (jaYukle). Konu "ja-n5-1" …, grup "ja"; Canlı Yarışma'ya ve Zorlandıklarım'a girmez.
-  var JA = { yuklendi: false, hata: false, bekleyen: null, seviyeler: [] };
-  function jaKur() {
-    var veri = window.KK_JA || {}, kel = veri.kelimeler || {};
-    JA.seviyeler = veri.seviyeler || [];
+  // Diğer diller (data/almanca.js → window.KK_DE, data/japonca.js → window.KK_JA): dosya, öğrenci o dili seçince yüklenir (dilYukle).
+  // Konu "de-a1-1", "ja-n5-1" …, grup "de" / "ja"; Canlı Yarışma'ya ve Zorlandıklarım'a girmez.
+  // Kelime biçimi: bicim "cumle" → [kelime, tür, Türkçe, örnek cümle, cümlenin Türkçesi]; "okunus" → [yazılış, hiragana, Latin harfleriyle okunuş, tür, Türkçe]
+  function dilKur(kod) {
+    var D = DILLER[kod], veri = window[D.veri] || {}, kel = veri.kelimeler || {}, lang = D.ses.split("-")[0];
+    var oku_ = D.bicim === "okunus" ? function (r) { return { w: r[0], kana: r[1], r: r[2], tur: r[3], t: r[4] }; }
+      : function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; };
+    D.seviyeler = veri.seviyeler || [];
     var tg = function (t) { return t === "b" ? "z" : t; };
-    JA.seviyeler.forEach(function (sv) {
-      sv.gruplar = []; sv.renk = "ja-r1";
+    D.seviyeler.forEach(function (sv) {
+      sv.gruplar = []; sv.renk = D.renk;
       var seviyeListe = [];
-      for (var sn = 1; kel[sv.id + "-" + sn]; sn++) kel[sv.id + "-" + sn].forEach(function (r) { seviyeListe.push({ w: r[0], tur: r[3], t: r[4] }); });
+      for (var sn = 1; kel[sv.id + "-" + sn]; sn++) kel[sv.id + "-" + sn].forEach(function (r) { seviyeListe.push(oku_(r)); });
       for (var gn = 1; kel[sv.id + "-" + gn]; gn++) {
         var gid = sv.id + "-" + gn;
         sv.gruplar.push(gid);
-        O.konular.push({ id: gid, ad: "Japonca " + sv.ad.split(" · ")[0] + " · " + gn + ". Grup", seviye: sv.id, no: gn, grup: "ja" });
-        var liste = kel[gid].map(function (r) { return { w: r[0], kana: r[1], r: r[2], tur: r[3], t: r[4] }; });
+        O.konular.push({ id: gid, ad: D.ad + " " + sv.ad.split(" · ")[0] + " · " + gn + ". Grup", seviye: sv.id, no: gn, grup: kod });
+        var liste = kel[gid].map(oku_);
         O.sorular[gid] = liste.map(function (x) {
           var uygun = function (y) { return y.w !== x.w && ayriAnlam(x.t, y.t); };
           var es = liste.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
           if (es.length < 2) es = seviyeListe.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
           if (es.length < 2) es = liste.filter(uygun);
-          var okunus = (x.kana ? '<span lang="ja">' + x.kana + "</span> · " : "") + x.r;
+          var okunus = x.r ? (x.kana ? '<span lang="ja">' + x.kana + "</span> · " : "") + x.r : "";
           return {
-            b: "ja", k: sv.id, grp: gid, w: x.w, tur: x.tur, t: x.t, kana: x.kana, r: x.r, dil: "ja-JP",
-            s: '<span class="en-soru"><strong lang="ja">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + '</small></span><span class="ja-okunus">' + okunus + "</span> ne demek?",
+            b: kod, k: sv.id, grp: gid, w: x.w, tur: x.tur, t: x.t, kana: x.kana, r: x.r, o: x.o, ot: x.ot, dil: D.ses,
+            s: '<span class="en-soru"><strong lang="' + lang + '">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + "</small></span>" +
+              (okunus ? '<span class="ja-okunus">' + okunus + "</span>" : "") + " ne demek?",
             c: [x.t].concat(karistir(es).slice(0, 2).map(function (y) { return y.t; })),
-            a: '<span class="en-anlam"><strong lang="ja">' + x.w + "</strong> (" + okunus + ") = " + x.t + "</span>"
+            a: '<span class="en-anlam"><strong lang="' + lang + '">' + x.w + "</strong>" + (okunus ? " (" + okunus + ")" : "") + " = " + x.t + "</span>" +
+              (x.o ? '<span class="en-ornek"><em lang="' + lang + '">' + x.o + "</em> " + x.ot + "</span>" : "")
           };
         });
       }
     });
   }
-  function jaYukle(bitti) {
-    if (JA.yuklendi) { if (bitti) bitti(); return; }
-    if (JA.bekleyen) { JA.bekleyen.push(bitti); return; }
-    JA.bekleyen = [bitti]; JA.hata = false;
+  function dilYukle(kod, bitti) {
+    var D = DILLER[kod];
+    if (!D) return;
+    if (D.yuklendi) { if (bitti) bitti(); return; }
+    if (D.bekleyen) { D.bekleyen.push(bitti); return; }
+    D.bekleyen = [bitti]; D.hata = false;
     var kaynak = document.querySelector('script[src*="data/ingilizce.js"]');
     var v = kaynak && /\?v=[^"'&]*/.exec(kaynak.getAttribute("src"));
     var sc = document.createElement("script");
-    sc.src = "data/japonca.js" + (v ? v[0] : "");
+    sc.src = D.dosya + (v ? v[0] : "");
     sc.onload = function () {
-      jaKur(); JA.yuklendi = true;
-      var l = JA.bekleyen; JA.bekleyen = null;
+      dilKur(kod); D.yuklendi = true;
+      var l = D.bekleyen; D.bekleyen = null;
       l.forEach(function (f) { if (f) f(); });
     };
-    sc.onerror = function () { JA.bekleyen = null; JA.hata = true; girisYenile(); };
+    sc.onerror = function () { D.bekleyen = null; D.hata = true; girisYenile(); };
     document.head.appendChild(sc);
   }
 
@@ -260,7 +272,7 @@
       return { id: id, bolum: true, ad: "Chapter " + no + " · " + b.ad, kisaAd: "Chapter " + no, ders: b.ders, sayi: O.bolumSoruSayisi || 5 };
     }
     var k = bul(O.konular, id) || {};
-    return { id: id, bolum: false, yks: k.grup === "yks", en: k.grup === "en" || k.grup === "ja", ja: k.grup === "ja", ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
+    return { id: id, bolum: false, yks: k.grup === "yks", en: k.grup === "en" || !!DILLER[k.grup], dil: DILLER[k.grup] ? k.grup : null, ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
   function zorSorular() {
     var c = cevaplar(oku()), l = [];
@@ -771,15 +783,17 @@
       baglan("#en-seviyeler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
       $("en-toplam").textContent = toplamYazi("İngilizce", grupSorular("en"), kayit, "en") +
         ". Her kelime, testte ilk kez doğru bildiğinde 1 puan getirir; bir grubun puanı tamsa o gruptaki bütün kelimeleri biliyorsun. Puanların sadece bu cihazda tutulur.";
-      // 🗾 Japonca: dosyası yüklendiyse seviyeler, İngilizce'deki gibi renkli şeritlerde
-      if ($("panel-ja")) {
-        $("ja-seviyeler").innerHTML = JA.yuklendi ? JA.seviyeler.map(function (sv, si) { return seritHtml(sv, si, false); }).join("")
-          : '<p class="en-alan-not">' + (JA.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>";
-        baglan("#ja-seviyeler", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
-        baglan("#ja-seviyeler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
-        $("ja-toplam").textContent = JA.yuklendi ? toplamYazi("Japonca", grupSorular("ja"), kayit, "ja") +
+      // Diğer diller: dosyası yüklendiyse seviyeler, İngilizce'deki gibi renkli şeritlerde
+      DIL_SIRA.forEach(function (kod) {
+        var D = DILLER[kod];
+        if (!$("panel-" + kod)) return;
+        $(kod + "-seviyeler").innerHTML = D.yuklendi ? D.seviyeler.map(function (sv, si) { return seritHtml(sv, si, false); }).join("")
+          : '<p class="en-alan-not">' + (D.hata ? "Kelimeler yüklenemedi; sayfayı yenile." : "Yükleniyor…") + "</p>";
+        baglan("#" + kod + "-seviyeler", "[data-kart]", function (b) { kartBasla(b.getAttribute("data-kart")); });
+        baglan("#" + kod + "-seviyeler", "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+        $(kod + "-toplam").textContent = D.yuklendi ? toplamYazi(D.ad, grupSorular(kod), kayit, kod) +
           ". Her kelime, testte ilk kez doğru bildiğinde 1 puan getirir. Puanların sadece bu cihazda tutulur." : "";
-      }
+      });
     }
     goster("oyun-giris");
   }
@@ -789,7 +803,7 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.ja ? "🗾 Japonca · 📝 Kelime Testi" : t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.dil ? DILLER[t.dil].ikon + " " + DILLER[t.dil].ad + " · 📝 Kelime Testi" : t.en ? "🔤 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
@@ -1195,7 +1209,7 @@
     $("oyun-rekor").textContent = (tekrarMi(durum.konu) ? "" : yeniRekor && eski != null ? "Yeni rekor! (Önceki en iyi: " + eski + ") · "
       : eski != null ? seviye().ad + " seviyesinde en iyi skorun: " + Math.max(eski, p) + " · " : "") +
       "Bu turda " + durum.yeniPuan + " yeni puan" + (bonus && bonus.eklendi ? " + " + bonus.toplam + " bonus" : "") + " · " +
-      toplamYazi(konuBilgi.yks ? "YKS" : konuBilgi.ja ? "Japonca" : konuBilgi.en ? "İngilizce" : "Üniversite", grupSorular(grupAdi(durum.konu)), kayit, grupAdi(durum.konu)) +
+      toplamYazi(konuBilgi.yks ? "YKS" : konuBilgi.dil ? DILLER[konuBilgi.dil].ad : konuBilgi.en ? "İngilizce" : "Üniversite", grupSorular(grupAdi(durum.konu)), kayit, grupAdi(durum.konu)) +
       (bitti ? " · ✓ Bu konudaki tüm soruları çözdün! Sorular yine gelir ama artık puan ve bonus eklenmez." : "");
 
     var kayipSayi = durum.kacan.filter(function (k) { return k.once; }).length;
@@ -1383,6 +1397,7 @@
     $("kart-okunus").textContent = okunus; $("kart-okunus").hidden = !okunus;
     $("kart-okunus2").textContent = okunus; $("kart-okunus2").hidden = !okunus;
     $("kart-anlam").textContent = q.t;
+    $("kart-ornek").setAttribute("lang", lang);
     $("kart-ornek").textContent = q.o || ""; $("kart-ornek").hidden = !q.o;
     $("kart-ceviri").textContent = q.ot || ""; $("kart-ceviri").hidden = !q.ot;
     var ezSatir = (q.es ? "≈ " + q.es.join(", ") : "") + (q.es && q.zit ? "   ·   " : "") + (q.zit ? "↔ " + q.zit.join(", ") : "");
@@ -1439,8 +1454,9 @@
   // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🔤 İngilizce ▾ ----
   // Dil sekmesine dokununca altında dil listesi açılır (İngilizce, Japonca); seçilen dilin paneli gösterilir.
   // Panel "ja" ile sekme düğmesi "en" aynıdır; düğmenin yazısı seçilen dili gösterir.
-  var SEKMELER = ["uni", "yks", "en", "ja"];
-  var DIL_AD = { en: "🔤 İngilizce", ja: "🗾 Japonca" };
+  var SEKMELER = ["uni", "yks", "en"].concat(DIL_SIRA);
+  var DIL_AD = { en: "🔤 İngilizce" };
+  DIL_SIRA.forEach(function (kod) { DIL_AD[kod] = DILLER[kod].ikon + " " + DILLER[kod].ad; });
   function dilMenu(ac) {
     if (!$("dil-menu")) return;
     $("dil-menu").hidden = !ac;
@@ -1451,16 +1467,16 @@
     if (SEKMELER.indexOf(ad) < 0) ad = "uni";
     SEKMELER.forEach(function (x) { if ($("panel-" + x)) $("panel-" + x).hidden = x !== ad; });
     ["uni", "yks", "en"].forEach(function (x) {
-      $("sekme-" + x).setAttribute("aria-selected", String(x === ad || (x === "en" && ad === "ja")));
+      $("sekme-" + x).setAttribute("aria-selected", String(x === ad || (x === "en" && !!DILLER[ad])));
     });
-    if ($("sekme-dil")) $("sekme-dil").textContent = DIL_AD[ad === "ja" ? "ja" : "en"];
+    if ($("sekme-dil")) $("sekme-dil").textContent = DIL_AD[DILLER[ad] ? ad : "en"];
     Array.prototype.forEach.call(document.querySelectorAll("#dil-menu [data-dil]"), function (b) {
       b.setAttribute("aria-current", String(b.getAttribute("data-dil") === ad));
     });
     dilMenu(false);
     var k = oku(); k.sekme = ad; yaz(k);
     if (ad !== "yks" && secimModu) tekrarModu(false);
-    if (ad === "ja" && !JA.yuklendi) jaYukle(girisYenile);
+    if (DILLER[ad] && !DILLER[ad].yuklendi) dilYukle(ad, girisYenile);
   }
   ["uni", "yks"].forEach(function (x) {
     if ($("sekme-" + x)) $("sekme-" + x).addEventListener("click", function () { sekmeAc(x); });
@@ -1477,16 +1493,16 @@
   // oyun.html#bolum-2, #limit, #yks, #yks-rakam, #ingilizce, #en-a1 (test), #kart-en-a1 (kartlar) gibi linkler
   // ilgili sekmeyi açar ve testi başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));
-  var kartHedef = /^kart-((?:en|ja)-.+)$/.exec(hedef);
-  var hedefJa = hedef === "japonca" || jaMi(kartHedef ? kartHedef[1] : hedef);
-  sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedefJa ? "ja" : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
+  var kartHedef = /^kart-((?:en|de|ja)-.+)$/.exec(hedef);
+  var hedefDil = { almanca: "de", japonca: "ja" }[hedef] || dilKod(kartHedef ? kartHedef[1] : hedef);
+  sekmeAc(hedef === "yks" || yksMi(hedef) ? "yks" : hedefDil ? hedefDil : hedef === "ingilizce" || enMi(hedef) || kartHedef ? "en" : hedef ? "uni" : (oku().sekme || "uni"));
   var rota = function () {
     if (kartHedef && havuz(kartHedef[1]).length) kartBasla(kartHedef[1]);
     else if (hedef && havuz(hedef).length) { if (dyId(hedef)) dyBasla(hedef); else seviyeSor(hedef); }
   };
   // Bölüme Özel bir gruba link (#en-calc-1, #kart-en-calc-1): bölüm seçilir, dosyası yüklenince test açılır
   var hedefAlan = EN && (EN.alanlar || []).filter(function (a) { return (kartHedef ? kartHedef[1] : hedef).indexOf(a.id + "-") === 0; })[0];
-  if (hedefJa && !JA.yuklendi) jaYukle(function () { girisCiz(); rota(); });
+  if (hedefDil && !DILLER[hedefDil].yuklendi) dilYukle(hedefDil, function () { girisCiz(); rota(); });
   else if (hedefAlan && !hedefAlan.yuklendi) {
     var ka = oku(); ka.alan = hedefAlan.id; yaz(ka);
     alanYukle(hedefAlan.id, function () { girisCiz(); rota(); });

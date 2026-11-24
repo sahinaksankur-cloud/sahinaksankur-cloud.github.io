@@ -811,7 +811,7 @@ p.hata-satir { margin: 0; }
 @media (max-width: 460px) { .dil-menu { left: auto; right: 0; } }
 
 /* 🗾 Japonca */
-.ja-r1 { background: #b3263a; }
+.ja-r1 { background: #b3263a; } .de-r1 { background: #5c4a12; }
 .ja-okunus { display: block; font-weight: 400; font-size: 0.95em; color: var(--muted); margin: 2px 0 6px; }
 .kk-okunus { display: block; font-size: 1rem; color: var(--muted); margin-top: 4px; }
 .kelime-kart [lang="ja"] { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif; }
