@@ -45,7 +45,7 @@
 
   // ---- Soru havuzu: YKS → açık YKS konuları; Calculus → config'teki konular ----
   function konular(grup) {
-    if (grup === "ingilizce") return O.konular.filter(function (k) { return k.grup === "en" && !k.ez && (O.sorular[k.id] || []).length; }).map(function (k) { return k.id; });
+    if (grup === "ingilizce") return O.konular.filter(function (k) { return k.grup === "en" && !k.ez && !k.alan && (O.sorular[k.id] || []).length; }).map(function (k) { return k.id; });
     if (grup === "yks") return O.konular.filter(function (k) { return k.grup === "yks" && !k.gizli && (O.sorular[k.id] || []).length; }).map(function (k) { return k.id; });
     return (CFG.calculusKonular || ["limit", "turev", "integral"]).filter(function (id) { return (O.sorular[id] || []).length; });
   }

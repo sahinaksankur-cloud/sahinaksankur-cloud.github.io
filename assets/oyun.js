@@ -48,7 +48,8 @@
     // Şık için anlam parçaları ("ince; zayıf" → ince, zayıf): doğru cevapla ortak parçası olan kelime yanlış şık olmaz.
     var anlamParca = function (t) { return t.split(";").map(function (p) { return p.trim().split(" (")[0]; }); };
     var ayriAnlam = function (a, b) { var pa = anlamParca(a); return !anlamParca(b).some(function (p) { return pa.indexOf(p) >= 0; }); };
-    (EN.seviyeler || []).forEach(function (sv) {
+    (EN.alanlar || []).forEach(function (a) { a.alanMi = true; });
+    (EN.seviyeler || []).concat(EN.alanlar || []).forEach(function (sv) {
      sv.gruplar = [];
      // Grupta aynı türden yeterli kelime yoksa (ör. 2 zarf) şıklar aynı seviyenin diğer gruplarından gelir.
      var seviyeListe = [];
@@ -58,7 +59,8 @@
       sv.gruplar.push(gid);
       var liste = EN.kelimeler[gid].map(function (r) { return { w: r[0], tur: r[1], t: r[2], o: r[3], ot: r[4] }; });
       var tg = function (t) { return t === "b" ? "z" : t; };   // zarf ve bağlaçlar şık için aynı grupta
-      O.konular.push({ id: gid, ad: sv.ad.split(" · ")[0] + " · " + gn + ". Grup", seviye: sv.id, no: gn, grup: "en" });
+      O.konular.push({ id: gid, ad: sv.alanMi ? sv.ad + " · " + ((sv.grupAd || [])[gn - 1] || gn + ". Grup") : sv.ad.split(" · ")[0] + " · " + gn + ". Grup",
+        seviye: sv.id, no: gn, grup: "en", alan: !!sv.alanMi });
       O.sorular[gid] = liste.map(function (x) {
         var uygun = function (y) { return y.w !== x.w && ayriAnlam(x.t, y.t); };
         var es = liste.filter(function (y) { return uygun(y) && tg(y.tur) === tg(x.tur); });
@@ -67,7 +69,7 @@
         var yanlis = karistir(es).slice(0, 2).map(function (y) { return y.t; });
         return {
           b: "en", k: sv.id, w: x.w, tur: x.tur, t: x.t, o: x.o, ot: x.ot,
-          s: '<span class="en-soru"><strong lang="en">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + "</small></span> ne demek?",
+          s: '<span class="en-soru"><strong lang="en">' + x.w + "</strong> <small>" + (EN_TUR[x.tur] || "") + (sv.etiket ? " · " + sv.etiket : "") + "</small></span> ne demek?",
           c: [x.t].concat(yanlis),
           a: '<span class="en-anlam"><strong lang="en">' + x.w + "</strong> = " + x.t + '</span><span class="en-ornek"><em lang="en">' + x.o + "</em> " + x.ot + "</span>"
         };
@@ -547,13 +549,14 @@
 
     // 🔤 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
     if ($("panel-en") && EN) {
-      $("en-seviyeler").innerHTML = (EN.seviyeler || []).map(function (sv, si) {
+      var alanBaslik = false;
+      $("en-seviyeler").innerHTML = (EN.seviyeler || []).concat(EN.alanlar || []).map(function (sv, si) {
         var toplamK = 0, toplamC = 0;
         var kartlar = sv.gruplar.map(function (gid) {
           var hk = havuz(gid), c = cozulenSayi(hk, kayit), k = bul(O.konular, gid);
           var ezk = bul(O.konular, gid + "-ez"), ezh = ezk ? havuz(ezk.id) : [], ezc = ezk ? cozulenSayi(ezh, kayit) : 0;
           toplamK += hk.length; toplamC += c;
-          return '<div class="en-grup' + (c === hk.length && c ? " bitti" : "") + '"><small>' + k.no + '. Grup<span class="en-uzun"> · ' + hk.length + " kelime</span></small>" +
+          return '<div class="en-grup' + (c === hk.length && c ? " bitti" : "") + '"><small>' + (sv.alanMi && (sv.grupAd || [])[k.no - 1] ? sv.grupAd[k.no - 1] : k.no + ". Grup") + '<span class="en-uzun"> · ' + hk.length + " kelime</span></small>" +
             "<strong>" + (c === hk.length && c ? '✓<span class="en-uzun"> Tamamlandı ·</span> ' : "") + '<span class="en-uzun">Puan: </span>' + c + " / " + hk.length + "</strong>" +
             (ezk ? '<span class="en-ez-satir">🔄 ' + ezc + " / " + ezh.length + "</span>" : "") +
             enIyiYazi(rek[rekorAnahtar(gid)], O.soruSayisi, sevAd) + bonusRozet(kayit, gid) + (ezk ? bonusRozet(kayit, ezk.id).replace("Bonus", "Eş / Zıt bonus") : "") +
@@ -562,7 +565,9 @@
             (ezk ? '<button type="button" class="btn en-ez-btn" data-konu="' + ezk.id + '"><span>🔄 Eş<span class="en-uzun"> </span>/<span class="en-uzun"> </span>Zıt</span><span class="en-ez-puan">' +
               (ezc === ezh.length ? " ✓" : " · " + ezc + "/" + ezh.length) + "</span></button>" : "") + "</div></div>";
         }).join("");
-        return '<section class="serit en-serit"><div class="tur en-r' + (si + 1) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
+        var bas = "";
+        if (sv.alanMi && !alanBaslik) { alanBaslik = true; bas = '<h3 class="en-alan-baslik">🎓 Bölüme Özel İngilizce</h3><p class="en-alan-not">Üniversitede bölümünün İngilizcesi: derslerde ve kitaplarda geçen terimler. Canlı Yarışma\'ya girmez.</p>'; }
+        return bas + '<section class="serit en-serit"><div class="tur ' + (sv.alanMi ? "en-alan" : "en-r" + (si + 1)) + '"><h2>' + sv.ad + "</h2><p>" + (sv.aciklama || "") + "</p>" +
           '<span class="ozellik">' + (sv.ust ? sv.ust + " · " : "") + toplamC + " / " + toplamK + " kelime</span></div>" +
           '<div class="secenekler en-gruplar">' + kartlar + "</div></section>";
       }).join("");

@@ -649,6 +649,9 @@ body.yayin .oyun-grafik { max-width: 560px; }
 
 /* 🔤 İngilizce: kelime kartları ve kelime testi */
 .en-giris { color: var(--muted); max-width: 820px; line-height: 1.55; margin: 0 0 18px; }
+.en-alan { background: #8c2f4e; }
+.en-alan-baslik { margin: 28px 0 4px; font-size: 1.15rem; }
+.en-alan-not { margin: 0 0 12px; color: var(--muted); font-size: 0.92rem; }
 .en-r1 { background: #2e7d5b; } .en-r2 { background: #0f7385; } .en-r3 { background: #1f4e8c; } .en-r4 { background: #6c4ab6; } .en-r5 { background: #b4581a; }
 .en-gruplar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .en-grup { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
