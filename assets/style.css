@@ -505,7 +505,6 @@ button.card.oyun-konu:hover { border-color: var(--accent); }
 
 /* 🔁 Konu Tekrarı: seçim modu ve alttaki çubuk */
 #panel-yks .serit { scroll-margin-top: 80px; }
-.sec.tekrar-ac { grid-column: 1 / -1; min-height: 0; border-left-color: #2e7d5b; }
 .secim-modu .sec.tum-tekrar { display: none; }
 .secim-modu #yks-konular .sec { border-style: dashed; }
 .secim-modu #yks-konular .sec.secili { border-style: solid; border-color: #2e7d5b; background: color-mix(in srgb, #2e7d5b 12%, var(--surface)); }
@@ -956,3 +955,9 @@ body.calisiyor .canli-hatirlat { display: none !important; }
   :root:not([data-theme="light"]) .kt-dugmeler .kt-hayir, :root:not([data-theme="light"]) .kt-kirmizi { color: #f2a59f; border-color: #f2a59f; }
   :root:not([data-theme="light"]) .kt-yesil { color: #6fcf97; }
 }
+
+/* Üniversite ve YKS alt bölüm düğmeleri (dil seçici ile aynı görünüm) */
+.alt-secici { margin: 0 0 18px; }
+.alt-sayi { display: inline-block; margin-left: 6px; min-width: 20px; padding: 0 6px; border-radius: 10px; background: #d9822b; color: #fff; font-size: 0.78rem; line-height: 20px; text-align: center; }
+.alt-sayi[hidden] { display: none; }
+.zor-yer[hidden], .serit[hidden] { display: none; }

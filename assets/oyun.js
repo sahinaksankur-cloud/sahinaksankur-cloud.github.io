@@ -673,6 +673,7 @@
           '<div class="en-zor-dugmeler"><button type="button" class="btn primary" data-konu="' + zid + '">📝 Test</button></div></div>'
         : '<p class="en-zor-bos">📌 <strong>Zorlandıklarım</strong>: testlerde kaçırdığın sorular burada toplanır. Şu an boş.</p>';
       baglan("#" + zid, "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-zor-sayi="' + zid + '"]'), function (e) { e.textContent = n ? String(n) : ""; e.hidden = !n; });
     });
 
     // 🧭 Calculus'a Hazır mısın?
@@ -739,6 +740,7 @@
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
       var ys = yksSorular();
       $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, "yks") + "." + PUAN_NOT;
+      if (typeof altUygula === "function" && $("yks-secici")) altUygula();
     }
 
     // 🇬🇧 İngilizce: her seviye bir şerit; her grupta 📇 Kartlar ve 📝 Test
@@ -910,7 +912,7 @@
       b("🔁 Sorular hangi sırayla gelir?", [
         "Önce hiç görmediğin sorular gelir.",
         "Onlar bitince kaçırdıkların gelir (en önce kaçırdığın önce).",
-        "Kaçırdığın sorular her sekmenin en üstündeki 📌 Zorlandıklarım destesinde de toplanır; doğru yaptığın soru desteden çıkar.",
+        "Kaçırdığın sorular 📌 Zorlandıklarım destesinde de toplanır; doğru yaptığın soru desteden çıkar.",
         "Hepsini çözünce çözdüğün sorular yine gelir ama artık puan getirmez."
       ]) +
       b("⚡ Puan getirmeyenler", [
@@ -1368,11 +1370,9 @@
     if (!$("panel-yks")) return;
     $("panel-yks").classList.toggle("secim-modu", acik);
     $("tekrar-cubuk").hidden = !acik;
+    $("yks-konu-tur").hidden = acik;
+    $("yks-tekrar-tur").hidden = !acik;
     tekrarModuUygula();
-    if (acik) {
-      var hedef = $("yks-konular").closest(".serit");
-      hedef.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-    }
   }
   function tekrarSec_(id, b) {
     var s = tekrarSecim(), i = s.k.indexOf(id);
@@ -1387,9 +1387,8 @@
     $("yks-tekrar-basla").disabled = !(n >= TEKRAR_EN_AZ && n <= TEKRAR_EN_COK);
     $("yks-tekrar-not").textContent = "🔁 Tekrar için " + TEKRAR_EN_AZ + "–" + TEKRAR_EN_COK + " konu seç · " + n + " seçili";
   }
-  if ($("tekrar-ac")) {
-    $("tekrar-ac").addEventListener("click", function () { tekrarModu(true); });
-    $("tekrar-vazgec").addEventListener("click", function () { tekrarModu(false); });
+  if ($("tekrar-vazgec")) {
+    $("tekrar-vazgec").addEventListener("click", function () { altSec("yks-konu"); });
     $("yks-tekrar-basla").addEventListener("click", function () { if (!this.disabled) seviyeSor(TEKRAR); });
   }
 
@@ -1482,6 +1481,46 @@
     else if ((e.key === " " || e.key === "Enter") && e.target === document.body) { e.preventDefault(); kartCevir(); }
   });
 
+  function hedefOn() { return decodeURIComponent((location.hash || "").slice(1)); }
+  // ---- Alt bölümler: Üniversite ve YKS sekmelerinin altındaki düğmeler (Diller'deki dil seçici gibi) ----
+  // Her düğme tek bir bölümü gösterir ([data-bolum]); seçim cihazda hatırlanır (kk-oyun-v1 → alt: { uni, yks }).
+  // 🔁 Konu Tekrarı: Konu Testi kartları seçim moduna geçer (tekrarModu).
+  var ALT_ILK = { uni: "uni-hazirlik", yks: "yks-konu" };
+  function altGecerli(p, ad) { return !!document.querySelector("#" + p + '-secici [data-alt="' + ad + '"]'); }
+  function altAyni(p) { var a = (oku().alt || {})[p]; return a && altGecerli(p, a) ? a : ALT_ILK[p]; }
+  function altGoster(p) {
+    var panel = $("panel-" + p), ad = altAyni(p);
+    if (!panel) return;
+    Array.prototype.forEach.call(panel.querySelectorAll("[data-bolum]"), function (e) {
+      e.hidden = e.getAttribute("data-bolum").split(" ").indexOf(ad) < 0;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#" + p + "-secici [data-alt]"), function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-alt") === ad));
+    });
+    if (p === "yks") {
+      var tekrar = ad === "yks-tekrar" && !panel.hidden;
+      if (tekrar !== secimModu) tekrarModu(tekrar);
+    }
+  }
+  function altKaydet(ad) { var k = oku(), p = ad.split("-")[0]; k.alt = k.alt || {}; k.alt[p] = ad; yaz(k); }
+  function altSec(ad) { altKaydet(ad); altGoster(ad.split("-")[0]); }
+  function altUygula() { altGoster("uni"); altGoster("yks"); }
+  // Bir test linkinin (#bolum-2, #dy-yks, #yks-rakam …) ait olduğu alt bölüm
+  function altIcin(id) {
+    if (!id) return null;
+    if (id === "uni-zor" || id === "yks-zor") return id;
+    if (id === "dy-yks") return "yks-dy";
+    if (id === "yks" || id === TUM_TEKRAR || yksMi(id)) return "yks-konu";
+    if (dyId(id)) return "uni-dy";
+    if (bolumNo(id)) return "uni-bolum";
+    if (id === HAZIRLIK) return "uni-hazirlik";
+    if (bul(O.konular, id) && !bul(O.konular, id).grup) return "uni-konu";
+    return null;
+  }
+  ["uni", "yks"].forEach(function (p) {
+    baglan("#" + p + "-secici", "[data-alt]", function (b) { altSec(b.getAttribute("data-alt")); });
+  });
+
   // ---- Sekmeler: 🎓 Üniversite / 📘 YKS / 🌍 Diller ----
   // 🌍 Diller sekmesinin altında bayraklı dil düğmeleri (#dil-secici: İngilizce, Almanca, Fransızca, Japonca);
   // seçilen dilin paneli gösterilir. Sekmeye dokununca son seçilen dil açılır (kk-oyun-v1 → dil).
@@ -1500,6 +1539,7 @@
     });
     var k = oku(); k.sekme = ad; if (dilde) k.dil = ad; yaz(k);
     if (ad !== "yks" && secimModu) tekrarModu(false);
+    altUygula();
     if (DILLER[ad] && !DILLER[ad].yuklendi) dilYukle(ad, girisYenile);
   }
   ["uni", "yks"].forEach(function (x) {
@@ -1509,6 +1549,7 @@
   baglan("#dil-secici", "[data-dil]", function (b) { sekmeAc(b.getAttribute("data-dil")); });
 
   girisCiz();
+  if (altIcin(hedefOn())) altKaydet(altIcin(hedefOn()));
   // oyun.html#bolum-2, #limit, #yks, #yks-rakam, #ingilizce, #en-a1 (test), #kart-en-a1 (kartlar) gibi linkler
   // ilgili sekmeyi açar ve testi başlatır
   var hedef = decodeURIComponent((location.hash || "").slice(1));

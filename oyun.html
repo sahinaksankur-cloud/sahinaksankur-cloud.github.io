@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=202611251857">
+  <link rel="stylesheet" href="assets/style.css?v=202611251915">
 </head>
 <body>
   <header class="topbar">
@@ -47,24 +47,31 @@
       </div>
 
       <div id="panel-uni" role="tabpanel" aria-labelledby="sekme-uni">
-      <div id="uni-zor" class="zor-yer"></div>
+      <div class="dil-secici alt-secici" id="uni-secici" role="group" aria-label="Test türü">
+        <button type="button" data-alt="uni-hazirlik" aria-pressed="false">🧭 Hazırlık</button>
+        <button type="button" data-alt="uni-bolum" aria-pressed="false">📝 Sınava Hazır</button>
+        <button type="button" data-alt="uni-konu" aria-pressed="false">🎯 Konu Turları</button>
+        <button type="button" data-alt="uni-dy" aria-pressed="false">⚡ Doğru / Yanlış</button>
+        <button type="button" data-alt="uni-zor" aria-pressed="false">📌 Zorlandıklarım<span class="alt-sayi" data-zor-sayi="uni-zor"></span></button>
+      </div>
+      <div id="uni-zor" class="zor-yer" data-bolum="uni-zor" hidden></div>
 
-      <section class="serit">
+      <section class="serit" data-bolum="uni-hazirlik">
         <div class="tur t0"><h2>🧭 Calculus'a Hazır mısın?</h2><p>Calculus'a başlamadan önce temel bilgilerini test et.</p><span class="ozellik">10 soru · precalculus</span></div>
         <div class="giris-kart" id="oyun-hazirlik"></div>
       </section>
 
-      <section class="serit">
+      <section class="serit" data-bolum="uni-bolum">
         <div class="tur t1"><h2 id="oyun-bolum-baslik">📝 Sınava Hazır mısın?</h2><p>Bir chapter'a çalıştın mı? Sınava hazır olup olmadığını gör. Sorular sadece o chapter'dan gelir.</p><span class="ozellik">5 soru · chapter testi</span></div>
         <div class="secenekler" id="oyun-bolumler"></div>
       </section>
 
-      <section class="serit">
+      <section class="serit" data-bolum="uni-konu">
         <div class="tur t2"><h2>🎯 Konu Turları</h2><p>Bir konuyu baştan sona tekrar et, puanını yükselt.</p><span class="ozellik">10 soru · tekrar</span></div>
         <div class="secenekler" id="oyun-konular"></div>
       </section>
 
-      <section class="serit">
+      <section class="serit" data-bolum="uni-dy">
         <div class="tur t3"><h2>⚡ Doğru / Yanlış</h2><p>Temel bilgilerin yerinde mi? Düşünmeden bilmen gerekenler.</p><span class="ozellik">5 ifade · her biri 5 sn</span></div>
         <div class="secenekler" id="oyun-dy"></div>
       </section>
@@ -73,20 +80,20 @@
       </div>
 
       <div id="panel-yks" role="tabpanel" aria-labelledby="sekme-yks" hidden>
-      <div id="yks-zor" class="zor-yer"></div>
-      <section class="serit">
-        <div class="tur t1"><h2>📝 Konu Testi</h2><p>Bir konuyu seç, o konudan 10 soru gelsin. Önce hiç görmediğin sorular, sonra çözemediklerin gelir.</p><span class="ozellik">10 soru · TYT</span></div>
+      <div class="dil-secici alt-secici" id="yks-secici" role="group" aria-label="Test türü">
+        <button type="button" data-alt="yks-konu" aria-pressed="false">📝 Konu Testi</button>
+        <button type="button" data-alt="yks-tekrar" aria-pressed="false">🔁 Konu Tekrarı</button>
+        <button type="button" data-alt="yks-dy" aria-pressed="false">⚡ Doğru / Yanlış</button>
+        <button type="button" data-alt="yks-zor" aria-pressed="false">📌 Zorlandıklarım<span class="alt-sayi" data-zor-sayi="yks-zor"></span></button>
+      </div>
+      <div id="yks-zor" class="zor-yer" data-bolum="yks-zor" hidden></div>
+      <section class="serit" data-bolum="yks-konu yks-tekrar">
+        <div class="tur t1" id="yks-konu-tur"><h2>📝 Konu Testi</h2><p>Bir konuyu seç, o konudan 10 soru gelsin. Önce hiç görmediğin sorular, sonra çözemediklerin gelir.</p><span class="ozellik">10 soru · TYT</span></div>
+        <div class="tur t2" id="yks-tekrar-tur" hidden><h2>🔁 Konu Tekrarı</h2><p>İstediğin 3–5 konunun kartına dokunarak seç, onlardan karışık 10 soru gelsin. En alttaki kart bütün konulardan karışık sorar.</p><span class="ozellik">10 soru · karma</span></div>
         <div class="secenekler" id="yks-konular"></div>
       </section>
 
-      <section class="serit">
-        <div class="tur t2"><h2>🔁 Konu Tekrarı</h2><p>İstediğin 3–5 konuyu seç, onlardan karışık 10 soru gelsin.</p><span class="ozellik">10 soru · karma</span></div>
-        <div class="secenekler">
-          <button type="button" class="sec s2 tekrar-ac" id="tekrar-ac"><small>🔁 3–5 konu</small><strong>Konuları seçerek tekrar et</strong><span class="skor">Yukarıdaki konu kartlarına dokunarak seçeceksin.</span></button>
-        </div>
-      </section>
-
-      <section class="serit">
+      <section class="serit" data-bolum="yks-dy">
         <div class="tur t3"><h2>⚡ Doğru / Yanlış</h2><p>Kurallar ve sık yapılan hatalar. Düşünmeden bilmen gerekenler.</p><span class="ozellik">5 ifade · her biri 5 sn</span></div>
         <div class="secenekler" id="yks-dy"></div>
       </section>
@@ -245,14 +252,14 @@
     </div>
   </footer>
 
-  <script src="assets/config.js?v=202611251857"></script>
-  <script src="assets/app.js?v=202611251857"></script>
-  <script src="data/sorular.js?v=202611251857"></script>
-  <script src="data/dogru-yanlis.js?v=202611251857"></script>
-  <script src="data/yks-sorular.js?v=202611251857"></script>
-  <script src="data/ingilizce.js?v=202611251857"></script>
-  <script src="assets/oyun.js?v=202611251857"></script>
-  <script src="assets/canli-takvim.js?v=202611251857"></script>
+  <script src="assets/config.js?v=202611251915"></script>
+  <script src="assets/app.js?v=202611251915"></script>
+  <script src="data/sorular.js?v=202611251915"></script>
+  <script src="data/dogru-yanlis.js?v=202611251915"></script>
+  <script src="data/yks-sorular.js?v=202611251915"></script>
+  <script src="data/ingilizce.js?v=202611251915"></script>
+  <script src="assets/oyun.js?v=202611251915"></script>
+  <script src="assets/canli-takvim.js?v=202611251915"></script>
   <!-- Ziyaretçi sayımı: GoatCounter (çerezsiz, kişisel veri yok; yerelde saymaz) -->
   <script data-goatcounter="https://kuzeykampus.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
