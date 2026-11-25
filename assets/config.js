@@ -40,7 +40,7 @@ window.KK_CONFIG = {
     // İngilizce yarışmasının soruları data/ingilizce.js'teki bütün kelime gruplarından gelir (A1–C1 karışık; Eş / Zıt hariç)
   },
 
-  // 🏕 Kuzey Kampüs Kampları (kamp.html): birlikte ders çalışma kampları. Herkes aynı saatte çalışır, aynı saatte molaya çıkar.
+  // 🏕 Kuzey Kampüs Ders Çalışma Kampları (kamp.html): birlikte ders çalışma kampları. Herkes aynı saatte çalışır, aynı saatte molaya çıkar.
   // Saatler Türkiye saatidir. duzen: [ders dakikası, ardından mola dakikası] sırayla (son molanın sonunda kamp biter).
   kamplar: {
     aktif: true,          // false: ana sayfadaki kamp şeridi gizlenir

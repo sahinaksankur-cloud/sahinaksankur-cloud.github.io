@@ -1,4 +1,4 @@
-// Kuzey Kampüs – 🏕 Kuzey Kampüs Kampları (kamp.html): birlikte ders çalışma.
+// Kuzey Kampüs – 🏕 Kuzey Kampüs Ders Çalışma Kampları (kamp.html): birlikte ders çalışma.
 // Sunucu yok. Kamplar saate bağlıdır (assets/kamp-takvim.js): herkes aynı saatte derse başlar, aynı saatte molaya çıkar.
 // "Kendi saatinde çalış": 30 / 40 / 50 dk ders; 10 dk mola, iki kısa moladan sonra bir kez 20 dk uzun mola.
 // Mola bitince okul zili + tarayıcının sesiyle "Kuzey Kampüs. Molanız bitti…" (ses dosyası yok, Web Audio + speechSynthesis).
@@ -307,7 +307,7 @@
   }
   function girisGoster() {
     goster("kamp-giris");
-    document.title = "Kuzey Kampüs Kampları – Birlikte Ders Çalışma";
+    document.title = "Kuzey Kampüs Ders Çalışma Kampları";
     $("kamp-devam").hidden = !sonMesaj;
     $("kamp-devam").textContent = sonMesaj;
     kartlar(true); rapor();

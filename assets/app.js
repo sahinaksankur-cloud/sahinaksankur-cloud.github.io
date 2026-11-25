@@ -440,7 +440,7 @@
     // 💡 Biliyor muydun?: [data-ipucu] olan yere sitedeki bir özelliği tanıtan kısa satır (her açılışta rastgele, açılır pencere değil).
     // "sakla": o sayfada gösterilmez (öğrenci zaten oradadır). oyun.js test sonucunda KK_IPUCU.ciz() ile yeniler.
     var IPUCLARI = [
-      { m: 'Her gün sabah, öğle ve akşam <a href="kamp.html">🏕 Kuzey Kampüs Kampları</a> var: başka öğrencilerle aynı saatte ders çalış, molada zil çalsın.', sakla: "kamp" },
+      { m: 'Her gün sabah, öğle ve akşam <a href="kamp.html">🏕 Ders Çalışma Kampları</a> var: başka öğrencilerle aynı saatte ders çalış, molada zil çalsın.', sakla: "kamp" },
       { m: 'İngilizce\'de <a href="oyun.html#en-bolume-ozel">🎓 Bölüme Özel İngilizce</a> var: Calculus, Ekonomi, İşletme, Mühendislik, Psikoloji ve Siyaset Bilimi terimleri.' },
       { m: 'Her gün <a href="canli.html">🔴 Canlı Yarışma</a> var: herkes aynı anda aynı soruları çözer. Saatleri Testler\'deki kırmızı şeritte.', sakla: "canli" },
       { m: 'İngilizce\'de kaçırdığın kelimeler <a href="oyun.html#ingilizce">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },

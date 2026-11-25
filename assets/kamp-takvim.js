@@ -1,4 +1,4 @@
-// Kuzey Kampüs – 🏕 Kuzey Kampüs Kampları takvimi (assets/config.js → kamplar).
+// Kuzey Kampüs – 🏕 Ders Çalışma Kampları takvimi (assets/config.js → kamplar).
 // Saatler Türkiye saatidir (UTC+3, yaz saati yok). Sunucu yok: kampın hangi derste/molada olduğunu her cihaz saatten hesaplar.
 // Ana sayfadaki şeridi ([data-kamp-serit]) de bu dosya çizer; kamp.html bu hesapları window.KK_KAMP ile kullanır.
 (function () {
@@ -74,8 +74,8 @@
       el.hidden = false;
       el.classList.toggle("simdi", !!d.kamp);
       el.innerHTML = '<span class="kamp-serit-ikon" aria-hidden="true">🏕</span>' +
-        '<span class="canli-serit-ic"><strong>Kuzey Kampüs Kampları</strong>' +
-        '<span class="canli-serit-program">Birlikte ders çalışma · Her gün ' + saatler + "</span></span>" +
+        '<span class="canli-serit-ic"><strong>Ders Çalışma Kampları</strong>' +
+        '<span class="canli-serit-program">Birlikte çalış · Her gün ' + saatler + "</span></span>" +
         '<span class="kamp-serit-durum">' + yazi + "</span>";
     });
   }
