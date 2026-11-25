@@ -1216,6 +1216,33 @@ window.KK_YKS = {
       { s: "6 − (x + 4) ifadesinin eşiti hangisidir?", c: ["2 − x", "10 − x", "2 + x"], a: "Eksi parantezi açınca: 6 − x − 4 = 2 − x." },
       { s: "x − (2x − 5) ifadesinin eşiti hangisidir?", c: ["−x + 5", "−x − 5", "3x − 5"], a: "x − 2x + 5 = −x + 5. Parantezdeki −5 eksiyle çarpılınca +5 olur." },
       { s: "2(x + 1) + 3(x − 1) ifadesinin eşiti hangisidir?", c: ["5x − 1", "5x + 1", "5x"], a: "2x + 2 + 3x − 3 = 5x − 1." },
+      // İç içe parantez (en içten başla), iki parantez ve işaret, eksi parantezle çıkarma (x buldurulmaz)
+      { s: "1 − (2 − (3 − x)) ifadesinin eşiti hangisidir?", c: ["2 − x", "−4 − x", "x + 2"], a: "En içten başla: 2 − (3 − x) = 2 − 3 + x = x − 1. Sonra 1 − (x − 1) = 1 − x + 1 = 2 − x." },
+      { s: "2 − (3 − (4 − x)) ifadesinin eşiti hangisidir?", c: ["3 − x", "−5 + x", "x + 1"], a: "3 − (4 − x) = 3 − 4 + x = x − 1. Sonra 2 − (x − 1) = 2 − x + 1 = 3 − x." },
+      { s: "x − (1 − (x − 2)) ifadesinin eşiti hangisidir?", c: ["2x − 3", "−3", "2x + 1"], a: "1 − (x − 2) = 1 − x + 2 = 3 − x. Sonra x − (3 − x) = x − 3 + x = 2x − 3." },
+      { s: "5 − (x − (2 − x)) ifadesinin eşiti hangisidir?", c: ["7 − 2x", "3 − 2x", "3"], a: "x − (2 − x) = x − 2 + x = 2x − 2. Sonra 5 − (2x − 2) = 5 − 2x + 2 = 7 − 2x." },
+      { s: "−(x − (3 − x)) ifadesinin eşiti hangisidir?", c: ["3 − 2x", "−3", "2x − 3"], a: "x − (3 − x) = x − 3 + x = 2x − 3. Önündeki eksi: −(2x − 3) = −2x + 3." },
+      { s: "2(1 − (x − 3)) ifadesinin eşiti hangisidir?", c: ["8 − 2x", "−4 − 2x", "2x − 4"], a: "İçeriden: 1 − (x − 3) = 1 − x + 3 = 4 − x. Sonra 2(4 − x) = 8 − 2x." },
+      { s: "−2(x − 3) + 3(1 − x) ifadesinin eşiti hangisidir?", c: ["9 − 5x", "−3 − 5x", "9 + x"], a: "−2x + 6 + 3 − 3x = 9 − 5x. −2 · (−3) = +6." },
+      { s: "3(x + 2) − 2(x − 1) ifadesinin eşiti hangisidir?", c: ["x + 8", "x + 4", "5x + 8"], a: "3x + 6 − 2x + 2 = x + 8. −2 · (−1) = +2." },
+      { s: "−(2x − 1) − 3(x + 1) ifadesinin eşiti hangisidir?", c: ["−5x − 2", "−5x + 4", "x − 2"], a: "−2x + 1 − 3x − 3 = −5x − 2." },
+      { s: "4(2 − x) − (3 − x) ifadesinin eşiti hangisidir?", c: ["5 − 3x", "5 − 5x", "11 − 3x"], a: "8 − 4x − 3 + x = 5 − 3x. Eksi parantez −x'i +x yapar." },
+      { s: "(3x + 1) − (x − 2) ifadesinin eşiti hangisidir?", c: ["2x + 3", "2x − 1", "4x + 3"], a: "Eksi parantez her işareti değiştirir: 3x + 1 − x + 2 = 2x + 3." },
+      { s: "−(−x + 4) ifadesinin eşiti hangisidir?", c: ["x − 4", "−x − 4", "x + 4"], a: "Eksi, içindeki her terimin işaretini değiştirir: x − 4." },
+      { s: "2(3 − x) − (x + 4) ifadesinin eşiti hangisidir?", c: ["2 − 3x", "10 − 3x", "2 − x"], a: "6 − 2x − x − 4 = 2 − 3x." },
+      { s: "½(4x − 2) ifadesinin açılımı hangisidir?", c: ["2x − 1", "2x − 2", "4x − 1"], a: "½ her terimle çarpılır: 4x'in yarısı 2x, 2'nin yarısı 1." },
+      // İki tarafta x, parantezli ve paydalı basit denklemler
+      { s: "3x = x + 8 ise x kaçtır?", c: ["4", "2", "8"], a: "x'leri bir tarafa topla: 3x − x = 8, 2x = 8, x = 4." },
+      { s: "5x − 2 = 3x + 8 ise x kaçtır?", c: ["5", "3", "−5"], a: "x'ler sola, sayılar sağa: 2x = 10, x = 5." },
+      { s: "2x + 7 = 4x + 1 ise x kaçtır?", c: ["3", "−3", "4"], a: "x'ler sağa, sayılar sola: 6 = 2x, x = 3." },
+      { s: "2(x − 1) = 6 ise x kaçtır?", c: ["4", "2", "7"], a: "Parantezi aç: 2x − 2 = 6, 2x = 8, x = 4. (Ya da iki tarafı 2'ye böl: x − 1 = 3.)" },
+      { s: "−(x + 2) = 5 ise x kaçtır?", c: ["−7", "3", "7"], a: "Aç: −x − 2 = 5, −x = 7, x = −7." },
+      { s: "3(2 − x) = 12 ise x kaçtır?", c: ["−2", "2", "6"], a: "İki tarafı 3'e böl: 2 − x = 4, x = −2." },
+      { s: "(x − 1)/3 = 2 ise x kaçtır?", c: ["7", "5", "3"], a: "İki tarafı 3 ile çarp: x − 1 = 6, x = 7." },
+      { s: "x/2 = −4 ise x kaçtır?", c: ["−8", "−2", "8"], a: "İki tarafı 2 ile çarp: x = −8." },
+      // x'i bulmadan geçme
+      { s: "2x + 1 = 9 ise 4x + 2 kaçtır?", c: ["18", "9", "17"], a: "4x + 2 = 2 · (2x + 1) = 2 · 9 = 18. x'i bulmaya gerek yok." },
+      { s: "x − 3 = 5 ise 2x − 6 kaçtır?", c: ["10", "16", "8"], a: "2x − 6 = 2 · (x − 3) = 2 · 5 = 10." },
       { s: "(x − 3) · 2 ifadesinin açılımı hangisidir?", c: ["2x − 6", "2x − 3", "x − 6"], a: "Çarpan sağda da olsa her terimle çarpılır: 2x − 6." }
     ]
   },
@@ -1502,6 +1529,11 @@ window.KK_YKS = {
     { k: "yks-denklem", s: "3(x − 4) = 3x − 4", d: false, n: "3 her terimle çarpılır: 3x − 12" },
     { k: "yks-denklem", s: "−(x − 3) = −x + 3", d: true },
     { k: "yks-denklem", s: "−2(x − 5) = −2x − 10", d: false, n: "−2 · (−5) = +10: −2x + 10" },
-    { k: "yks-denklem", s: "2x + 3 ile 2(x + 3) aynı ifadedir.", d: false, n: "2(x + 3) = 2x + 6" }
+    { k: "yks-denklem", s: "2x + 3 ile 2(x + 3) aynı ifadedir.", d: false, n: "2(x + 3) = 2x + 6" },
+    { k: "yks-denklem", s: "1 − (2 − x) = x − 1", d: true },
+    { k: "yks-denklem", s: "(3x + 1) − (x − 2) = 2x − 1", d: false, n: "Eksi parantez −2'yi +2 yapar: 2x + 3" },
+    { k: "yks-denklem", s: "İç içe parantezler en içten başlanarak açılır.", d: true },
+    { k: "yks-denklem", s: "−(−x + 4) = x + 4", d: false, n: "Eksi her terimin işaretini değiştirir: x − 4" },
+    { k: "yks-denklem", s: "3x = x + 8 denkleminde x'ler bir tarafa toplanınca 2x = 8 olur.", d: true }
   ]
 };
