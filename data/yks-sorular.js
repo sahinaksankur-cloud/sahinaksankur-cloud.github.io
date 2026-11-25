@@ -1330,6 +1330,13 @@ window.KK_YKS = {
       { s: "x > 0 ise |−x| hangisidir?", c: ["x", "−x", "0"], a: "|−x| = |x| = x (x pozitif)." },
       { s: "x = −3 iken |x| ile x arasında hangisi doğrudur?", c: ["|x| = −x", "|x| = x", "|x| < x"], a: "|−3| = 3 ve −x = 3: |x| = −x." },
       { s: "Mutlak değer için hangisi her zaman doğrudur?", c: ["|x| ≥ 0", "|x| > 0", "|x| = x"], a: "|0| = 0 olduğu için > değil ≥: |x| ≥ 0." },
+      // √(x²) = |x|
+      { s: "Mutlak değerle yazılınca √(x<sup>2</sup>) hangisidir?", c: ["|x|", "x", "−|x|"], a: "Karekök negatif sonuç vermez: x = 3 için 3, x = −3 için de 3. Sonuç x'in sıfıra uzaklığı: |x|." },
+      { s: "√((−5)<sup>2</sup>) hangisine eşittir?", c: ["|−5|", "−5", "−|5|"], a: "√((−5)<sup>2</sup>) = √25 = 5 = |−5|. −5 ve −|5| ise −5'tir." },
+      { s: "√((−5)<sup>2</sup>) ile |−5| için hangisi doğrudur?", c: ["Eşittir", "Biri negatiftir", "√((−5)<sup>2</sup>) daha büyüktür"], a: "İkisi de 5: √(x<sup>2</sup>) = |x|." },
+      { s: "√((x − 3)<sup>2</sup>) hangisine eşittir?", c: ["|x − 3|", "x − 3", "3 − x"], a: "√(□<sup>2</sup>) = |□|: içindeki ne olursa olsun mutlak değeri çıkar." },
+      { s: "√((−a)<sup>2</sup>) hangisine eşittir?", c: ["|a|", "−a", "a"], a: "√((−a)<sup>2</sup>) = |−a| = |a|." },
+      { s: "x = −7 için √(x<sup>2</sup>) hangisine eşittir?", c: ["|−7|", "−7", "−|7|"], a: "√49 = 7 = |−7|." },
       // Kısa hesap
       { s: "|−3| + |2| kaçtır?", c: ["5", "−1", "1"], a: "3 + 2 = 5." },
       { s: "|−7| − |−2| kaçtır?", c: ["5", "−9", "9"], a: "7 − 2 = 5." },
@@ -1701,6 +1708,8 @@ window.KK_YKS = {
     { k: "yks-mutlak", s: "|a| < 3, a'nın sıfıra 3 birimden daha yakın olduğunu söyler.", d: true },
     { k: "yks-mutlak", s: "|a| > 5, a'nın sıfıra 5 birimden daha yakın olduğunu söyler.", d: false, n: "Daha uzak olduğunu söyler" },
     { k: "yks-mutlak", s: "|−a| > 5 ise a'nın sıfıra uzaklığı da 5'ten fazladır.", d: true },
-    { k: "yks-mutlak", s: "2 < |a| < 5 ise a, 2 ile 5 arasındadır.", d: false, n: "a negatif de olabilir: |−3| = 3" }
+    { k: "yks-mutlak", s: "2 < |a| < 5 ise a, 2 ile 5 arasındadır.", d: false, n: "a negatif de olabilir: |−3| = 3" },
+    { k: "yks-mutlak", s: "√(x<sup>2</sup>) = |x|", d: true },
+    { k: "yks-mutlak", s: "√((−5)<sup>2</sup>) = |−5|", d: true }
   ]
 };
