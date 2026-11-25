@@ -33,9 +33,14 @@
     // 🔁 Konu Tekrarı: kendi sorusu yok; öğrencinin seçtiği konuların sorularından karma 10 soru (havuz → tekrarHavuz)
     O.konular.push({ id: "yks-tekrar", ad: "Konu Tekrarı", grup: "yks", gizli: true });
     O.konular.push({ id: "yks-tumtekrar", ad: "Tüm konuların tekrarı", grup: "yks", gizli: true });
+    O.konular.push({ id: "yks-zor", ad: "Zorlandıklarım", grup: "yks", gizli: true });
     if (DY) DY.ifadeler = DY.ifadeler.concat((YKS.dogruYanlis || []).filter(function (q) { return acik[q.k]; })
       .map(function (q) { q.b = "yks"; return q; }));
   }
+  // 📌 Zorlandıklarım (Üniversite ve YKS): kaçırılıp henüz doğru yapılamamış sorular; her sekmenin kendi destesi.
+  var ZORLAR = { "uni-zor": "uni", "yks-zor": "yks" };
+  function zorMu(id) { return !!ZORLAR[id]; }
+  O.konular.push({ id: "uni-zor", ad: "Zorlandıklarım", grup: "uni", gizli: true });
   function yksMi(id) { return /^yks-/.test(id || "") || id === "dy-yks"; }
 
   // 🇬🇧 İngilizce kelimeler (data/ingilizce.js): her seviyede 50'şer kelimelik gruplar; her grup bir konu ("en-a1-1" …).
@@ -275,11 +280,14 @@
     var k = bul(O.konular, id) || {};
     return { id: id, bolum: false, yks: k.grup === "yks", en: k.grup === "en" || !!DILLER[k.grup], dil: DILLER[k.grup] ? k.grup : null, ad: k.ad || "", kisaAd: k.ad || "", ders: k.ders, sonuc: k.sonuc, sayi: O.soruSayisi };
   }
-  function zorSorular() {
-    var c = cevaplar(oku()), l = [];
+  function zorSorular(g) {
+    var c = cevaplar(oku()), l = [], gorulen = {};
     Object.keys(O.sorular).forEach(function (k) {
-      if (grupAdi(k) !== "en") return;
-      O.sorular[k].forEach(function (q) { var x = c[anahtar(q)]; if (x && x[0] === 0) l.push(q); });
+      if (grupAdi(k) !== (g || "en")) return;
+      O.sorular[k].forEach(function (q) {
+        var a = anahtar(q), x = c[a];
+        if (x && x[0] === 0 && !gorulen[a]) { gorulen[a] = 1; l.push(q); }
+      });
     });
     return l;
   }
@@ -306,6 +314,7 @@
     if (id === "karisik") return tumSorular();
     if (tekrarMi(id)) return tekrarHavuz(id);
     if (id === ZOR) return zorSorular();
+    if (zorMu(id)) return zorSorular(ZORLAR[id]);
     return O.sorular[id] || [];
   }
   // ∫ ve Σ işaretlerinin alt/üst sınırlarını ders kitabındaki gibi alt alta yazar.
@@ -654,6 +663,18 @@
     durum.seviye = bul(SEVIYELER, durum.seviye) ? durum.seviye : (bul(SEVIYELER, kayit.seviye) ? kayit.seviye : SEVIYELER[0].id);
     var sevAd = seviye().ad;
 
+    // 📌 Zorlandıklarım (Üniversite ve YKS sekmelerinin en üstünde)
+    Object.keys(ZORLAR).forEach(function (zid) {
+      var el = $(zid);
+      if (!el) return;
+      var n = havuz(zid).length;
+      el.innerHTML = n
+        ? '<div class="en-zor-serit"><div><strong>📌 Zorlandıklarım</strong><span>' + n + " soru. Testlerde kaçırdığın sorular burada toplanır; doğru yaptığın desteden çıkar.</span></div>" +
+          '<div class="en-zor-dugmeler"><button type="button" class="btn primary" data-konu="' + zid + '">📝 Test</button></div></div>'
+        : '<p class="en-zor-bos">📌 <strong>Zorlandıklarım</strong>: testlerde kaçırdığın sorular burada toplanır. Şu an boş.</p>';
+      baglan("#" + zid, "[data-konu]", function (b) { seviyeSor(b.getAttribute("data-konu")); });
+    });
+
     // 🧭 Calculus'a Hazır mısın?
     var hz = bul(O.konular, HAZIRLIK) || {};
     $("oyun-hazirlik").innerHTML = '<div><strong>Precalculus hazırlık testi</strong><p>' + (hz.aciklama || "") + "</p>" +
@@ -804,14 +825,15 @@
   function seviyeSor(id) {
     var t = testBilgi(id);
     seviyeHedef = id;
-    var tur = t.dil ? DILLER[t.dil].ikon + " " + DILLER[t.dil].ad + " · 📝 Kelime Testi" : t.en ? "🇬🇧 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
+    var tur = t.dil ? DILLER[t.dil].ikon + " " + DILLER[t.dil].ad + " · 📝 Kelime Testi" : t.en ? "🇬🇧 İngilizce · " + (/-ez$/.test(id) ? "🔄 Eş / Zıt Anlam" : /-bd$/.test(id) ? "🧩 Boşluk Doldurma" : /-ty$/.test(id) ? "🔁 Ters Yön" : /-yz$/.test(id) ? "✍️ Yazarak Hatırla" : "📝 Kelime Testi") : id === "uni-zor" ? "🎓 Üniversite · 📌 Zorlandıklarım" : id === "yks-zor" ? "📘 YKS · 📌 Zorlandıklarım" : id === TEKRAR ? "📘 YKS · 🔁 Konu Tekrarı" : id === TUM_TEKRAR ? "📘 YKS · 🔁 Tüm konular" : t.yks ? "📘 YKS · 📝 Konu Testi" : t.bolum ? "📝 " + (O.bolumBaslik || "Sınava Hazır mısın?") : id === HAZIRLIK ? "🧭 Calculus'a Hazır mısın?" : "🎯 Konu Turları";
     $("seviye-tur").textContent = tur;
     $("seviye-baslik").textContent = t.bolum ? t.ad : (id === HAZIRLIK ? "Precalculus hazırlık testi" : t.ad);
     // Tekrar testlerinde "çözdüklerim de gelsin" seçeneği pencerede sorulur
     $("yks-tekrar-secenek").hidden = !tekrarMi(id);
     var aciklamaYaz = function () {
-      var n = tekrarMi(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
+      var n = tekrarMi(id) || zorMu(id) ? Math.min(t.sayi, havuz(id).length) : t.sayi;
       $("seviye-aciklama").textContent = tekrarMi(id) && !n ? "Bu konulardaki bütün soruları çözmüşsün. “Çözdüklerim de gelsin”i seç."
+        : zorMu(id) ? (n ? "Daha önce kaçırdığın ve henüz doğru yapamadığın sorular (" + havuz(id).length + " soru); bir testte en fazla " + n + " soru gelir. Doğru yaptığın soru desteden çıkar. Her soru için ne kadar süre istersin?" : "Desten boş: kaçırdığın bütün soruları doğru yapmışsın.")
         : id === ZOR && !ozelListe ? "Daha önce kaçırdığın ve henüz doğru yapamadığın sorular (" + havuz(ZOR).length + " soru). Doğru yaptığın soru desteden çıkar. Her soru için ne kadar süre istersin?"
         : t.en && /-yz$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini klavyeyle yaz; ilk harfi ve harf sayısı ipucu. Yazmak için her soruya " + YAZ_EK + " sn eklenir. " + n + " kelime. Her kelime için ne kadar süre istersin?"
         : t.en && /-ty$/.test(id) ? "Türkçe anlamı verilen kelimenin İngilizcesini seç. " + n + " kelime. Her kelime için ne kadar süre istersin?"
@@ -846,7 +868,7 @@
   function seviyeKapat() { $("seviye-perde").hidden = true; seviyeHedef = null; }
 
   // ---- ℹ️ Puan kuralları: teste başlarken kısa hâli, "Puanlar nasıl işler?" penceresinde tamamı ----
-  function bonusOlur(id) { var t = testBilgi(id); return !t.bolum && t.sayi >= (O.soruSayisi || 10); }
+  function bonusOlur(id) { var t = testBilgi(id); return !t.bolum && !zorMu(id) && t.sayi >= (O.soruSayisi || 10); }
   function bonusYazi() {
     return SEVIYELER.map(function (sv) {
       var b = TAM_BONUS[sv.id] || {};
@@ -859,7 +881,9 @@
     else k.push("⭐ Her soru, <strong>ilk kez doğru</strong> çözdüğünde 1 puan getirir. Süre dolarsa puan yok.");
     if (bonusOlur(id)) k.push("🎯 Hepsini doğru yaparsan bonus: " + bonusYazi() + ".");
     else if (testBilgi(id).bolum) k.push("🎯 5 soruluk chapter testlerinde bonus yok; bonus 10 soruluk testlerde.");
-    if (!tekrarMi(id) && !ozelListe) k.push("🔁 Önce hiç görmediğin sorular, sonra kaçırdıkların gelir.");
+    else if (zorMu(id)) k.push("🎯 Zorlandıklarım'da bonus yok; bonus konu testlerinde.");
+    if (zorMu(id)) k.push("📌 En önce kaçırdığın soru önce gelir. Doğru yaptığın soru desteden çıkar.");
+    else if (!tekrarMi(id) && !ozelListe) k.push("🔁 Önce hiç görmediğin sorular, sonra kaçırdıkların gelir.");
     return k;
   }
   function kuralCiz() {
@@ -877,7 +901,7 @@
         "10 soruluk testlerde hepsini doğru yaparsan: " + bonusYazi() + ".",
         "Hız bonusu: soru başına ortalama kaç saniye erken bitirdiysen o kadar puan (12 saniyelik soruyu 9 saniyede çözersen +3).",
         "Bonus, o turda en az bir yeni puan aldıysan eklenir. Bir konunun bütün sorularını çözdüysen kutlama yapılır ama bonus eklenmez.",
-        "5 soruluk “Sınava Hazır mısın?” testlerinde bonus yok."
+        "5 soruluk “Sınava Hazır mısın?” testlerinde ve 📌 Zorlandıklarım'da (Üniversite, YKS) bonus yok."
       ]) +
       b("⏱ Süre ve seviye", [
         "Seviye sadece süreyi değiştirir, sorular aynıdır: " + sureler + ". Grafikli sorularda " + ek + " saniye ek süre var.",
@@ -886,6 +910,7 @@
       b("🔁 Sorular hangi sırayla gelir?", [
         "Önce hiç görmediğin sorular gelir.",
         "Onlar bitince kaçırdıkların gelir (en önce kaçırdığın önce).",
+        "Kaçırdığın sorular her sekmenin en üstündeki 📌 Zorlandıklarım destesinde de toplanır; doğru yaptığın soru desteden çıkar.",
         "Hepsini çözünce çözdüğün sorular yine gelir ama artık puan getirmez."
       ]) +
       b("⚡ Puan getirmeyenler", [
@@ -1136,6 +1161,7 @@
     $("oyun-tekrar").classList.add("primary");
     $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
     $("oyun-tekrar").textContent = "⚡ Yeni ifadelerle tekrar";
+    $("oyun-tekrar").hidden = false;
     $("oyun-tekrar").classList.toggle("primary", d === "tum" || d === "yks");
     $("oyun-tekrar").setAttribute("data-hedef", dy.id);
     $("oyun-konu-degis").textContent = "Geri dön";
@@ -1183,7 +1209,7 @@
     kayit.oyun = (kayit.oyun || 0) + 1;
     // ⭐ Tam doğru bonusu (sadece 10 soruluk testler; chapter testleri 5 soru olduğu için hariç)
     var bonus = null;
-    if (p === n && n >= (O.soruSayisi || 10) && !testBilgi(durum.konu).bolum) {
+    if (p === n && n >= (O.soruSayisi || 10) && bonusOlur(durum.konu)) {
       bonus = bonusHesap(seviye().id, durum.kalan, n);
       bonus.eklendi = durum.yeniPuan > 0;   // turda yeni puan yoksa konu zaten bitmiştir: bonus eklenmez
       if (bonus.eklendi) { kayit.bonus = kayit.bonus || {}; kayit.bonus[anahtar] = (kayit.bonus[anahtar] || 0) + bonus.toplam; }
@@ -1219,11 +1245,14 @@
     if (kayipSayi) notlar.push("Daha önce doğru çözdüğün " + kayipSayi + " soruyu bu sefer kaçırdın (aşağıda işaretli). Puanın silinmedi.");
     var yeniKacan = durum.kacan.filter(function (k) { return !k.once; }), sureSayi = yeniKacan.filter(function (k) { return k.neden === "sure"; }).length;
     if (yeniKacan.length) notlar.push("Kaçırdığın " + yeniKacan.length + " soru" + (sureSayi ? " (" + (sureSayi === yeniKacan.length ? "hepsinde" : sureSayi + " tanesinde") + " süre doldu)" : "") +
-      " puan getirmedi. " + (yeniKacan.length > 1 ? "Bu sorular" : "Bu soru") + " yeni sorular bitince yine karşına çıkacak; o zaman doğru yaparsan puanını alırsın.");
+      " puan getirmedi. " + (zorMu(durum.konu) ? (yeniKacan.length > 1 ? "Bu sorular" : "Bu soru") + " Zorlandıklarım destende kalıyor; doğru yaptığında puanını alırsın."
+        : (yeniKacan.length > 1 ? "Bu sorular" : "Bu soru") + " yeni sorular bitince yine karşına çıkacak; o zaman doğru yaparsan puanını alırsın."));
     if (p === n - 1 && bonusOlur(durum.konu)) {
       var yb = TAM_BONUS[seviye().id] || {};
       notlar.push("🎯 Bir soru kaldı! Hepsini doğru yapsaydın " + seviye().ad + " seviyede +" + (yb.puan || 0) + " bonus" + (yb.hiz ? " ve hız bonusu" : "") + " alacaktın.");
     }
+    if (zorMu(durum.konu)) notlar.push(havuz(durum.konu).length ? "📌 Zorlandıklarım destende " + havuz(durum.konu).length + " soru kaldı."
+      : "📌 Zorlandıklarım desten boşaldı! Kaçırdığın bütün soruları doğru yaptın. 🎉");
     $("oyun-tekrar-not").innerHTML = notlar.join("<br>");
     $("oyun-tekrar-not").hidden = !notlar.length;
 
@@ -1244,7 +1273,8 @@
     $("oyun-ders-link").hidden = !konuBilgi.ders && (konuBilgi.bolum || konuBilgi.yks || konuBilgi.en);
     $("oyun-ders-link").href = konuBilgi.ders || "ders.html?liste=calc1";
     $("oyun-ders-link").textContent = konuBilgi.bolum ? "Chapter'ın derslerine dön" : "Konu anlatımını izle";
-    $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : konuBilgi.en ? "Yeni kelimelerle test" : "Tekrar oyna";
+    $("oyun-tekrar").textContent = konuBilgi.bolum ? "Yeni sorularla tekrar dene" : konuBilgi.en ? "Yeni kelimelerle test" : zorMu(durum.konu) ? "Kalan sorularla devam et" : "Tekrar oyna";
+    $("oyun-tekrar").hidden = zorMu(durum.konu) && !havuz(durum.konu).length;
     $("oyun-bar-dolu").style.width = "100%";
     goster("oyun-sonuc");
     if (bonus) kutla(bonus);

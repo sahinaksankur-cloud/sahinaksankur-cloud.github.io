@@ -443,6 +443,7 @@
       { m: 'Her gün sabah, öğle ve akşam <a href="kamp.html">🏕 Ders Çalışma Kampları</a> var: başka öğrencilerle aynı saatte ders çalış, molada zil çalsın.', sakla: "kamp", tam: true },
       { m: 'İngilizce\'de <a href="oyun.html#en-bolume-ozel">🎓 Bölüme Özel İngilizce</a> var: Calculus, Ekonomi, İşletme, Mühendislik, Psikoloji ve Siyaset Bilimi terimleri.' },
       { m: 'Her gün <a href="canli.html">🔴 Canlı Yarışma</a> var: herkes aynı anda aynı soruları çözer. Saatleri Testler\'deki kırmızı şeritte.', sakla: "canli" },
+      { m: 'Testlerde kaçırdığın Calculus ve YKS soruları, sekmelerin en üstündeki <a href="oyun.html">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },
       { m: 'İngilizce\'de kaçırdığın kelimeler <a href="oyun.html#ingilizce">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },
       { m: 'İngilizce kelimeleri <a href="oyun.html#ingilizce">✍️ klavyeyle yazarak</a> da çalışabilirsin; her grupta Boşluk, Ters yön ve Eş / Zıt testleri de var.' },
       { m: 'Testler\'de <a href="oyun.html#almanca">🇩🇪 Almanca</a>, <a href="oyun.html#fransizca">🇫🇷 Fransızca</a> ve <a href="oyun.html#japonca">🇯🇵 Japonca</a> da var: Testler\'deki 🌍 Diller sekmesinden dilini seç. Kelimeleri sesiyle birlikte ezberle.' },
