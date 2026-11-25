@@ -1352,6 +1352,23 @@ window.KK_YKS = {
       { s: "|x| < 3 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−3 < x < 3", "x < 3", "x > −3"], a: "Sıfıra uzaklığı 3'ten az: −3 ile 3 arasında." },
       { s: "|x| > 2 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x < −2 ya da x > 2", "−2 < x < 2", "x > 2"], a: "Sıfıra uzaklığı 2'den fazla: 2'nin sağında ya da −2'nin solunda." },
       { s: "|x| ≤ 2 koşulunu sağlayan kaç tam sayı vardır?", c: ["5", "3", "4"], a: "−2, −1, 0, 1, 2: beş tane." },
+      // Mutlak değerli eşitsizlik: uzaklıkla düşün
+      { s: "Sayı doğrusunda sıfıra uzaklığı 3'ten az olan sayıları hangisi gösterir?", c: ["|x| < 3", "|x| > 3", "x < 3"], a: "Sıfıra uzaklık |x|; 3'ten az: |x| < 3." },
+      { s: "−4 < x < 4 aralığı hangisiyle gösterilir?", c: ["|x| < 4", "|x| > 4", "x < 4"], a: "−4 ile 4 arası: sıfıra uzaklığı 4'ten az olan sayılar, |x| < 4." },
+      { s: "|x| ≥ 4 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x ≤ −4 ya da x ≥ 4", "−4 ≤ x ≤ 4", "x ≥ 4"], a: "Sıfıra uzaklığı en az 4: 4 ve sağı, −4 ve solu." },
+      { s: "|x − 2| < 3 ne demektir?", c: ["x'in 2'ye uzaklığı 3'ten azdır", "x'in 2 eksiği 3'ten büyüktür", "x'in sıfıra uzaklığı 3'ten azdır"], a: "|x − 2|, x ile 2 arasındaki uzaklık." },
+      { s: "Sayı doğrusunda 2'ye uzaklığı 5'ten fazla olan sayıları hangisi gösterir?", c: ["|x − 2| > 5", "|x + 2| > 5", "|x − 5| > 2"], a: "2'ye uzaklık |x − 2|; 5'ten fazla: |x − 2| > 5." },
+      { s: "|x − 2| < 3 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−1 < x < 5", "−3 < x < 3", "x < 5"], a: "2'nin 3 solu −1, 3 sağı 5: x bu ikisinin arasında." },
+      { s: "|x − 1| ≤ 2 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−1 ≤ x ≤ 3", "−2 ≤ x ≤ 2", "1 ≤ x ≤ 3"], a: "1'e uzaklığı en çok 2: 1 − 2 = −1 ile 1 + 2 = 3 arası (uçlar dahil)." },
+      { s: "|x + 1| < 4 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−5 < x < 3", "−3 < x < 5", "−4 < x < 4"], a: "|x + 1| = |x − (−1)|: −1'e uzaklık 4'ten az, −5 ile 3 arası." },
+      { s: "|x − 3| > 1 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x < 2 ya da x > 4", "2 < x < 4", "x > 4"], a: "3'e uzaklığı 1'den fazla: 2'nin solu ya da 4'ün sağı." },
+      { s: "|x| < 4 koşulunu sağlayan kaç tam sayı vardır?", c: ["7", "8", "9"], a: "−3, −2, −1, 0, 1, 2, 3: yedi tane (−4 ve 4 dahil değil)." },
+      { s: "|x − 2| < 3 koşulunu sağlayan kaç tam sayı vardır?", c: ["5", "6", "7"], a: "−1 < x < 5: 0, 1, 2, 3, 4, beş tane." },
+      { s: "|x| ≤ 3 ise x'in alabileceği en küçük tam sayı değeri kaçtır?", c: ["−3", "0", "−2"], a: "−3 ≤ x ≤ 3: en küçük −3 (uç dahil)." },
+      { s: "|x| < 5 ise x'in alabileceği en büyük tam sayı değeri kaçtır?", c: ["4", "5", "−4"], a: "−5 < x < 5: 5 dahil değil, en büyük 4." },
+      { s: "|x| ≤ 0 eşitsizliğini hangi sayılar sağlar?", c: ["Sadece 0", "Hiçbir sayı", "Bütün sayılar"], a: "Mutlak değer negatif olamaz; 0'dan küçük ya da eşit olması için 0 olmalı: x = 0." },
+      { s: "|x| > −2 eşitsizliğini hangi sayılar sağlar?", c: ["Bütün reel sayılar", "Hiçbir sayı", "x > 2 olanlar"], a: "Mutlak değer hep 0 ya da pozitif; her zaman −2'den büyüktür." },
+      { s: "|x| ≥ 0 eşitsizliğini hangi sayılar sağlar?", c: ["Bütün reel sayılar", "Sadece pozitifler", "Sadece 0"], a: "Uzaklık hiçbir zaman negatif değildir: her sayı sağlar." },
       { s: "|x| < −1 eşitsizliğinin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x < −1", "−1 < x < 1"], a: "Mutlak değer 0 ya da pozitif; negatif bir sayıdan küçük olamaz." }
     ]
   },
@@ -1661,6 +1678,11 @@ window.KK_YKS = {
     { k: "yks-mutlak", s: "|x| = −5 denkleminin iki çözümü vardır.", d: false, n: "Uzaklık negatif olamaz: çözüm yok" },
     { k: "yks-mutlak", s: "−|−4| = 4", d: false, n: "Önce |−4| = 4, sonra eksi: −4" },
     { k: "yks-mutlak", s: "|2 − 5| = |5 − 2|", d: true },
-    { k: "yks-mutlak", s: "|x| < 3 ise x, −3 ile 3 arasındadır.", d: true }
+    { k: "yks-mutlak", s: "|x| < 3 ise x, −3 ile 3 arasındadır.", d: true },
+    { k: "yks-mutlak", s: "|x| < 3 ile x < 3 aynı anlamdadır.", d: false, n: "x = −5 için x < 3 doğru ama |−5| = 5, 3'ten küçük değil" },
+    { k: "yks-mutlak", s: "|x| > 2 ise x > 2'dir.", d: false, n: "x < −2 de olabilir: |−3| = 3 > 2" },
+    { k: "yks-mutlak", s: "|x| > −2 eşitsizliğini her reel sayı sağlar.", d: true },
+    { k: "yks-mutlak", s: "|x| ≤ 0 ise x = 0'dır.", d: true },
+    { k: "yks-mutlak", s: "|x − 2| < 3, x'in 2'ye uzaklığının 3'ten az olduğunu söyler.", d: true }
   ]
 };
