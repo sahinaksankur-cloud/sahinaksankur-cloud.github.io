@@ -840,7 +840,7 @@ p.hata-satir { margin: 0; }
 .kamp-devam[hidden] { display: none; }
 .kamp-devam { max-width: 760px; margin: 0 auto 18px; padding: 12px 16px; border-radius: 12px; background: rgba(46, 125, 91, 0.12); font-weight: 600; text-align: center; }
 .kamp-bolum-baslik { font-size: 1.15rem; margin: 8px 0 10px; }
-.kamp-kartlar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.kamp-kartlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
 @media (max-width: 860px) { .kamp-kartlar { grid-template-columns: minmax(0, 1fr); } }
 .kamp-kart { background: var(--surface); border: 1px solid var(--border); border-top: 4px solid #2e7d5b; border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
 .kamp-kart.simdi { outline: 2px solid #2e7d5b; }
@@ -918,3 +918,6 @@ body.calisiyor .canli-hatirlat { display: none !important; }
 .calis-dugmeler .kamp-yarisma { border-color: #d64545; color: #c0392b; font-weight: 600; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .calis-dugmeler .kamp-yarisma { color: #ff8a80; } }
 .calis-dugmeler .kamp-kucuk { flex-basis: 100%; margin: 0; }
+.kamp-kart.gece { border-top-color: #3b3f8f; }
+.kamp-kart.gece.simdi { outline-color: #3b3f8f; }
+.kamp-devam .btn { margin-top: 8px; }

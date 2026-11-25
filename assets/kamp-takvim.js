@@ -16,17 +16,18 @@
   // Bir kampın o günkü hâli: ders ve mola blokları (ms)
   function kur(k, gun) {
     var hm = k.bas.split(":"), t = gunBasi(gun) + (+hm[0]) * 3600e3 + (+hm[1]) * DK, bloklar = [], ders = 0;
-    var bas = t;
-    DUZEN.forEach(function (d, i) {
+    var bas = t, duzen = k.duzen || DUZEN;
+    duzen.forEach(function (d, i) {
       bloklar.push({ tur: "ders", no: i + 1, bas: t, bit: t + d[0] * DK, dk: d[0] }); t += d[0] * DK; ders += d[0];
-      if (d[1] && i < DUZEN.length - 1) { bloklar.push({ tur: "mola", no: i + 1, bas: t, bit: t + d[1] * DK, dk: d[1], uzun: d[1] >= 20 }); t += d[1] * DK; }
+      if (d[1] && i < duzen.length - 1) { bloklar.push({ tur: "mola", no: i + 1, bas: t, bit: t + d[1] * DK, dk: d[1], uzun: d[1] >= 20 }); t += d[1] * DK; }
     });
-    return { id: k.id, ad: k.ad, ikon: k.ikon || "🏕", not: k.not || "", saat: k.bas, gun: gun, bas: bas, bit: t,
-      bitSaat: saatYaz(t), bloklar: bloklar, dersDk: ders, dersSayisi: DUZEN.length, anahtar: gun + " " + k.id };
+    return { id: k.id, ad: k.ad, ikon: k.ikon || "🏕", not: k.not || "", kapanis: k.kapanis || "", saat: k.bas, gun: gun, bas: bas, bit: t,
+      bitSaat: saatYaz(t), bloklar: bloklar, dersDk: ders, dersSayisi: duzen.length, anahtar: gun + " " + k.id };
   }
   function saatYaz(ms) { return new Date(ms + TR).toISOString().slice(11, 16); }
   function gunun(gun) {
-    return (CFG.liste || []).filter(function (k) { return !iptalMi(gun, k.bas); })
+    var ay = +gun.slice(5, 7);   // "aylar" yazılan kamp (Gece Kampı) sadece o aylarda yapılır
+    return (CFG.liste || []).filter(function (k) { return !iptalMi(gun, k.bas) && !iptalMi(gun, k.id) && (!k.aylar || k.aylar.indexOf(ay) >= 0); })
       .map(function (k) { return kur(k, gun); }).sort(function (a, b) { return a.bas - b.bas; });
   }
   function aralik(bas, bit) {
@@ -59,7 +60,7 @@
   // ---- Şerit: [data-kamp-serit] (ana sayfa) ----
   var seritler = document.querySelectorAll("[data-kamp-serit]");
   if (!seritler.length) return;
-  var saatler = (CFG.liste || []).map(function (k) { return k.bas; }).join(" · ");
+  var saatler = (CFG.liste || []).map(function (k) { return k.bas; }).filter(function (x, i, l) { return l.indexOf(x) === i; }).join(" · ");
   function ciz() {
     var s = Date.now(), d = durum(s), yazi;
     if (d.kamp && d.blok) {

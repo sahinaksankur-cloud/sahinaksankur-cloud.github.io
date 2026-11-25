@@ -44,11 +44,17 @@ window.KK_CONFIG = {
   // Saatler Türkiye saatidir. duzen: [ders dakikası, ardından mola dakikası] sırayla (son molanın sonunda kamp biter).
   kamplar: {
     aktif: true,          // false: ana sayfadaki kamp şeridi gizlenir
-    duzen: [[50, 10], [50, 10], [40, 20], [50, 10], [50, 0]],   // 5 ders, 240 dk çalışma
+    duzen: [[50, 10], [50, 10], [40, 20], [50, 10], [50, 0]],   // 5 ders, 240 dk çalışma (bir kampın kendi "duzen"i varsa o geçerli)
     liste: [
       { id: "sabah", ad: "Sabah Çalışma Kampı", ikon: "🌅", bas: "08:00", not: "Mezunlar ve üniversiteliler için" },
       { id: "ogle", ad: "Öğle Çalışma Kampı", ikon: "☀️", bas: "13:00", not: "Mezunlar ve üniversiteliler için" },
-      { id: "aksam", ad: "Akşam Çalışma Kampı", ikon: "🌙", bas: "19:00" }
+      { id: "aksam", ad: "Akşam Çalışma Kampı", ikon: "🌙", bas: "19:00" },
+      // Üniversiteliler için sınav dönemi gece kampı: sadece "aylar"da (dönem başından 1 ay sonra → finallerin sonu).
+      // İlk 5 dersi Akşam Kampı ile aynı; 8 ders, 380 dk (6 sa 20 dk) çalışma, 02:50'de biter.
+      { id: "gece", ad: "Gece Çalışma Kampı", ikon: "🦉", bas: "19:00", not: "Üniversiteliler için · Sınav dönemi",
+        aylar: [11, 12, 1, 3, 4, 5, 6],
+        duzen: [[50, 10], [50, 10], [40, 20], [50, 10], [50, 10], [40, 20], [50, 10], [50, 0]],
+        kapanis: "Kuzey Kampüs. Gece kampı bitti. Şimdi uyku zamanı, sınavda dinç ol!" }
     ],
     // Kampın yapılmayacağı günler: "2026-12-31" (o günün tüm kampları) ya da "2026-12-31 19:00" (sadece o kamp)
     iptal: []

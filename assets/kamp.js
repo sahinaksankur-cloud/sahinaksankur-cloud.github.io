@@ -267,7 +267,9 @@
     yaz(); ekranGoster(); arkaBaslat();
   }
   var sonMesaj = "";
-  function bitir(mesaj) {
+  var sonDevam = null;
+  function bitir(mesaj, devam) {
+    sonDevam = devam || null;
     var a = kayit.aktif, s = simdi(), ms = 0;
     if (!a) return;
     if (a.tur === "kamp") {
@@ -310,6 +312,12 @@
     document.title = "Kuzey Kampüs Ders Çalışma Kampları";
     $("kamp-devam").hidden = !sonMesaj;
     $("kamp-devam").textContent = sonMesaj;
+    if (sonMesaj && sonDevam) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "btn primary"; b.setAttribute("data-katil", sonDevam.anahtar);
+      b.textContent = sonDevam.ikon + " " + sonDevam.ad + "na devam et";
+      $("kamp-devam").appendChild(document.createTextNode(" ")); $("kamp-devam").appendChild(b);
+    }
     kartlar(true); rapor();
   }
   function ekranGoster() {
@@ -332,10 +340,12 @@
     // Kamp bittiyse
     if (h.faz === "bitti") {
       var k0 = h.kamp;
-      konus("Kuzey Kampüs. " + k0.ad + " bitti. Bugün harika çalıştın!");
       var c0 = baglam(); if (c0) can(c0);
       var ms0 = kampSure(a, k0.bit);
-      bitir("🏕 " + k0.ad + " bitti. Bu kampta " + dkMetin(ms0 / 1000) + " çalıştın. Yarın aynı saatte görüşürüz!");
+      var devam = K.durum(s).kamp;
+      devam = devam && devam.anahtar !== k0.anahtar && devam.bas < k0.bit ? devam : null;
+      konus(k0.kapanis || "Kuzey Kampüs. " + k0.ad + " bitti. " + (devam ? devam.ad + " devam ediyor." : "Bugün harika çalıştın!"));
+      bitir("🏕 " + k0.ad + " bitti. Bu kampta " + dkMetin(ms0 / 1000) + " çalıştın. " + (devam ? "" : k0.kapanis ? "Şimdi uyku zamanı, sınavda dinç ol!" : "Yarın aynı saatte görüşürüz!"), devam);
       return;
     }
     // Kişisel: mola süresi dolduysa "dönüş" fazına geç
@@ -452,7 +462,17 @@
   // ---- Kamp kartları ----
   var kartHtml = "";
   function kartlar(zorla) {
-    var s = simdi(), bugun = K.gunun(K.gunAnahtar(s)), html = "";
+    var s = simdi(), bugunAn = K.gunAnahtar(s), html = "";
+    // Bugünün kampları + gece yarısını geçip hâlâ süren dünkü kamp (Gece Kampı 00:00–02:50)
+    var bugun = K.aralik(s - GUN, s).filter(function (k) { return k.gun === bugunAn || (k.bas <= s && s < k.bit); })
+      .filter(function (k, i, l) { return !(k.gun === bugunAn && l.some(function (x) { return x.gun !== bugunAn && x.id === k.id; })); });
+    var turler = {};
+    bugun.forEach(function (k) { turler[k.dersSayisi + "|" + k.dersDk] = k; });
+    $("kamp-kartlar-not").textContent = Object.keys(turler).map(function (t) {
+      var k = turler[t], uzun = k.bloklar.filter(function (b) { return b.uzun; }).length;
+      return (k.id === "gece" ? "Gece kampında " : "Sabah, öğle ve akşam kamplarında ") + k.dersSayisi + " ders, toplam " + dkMetin(k.dersDk * 60) + " çalışma" +
+        (uzun ? " (" + uzun + " uzun mola)" : "") + ".";
+    }).join(" ");
     if (!bugun.length) { $("kamp-kartlar").innerHTML = '<p class="kamp-kucuk">Bugün kamp yok.</p>'; return; }
     bugun.forEach(function (k) {
       var durum, dugme, sinif = "";
@@ -476,6 +496,7 @@
         (k.not ? '<p class="kamp-not">' + k.not + "</p>" : "") +
         '<p class="kamp-durum">' + durum + "</p>" + dugme +
         "<details><summary>Ders saatleri</summary><ul class=\"kamp-plan\">" + plan + "</ul></details></article>";
+      if (k.id === "gece") html = html.replace('<article class="kamp-kart ', '<article class="kamp-kart gece ');
     });
     // Geri sayım her saniye değişir: kartı yeniden kurmadan sadece saati güncelle (açık "Ders saatleri" kapanmasın)
     var sade = html.replace(/data-geri="(\d+)">[^<]*</g, 'data-geri="$1"><');
@@ -487,6 +508,10 @@
     f();
     Array.prototype.forEach.call(document.querySelectorAll("#kamp-kartlar details"), function (d, i) { d.open = !!acik[i]; });
   }
+  $("kamp-devam").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-katil]");
+    if (b) { sonMesaj = ""; kampaKatil(b.getAttribute("data-katil")); }
+  });
   $("kamp-kartlar").addEventListener("click", function (e) {
     var b = e.target.closest("[data-katil]");
     if (b) { sonMesaj = ""; kampaKatil(b.getAttribute("data-katil")); }
