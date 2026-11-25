@@ -1582,7 +1582,37 @@ window.KK_YKS = {
       { s: "Bir sınıfta kızların erkeklere oranı 3/4'tür. Kızlar 3k ise erkekler nasıl yazılır?", c: ["4k", "3k", "k/4"], a: "Kız/erkek = 3k/4k." },
       { s: "Bir sınıfta kızların erkeklere oranı 3/4'tür. Sınıf 28 kişi ise kaç kız vardır?", c: ["12", "16", "21"], a: "Kız 3k, erkek 4k: 7k = 28, k = 4, kız = 12." },
       { s: "Bir tarifte unun şekere oranı 5/2'dir. 10 bardak un kullanılırsa kaç bardak şeker gerekir?", c: ["4", "25", "5"], a: "Un 5k = 10 ise k = 2; şeker 2k = 4." },
-      { s: "Bir haritada 1 cm, 5 km'yi gösteriyor. Haritada 3 cm olan yol gerçekte kaç km'dir?", c: ["15", "8", "5/3"], a: "Oran aynı kalır: 3 · 5 = 15 km." }
+      { s: "Bir haritada 1 cm, 5 km'yi gösteriyor. Haritada 3 cm olan yol gerçekte kaç km'dir?", c: ["15", "8", "5/3"], a: "Oran aynı kalır: 3 · 5 = 15 km." },
+      // Doğru ve ters orantı: tanım, hangisi (işçi, hız, musluk, pasta, yazıcı; yaş-boy orantısız), artar/azalır, ne kadar, kısa hesap
+      { s: "Doğru orantı nedir?", c: ["Biri artınca öbürü de aynı oranda artar", "Biri artınca öbürü aynı oranda azalır", "İkisinin toplamı hep aynı kalır"], a: "Doğru orantı: biri 2 katına çıkınca öbürü de 2 katına çıkar." },
+      { s: "Ters orantı nedir?", c: ["Biri artınca öbürü aynı oranda azalır", "Biri artınca öbürü de aynı oranda artar", "İkisinin farkı hep aynı kalır"], a: "Ters orantı: biri 2 katına çıkınca öbürü yarıya iner." },
+      { s: "Doğru orantılı a ve b için hangisi hep aynı kalır?", c: ["a/b", "a · b", "a + b"], a: "Doğru orantıda bölüm sabittir: a/b = k." },
+      { s: "Ters orantılı a ve b için hangisi hep aynı kalır?", c: ["a · b", "a/b", "a − b"], a: "Ters orantıda çarpım sabittir: a · b = k." },
+      { s: "Aynı hızla çalışan işçilerin sayısı ile belli bir sürede yaptıkları iş arasında hangi orantı vardır?", c: ["Doğru orantı", "Ters orantı", "Orantı yoktur"], a: "İşçi 2 katına çıkarsa aynı sürede yapılan iş de 2 katına çıkar." },
+      { s: "Bir işi yapan işçilerin sayısı ile işin bitme süresi arasında hangi orantı vardır?", c: ["Ters orantı", "Doğru orantı", "Orantı yoktur"], a: "İşçi 2 katına çıkarsa iş yarı sürede biter." },
+      { s: "Bir aracın hızı ile belli bir yolu alma süresi arasında hangi orantı vardır?", c: ["Ters orantı", "Doğru orantı", "Orantı yoktur"], a: "Hız 2 katına çıkarsa aynı yol yarı sürede alınır." },
+      { s: "Sabit hızla giden bir aracın yolda geçirdiği süre ile aldığı yol arasında hangi orantı vardır?", c: ["Doğru orantı", "Ters orantı", "Orantı yoktur"], a: "2 katı sürede 2 katı yol alınır." },
+      { s: "Bir musluğun açık kaldığı süre ile akıttığı su arasında hangi orantı vardır?", c: ["Doğru orantı", "Ters orantı", "Orantı yoktur"], a: "Musluk 2 katı süre açık kalırsa 2 katı su akar." },
+      { s: "Bir havuzu dolduran özdeş muslukların sayısı ile havuzun dolma süresi arasında hangi orantı vardır?", c: ["Ters orantı", "Doğru orantı", "Orantı yoktur"], a: "Musluk 2 katına çıkarsa havuz yarı sürede dolar." },
+      { s: "Bir pastanın eşit paylaşıldığı kişi sayısı ile kişi başına düşen pay arasında hangi orantı vardır?", c: ["Ters orantı", "Doğru orantı", "Orantı yoktur"], a: "Kişi 2 katına çıkarsa herkesin payı yarıya iner." },
+      { s: "Bir yazıcının çalıştığı süre ile bastığı sayfa sayısı arasında hangi orantı vardır?", c: ["Doğru orantı", "Ters orantı", "Orantı yoktur"], a: "2 katı sürede 2 katı sayfa basılır." },
+      { s: "Bir çocuğun yaşı ile boyu arasında hangi orantı vardır?", c: ["Orantı yoktur", "Doğru orantı", "Ters orantı"], a: "İkisi birlikte artar ama aynı oranda değil: 10 yaşındaki çocuk 5 yaşındakinin 2 katı boyda değildir." },
+      { s: "İşçi sayısı artarsa aynı işin bitme süresi ne olur?", c: ["Kısalır", "Uzar", "Değişmez"], a: "Ters orantı: işçi artınca süre kısalır." },
+      { s: "İşçi sayısı artarsa aynı sürede yapılan iş ne olur?", c: ["Artar", "Azalır", "Değişmez"], a: "Doğru orantı: işçi artınca yapılan iş artar." },
+      { s: "Araç hızlanırsa aynı yere varış süresi ne olur?", c: ["Kısalır", "Uzar", "Değişmez"], a: "Ters orantı: hız artınca süre kısalır." },
+      { s: "Musluk sayısı azalırsa havuzun dolma süresi ne olur?", c: ["Uzar", "Kısalır", "Değişmez"], a: "Ters orantı: musluk azalınca süre uzar." },
+      { s: "İşçi sayısı 2 katına çıkarsa aynı işin bitme süresi ne olur?", c: ["Yarıya iner", "2 katına çıkar", "Değişmez"], a: "Ters orantı: 2 katı işçi, yarı süre." },
+      { s: "İşçi sayısı 2 katına çıkarsa aynı sürede yapılan iş ne olur?", c: ["2 katına çıkar", "Yarıya iner", "Değişmez"], a: "Doğru orantı: 2 katı işçi, 2 katı iş." },
+      { s: "Aracın hızı 3 katına çıkarsa aynı yolu alma süresi ne olur?", c: ["3'te birine iner", "3 katına çıkar", "Değişmez"], a: "Ters orantı: 3 katı hız, 3'te bir süre." },
+      { s: "Aracın hızı yarıya inerse aynı yolu alma süresi ne olur?", c: ["2 katına çıkar", "Yarıya iner", "Değişmez"], a: "Ters orantı: hız yarıya inerse süre 2 katına çıkar." },
+      { s: "Pastayı paylaşan kişi sayısı 3 katına çıkarsa kişi başına düşen pay ne olur?", c: ["3'te birine iner", "3 katına çıkar", "Değişmez"], a: "Ters orantı: 3 katı kişi, 3'te bir pay." },
+      { s: "4 işçi bir işi 6 günde bitiriyor. Aynı hızda 8 işçi bu işi kaç günde bitirir?", c: ["3", "12", "2"], a: "Ters orantı: işçi 2 katı, süre yarısı: 3 gün. (4 · 6 = 8 · 3)" },
+      { s: "Saatte 60 km giden bir araç bir yolu 4 saatte alıyor. Saatte 80 km giderse kaç saatte alır?", c: ["3", "5", "6"], a: "Ters orantı: hız · süre sabit, 60 · 4 = 240 = 80 · 3." },
+      { s: "3 özdeş musluk bir havuzu 8 saatte dolduruyor. 6 musluk kaç saatte doldurur?", c: ["4", "16", "2"], a: "Ters orantı: musluk 2 katı, süre yarısı: 4 saat." },
+      { s: "Bir musluk 2 saatte 30 litre su akıtıyor. 6 saatte kaç litre akıtır?", c: ["90", "10", "60"], a: "Doğru orantı: süre 3 katı, su 3 katı: 90 litre." },
+      { s: "Bir yazıcı 5 dakikada 40 sayfa basıyor. 15 dakikada kaç sayfa basar?", c: ["120", "80", "200"], a: "Doğru orantı: süre 3 katı, sayfa 3 katı: 120." },
+      { s: "a ile b doğru orantılıdır. a = 4 iken b = 6 ise a = 8 iken b kaçtır?", c: ["12", "3", "10"], a: "Doğru orantı: a 2 katı, b de 2 katı: 12." },
+      { s: "a ile b ters orantılıdır. a = 4 iken b = 6 ise a = 8 iken b kaçtır?", c: ["3", "12", "24"], a: "Ters orantı: a · b = 24 sabit: 8 · b = 24, b = 3." }
     ]
   },
 
@@ -1935,6 +1965,12 @@ window.KK_YKS = {
     { k: "yks-oran", s: "Oranlanan iki çokluğun birimi aynı olmalıdır.", d: true },
     { k: "yks-oran", s: "3a = 2b ise a/b = 3/2'dir.", d: false, n: "a/b = 2/3: katsayılar çapraz yer değiştirir" },
     { k: "yks-oran", s: "a/3 = b/2 ise a = 3k ve b = 2k yazılabilir.", d: true },
-    { k: "yks-oran", s: "a/b = c/d ise a · d = b · c'dir.", d: true }
+    { k: "yks-oran", s: "a/b = c/d ise a · d = b · c'dir.", d: true },
+    { k: "yks-oran", s: "İşçi sayısı ile işin bitme süresi doğru orantılıdır.", d: false, n: "Ters orantılıdır: işçi artınca süre kısalır" },
+    { k: "yks-oran", s: "Bir aracın hızı 2 katına çıkarsa aynı yolu alma süresi yarıya iner.", d: true },
+    { k: "yks-oran", s: "Doğru orantılı iki çokluğun bölümü sabittir.", d: true },
+    { k: "yks-oran", s: "Ters orantılı iki çokluğun çarpımı sabittir.", d: true },
+    { k: "yks-oran", s: "Yaş arttıkça boy da arttığı için yaş ile boy doğru orantılıdır.", d: false, n: "Birlikte artsalar da aynı oranda artmazlar: orantı yok" },
+    { k: "yks-oran", s: "Musluk sayısı azalırsa havuzun dolma süresi uzar.", d: true }
   ]
 };
