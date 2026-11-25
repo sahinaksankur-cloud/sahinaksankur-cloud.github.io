@@ -438,9 +438,9 @@
         }).catch(function () {});
     }
     // 💡 Biliyor muydun?: [data-ipucu] olan yere sitedeki bir özelliği tanıtan kısa satır (her açılışta rastgele, açılır pencere değil).
-    // "sakla": o sayfada gösterilmez (öğrenci zaten oradadır). oyun.js test sonucunda KK_IPUCU.ciz() ile yeniler.
+    // "sakla": o sayfada gösterilmez (öğrenci zaten oradadır; adı böyle başlayan sayfalar, "tam": sadece tam o sayfa). oyun.js test sonucunda KK_IPUCU.ciz() ile yeniler.
     var IPUCLARI = [
-      { m: 'Her gün sabah, öğle ve akşam <a href="kamp.html">🏕 Ders Çalışma Kampları</a> var: başka öğrencilerle aynı saatte ders çalış, molada zil çalsın.', sakla: "kamp" },
+      { m: 'Her gün sabah, öğle ve akşam <a href="kamp.html">🏕 Ders Çalışma Kampları</a> var: başka öğrencilerle aynı saatte ders çalış, molada zil çalsın.', sakla: "kamp", tam: true },
       { m: 'İngilizce\'de <a href="oyun.html#en-bolume-ozel">🎓 Bölüme Özel İngilizce</a> var: Calculus, Ekonomi, İşletme, Mühendislik, Psikoloji ve Siyaset Bilimi terimleri.' },
       { m: 'Her gün <a href="canli.html">🔴 Canlı Yarışma</a> var: herkes aynı anda aynı soruları çözer. Saatleri Testler\'deki kırmızı şeritte.', sakla: "canli" },
       { m: 'İngilizce\'de kaçırdığın kelimeler <a href="oyun.html#ingilizce">📌 Zorlandıklarım</a> destesinde toplanır; doğru yapınca desteden çıkar.' },
@@ -455,7 +455,7 @@
     window.KK_IPUCU = {
       ciz: function (el) {
         if (!el) return;
-        var l = IPUCLARI.filter(function (t) { return !t.sakla || sayfaAdi.indexOf(t.sakla) !== 0; });
+        var l = IPUCLARI.filter(function (t) { return !t.sakla || (t.tam ? sayfaAdi !== t.sakla : sayfaAdi.indexOf(t.sakla) !== 0); });
         var t = l[Math.floor(Math.random() * l.length)];
         el.innerHTML = '<strong>💡 Biliyor muydun?</strong> ' + t.m;
         el.hidden = false;
