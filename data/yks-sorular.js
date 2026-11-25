@@ -25,7 +25,8 @@ window.KK_YKS = {
     { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" }
+    { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" },
+    { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -1244,6 +1245,64 @@ window.KK_YKS = {
       { s: "2x + 1 = 9 ise 4x + 2 kaçtır?", c: ["18", "9", "17"], a: "4x + 2 = 2 · (2x + 1) = 2 · 9 = 18. x'i bulmaya gerek yok." },
       { s: "x − 3 = 5 ise 2x − 6 kaçtır?", c: ["10", "16", "8"], a: "2x − 6 = 2 · (x − 3) = 2 · 5 = 10." },
       { s: "(x − 3) · 2 ifadesinin açılımı hangisidir?", c: ["2x − 6", "2x − 3", "x − 6"], a: "Çarpan sağda da olsa her terimle çarpılır: 2x − 6." }
+    ],
+    // Basit Eşitsizlikler (kullanıcı kararı; Denklemler'in mantığı): semboller → aynı anlama gelenler (x < 2 ile −x > −2) →
+    // ekleme/çıkarma → pozitifle ve negatifle çarpma/bölme (yön) → iki işlemli basit → parantezli → aralıktaki tam/doğal sayılar → aralıktan ifadeye.
+    "yks-esitsizlik": [
+      // Semboller
+      { s: "x < 3 ise x hangisi olabilir?", c: ["2", "3", "4"], a: "x < 3: x, 3'ten küçük; 3 dahil değil." },
+      { s: "x ≤ 4 ise x hangisi olamaz?", c: ["5", "4", "−4"], a: "x ≤ 4: x en çok 4 (4 dahil). 5 olamaz." },
+      { s: "“x en az 5'tir” nasıl yazılır?", c: ["x ≥ 5", "x > 5", "x ≤ 5"], a: "En az 5: 5 olabilir ya da daha büyük: x ≥ 5." },
+      { s: "“x en çok 2'dir” nasıl yazılır?", c: ["x ≤ 2", "x < 2", "x ≥ 2"], a: "En çok 2: 2 olabilir ya da daha küçük: x ≤ 2." },
+      { s: "“x, 3'ten küçüktür” nasıl yazılır?", c: ["x < 3", "x > 3", "x ≤ 3"], a: "3'ten küçük: 3 dahil değil, x < 3." },
+      // Aynı anlama gelenler
+      { s: "x < 2 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−x > −2", "−x < −2", "x > −2"], a: "İki taraf −1 ile çarpılınca yön döner: x < 2 ise −x > −2." },
+      { s: "x > 5 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−x < −5", "−x > −5", "x < −5"], a: "−1 ile çarp, yön dönsün: −x < −5." },
+      { s: "−x ≥ 3 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x ≤ −3", "x ≥ −3", "x ≤ 3"], a: "−1 ile çarp, yön dönsün: x ≤ −3." },
+      { s: "−x < −4 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x > 4", "x < 4", "x > −4"], a: "−1 ile çarp, yön dönsün: x > 4." },
+      { s: "2 < x eşitsizliği hangisiyle aynı anlamdadır?", c: ["x > 2", "x < 2", "x > −2"], a: "Yer değiştirince sembol de döner: 2 < x ile x > 2 aynıdır." },
+      // Ekleme ve çıkarma: yön değişmez
+      { s: "x + 3 < 5 ise hangisi doğrudur?", c: ["x < 2", "x < 8", "x > 2"], a: "İki taraftan 3 çıkar, yön değişmez: x < 2." },
+      { s: "x − 4 > 1 ise hangisi doğrudur?", c: ["x > 5", "x > −3", "x < 5"], a: "İki tarafa 4 ekle: x > 5." },
+      { s: "x + 7 ≥ 2 ise hangisi doğrudur?", c: ["x ≥ −5", "x ≥ 9", "x ≤ −5"], a: "İki taraftan 7 çıkar: x ≥ −5." },
+      { s: "x − 2 ≤ −6 ise hangisi doğrudur?", c: ["x ≤ −4", "x ≤ −8", "x ≥ −4"], a: "İki tarafa 2 ekle: x ≤ −4." },
+      { s: "a < b ise a + 3 ile b + 3 için hangisi doğrudur?", c: ["a + 3 < b + 3", "a + 3 > b + 3", "a + 3 = b + 3"], a: "İki tarafa aynı sayı eklenince sıra bozulmaz." },
+      // Pozitif sayıyla çarpma ve bölme: yön değişmez
+      { s: "2x < 8 ise hangisi doğrudur?", c: ["x < 4", "x > 4", "x < 16"], a: "İki tarafı pozitif 2'ye böl, yön değişmez: x < 4." },
+      { s: "3x ≥ −12 ise hangisi doğrudur?", c: ["x ≥ −4", "x ≤ −4", "x ≥ 4"], a: "Pozitif 3'e böl, yön değişmez: x ≥ −4. Sağdaki sayının eksi olması yönü değiştirmez." },
+      { s: "x/2 > 3 ise hangisi doğrudur?", c: ["x > 6", "x > 3/2", "x < 6"], a: "İki tarafı pozitif 2 ile çarp: x > 6." },
+      { s: "x < 5 ise 2x için hangisi doğrudur?", c: ["2x < 10", "2x > 10", "2x < 7"], a: "İki tarafı pozitif 2 ile çarp: 2x < 10." },
+      // Negatif sayıyla çarpma ve bölme: yön değişir
+      { s: "2 < 3 iken −2 ile −3 için hangisi doğrudur?", c: ["−2 > −3", "−2 < −3", "−2 = −3"], a: "Sayı doğrusunda −2, −3'ün sağındadır. Negatifle çarpınca sıra ters döner; yön bu yüzden değişir." },
+      { s: "Bir eşitsizliğin iki tarafı negatif bir sayıyla çarpılırsa ne olur?", c: ["Yön değişir", "Yön değişmez", "Eşitlik olur"], a: "2 < 3 iken −2 > −3: negatifle çarpma (ya da bölme) yönü çevirir." },
+      { s: "−x < 3 ise hangisi doğrudur?", c: ["x > −3", "x < −3", "x > 3"], a: "−1 ile çarp, yön dönsün: x > −3." },
+      { s: "−2x < 8 ise hangisi doğrudur?", c: ["x > −4", "x < −4", "x > 4"], a: "Negatif −2'ye böl, yön dönsün: x > −4." },
+      { s: "−3x ≥ 9 ise hangisi doğrudur?", c: ["x ≤ −3", "x ≥ −3", "x ≤ 3"], a: "Negatif −3'e böl, yön dönsün: x ≤ −3." },
+      { s: "−x/2 > 1 ise hangisi doğrudur?", c: ["x < −2", "x > −2", "x < 2"], a: "İki tarafı −2 ile çarp, yön dönsün: x < −2." },
+      { s: "x > 3 ise −2x için hangisi doğrudur?", c: ["−2x < −6", "−2x > −6", "2x < −6"], a: "İki tarafı −2 ile çarp, yön dönsün: −2x < −6." },
+      // İki işlemli basit eşitsizlikler
+      { s: "2x + 1 < 7 ise hangisi doğrudur?", c: ["x < 3", "x < 4", "x > 3"], a: "1'i at: 2x < 6; 2'ye böl: x < 3." },
+      { s: "3 − x > 1 ise hangisi doğrudur?", c: ["x < 2", "x > 2", "x < −2"], a: "3'ü at: −x > −2; −1 ile çarp, yön dönsün: x < 2." },
+      { s: "5 − 2x ≥ 1 ise hangisi doğrudur?", c: ["x ≤ 2", "x ≥ 2", "x ≤ −2"], a: "5'i at: −2x ≥ −4; −2'ye böl, yön dönsün: x ≤ 2." },
+      { s: "x/3 − 1 ≤ 2 ise hangisi doğrudur?", c: ["x ≤ 9", "x ≤ 3", "x ≥ 9"], a: "1 ekle: x/3 ≤ 3; 3 ile çarp: x ≤ 9." },
+      // Parantezli
+      { s: "2(x − 1) < 6 ise hangisi doğrudur?", c: ["x < 4", "x < 2", "x > 4"], a: "Pozitif 2'ye böl: x − 1 < 3, x < 4." },
+      { s: "−(x + 2) > 3 ise hangisi doğrudur?", c: ["x < −5", "x > −5", "x < 1"], a: "Aç: −x − 2 > 3, −x > 5; −1 ile çarp, yön dönsün: x < −5." },
+      { s: "3(2 − x) ≤ 12 ise hangisi doğrudur?", c: ["x ≥ −2", "x ≤ −2", "x ≥ 2"], a: "3'e böl: 2 − x ≤ 4, −x ≤ 2; yön dönsün: x ≥ −2." },
+      { s: "1 − (2 − x) > 4 ise hangisi doğrudur?", c: ["x > 5", "x > 3", "x < −5"], a: "Parantezi aç: 1 − 2 + x = x − 1. x − 1 > 4, x > 5." },
+      // Aralıktaki sayılar: sayı kümesine dikkat
+      { s: "−2 < x ≤ 3 koşulunu sağlayan kaç tam sayı vardır?", c: ["5", "6", "4"], a: "−1, 0, 1, 2, 3: beş tane. −2 dahil değil, 3 dahil." },
+      { s: "x < 4 koşulunu sağlayan kaç doğal sayı vardır?", c: ["4", "3", "5"], a: "0, 1, 2, 3: dört tane (0 da doğal sayı)." },
+      { s: "0 < x < 5 koşulunu sağlayan kaç tam sayı vardır?", c: ["4", "5", "6"], a: "1, 2, 3, 4: dört tane. 0 ve 5 dahil değil." },
+      { s: "x < 4 ise x'in alabileceği en büyük tam sayı değeri kaçtır?", c: ["3", "4", "Yoktur"], a: "4 dahil değil; 4'ten küçük en büyük tam sayı 3." },
+      { s: "x ≤ 2 ise x'in alabileceği en büyük tam sayı değeri kaçtır?", c: ["2", "1", "3"], a: "≤ işareti 2'yi içerir: en büyük değer 2." },
+      { s: "x > −3 ise x'in alabileceği en küçük tam sayı değeri kaçtır?", c: ["−2", "−3", "−4"], a: "−3 dahil değil; −3'ten büyük en küçük tam sayı −2." },
+      { s: "x < 4 ise x'in alabileceği en büyük reel sayı değeri kaçtır?", c: ["Yoktur", "3", "3,9"], a: "4'e istediğin kadar yaklaşabilirsin (3,9; 3,99; …) ama 4 olamaz: en büyük reel sayı yoktur." },
+      // Aralıktan ifadeye
+      { s: "1 < x < 4 ise x + 2 hangi aralıktadır?", c: ["3 < x + 2 < 6", "1 < x + 2 < 4", "−1 < x + 2 < 2"], a: "Her tarafa 2 ekle: 3 < x + 2 < 6." },
+      { s: "1 < x < 4 ise −x hangi aralıktadır?", c: ["−4 < −x < −1", "−1 < −x < 4", "1 < −x < 4"], a: "−1 ile çarp, yön dönsün: −1 > −x > −4, yani −4 < −x < −1." },
+      { s: "2 < x < 5 ise 3x hangi aralıktadır?", c: ["6 < 3x < 15", "5 < 3x < 8", "2 < 3x < 15"], a: "Her tarafı pozitif 3 ile çarp: 6 < 3x < 15." },
+      { s: "−1 < x < 2 ise −2x hangi aralıktadır?", c: ["−4 < −2x < 2", "−2 < −2x < 4", "−4 < −2x < −2"], a: "−2 ile çarp, yön dönsün: 2 > −2x > −4, yani −4 < −2x < 2." }
     ]
   },
 
@@ -1534,6 +1593,15 @@ window.KK_YKS = {
     { k: "yks-denklem", s: "(3x + 1) − (x − 2) = 2x − 1", d: false, n: "Eksi parantez −2'yi +2 yapar: 2x + 3" },
     { k: "yks-denklem", s: "İç içe parantezler en içten başlanarak açılır.", d: true },
     { k: "yks-denklem", s: "−(−x + 4) = x + 4", d: false, n: "Eksi her terimin işaretini değiştirir: x − 4" },
-    { k: "yks-denklem", s: "3x = x + 8 denkleminde x'ler bir tarafa toplanınca 2x = 8 olur.", d: true }
+    { k: "yks-denklem", s: "3x = x + 8 denkleminde x'ler bir tarafa toplanınca 2x = 8 olur.", d: true },
+    { k: "yks-esitsizlik", s: "x < 2 ile −x > −2 aynı anlamdadır.", d: true },
+    { k: "yks-esitsizlik", s: "Eşitsizliğin iki tarafına aynı sayı eklenirse yön değişmez.", d: true },
+    { k: "yks-esitsizlik", s: "Eşitsizliğin iki tarafı negatif bir sayıya bölünürse yön değişmez.", d: false, n: "Yön değişir: −2x < 4 ise x > −2" },
+    { k: "yks-esitsizlik", s: "−x < 3 ise x < −3'tür.", d: false, n: "−1 ile çarpınca yön döner: x > −3" },
+    { k: "yks-esitsizlik", s: "x ≤ 5 ise x, 5 olabilir.", d: true },
+    { k: "yks-esitsizlik", s: "x < 5 ise x'in alabileceği en büyük tam sayı değeri 5'tir.", d: false, n: "5 dahil değil: en büyük tam sayı 4" },
+    { k: "yks-esitsizlik", s: "2 < 3 olduğu için −2 < −3'tür.", d: false, n: "−2 > −3: negatifle çarpınca sıra ters döner" },
+    { k: "yks-esitsizlik", s: "x > 3 ile 3 < x aynı anlamdadır.", d: true },
+    { k: "yks-esitsizlik", s: "3x > −6 ise x > −2'dir.", d: true }
   ]
 };
