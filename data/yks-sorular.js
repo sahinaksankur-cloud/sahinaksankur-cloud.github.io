@@ -1512,7 +1512,21 @@ window.KK_YKS = {
       { s: "16 − x<sup>4</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["4 − x", "2 − x", "4 + x<sup>2</sup>"], a: "16 − x<sup>4</sup> = (4 − x<sup>2</sup>)(4 + x<sup>2</sup>) = (2 − x)(2 + x)(4 + x<sup>2</sup>)." },
       { s: "x<sup>3</sup> − 8 ifadesinin çarpanı olmayan hangisidir?", c: ["x + 2", "x − 2", "x<sup>2</sup> + 2x + 4"], a: "x<sup>3</sup> − 8 = (x − 2)(x<sup>2</sup> + 2x + 4)." },
       { s: "x − 25 ifadesinin çarpanı hangisidir?", c: ["√x + 5", "x + 5", "x − 5"], a: "x − 25 = (√x − 5)(√x + 5). x − 5 ve x + 5 çarpan değildir." },
-      { s: "x<sup>4</sup> − 16 ifadesinin çarpanı hangisidir?", c: ["x<sup>2</sup> + 4", "x + 4", "x − 4"], a: "x<sup>4</sup> − 16 = (x<sup>2</sup> − 4)(x<sup>2</sup> + 4) = (x − 2)(x + 2)(x<sup>2</sup> + 4)." }
+      { s: "x<sup>4</sup> − 16 ifadesinin çarpanı hangisidir?", c: ["x<sup>2</sup> + 4", "x + 4", "x − 4"], a: "x<sup>4</sup> − 16 = (x<sup>2</sup> − 4)(x<sup>2</sup> + 4) = (x − 2)(x + 2)(x<sup>2</sup> + 4)." },
+      // x + 1/x ve a + b, ab: sayı denemeden, kare alarak (ortadaki terim 2 · x · 1/x = 2)
+      { s: "(x + 1/x)<sup>2</sup> hangisine eşittir?", c: ["x<sup>2</sup> + 2 + 1/x<sup>2</sup>", "x<sup>2</sup> + 1/x<sup>2</sup>", "x<sup>2</sup> + 1 + 1/x<sup>2</sup>"], a: "Ortadaki terim 2 · x · 1/x = 2: x<sup>2</sup> + 2 + 1/x<sup>2</sup>." },
+      { s: "(x − 1/x)<sup>2</sup> hangisine eşittir?", c: ["x<sup>2</sup> − 2 + 1/x<sup>2</sup>", "x<sup>2</sup> − 1/x<sup>2</sup>", "x<sup>2</sup> − 1 + 1/x<sup>2</sup>"], a: "Ortadaki terim −2 · x · 1/x = −2; son terim (−1/x)<sup>2</sup> = +1/x<sup>2</sup>." },
+      { s: "x<sup>2</sup> + 1/x<sup>2</sup> ifadesi (x + 1/x) ile nasıl yazılır?", c: ["(x + 1/x)<sup>2</sup> − 2", "(x + 1/x)<sup>2</sup> + 2", "(x + 1/x)<sup>2</sup>"], a: "(x + 1/x)<sup>2</sup> = x<sup>2</sup> + 2 + 1/x<sup>2</sup>; 2'yi çıkarınca x<sup>2</sup> + 1/x<sup>2</sup>." },
+      { s: "x<sup>2</sup> + 1/x<sup>2</sup> ifadesi (x − 1/x) ile nasıl yazılır?", c: ["(x − 1/x)<sup>2</sup> + 2", "(x − 1/x)<sup>2</sup> − 2", "(x − 1/x)<sup>2</sup>"], a: "(x − 1/x)<sup>2</sup> = x<sup>2</sup> − 2 + 1/x<sup>2</sup>; 2 ekleyince x<sup>2</sup> + 1/x<sup>2</sup>." },
+      { s: "x + 1/x = 3 ise x<sup>2</sup> + 1/x<sup>2</sup> kaçtır?", c: ["7", "9", "11"], a: "İki tarafın karesini al: x<sup>2</sup> + 2 + 1/x<sup>2</sup> = 9, x<sup>2</sup> + 1/x<sup>2</sup> = 7." },
+      { s: "x + 1/x = 4 ise x<sup>2</sup> + 1/x<sup>2</sup> kaçtır?", c: ["14", "16", "18"], a: "Karesi: x<sup>2</sup> + 2 + 1/x<sup>2</sup> = 16, sonuç 14." },
+      { s: "x − 1/x = 2 ise x<sup>2</sup> + 1/x<sup>2</sup> kaçtır?", c: ["6", "4", "2"], a: "Karesi: x<sup>2</sup> − 2 + 1/x<sup>2</sup> = 4, sonuç 6." },
+      { s: "x − 1/x = 3 ise x<sup>2</sup> + 1/x<sup>2</sup> kaçtır?", c: ["11", "9", "7"], a: "Karesi: x<sup>2</sup> − 2 + 1/x<sup>2</sup> = 9, sonuç 11." },
+      { s: "(x + 1/x)<sup>2</sup> − (x − 1/x)<sup>2</sup> kaçtır?", c: ["4", "2", "0"], a: "(x<sup>2</sup> + 2 + 1/x<sup>2</sup>) − (x<sup>2</sup> − 2 + 1/x<sup>2</sup>) = 4. (a + b)<sup>2</sup> − (a − b)<sup>2</sup> = 4ab ve ab = x · 1/x = 1." },
+      { s: "x<sup>2</sup> − 1/x<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 1/x)(x + 1/x)", "(x − 1/x)<sup>2</sup>", "(x + 1/x)<sup>2</sup>"], a: "İki kare farkı: x<sup>2</sup> − (1/x)<sup>2</sup>." },
+      { s: "a + b = 5 ve ab = 6 ise a<sup>2</sup> + b<sup>2</sup> kaçtır?", c: ["13", "25", "19"], a: "a<sup>2</sup> + b<sup>2</sup> = (a + b)<sup>2</sup> − 2ab = 25 − 12 = 13." },
+      { s: "a − b = 3 ve ab = 4 ise a<sup>2</sup> + b<sup>2</sup> kaçtır?", c: ["17", "9", "1"], a: "a<sup>2</sup> + b<sup>2</sup> = (a − b)<sup>2</sup> + 2ab = 9 + 8 = 17." },
+      { s: "a + b = 4 ve ab = 3 ise (a − b)<sup>2</sup> kaçtır?", c: ["4", "16", "10"], a: "(a − b)<sup>2</sup> = (a + b)<sup>2</sup> − 4ab = 16 − 12 = 4." }
     ]
   },
 
@@ -1853,6 +1867,8 @@ window.KK_YKS = {
     { k: "yks-carpan", s: "(x − 4)/(√x − 2) = √x − 2", d: false, n: "x − 4 = (√x − 2)(√x + 2): sonuç √x + 2" },
     { k: "yks-carpan", s: "(√3 + 1)<sup>2</sup> = 4", d: false, n: "Ortadaki 2√3 unutulmasın: 4 + 2√3" },
     { k: "yks-carpan", s: "x + y, x − y ifadesinin bir çarpanıdır.", d: false, n: "x − y = (√x − √y)(√x + √y); x + y çarpan değil" },
-    { k: "yks-carpan", s: "2 + √x, 4 − x ifadesinin bir çarpanıdır.", d: true }
+    { k: "yks-carpan", s: "2 + √x, 4 − x ifadesinin bir çarpanıdır.", d: true },
+    { k: "yks-carpan", s: "(x + 1/x)<sup>2</sup> = x<sup>2</sup> + 1/x<sup>2</sup>", d: false, n: "Ortadaki 2 · x · 1/x = 2 unutulmasın: x<sup>2</sup> + 2 + 1/x<sup>2</sup>" },
+    { k: "yks-carpan", s: "x + 1/x = 3 ise x<sup>2</sup> + 1/x<sup>2</sup> = 7'dir.", d: true }
   ]
 };
