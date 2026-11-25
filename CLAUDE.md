@@ -31,7 +31,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 |---|---|
 | `index.html` | Ana sayfa (özet): kısa kanal tanıtımı ve dört kutu — 📚 Dersler (sol üst; telefonda en üstte; ders bağlantıları ve video sayıları `#ana-dersler`, app.js `renderAnaDersler`), 🏛 Kampüsün İçinden, 🎮 Testler, ✍️ Makaleler ("Son yazı" bağlantısı elle yazılı: **yeni makale eklenince güncelle**); altta WhatsApp ve Birebir ders şeridi. Tanıtımın altında küçük 🌱 davet şeridi ("Yeni açıldık! Beğendiysen sınıf arkadaşlarınla paylaş." + 📤 Paylaş) |
 | `dersler.html` | Ders kartları (`#courses`, app.js `renderHome`): Calculus 1, 2, Çalışma Soruları ve "Yakında" kartı. Menüdeki "Dersler" buraya gider |
-| `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici. Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
+| `ders.html?liste=<id>` | Video oynatıcı, ders listesi, arama, PDF görüntüleyici, ✏️ Kendini test et (bkz. aşağıda). Tek videoya link: `ders.html?liste=calc1#v=<YouTube kimliği>` |
 | `iletisim.html` | Bilgi alma formu (öğrencinin e-posta uygulamasını açar, veri saklanmaz) ve Duyurular (WhatsApp) kartı |
 | `oyun.html` | Testler (menüde "Testler"; eski adı Calculus Oyunu). Üstte üç sekme: 🎓 Üniversite, 📘 YKS ve 🌍 Diller (İngilizce, Almanca, Fransızca, Japonca; son açılan sekme ve dil cihazda hatırlanır; `#yks` YKS'yi, `#ingilizce` İngilizce'yi, `#almanca` / `#fransizca` / `#japonca` o dili açar). Üniversite'de dört test türü, her biri kendi renkli şeridinde (🧭 Calculus'a Hazır mısın? mor, 📝 Sınava Hazır mısın? lacivert, 🎯 Konu Turları yeşil, ⚡ Doğru / Yanlış turuncu). Kayıt yok; puanlar sadece öğrencinin cihazında (`localStorage`, anahtar `kk-oyun-v1`) |
 | `canli.html` | 🔴 Canlı Yarışma (bkz. Oyun → Canlı Yarışma). Menüde yok; ana sayfadaki ve Testler'deki kırmızı şeritten (`data-canli-serit`) açılır. Şeritte, bekleme ekranında ve programdaki her yarışmanın yanında kalan süre dijital saat olarak (`00:00:00`, `.canli-saat`) her saniye güncellenir |
@@ -43,6 +43,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `assets/app.js`, `assets/style.css` | Site kodu ve görünüm |
 | `assets/pdfjs/` | PDF.js (PDF'leri sayfa içinde, telefonda da göstermek için) |
 | `data/videos.csv` | Tüm videolar ve PDF'leri |
+| `data/video-sorular/<ders id>.js` | ✏️ Kendini test et soruları (`window.KK_VS`, video kimliğine göre); şu an `yks-tyt.js` ve `yks-ayt.js` (boş) |
 | `data/sorular.js`, `data/dogru-yanlis.js`, `assets/oyun.js` | Oyunun soru bankası, Doğru/Yanlış ifadeleri ve kodu |
 | `assets/canli.js`, `assets/canli-takvim.js`, `assets/canli-qr.svg` | Canlı Yarışma kodu, yarışma takvimi ve şeridi, yayın ekranındaki QR kod (`https://kuzeykampuscalculus.com/canli.html`) |
 | `assets/kamp.js`, `assets/kamp-takvim.js` | Kamplar sayfasının kodu; kamp takvimi ve ana sayfa şeridi |
@@ -52,7 +53,8 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 | `pdf/<liste>/` | Sitedeki PDF dosyaları |
 
 ### `assets/config.js` içindeki önemli ayarlar
-- `dersler`: Sitedeki dersler. Şu an aktif: `calc1` (Calculus 1), `calc2` (Calculus 2), `calc1-soru` (Calculus Çalışma Soruları). `en-calc` "Yakında" olarak duruyor.
+- `dersler`: Sitedeki dersler. Şu an aktif: `calc1` (Calculus 1), `calc2` (Calculus 2), `calc1-soru` (Calculus Çalışma Soruları). `yks-tyt` (TYT Matematik), `yks-ayt` (AYT Matematik) ve `en-calc` "Yakında" olarak duruyor (YKS videoları gelince `aktif: true` ve `playlist`). `sorular: true` olan derste ders sayfası `data/video-sorular/<id>.js` dosyasını yükler.
+- `kendiniTest.gecme`: ✏️ Kendini test et'te yeşil ✓ için çözülmesi gereken soru sayısı (3; videoda daha az soru varsa hepsi).
 - `whatsappKanal`: WhatsApp duyuru kanalı linki. Boşsa sitedeki tüm kanal bağlantıları gizlenir.
 - `pdfIndirme`: `false` yapılırsa PDF'lerin yanındaki "⬇ İndir" düğmesi kalkar.
 - `whatsapp`: Birebir iletişim numarası. **Boş kalmalı** (kişisel numara gösterilmiyor).
@@ -65,6 +67,14 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - `pdf` biçimi: `Boş PDF=pdf/calc1/039-bos.pdf | Çözümlü PDF=pdf/calc1/039-cozumlu.pdf`. Etiket `=` işaretinden önce yazılır, birden fazla PDF `|` ile ayrılır. Boş bırakılırsa sitede "PDF'i yakında eklenecek" yazar.
 - PDF dosya adları: `pdf/<liste>/<sıra 3 hane>-<bos|cozumlu|pdf>.pdf`. Bölüm 2 çalışma sorularının 17 dersi ortak `pdf/calc1-soru/limit-calisma-sorulari.pdf` dosyasını kullanır.
 - İçerik: `calc1` 110 video, `calc2` 42 video, `calc1-soru` 93 video.
+
+## ✏️ Kendini test et (ders sayfası; şu an YKS dersleri için kuruldu, videolar henüz yok)
+- Her videonun altında (PDF kutusunun üstünde) `#kt` kutusu: o videonun kitaptaki ÇALIŞMA SORULARI'ndan **3 soru** (kullanıcı kararı: videoda 3 soru standart; kitabın 6 sorusunun hepsi PDF'te). Kolay, orta, zor birer soru seçilir; soru metni ve cevaplar Canva'daki ÇALIŞMA SORULARI ve CEVAPLAR sayfalarından aynen alınır (elle uydurulmaz; cevaplar hesaplanıp kontrol edilir, uyuşmazlık kullanıcıya sorulur).
+- Akış: Soru → öğrenci kâğıtta çözer → "Cevabı göster" (kalın cevap + gri kısa çözüm) → "✓ Çözdüm" / "✗ Çözemedim" → sonraki soru. Tur sonunda özet; çözülmeyenler "Kalan soruları yeniden dene" ile tekrar gelir; ders tamamsa "Sonraki derse geç". **Puan yok** (öğrenci kendisi değerlendiriyor). Videolar kilitlenmez.
+- Listede her videonun yanında işaret (`.kt-isaret`): boş gri daire = denenmedi, kırmızı "✗ 2/3" = denendi ama bitmedi, yeşil ✓ = `gecme` kadar soru çözüldü. Sayfa başlığının altında `#kt-ozet`: "✏️ Çalışma soruları: %42 çözüldü (84 / 200) · ✓ 12 ders tamam · ✗ 5 ders yarım" + çubuk. Sorusu olmayan videoda kutu ve işaret görünmez.
+- Kayıt sadece cihazda: `localStorage` → `kk-ders-v1` → `vs[video kimliği][soru no] = 1 | 0` (çözülen soru çözülmüş kalır). Soru dosyası sadece o dersin sayfası açılınca yüklenir (`?v=` app.js'in sürümünden).
+- Soru dosyası biçimi (`data/video-sorular/yks-ayt.js`): `"VIDEO_KIMLIGI": { kaynak: "Çalışma Soruları 1.1.1", sorular: [{ no: 2, s: "soru (HTML)", c: "cevap (HTML)", cozum: "kısa çözüm" }] }`; `no` kitaptaki soru numarası (kayıt bununla tutulur, sonradan değiştirme).
+- Yeni video eklenirken: kullanıcı YouTube linki + Canva dosyası verir → `videos.csv` satırı + PDF'ler + bu dosyaya 3 soru → ekran görüntüsüyle kullanıcıya gösterilir → onaydan sonra yayın.
 
 ## PDF'ler
 - Tüm PDF'ler sitenin içinde (`pdf/`). Sitede Google Drive linki kalmadı.

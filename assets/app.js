@@ -225,6 +225,24 @@
 
   // ---------- Ders sayfası ----------
 
+  // ✏️ Kendini test et: videoya bağlı çalışma soruları (data/video-sorular/<ders id>.js → window.KK_VS).
+  // Öğrenci soruyu kâğıtta çözer, cevaba bakar, "Çözdüm" ya da "Çözemedim" der. Puan yok.
+  // Kayıt sadece cihazda: localStorage "kk-ders-v1" → vs[video kimliği][soru no] = 1 çözdü | 0 çözemedi.
+  var KT_DEPO = "kk-ders-v1";
+  var SURUM = (function () {
+    var sc = document.currentScript, m = sc && /[?&]v=(\w+)/.exec(sc.src);
+    return m ? m[1] : String(Date.now());
+  })();
+  function ktOku() { try { return JSON.parse(localStorage.getItem(KT_DEPO)) || {}; } catch (e) { return {}; } }
+  function ktYaz(k) { try { localStorage.setItem(KT_DEPO, JSON.stringify(k)); } catch (e) {} }
+  function scriptYukle(src) {
+    return new Promise(function (ok) {
+      var el = document.createElement("script");
+      el.src = src; el.onload = ok; el.onerror = ok;
+      document.head.appendChild(el);
+    });
+  }
+
   function renderCourse() {
     var params = new URLSearchParams(location.search);
     var dersId = params.get("liste") || "calc1";
@@ -240,7 +258,9 @@
     document.getElementById("course-title").textContent = ders.ad;
     document.getElementById("course-desc").textContent = ders.aciklama;
 
-    loadVideos().then(function (all) {
+    var soruYukle = ders.sorular ? scriptYukle("data/video-sorular/" + ders.id + ".js?v=" + SURUM) : Promise.resolve();
+    Promise.all([loadVideos(), soruYukle]).then(function (sonuc) {
+      var all = sonuc[0];
       var videos = all
         .filter(function (v) { return v.liste === ders.id; })
         .sort(function (a, b) { return a.sira - b.sira; });
@@ -272,9 +292,119 @@
           shown++;
           return '<li><button type="button" data-i="' + i + '"' + (i === current ? ' class="active"' : "") + ">" +
             '<span class="num">' + (i + 1) + "</span><span>" + esc(v.baslik) +
-            (v.pdfs.length ? '<span class="pdf-dot">PDF</span>' : "") + "</span></button></li>";
+            (v.pdfs.length ? '<span class="pdf-dot">PDF</span>' : "") + "</span>" + ktIsaret(v) + "</button></li>";
         }).join("");
         countEl.textContent = q ? shown + " sonuç" : videos.length + " video";
+      }
+
+      // ---- ✏️ Kendini test et ----
+      var KT = window.KK_VS || {}, GECME = (CFG.kendiniTest && CFG.kendiniTest.gecme) || 3;
+      var ktEl = document.getElementById("kt"), ozetEl = document.getElementById("kt-ozet");
+      var kt = null;   // süren tur: { v, deste, i, cozdu, acik }
+      function ktSorular(v) { return (KT[v.id] && KT[v.id].sorular) || []; }
+      function ktDurum(v) {
+        var sor = ktSorular(v), kayit = (ktOku().vs || {})[v.id] || {}, c = 0, d = 0;
+        sor.forEach(function (q) { if (kayit[q.no] === 1) c++; if (kayit[q.no] != null) d++; });
+        var hedef = Math.min(GECME, sor.length);
+        return { n: sor.length, cozulen: c, denendi: d > 0, hedef: hedef, tamam: sor.length > 0 && c >= hedef, kayit: kayit };
+      }
+      function ktIsaret(v) {
+        var d = ktDurum(v);
+        if (!d.n) return "";
+        if (d.tamam) return '<span class="kt-isaret tamam" title="Ders tamam: soruları çözdün" aria-label="Ders tamam">✓</span>';
+        if (d.denendi) return '<span class="kt-isaret yarim" title="Sorular bitmedi: ' + d.cozulen + " / " + d.hedef + '" aria-label="Sorular bitmedi, ' + d.cozulen + " / " + d.hedef + '">✗ ' + d.cozulen + "/" + d.hedef + "</span>";
+        return '<span class="kt-isaret bos" title="' + d.n + ' soru seni bekliyor" aria-label="Sorular denenmedi"></span>';
+      }
+      function ktOzet() {
+        var top = 0, coz = 0, tamam = 0, yarim = 0;
+        videos.forEach(function (v) {
+          var d = ktDurum(v);
+          if (!d.n) return;
+          top += d.n; coz += d.cozulen;
+          if (d.tamam) tamam++; else if (d.denendi) yarim++;
+        });
+        if (!top) { ozetEl.hidden = true; return; }
+        var yuzde = Math.round(coz * 100 / top);
+        ozetEl.hidden = false;
+        ozetEl.innerHTML = '<div class="kt-ozet-yazi"><strong>✏️ Çalışma soruları: %' + yuzde + " çözüldü</strong> <span>(" + coz + " / " + top + ")" +
+          (tamam ? ' · <b class="kt-yesil">✓ ' + tamam + " ders tamam</b>" : "") + (yarim ? ' · <b class="kt-kirmizi">✗ ' + yarim + " ders yarım</b>" : "") + "</span></div>" +
+          '<div class="kt-cubuk" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + yuzde + '"><div style="width:' + yuzde + '%"></div></div>';
+      }
+      function ktGiris(v) {
+        kt = null;
+        var d = ktDurum(v);
+        if (!d.n) { ktEl.hidden = true; ktEl.innerHTML = ""; return; }
+        var kalan = ktSorular(v).filter(function (q) { return d.kayit[q.no] !== 1; }).length;
+        var hedefYazi = d.hedef === d.n ? (d.n === 1 ? "Soruyu" : d.n + " sorunun hepsini") : d.n + " sorudan " + d.hedef + " tanesini";
+        ktEl.hidden = false;
+        ktEl.className = "kt" + (d.tamam ? " tamam" : "");
+        ktEl.innerHTML = '<div class="kt-bas"><h3>✏️ Kendini test et</h3>' + ktIsaret(v) + "</div>" +
+          (d.tamam
+            ? "<p>🟢 <strong>Bu ders tamam!</strong> " + d.cozulen + " / " + d.n + " soruyu çözdün." + (kalan ? " İstersen kalan " + kalan + " soruyu da çöz." : "") + "</p>"
+            : "<p>Videoyu izledikten sonra kitaptaki çalışma sorularından " + d.n + " soruyu kâğıtta çöz" +
+              (KT[v.id] && KT[v.id].kaynak ? " (" + esc(KT[v.id].kaynak) + ")" : "") + ". " +
+              hedefYazi + " çözünce bu ders yeşil ✓ olur.</p>" + (d.denendi ? '<p class="kt-durum">Şu ana kadar ' + d.cozulen + " / " + d.n + " soru çözdün.</p>" : "")) +
+          '<div class="kt-dugmeler"><button type="button" class="btn primary" data-kt="basla">' +
+          (kalan ? (d.denendi ? "Kalan " + kalan + " soruyu çöz →" : "Teste başla →") : "🔁 Yeniden çöz") + "</button></div>";
+        ktEl.querySelector('[data-kt="basla"]').addEventListener("click", function () { ktBasla(v); });
+      }
+      function ktBasla(v) {
+        var d = ktDurum(v), sor = ktSorular(v);
+        var kalan = sor.filter(function (q) { return d.kayit[q.no] !== 1; });
+        kt = { v: v, deste: kalan.length ? kalan : sor.slice(), i: 0, cozdu: 0, onceTamam: d.tamam };
+        ktSoru();
+      }
+      function ktSoru() {
+        var q = kt.deste[kt.i], kaynak = (KT[kt.v.id] && KT[kt.v.id].kaynak) || "";
+        ktEl.innerHTML = '<div class="kt-bas"><h3>✏️ Soru ' + (kt.i + 1) + " / " + kt.deste.length + "</h3>" +
+          '<span class="kt-kaynak">' + esc(kaynak) + (q.no ? " · no. " + q.no : "") + "</span></div>" +
+          '<div class="kt-soru">' + q.s + "</div>" +
+          '<p class="kt-ipucu">Kâğıtta çöz, sonra cevaba bak.</p>' +
+          '<div class="kt-dugmeler"><button type="button" class="btn primary" data-kt="goster">Cevabı göster</button></div>';
+        ktEl.querySelector('[data-kt="goster"]').addEventListener("click", ktCevap);
+        ktEl.querySelector('[data-kt="goster"]').focus({ preventScroll: true });
+      }
+      function ktCevap() {
+        var q = kt.deste[kt.i];
+        var dug = ktEl.querySelector(".kt-dugmeler");
+        ktEl.querySelector(".kt-ipucu").remove();
+        dug.insertAdjacentHTML("beforebegin", '<div class="kt-cevap"><div>Cevap: <strong>' + q.c + "</strong></div>" +
+          (q.cozum ? '<div class="kt-cozum">' + q.cozum + "</div>" : "") + "</div>" + '<p class="kt-soru-alt">Sen de bunu buldun mu?</p>');
+        dug.innerHTML = '<button type="button" class="btn kt-evet" data-kt="evet">✓ Çözdüm</button><button type="button" class="btn kt-hayir" data-kt="hayir">✗ Çözemedim</button>';
+        dug.querySelector('[data-kt="evet"]').addEventListener("click", function () { ktIsle(true); });
+        dug.querySelector('[data-kt="hayir"]').addEventListener("click", function () { ktIsle(false); });
+        dug.querySelector('[data-kt="evet"]').focus({ preventScroll: true });
+      }
+      function ktIsle(cozdu) {
+        var q = kt.deste[kt.i], k = ktOku();
+        k.vs = k.vs || {};
+        var vk = k.vs[kt.v.id] = k.vs[kt.v.id] || {};
+        vk[q.no] = cozdu || vk[q.no] === 1 ? 1 : 0;   // çözülmüş soru çözülmüş kalır
+        ktYaz(k);
+        if (cozdu) kt.cozdu++;
+        drawList(); ktOzet();
+        kt.i++;
+        if (kt.i < kt.deste.length) ktSoru(); else ktSon();
+      }
+      function ktSon() {
+        var v = kt.v, d = ktDurum(v), m = kt.deste.length, yeniTamam = d.tamam && !kt.onceTamam;
+        var sonraki = current < videos.length - 1;
+        var pdfVar = v.pdfs.length > 0;
+        ktEl.className = "kt" + (d.tamam ? " tamam" : "");
+        ktEl.innerHTML = '<div class="kt-bas"><h3>' + (yeniTamam ? "🟢 Tebrikler, bu ders tamam!" : d.tamam ? "🟢 Bu ders tamam" : "✏️ Tur bitti") + "</h3>" + ktIsaret(v) + "</div>" +
+          "<p>Bu turda " + m + " sorudan <strong>" + kt.cozdu + "</strong> tanesini çözdün. Toplam: " + d.cozulen + " / " + d.n + ".</p>" +
+          (d.tamam ? "" : '<p class="kt-durum">Çözemediğin sorular için videonun ilgili kısmını tekrar izle, sonra yeniden dene. Ders, ' +
+            (d.hedef === d.n ? "soruların hepsini" : d.hedef + " soruyu") + " çözünce yeşil ✓ olur.</p>") +
+          (pdfVar ? '<p class="kt-durum">Daha fazla pratik istersen bütün çalışma soruları PDF\'te.</p>' : "") +
+          '<div class="kt-dugmeler">' +
+          (d.tamam && sonraki ? '<button type="button" class="btn primary" data-kt="sonraki">Sonraki derse geç →</button>' : "") +
+          (!d.tamam ? '<button type="button" class="btn primary" data-kt="tekrar">Kalan soruları yeniden dene</button>' : "") +
+          '<button type="button" class="btn" data-kt="kapat">Kapat</button></div>';
+        var b;
+        if ((b = ktEl.querySelector('[data-kt="sonraki"]'))) b.addEventListener("click", function () { select(current + 1, { scroll: true }); });
+        if ((b = ktEl.querySelector('[data-kt="tekrar"]'))) b.addEventListener("click", function () { ktBasla(v); });
+        ktEl.querySelector('[data-kt="kapat"]').addEventListener("click", function () { ktGiris(v); });
+        if (yeniTamam && window.matchMedia && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) ktEl.classList.add("kutla");
       }
 
       function showPdf(v, k) {
@@ -319,6 +449,7 @@
         document.getElementById("next").disabled = current === videos.length - 1;
         document.getElementById("yt").href = "https://www.youtube.com/watch?v=" + v.id;
         showPdf(v, 0);
+        ktGiris(v);
         if (!opts || !opts.fromHash) history.replaceState(null, "", "#v=" + v.id);
         drawList();
         if (opts && opts.scroll) window.scrollTo({ top: 0, behavior: "smooth" });
@@ -333,6 +464,7 @@
       document.getElementById("next").addEventListener("click", function () { select(current + 1); });
       window.addEventListener("hashchange", function () { select(hashIndex(), { fromHash: true }); });
 
+      ktOzet();
       select(hashIndex(), { fromHash: true });
     });
   }

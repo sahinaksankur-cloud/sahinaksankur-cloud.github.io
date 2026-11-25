@@ -60,6 +60,10 @@ window.KK_CONFIG = {
     iptal: []
   },
 
+  // ✏️ Kendini test et (ders sayfası): videonun altındaki çalışma soruları (data/video-sorular/<ders id>.js).
+  // Öğrenci bu kadar soruyu çözünce videonun yanında yeşil ✓ yanar (videoda daha az soru varsa hepsi).
+  kendiniTest: { gecme: 3 },
+
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.
   dersler: [
     {
@@ -89,6 +93,26 @@ window.KK_CONFIG = {
       playlist: "PLQMBWHXZe7fn-pXsh_1DtA5rli_-DYcMD",
       dil: "tr",
       aktif: true
+    },
+    {
+      id: "yks-tyt",
+      ad: "TYT Matematik",
+      kisaAd: "TYT",
+      aciklama: "Temel kavramlardan başlayarak TYT matematik konu anlatımı. Her dersin altında ✏️ Kendini test et: kitaptaki çalışma sorularından 3 soru.",
+      playlist: "",
+      dil: "tr",
+      sorular: true,
+      aktif: false
+    },
+    {
+      id: "yks-ayt",
+      ad: "AYT Matematik",
+      kisaAd: "AYT",
+      aciklama: "Fonksiyonlardan başlayarak AYT matematik konu anlatımı. Her dersin altında ✏️ Kendini test et: kitaptaki çalışma sorularından 3 soru.",
+      playlist: "",
+      dil: "tr",
+      sorular: true,
+      aktif: false
     },
     {
       id: "en-calc",

@@ -921,3 +921,38 @@ body.calisiyor .canli-hatirlat { display: none !important; }
 .kamp-kart.gece { border-top-color: #3b3f8f; }
 .kamp-kart.gece.simdi { outline-color: #3b3f8f; }
 .kamp-devam .btn { margin-top: 8px; }
+
+/* ✏️ Kendini test et (ders sayfası) */
+.list li button { grid-template-columns: 34px 1fr auto; }
+.kt-isaret { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; margin-top: 1px; }
+.kt-isaret.tamam { background: #2e8b57; color: #fff; }
+.kt-isaret.yarim { background: #fbe3e1; color: #b3261e; border: 1px solid #e8a39d; }
+.kt-isaret.bos { border: 2px solid var(--border); background: transparent; width: 22px; min-width: 22px; padding: 0; }
+.kt { background: var(--surface); border: 2px solid var(--accent); border-radius: var(--radius); padding: 16px 18px; margin: 0 0 20px; }
+.kt.tamam { border-color: #2e8b57; }
+.kt.kutla { animation: kt-kutla 0.9s ease-out; }
+@keyframes kt-kutla { 0% { box-shadow: 0 0 0 0 rgba(46, 139, 87, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(46, 139, 87, 0); } }
+.kt-bas { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.kt-bas h3 { margin: 0; font-size: 1.1rem; }
+.kt-kaynak { color: var(--muted); font-size: 0.85rem; }
+.kt p { margin: 0 0 10px; line-height: 1.5; }
+.kt-durum { color: var(--muted); font-size: 0.92rem; }
+.kt-soru { font-size: 1.15rem; line-height: 1.6; margin: 6px 0 12px; }
+.kt-ipucu, .kt-soru-alt { color: var(--muted); font-size: 0.9rem; }
+.kt-cevap { background: var(--surface-2); border-radius: 10px; padding: 10px 14px; margin: 0 0 10px; font-size: 1.05rem; }
+.kt-cozum { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+.kt-dugmeler { display: flex; gap: 8px; flex-wrap: wrap; }
+.kt-dugmeler .kt-evet { background: #2e8b57; border-color: #2e8b57; color: #fff; }
+.kt-dugmeler .kt-hayir { background: transparent; border-color: #b3261e; color: #b3261e; }
+.kt-ozet { margin-top: 12px; max-width: 640px; }
+.kt-ozet-yazi { font-size: 0.92rem; margin-bottom: 6px; }
+.kt-ozet-yazi span { color: var(--muted); }
+.kt-yesil { color: #2e8b57; }
+.kt-kirmizi { color: #b3261e; }
+.kt-cubuk { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.kt-cubuk div { height: 100%; background: #2e8b57; border-radius: 4px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .kt-isaret.yarim { background: #3b1d1b; color: #f2a59f; border-color: #6e2f2a; }
+  :root:not([data-theme="light"]) .kt-dugmeler .kt-hayir, :root:not([data-theme="light"]) .kt-kirmizi { color: #f2a59f; border-color: #f2a59f; }
+  :root:not([data-theme="light"]) .kt-yesil { color: #6fcf97; }
+}
