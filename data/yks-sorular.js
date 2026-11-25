@@ -28,7 +28,8 @@ window.KK_YKS = {
     { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" },
     { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 },
     { id: "yks-mutlak", ad: "Mutlak Değer", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-carpan", ad: "Çarpanlara Ayırma", ust: "Cebir", sinav: "TYT", sinif: 9 }
+    { id: "yks-carpan", ad: "Çarpanlara Ayırma", ust: "Cebir", sinav: "TYT", sinif: 9 },
+    { id: "yks-oran", ad: "Oran – Orantı", ust: "Oran – Orantı", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -1549,6 +1550,39 @@ window.KK_YKS = {
       { s: "(x<sup>2</sup> − 4)/(x<sup>2</sup> + 4x + 4) ifadesinin sadeleşmiş hâli hangisidir?", c: ["(x − 2)/(x + 2)", "(x + 2)/(x − 2)", "−1"], a: "(x − 2)(x + 2) / (x + 2)<sup>2</sup>: bir (x + 2) sadeleşir." },
       { s: "(x − 5)/(5 − x) ifadesinin eşiti hangisidir?", c: ["−1", "1", "0"], a: "5 − x = −(x − 5): sonuç −1." },
       { s: "(x + 3)/3 ifadesi için hangisi doğrudur?", c: ["Sadeleşmez", "x'e eşittir", "x + 1'e eşittir"], a: "Toplamda sadeleştirme yapılmaz: 3, x + 3'ün çarpanı değil, terimi. (x = 3 için 6/3 = 2, x + 1 = 4.)" }
+    ],
+    // Oran – Orantı (kullanıcı kararı): oran ile orantı farkı, oranda birim aynı, orantı katsayısı k'nın amacı (çok bilinmeyeni
+    // tek bilinmeyene indirmek), ikili ve üçlü orantıda k, "katı" soruları (3a = 2b ise a/b = 2/3), günlük hayattan kısa sorular. Para/fiyat yok.
+    "yks-oran": [
+      { s: "Oran nedir?", c: ["Aynı birimdeki iki çokluğun bölümü", "İki oranın eşitliği", "İki sayının farkı"], a: "Oran, aynı birimle ölçülen iki çokluğun bölümüdür: a/b." },
+      { s: "Orantı nedir?", c: ["İki oranın eşitliği", "İki çokluğun bölümü", "İki sayının çarpımı"], a: "İki oran birbirine eşitlenirse orantı olur: a/b = c/d." },
+      { s: "a'nın b'ye oranı nasıl yazılır?", c: ["a/b", "b/a", "a · b"], a: "“a'nın b'ye oranı”: a üstte, b altta." },
+      { s: "a'nın b'ye oranı 2/3 ne demektir?", c: ["a'nın 2 parçasına karşılık b'nin 3 parçası var", "a = 2 ve b = 3'tür", "a, b'den 1 eksiktir"], a: "a/b = 2/3: a = 2k, b = 3k. a = 4, b = 6 de olabilir; a = 2, b = 3 olmak zorunda değil." },
+      { s: "Oran yazılırken iki çokluğun birimi için hangisi doğrudur?", c: ["Aynı olmalıdır", "Farklı olmalıdır", "Önemli değildir"], a: "Önce aynı birime çevrilir: 2 m ile 50 cm oranlanacaksa 200 cm / 50 cm." },
+      { s: "2 m'nin 50 cm'ye oranı kaçtır?", c: ["4", "1/25", "2/50"], a: "Aynı birime çevir: 200 cm / 50 cm = 4." },
+      { s: "1 saatin 20 dakikaya oranı kaçtır?", c: ["3", "1/20", "20"], a: "1 saat = 60 dakika: 60/20 = 3." },
+      { s: "3/4 = 6/8 eşitliğine ne denir?", c: ["Orantı", "Oran", "Çarpım"], a: "İki oranın eşitliği: orantı." },
+      { s: "a/b = c/d ise hangisi doğrudur?", c: ["a · d = b · c", "a · c = b · d", "a + d = b + c"], a: "İçler çarpımı dışlar çarpımına eşittir: a · d = b · c." },
+      { s: "Oran – orantıda orantı katsayısı (k) kullanmanın amacı nedir?", c: ["Bilinmeyenleri tek bilinmeyene indirmek", "Sonucu büyütmek", "Birimleri değiştirmek"], a: "a/2 = b/3 = k derken a = 2k, b = 3k olur: iki bilinmeyen yerine tek bilinmeyen k kalır." },
+      { s: "a/3 = b/2 = k ise a ve b nasıl yazılır?", c: ["a = 3k, b = 2k", "a = k/3, b = k/2", "a = 2k, b = 3k"], a: "a/3 = k ise a = 3k; b/2 = k ise b = 2k." },
+      { s: "a/3 = b/2 ise a/b kaçtır?", c: ["3/2", "2/3", "6"], a: "a = 3k, b = 2k: a/b = 3k/2k = 3/2." },
+      { s: "a/5 = b/4 ise a/b kaçtır?", c: ["5/4", "4/5", "20"], a: "a = 5k, b = 4k: a/b = 5/4." },
+      { s: "a/2 = b/3 = c/4 ise a, b ve c nasıl yazılır?", c: ["a = 2k, b = 3k, c = 4k", "a = k/2, b = k/3, c = k/4", "a = 4k, b = 3k, c = 2k"], a: "Üçlü orantıda da hepsi aynı k ile yazılır: üç bilinmeyen tek bilinmeyene iner." },
+      { s: "a/2 = b/3 = c/4 ise c/a kaçtır?", c: ["2", "1/2", "4"], a: "c = 4k, a = 2k: c/a = 2." },
+      { s: "a/2 = b/3 = c/4 ve a + b + c = 18 ise k kaçtır?", c: ["2", "18", "9"], a: "2k + 3k + 4k = 9k = 18, k = 2. Üç bilinmeyen yerine tek bilinmeyen." },
+      { s: "a/3 = b/5 ve a + b = 24 ise a kaçtır?", c: ["9", "15", "3"], a: "a = 3k, b = 5k: 8k = 24, k = 3, a = 9." },
+      { s: "a, b'nin 3 katı ise a/b kaçtır?", c: ["3", "1/3", "3b"], a: "a = 3b: a/b = 3." },
+      { s: "a, b'nin yarısı ise a/b kaçtır?", c: ["1/2", "2", "b/2"], a: "a = b/2: a/b = 1/2." },
+      { s: "a'nın 3 katı b'nin 2 katına eşitse a/b kaçtır?", c: ["2/3", "3/2", "6"], a: "3a = 2b: a/b = 2/3. Katsayılar çapraz yer değiştirir; az olanın katı fazla." },
+      { s: "3 tane a ile 4 tane b aynı ise a/b kaçtır?", c: ["4/3", "3/4", "12"], a: "3a = 4b: a/b = 4/3. 3 tanesi 4 taneye eşitse a daha büyüktür." },
+      { s: "2a = 5b ise a/b kaçtır?", c: ["5/2", "2/5", "10"], a: "a/b = 5/2." },
+      { s: "4a = 6b ise a/b kaçtır?", c: ["3/2", "2/3", "24"], a: "a/b = 6/4 = 3/2." },
+      { s: "Bir çocuğun cevizlerinin 3 katı, fındıklarının 6 katına eşittir. Cevizlerin fındıklara oranı kaçtır?", c: ["2", "1/2", "18"], a: "3c = 6f: c/f = 6/3 = 2. Ceviz, fındığın 2 katı." },
+      { s: "Ali'nin bilyelerinin 2 katı, Ayşe'nin bilyelerinin 5 katına eşittir. Ali'nin bilyelerinin Ayşe'ninkilere oranı kaçtır?", c: ["5/2", "2/5", "10"], a: "2A = 5Y: A/Y = 5/2." },
+      { s: "Bir sınıfta kızların erkeklere oranı 3/4'tür. Kızlar 3k ise erkekler nasıl yazılır?", c: ["4k", "3k", "k/4"], a: "Kız/erkek = 3k/4k." },
+      { s: "Bir sınıfta kızların erkeklere oranı 3/4'tür. Sınıf 28 kişi ise kaç kız vardır?", c: ["12", "16", "21"], a: "Kız 3k, erkek 4k: 7k = 28, k = 4, kız = 12." },
+      { s: "Bir tarifte unun şekere oranı 5/2'dir. 10 bardak un kullanılırsa kaç bardak şeker gerekir?", c: ["4", "25", "5"], a: "Un 5k = 10 ise k = 2; şeker 2k = 4." },
+      { s: "Bir haritada 1 cm, 5 km'yi gösteriyor. Haritada 3 cm olan yol gerçekte kaç km'dir?", c: ["15", "8", "5/3"], a: "Oran aynı kalır: 3 · 5 = 15 km." }
     ]
   },
 
@@ -1895,6 +1929,12 @@ window.KK_YKS = {
     { k: "yks-carpan", s: "(x + 3)/3 = x + 1", d: false, n: "Toplamda sadeleştirme yapılmaz; 3, x + 3'ün çarpanı değil" },
     { k: "yks-carpan", s: "x ≠ 3 için (x<sup>2</sup> − 9)/(x − 3) = x + 3", d: true },
     { k: "yks-carpan", s: "x<sup>2</sup> + 5x + 6 = (x + 2)(x + 3)", d: true },
-    { k: "yks-carpan", s: "(x − 5)/(5 − x) = 1", d: false, n: "5 − x = −(x − 5): sonuç −1" }
+    { k: "yks-carpan", s: "(x − 5)/(5 − x) = 1", d: false, n: "5 − x = −(x − 5): sonuç −1" },
+    { k: "yks-oran", s: "Oran, iki oranın eşitliğidir.", d: false, n: "Bu orantıdır; oran iki çokluğun bölümüdür" },
+    { k: "yks-oran", s: "a'nın b'ye oranı 2/3 ise a = 2 ve b = 3 olmak zorundadır.", d: false, n: "a = 2k, b = 3k: 4 ve 6, 10 ve 15 de olabilir" },
+    { k: "yks-oran", s: "Oranlanan iki çokluğun birimi aynı olmalıdır.", d: true },
+    { k: "yks-oran", s: "3a = 2b ise a/b = 3/2'dir.", d: false, n: "a/b = 2/3: katsayılar çapraz yer değiştirir" },
+    { k: "yks-oran", s: "a/3 = b/2 ise a = 3k ve b = 2k yazılabilir.", d: true },
+    { k: "yks-oran", s: "a/b = c/d ise a · d = b · c'dir.", d: true }
   ]
 };
