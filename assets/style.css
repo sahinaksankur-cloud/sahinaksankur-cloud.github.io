@@ -816,3 +816,102 @@ p.hata-satir { margin: 0; }
 .kk-okunus { display: block; font-size: 1rem; color: var(--muted); margin-top: 4px; }
 .kelime-kart [lang="ja"] { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif; }
 .kelime-kart [hidden] { display: none !important; }
+
+/* 🏕 Kuzey Kampüs Kampları (kamp.html, assets/kamp.js, assets/kamp-takvim.js) ve ana sayfa şeridi */
+.kamp-serit[hidden] { display: none !important; }
+.kamp-serit {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 18px; padding: 12px 16px;
+  background: var(--surface); border: 2px solid #2e7d5b; border-radius: var(--radius); color: var(--text); box-shadow: var(--shadow);
+}
+.kamp-serit:hover { text-decoration: none; border-color: #256b4d; }
+.kamp-serit-ikon { font-size: 1.4rem; flex: none; }
+.kamp-serit-durum { font-weight: 700; color: #2e7d5b; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.kamp-serit.simdi { background: #2e7d5b; border-color: #2e7d5b; color: #fff; }
+.kamp-serit.simdi .canli-serit-program, .kamp-serit.simdi .kamp-serit-durum { color: #fff; }
+.kamp-saat { color: #7ee0a8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kamp-serit-durum { color: #7ee0a8; } }
+
+.kamp { padding-bottom: 48px; }
+.kamp-baslik { max-width: 760px; margin: 28px auto 18px; text-align: center; }
+.kamp-baslik h1 { margin: 0 0 4px; font-family: var(--serif); font-size: clamp(1.6rem, 5vw, 2.3rem); line-height: 1.2; }
+.kamp-alt { margin: 0 0 10px; font-weight: 700; color: #2e7d5b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kamp-alt { color: #7ee0a8; } }
+.kamp-baslik p:last-child { margin: 0; color: var(--muted); line-height: 1.55; }
+.kamp-devam[hidden] { display: none; }
+.kamp-devam { max-width: 760px; margin: 0 auto 18px; padding: 12px 16px; border-radius: 12px; background: rgba(46, 125, 91, 0.12); font-weight: 600; text-align: center; }
+.kamp-bolum-baslik { font-size: 1.15rem; margin: 8px 0 10px; }
+.kamp-kartlar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 860px) { .kamp-kartlar { grid-template-columns: minmax(0, 1fr); } }
+.kamp-kart { background: var(--surface); border: 1px solid var(--border); border-top: 4px solid #2e7d5b; border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
+.kamp-kart.simdi { outline: 2px solid #2e7d5b; }
+.kamp-kart.bitti { opacity: 0.75; }
+.kamp-kart h3 { margin: 0; font-size: 1.1rem; }
+.kamp-kart p { margin: 0; }
+.kamp-saatler { color: var(--muted); font-size: 0.92rem; }
+.kamp-not { font-size: 0.85rem; color: #8a5a00; font-weight: 600; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kamp-not { color: #f5b971; } }
+.kamp-durum { font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.kamp-kart .btn { justify-self: start; }
+.kamp-kart details { font-size: 0.9rem; color: var(--muted); }
+.kamp-kart summary { cursor: pointer; }
+.kamp-plan { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 3px; }
+.kamp-plan span { font-variant-numeric: tabular-nums; font-weight: 600; display: inline-block; min-width: 7.2em; }
+.kamp-plan .su-an { color: var(--text); font-weight: 700; }
+.kamp-kucuk { margin: 8px 0 0; color: var(--muted); font-size: 0.88rem; }
+.kamp-ikili { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+@media (max-width: 760px) { .kamp-ikili { grid-template-columns: minmax(0, 1fr); } }
+.kamp-kutu { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 10px; align-content: start; margin-top: 16px; }
+.kamp-ikili .kamp-kutu { margin-top: 0; }
+.kamp-kutu h2 { margin: 0; font-size: 1.15rem; }
+.kamp-kutu p { margin: 0; line-height: 1.5; }
+.kamp-sureler, .kamp-sesler { display: flex; gap: 8px; flex-wrap: wrap; }
+.kamp-sure, .kamp-sesler button { font: inherit; padding: 8px 16px; border-radius: 999px; border: 2px solid var(--border); background: var(--surface-2); color: var(--text); cursor: pointer; font-weight: 600; }
+.kamp-sure.secili, .kamp-sesler button.secili { border-color: #2e7d5b; background: #2e7d5b; color: #fff; }
+.kamp-etiket { font-weight: 600; font-size: 0.92rem; }
+.kamp-secim, .kamp-hedef-kutu input { font: inherit; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); width: 100%; max-width: 100%; }
+.kamp-kutu .btn.big { justify-self: start; }
+.rapor-sayilar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .rapor-sayilar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.rapor-sayi { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; display: grid; gap: 2px; }
+.rapor-sayi strong { font-size: 1.15rem; }
+.rapor-sayi span { color: var(--muted); font-size: 0.85rem; }
+.rapor-grafik { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; margin-top: 6px; }
+.rapor-gun { display: grid; gap: 4px; justify-items: center; font-size: 0.78rem; color: var(--muted); }
+.rapor-deger { min-height: 1.2em; font-size: 0.72rem; white-space: nowrap; }
+.rapor-sutun { width: 100%; max-width: 44px; height: 110px; background: var(--surface-2); border-radius: 8px; display: flex; align-items: flex-end; overflow: hidden; }
+.rapor-sutun div { width: 100%; background: #2e7d5b; border-radius: 8px 8px 0 0; min-height: 0; }
+.kamp-rapor h3 { margin: 8px 0 4px; font-size: 1rem; }
+.rapor-hedef { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.rapor-hedef span { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 6px; }
+
+/* Çalışma ekranı: sade, dikkat dağıtmayan */
+#kamp-calis, #kamp-isinma { max-width: 720px; margin: 0 auto; padding-top: 24px; }
+.calis-kart { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 30px 22px; display: grid; gap: 12px; justify-items: center; text-align: center; transition: background 0.6s; }
+.calis-kart.faz-mola { background: rgba(201, 106, 16, 0.08); }
+.calis-kart.faz-donus { background: rgba(192, 57, 43, 0.10); border-color: #c0392b; }
+.calis-kart.haber { background: rgba(46, 125, 91, 0.16); }
+.calis-etiket { margin: 0; color: var(--muted); font-weight: 600; font-size: 0.92rem; }
+.calis-faz { margin: 0; font-family: var(--serif); font-size: clamp(1.6rem, 6vw, 2.3rem); }
+.calis-sure { margin: 0; color: var(--muted); font-size: 1rem; min-height: 1.4em; }
+.calis-sure.buyuk { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.calis-bar[hidden] { display: none; }
+.calis-bar { width: 100%; max-width: 420px; height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.calis-bar div { height: 100%; background: #2e7d5b; opacity: 0.6; transition: width 1s linear; }
+.faz-mola .calis-bar div { background: #c96a10; }
+.calis-mesaj { margin: 0; color: var(--muted); max-width: 480px; line-height: 1.5; }
+.calis-dugmeler { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.calis-dugmeler:empty { display: none; }
+.calis-hedef[hidden] { display: none; }
+.calis-hedef { margin: 0; font-weight: 600; }
+.calis-ayarlar { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 14px; }
+.calis-ayar { display: grid; gap: 8px; }
+.calis-ayar input[type="range"] { width: 100%; max-width: 320px; accent-color: #2e7d5b; }
+.kamp-onay { display: flex; gap: 8px; align-items: flex-start; font-size: 0.95rem; }
+.kamp-onay input { margin-top: 3px; accent-color: #2e7d5b; }
+.calis-ayarlar .btn { justify-self: start; }
+body.calisiyor .canli-hatirlat { display: none !important; }
+.ekran-panel { text-align: center; justify-items: center; }
+.ekran-panel h3 { margin: 0; font-size: 1.3rem; }
+.ekran-panel p { margin: 0; line-height: 1.5; }
+.ekran-ikon { font-size: 2.6rem; }
+#kamp-isinma .oyun-kart + .oyun-kart { margin-top: 0; }

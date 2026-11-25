@@ -39,6 +39,20 @@ window.KK_CONFIG = {
     // İngilizce yarışmasının soruları data/ingilizce.js'teki bütün kelime gruplarından gelir (A1–C1 karışık; Eş / Zıt hariç)
   },
 
+  // 🏕 Kuzey Kampüs Kampları (kamp.html): birlikte ders çalışma kampları. Herkes aynı saatte çalışır, aynı saatte molaya çıkar.
+  // Saatler Türkiye saatidir. duzen: [ders dakikası, ardından mola dakikası] sırayla (son molanın sonunda kamp biter).
+  kamplar: {
+    aktif: true,          // false: ana sayfadaki kamp şeridi gizlenir
+    duzen: [[50, 10], [50, 10], [40, 20], [50, 10], [50, 0]],   // 5 ders, 240 dk çalışma
+    liste: [
+      { id: "sabah", ad: "Sabah Çalışma Kampı", ikon: "🌅", bas: "08:00", not: "Mezunlar ve üniversiteliler için" },
+      { id: "ogle", ad: "Öğle Çalışma Kampı", ikon: "☀️", bas: "13:00", not: "Mezunlar ve üniversiteliler için" },
+      { id: "aksam", ad: "Akşam Çalışma Kampı", ikon: "🌙", bas: "19:00" }
+    ],
+    // Kampın yapılmayacağı günler: "2026-12-31" (o günün tüm kampları) ya da "2026-12-31 19:00" (sadece o kamp)
+    iptal: []
+  },
+
   // Sitedeki dersler. "id", tablodaki "liste" sütunuyla aynı olmalı.
   dersler: [
     {

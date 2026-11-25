@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuzey Kampüs Kampları – Birlikte Ders Çalışma</title>
+  <meta name="description" content="Birlikte ders çalışma kampları: her gün sabah, öğle ve akşam. 50 dakika ders, 10 dakika mola. Kendi saatinde çalışma, derse ısınma ve çalışma raporu. Kayıt yok.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=202611251347">
+</head>
+<body class="kamp-sayfa">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html">Kuzey <span>Kampüs</span></a>
+      <nav class="nav">
+        <a href="dersler.html">Dersler</a>
+        <a href="oyun.html">Testler</a>
+        <a href="kampus.html"><span class="nav-uzun">Kampüsün İçinden</span><span class="nav-kisa">Kampüs</span></a>
+        <a href="makaleler.html">Makaleler</a>
+        <a href="iletisim.html">Birebir Ders</a>
+        <a data-yt href="#" target="_blank" rel="noopener" class="nav-yt">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap kamp">
+    <!-- Giriş: kamplar, kendi saatinde çalışma, derse ısınma, rapor -->
+    <section id="kamp-giris">
+      <div class="kamp-baslik">
+        <h1>🏕 Kuzey Kampüs Kampları</h1>
+        <p class="kamp-alt">Birlikte ders çalışma kampları · Her gün sabah, öğle ve akşam</p>
+        <p>Kitabını aç, telefonunu kenara koy. Aynı saatte, başka öğrencilerle birlikte ders çalış: 50 dakika ders, 10 dakika mola. Molan bitince zil çalar, derse dönersin. Kayıt yok; istediğin kampa istediğin an katıl.</p>
+      </div>
+
+      <p class="kamp-devam" id="kamp-devam" hidden></p>
+
+      <h2 class="kamp-bolum-baslik">Bugünün kampları</h2>
+      <div class="kamp-kartlar" id="kamp-kartlar"></div>
+      <p class="kamp-kucuk">Her kampta 5 ders var, toplam 4 saat çalışma. 3. dersten sonra 20 dakikalık uzun mola.</p>
+
+      <div class="kamp-ikili">
+        <section class="kamp-kutu" id="kisisel-kutu">
+          <h2>⏱ Kendi saatinde çalış</h2>
+          <p>Kamp saatini beklemeden, istediğin an başla. Ders süreni bir kez seç:</p>
+          <div class="kamp-sureler" role="radiogroup" aria-label="Ders süresi">
+            <button type="button" class="kamp-sure" data-sure="30" role="radio">30 dk</button>
+            <button type="button" class="kamp-sure" data-sure="40" role="radio">40 dk</button>
+            <button type="button" class="kamp-sure" data-sure="50" role="radio">50 dk</button>
+          </div>
+          <p class="kamp-kucuk">Her dersten sonra 10 dakikalık mola. İki kısa moladan sonra bir kez 20 dakikalık uzun mola alabilirsin.</p>
+          <button type="button" class="btn primary big" id="kisisel-basla">Çalışmaya başla</button>
+        </section>
+
+        <section class="kamp-kutu" id="isinma-kutu">
+          <h2>🔥 Derse Isınma</h2>
+          <p>Çalışmaya başlamadan önce 5 kısa soruyla zihnini ısıt. Bugün ne çalışacaksan o konuyu seç.</p>
+          <label class="kamp-etiket" for="isinma-konu">Konu</label>
+          <select id="isinma-konu" class="kamp-secim" disabled><option>Konular yükleniyor…</option></select>
+          <button type="button" class="btn big" id="isinma-basla" disabled>5 soruyla ısın</button>
+          <p class="kamp-kucuk">Isınmada çözdüğün sorular Testler'deki puanına da eklenir.</p>
+        </section>
+      </div>
+
+      <section class="kamp-kutu kamp-rapor" id="kamp-rapor">
+        <h2>📊 Çalışma raporun</h2>
+        <div class="rapor-sayilar" id="rapor-sayilar"></div>
+        <div class="rapor-grafik" id="rapor-grafik" aria-label="Son 7 günün çalışma süreleri"></div>
+        <div id="rapor-hedefler"></div>
+        <p class="kamp-kucuk">Raporun sadece bu cihazda, bu tarayıcıda durur. Hiçbir yere gönderilmez.</p>
+      </section>
+
+      <section class="kamp-kutu">
+        <h2>Nasıl işler?</h2>
+        <ul class="canli-kurallar">
+          <li><strong>Kamplar:</strong> Herkes aynı saatte derse başlar, aynı saatte molaya çıkar. Kamp başladıktan sonra da katılabilirsin.</li>
+          <li><strong>Ders sırasında</strong> sayaç sessizce işler. Telefonunun ekranını açarsan sana "Çalışman bitmedi" diye hatırlatırız.</li>
+          <li><strong>Mola bitince</strong> zil çalar ve "Molanız bitti" diye seslenilir. Molada sayfayı kapatma; sesin açık olsun.</li>
+          <li><strong>Arka plan sesi:</strong> Bilgisayarda ya da tablette çalışırken su sesi, yağmur ya da hafif müzik açabilirsin.</li>
+          <li><strong>Rapor:</strong> Bugün, bu hafta ve bu ay ne kadar çalıştığını görürsün. Kamptan çıkarken "Kamptan ayrıl"a dokun ki süren doğru yazılsın.</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Çalışma ekranı (kamp ya da kendi saatinde) -->
+    <section id="kamp-calis" hidden>
+      <div class="calis-kart" id="calis-kart">
+        <p class="calis-etiket" id="calis-etiket"></p>
+        <h1 class="calis-faz" id="calis-faz"></h1>
+        <p class="calis-sure" id="calis-sure" role="timer" aria-live="off"></p>
+        <div class="calis-bar" id="calis-bar-kutu"><div id="calis-bar"></div></div>
+        <p class="calis-mesaj" id="calis-mesaj" role="status"></p>
+        <div class="calis-dugmeler" id="calis-dugmeler"></div>
+        <p class="calis-hedef" id="calis-hedef" hidden></p>
+      </div>
+
+      <div class="calis-ayarlar">
+        <div class="calis-ayar">
+          <span class="kamp-etiket">🎧 Arka plan sesi</span>
+          <div class="kamp-sesler" id="arka-sesler">
+            <button type="button" data-arka="yok">Kapalı</button>
+            <button type="button" data-arka="su">💧 Su</button>
+            <button type="button" data-arka="yagmur">🌧 Yağmur</button>
+            <button type="button" data-arka="muzik">🎵 Hafif müzik</button>
+          </div>
+          <input type="range" id="arka-ses" min="0" max="100" value="50" aria-label="Arka plan sesinin yüksekliği">
+        </div>
+        <label class="calis-ayar kamp-onay"><input type="checkbox" id="ayar-haber"> Ders süresi bitince haber ver (sessiz; arka plan sesi açıksa kısa bir ses)</label>
+        <label class="calis-ayar kamp-onay"><input type="checkbox" id="ayar-gizle"> Ders sırasında sayacı gizle</label>
+        <label class="calis-ayar kamp-hedef-kutu">
+          <span class="kamp-etiket">🎯 Bugünkü hedefim</span>
+          <input type="text" id="hedef" maxlength="120" placeholder="Örneğin: Türev kuralları, 20 soru">
+        </label>
+        <button type="button" class="btn" id="zil-dene">🔔 Zili dene</button>
+        <button type="button" class="btn" id="calis-bitir">Kamptan ayrıl</button>
+      </div>
+    </section>
+
+    <!-- Derse Isınma: 5 soru -->
+    <section id="kamp-isinma" hidden>
+      <div class="oyun-ust">
+        <span><strong>🔥 Derse Isınma</strong> · <span id="isinma-ad"></span> · <span id="isinma-ilerleme"></span></span>
+      </div>
+      <div class="oyun-kart" id="isinma-kart">
+        <p class="oyun-metin" id="isinma-metin"></p>
+        <div class="oyun-secenekler" id="isinma-secenekler"></div>
+        <p class="oyun-aciklama" id="isinma-aciklama" hidden></p>
+        <button class="btn primary big" id="isinma-sonraki" type="button" hidden>Sonraki soru →</button>
+      </div>
+      <div class="oyun-kart" id="isinma-sonuc" hidden>
+        <p class="oyun-sonuc-baslik">Isındın! 🔥</p>
+        <p class="oyun-sonuc-puan"><strong id="isinma-puan"></strong> / 5</p>
+        <p id="isinma-mesaj"></p>
+        <div class="oyun-dugmeler" id="isinma-dugmeler"></div>
+      </div>
+    </section>
+
+    <p class="canli-not">Kuzey Kampüs Kampları, her gün biraz daha düzenli çalışman için var. Kayıt yok, ödül yok; çalışma süren sadece senin cihazında kalır.</p>
+  </main>
+
+  <!-- Ders sırasında ekran açılırsa -->
+  <div class="perde" id="ekran-perde" hidden>
+    <div class="panel ekran-panel" role="alertdialog" aria-modal="true" aria-labelledby="ekran-baslik">
+      <p class="ekran-ikon" aria-hidden="true">📵</p>
+      <h3 id="ekran-baslik">Ekranını kapat, çalışman bitmedi.</h3>
+      <p id="ekran-metin"></p>
+      <button type="button" class="btn primary big" id="ekran-tamam">Tamam, derse dönüyorum</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© Kuzey Kampüs – Şahin Aksankur</span>
+      <a href="iletisim.html">İletişim</a>
+      <a data-yt href="#" target="_blank" rel="noopener">YouTube kanalı</a>
+      <a data-wa-kanal href="#" target="_blank" rel="noopener" hidden>WhatsApp kanalı</a>
+    </div>
+  </footer>
+
+  <script src="assets/config.js?v=202611251347"></script>
+  <script src="assets/app.js?v=202611251347"></script>
+  <script src="assets/canli-takvim.js?v=202611251347"></script>
+  <!-- Ziyaretçi sayımı: GoatCounter (çerezsiz, kişisel veri yok; yerelde saymaz) -->
+  <script data-goatcounter="https://kuzeykampus.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script src="assets/kamp-takvim.js?v=202611251347"></script>
+  <script src="assets/kamp.js?v=202611251347"></script>
+</body>
+</html>

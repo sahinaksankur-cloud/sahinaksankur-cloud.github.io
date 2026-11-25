@@ -606,7 +606,7 @@
   // 🔴 Canlı Yarışma (assets/canli.js) bu yardımcıları kullanır: aynı soru görünümü, puan kaydı, sesler ve havai fişek.
   window.KK_ARAC = {
     bicim: bicim, soruHtml: soruHtml, anahtar: anahtar, cevapYaz: cevapYaz, cozulduMu: cozulduMu,
-    cal: cal, sesBaglam: sesBaglam, fisekler: fisekler, oku: oku, yaz: yaz, hataLink: hataLink, ekSure: O.ekSure == null ? 5 : O.ekSure
+    cal: cal, sesBaglam: sesBaglam, fisekler: fisekler, oku: oku, yaz: yaz, hataLink: hataLink, soruSec: soruSec, ekSure: O.ekSure == null ? 5 : O.ekSure
   };
   if (!$("oyun-giris")) return;
 
