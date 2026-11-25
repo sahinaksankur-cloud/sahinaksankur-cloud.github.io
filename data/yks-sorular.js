@@ -1337,6 +1337,19 @@ window.KK_YKS = {
       { s: "√((x − 3)<sup>2</sup>) hangisine eşittir?", c: ["|x − 3|", "x − 3", "3 − x"], a: "√(□<sup>2</sup>) = |□|: içindeki ne olursa olsun mutlak değeri çıkar." },
       { s: "√((−a)<sup>2</sup>) hangisine eşittir?", c: ["|a|", "−a", "a"], a: "√((−a)<sup>2</sup>) = |−a| = |a|." },
       { s: "x = −7 için √(x<sup>2</sup>) hangisine eşittir?", c: ["|−7|", "−7", "−|7|"], a: "√49 = 7 = |−7|." },
+      // Kısa problemler: "… 'den k fazla ya da eksik" → |x − a| = k
+      { s: "Hava sıcaklığı x °C, 3 °C'ye 1 derece uzaklıkta. Hangisiyle gösterilir?", c: ["|x − 3| = 1", "|x − 1| = 3", "|x + 3| = 1"], a: "x'in 3'e uzaklığı 1: |x − 3| = 1 (x = 2 ya da x = 4)." },
+      { s: "Bir arabanın hızı x km/sa, 90'dan 10 fazla ya da 10 eksik. Hangisiyle gösterilir?", c: ["|x − 90| = 10", "|x − 10| = 90", "|x + 90| = 10"], a: "Hızın 90'a uzaklığı 10: |x − 90| = 10." },
+      { s: "Bir çocuğun ağırlığı x kg, 45 kg'dan 3 fazla ya da 3 eksik. Hangisiyle gösterilir?", c: ["|x − 45| = 3", "|x − 3| = 45", "|x + 3| = 45"], a: "Ağırlığın 45'e uzaklığı 3: |x − 45| = 3." },
+      { s: "Bir çocuğun x cevizi var; bu sayı 29'dan 4 eksik ya da 4 fazla. Hangisiyle gösterilir?", c: ["|x − 29| = 4", "|x − 4| = 29", "|x + 4| = 29"], a: "Ceviz sayısının 29'a uzaklığı 4: |x − 29| = 4." },
+      { s: "Hava sıcaklığı x °C, −2 °C'ye 5 derece uzaklıkta. Hangisiyle gösterilir?", c: ["|x + 2| = 5", "|x − 2| = 5", "|x − 5| = 2"], a: "−2'ye uzaklık |x − (−2)| = |x + 2|: |x + 2| = 5." },
+      { s: "Bir sınav puanı x, 70'ten en çok 5 puan farklı. Hangisiyle gösterilir?", c: ["|x − 70| ≤ 5", "|x − 70| ≥ 5", "|x − 5| ≤ 70"], a: "70'e uzaklık en çok 5: |x − 70| ≤ 5." },
+      { s: "Bir paketin ağırlığı x gram, 500 gramdan en fazla 20 gram sapabilir. Hangisiyle gösterilir?", c: ["|x − 500| ≤ 20", "|x − 500| > 20", "|x − 20| ≤ 500"], a: "500'e uzaklık en fazla 20: |x − 500| ≤ 20." },
+      { s: "Bir kişinin boyu x cm, 170 cm'den 6 cm'den daha fazla farklı. Hangisiyle gösterilir?", c: ["|x − 170| > 6", "|x − 170| < 6", "|x − 6| > 170"], a: "170'e uzaklık 6'dan fazla: |x − 170| > 6." },
+      { s: "Hava sıcaklığı x °C, 0 °C'ye 4 dereceden daha yakın. Hangisiyle gösterilir?", c: ["|x| < 4", "|x| > 4", "|x − 4| < 0"], a: "Sıfıra uzaklık 4'ten az: |x| < 4." },
+      { s: "Bir arabanın hızı 90 km/sa'ten 10 fazla ya da 10 eksik. Hız kaç km/sa olabilir?", c: ["80 ya da 100", "Sadece 100", "90 ya da 100"], a: "90 − 10 = 80, 90 + 10 = 100." },
+      { s: "Bir çocuğun ceviz sayısı 29'dan 4 eksik ya da 4 fazla. Kaç cevizi olabilir?", c: ["25 ya da 33", "Sadece 33", "4 ya da 29"], a: "29 − 4 = 25, 29 + 4 = 33." },
+      { s: "Bir çocuğun ağırlığı x kg ve |x − 45| = 3. Çocuk kaç kg olabilir?", c: ["42 ya da 48", "Sadece 48", "3 ya da 45"], a: "45'e uzaklık 3: 45 − 3 = 42 ya da 45 + 3 = 48." },
       // Kısa hesap
       { s: "|−3| + |2| kaçtır?", c: ["5", "−1", "1"], a: "3 + 2 = 5." },
       { s: "|−7| − |−2| kaçtır?", c: ["5", "−9", "9"], a: "7 − 2 = 5." },
@@ -1710,6 +1723,8 @@ window.KK_YKS = {
     { k: "yks-mutlak", s: "|−a| > 5 ise a'nın sıfıra uzaklığı da 5'ten fazladır.", d: true },
     { k: "yks-mutlak", s: "2 < |a| < 5 ise a, 2 ile 5 arasındadır.", d: false, n: "a negatif de olabilir: |−3| = 3" },
     { k: "yks-mutlak", s: "√(x<sup>2</sup>) = |x|", d: true },
-    { k: "yks-mutlak", s: "√((−5)<sup>2</sup>) = |−5|", d: true }
+    { k: "yks-mutlak", s: "√((−5)<sup>2</sup>) = |−5|", d: true },
+    { k: "yks-mutlak", s: "“x, 90'dan 10 fazla ya da 10 eksik” ifadesi |x − 90| = 10 ile gösterilir.", d: true },
+    { k: "yks-mutlak", s: "“x, 45'ten en çok 3 farklı” ifadesi |x − 45| ≥ 3 ile gösterilir.", d: false, n: "En çok 3: |x − 45| ≤ 3" }
   ]
 };
