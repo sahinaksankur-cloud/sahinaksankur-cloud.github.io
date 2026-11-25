@@ -1497,7 +1497,22 @@ window.KK_YKS = {
       { s: "(∛a − ∛b)(∛(a<sup>2</sup>) + ∛(ab) + ∛(b<sup>2</sup>)) ifadesinin eşiti hangisidir?", c: ["a − b", "a + b", "∛a − ∛b"], a: "Küplerin farkı: (∛a)<sup>3</sup> − (∛b)<sup>3</sup> = a − b." },
       { s: "(∛2 + 1)(∛4 − ∛2 + 1) kaçtır?", c: ["3", "1", "2∛2"], a: "Küplerin toplamı: (∛2)<sup>3</sup> + 1<sup>3</sup> = 2 + 1 = 3 (∛4 = ∛(2<sup>2</sup>))." },
       { s: "x − y ifadesine hangileri eşittir?<br>I. (√x − √y)(√x + √y)<br>II. (∛x − ∛y)(∛(x<sup>2</sup>) + ∛(xy) + ∛(y<sup>2</sup>))<br>III. (√x − √y)<sup>2</sup>", c: ["I ve II", "Yalnız I", "I, II ve III"], a: "I iki kare farkı, II küplerin farkı. (√x − √y)<sup>2</sup> = x − 2√(xy) + y." },
-      { s: "x + 8 ifadesine hangileri eşittir?<br>I. (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4)<br>II. (∛x + 2)<sup>3</sup><br>III. (∛x + 2)(∛(x<sup>2</sup>) + 2∛x + 4)", c: ["Yalnız I", "I ve II", "I ve III"], a: "Küplerin toplamı: (∛x)<sup>3</sup> + 2<sup>3</sup> = (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4). Toplamda ortadaki işaret eksi." }
+      { s: "x + 8 ifadesine hangileri eşittir?<br>I. (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4)<br>II. (∛x + 2)<sup>3</sup><br>III. (∛x + 2)(∛(x<sup>2</sup>) + 2∛x + 4)", c: ["Yalnız I", "I ve II", "I ve III"], a: "Küplerin toplamı: (∛x)<sup>3</sup> + 2<sup>3</sup> = (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4). Toplamda ortadaki işaret eksi." },
+      // Hangisi çarpanı değildir? (iki kare farkını bir, iki kez kullanma)
+      { s: "x − y ifadesinin çarpanı olmayan hangisidir?", c: ["x + y", "√x − √y", "√x + √y"], a: "x − y = (√x − √y)(√x + √y). x + y çarpan değildir." },
+      { s: "4 − x ifadesinin çarpanı olmayan hangisidir?", c: ["2 − x", "2 − √x", "2 + √x"], a: "4 − x = 2<sup>2</sup> − (√x)<sup>2</sup> = (2 − √x)(2 + √x). 2 − x çarpan değildir." },
+      { s: "x − 9 ifadesinin çarpanı olmayan hangisidir?", c: ["x − 3", "√x − 3", "√x + 3"], a: "x − 9 = (√x − 3)(√x + 3). x − 3 çarpan değildir." },
+      { s: "x − 1 ifadesinin çarpanı olmayan hangisidir?", c: ["x + 1", "√x − 1", "∛x − 1"], a: "x − 1 = (√x − 1)(√x + 1) = (∛x − 1)(∛(x<sup>2</sup>) + ∛x + 1). x + 1 çarpan değildir." },
+      { s: "x − 4y<sup>2</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["x − 2y", "√x − 2y", "√x + 2y"], a: "x − 4y<sup>2</sup> = (√x)<sup>2</sup> − (2y)<sup>2</sup> = (√x − 2y)(√x + 2y)." },
+      { s: "x<sup>2</sup> − 9 ifadesinin çarpanı olmayan hangisidir?", c: ["x − 9", "x − 3", "x + 3"], a: "x<sup>2</sup> − 9 = (x − 3)(x + 3)." },
+      { s: "1 − x<sup>2</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["1 + x<sup>2</sup>", "1 − x", "1 + x"], a: "1 − x<sup>2</sup> = (1 − x)(1 + x). 1 + x<sup>2</sup> bir toplam; çarpan değildir." },
+      { s: "9 − 4x<sup>2</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["9 − 2x", "3 − 2x", "3 + 2x"], a: "9 − 4x<sup>2</sup> = (3 − 2x)(3 + 2x)." },
+      { s: "a<sup>2</sup> − b<sup>2</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["a<sup>2</sup> + b<sup>2</sup>", "a − b", "a + b"], a: "a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b). a<sup>2</sup> + b<sup>2</sup> çarpan değildir." },
+      { s: "x<sup>4</sup> − 1 ifadesinin çarpanı olmayan hangisidir?", c: ["x + 2", "x − 1", "x<sup>2</sup> + 1"], a: "İki kez iki kare farkı: x<sup>4</sup> − 1 = (x<sup>2</sup> − 1)(x<sup>2</sup> + 1) = (x − 1)(x + 1)(x<sup>2</sup> + 1)." },
+      { s: "16 − x<sup>4</sup> ifadesinin çarpanı olmayan hangisidir?", c: ["4 − x", "2 − x", "4 + x<sup>2</sup>"], a: "16 − x<sup>4</sup> = (4 − x<sup>2</sup>)(4 + x<sup>2</sup>) = (2 − x)(2 + x)(4 + x<sup>2</sup>)." },
+      { s: "x<sup>3</sup> − 8 ifadesinin çarpanı olmayan hangisidir?", c: ["x + 2", "x − 2", "x<sup>2</sup> + 2x + 4"], a: "x<sup>3</sup> − 8 = (x − 2)(x<sup>2</sup> + 2x + 4)." },
+      { s: "x − 25 ifadesinin çarpanı hangisidir?", c: ["√x + 5", "x + 5", "x − 5"], a: "x − 25 = (√x − 5)(√x + 5). x − 5 ve x + 5 çarpan değildir." },
+      { s: "x<sup>4</sup> − 16 ifadesinin çarpanı hangisidir?", c: ["x<sup>2</sup> + 4", "x + 4", "x − 4"], a: "x<sup>4</sup> − 16 = (x<sup>2</sup> − 4)(x<sup>2</sup> + 4) = (x − 2)(x + 2)(x<sup>2</sup> + 4)." }
     ]
   },
 
@@ -1836,6 +1851,8 @@ window.KK_YKS = {
     { k: "yks-carpan", s: "(a + b)<sup>2</sup> − (a − b)<sup>2</sup> = 4ab", d: true },
     { k: "yks-carpan", s: "(√x − √y)(√x + √y) = x − y", d: true },
     { k: "yks-carpan", s: "(x − 4)/(√x − 2) = √x − 2", d: false, n: "x − 4 = (√x − 2)(√x + 2): sonuç √x + 2" },
-    { k: "yks-carpan", s: "(√3 + 1)<sup>2</sup> = 4", d: false, n: "Ortadaki 2√3 unutulmasın: 4 + 2√3" }
+    { k: "yks-carpan", s: "(√3 + 1)<sup>2</sup> = 4", d: false, n: "Ortadaki 2√3 unutulmasın: 4 + 2√3" },
+    { k: "yks-carpan", s: "x + y, x − y ifadesinin bir çarpanıdır.", d: false, n: "x − y = (√x − √y)(√x + √y); x + y çarpan değil" },
+    { k: "yks-carpan", s: "2 + √x, 4 − x ifadesinin bir çarpanıdır.", d: true }
   ]
 };
