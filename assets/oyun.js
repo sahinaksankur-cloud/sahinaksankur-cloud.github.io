@@ -704,9 +704,9 @@
     var dyN = (DY && DY.soruSayisi) || 5;
     $("oyun-dy").innerHTML = BOLUMLER.filter(function (b) { return havuz("dy-" + b.no).length; }).map(function (b) {
       return '<button type="button" class="sec s3" data-dy="dy-' + b.no + '"><small>Chapter ' + b.no + "</small><strong>" + b.ad + "</strong>" +
-        enIyiYazi(rek["dy-" + b.no], dyN) + "</button>";
+        dyDurum("dy-" + b.no, kayit) + enIyiYazi(rek["dy-" + b.no], dyN) + "</button>";
     }).join("") + (havuz("dy-tum").length ? '<button type="button" class="sec s3" data-dy="dy-tum"><small>Hepsi</small><strong>Tüm chapter\'lar</strong>' +
-      enIyiYazi(rek["dy-tum"], dyN) + "</button>" : "");
+      dyDurum("dy-tum", kayit) + enIyiYazi(rek["dy-tum"], dyN) + "</button>" : "");
     baglan("#oyun-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
 
     var PUAN_NOT = " Her soru, ilk kez doğru çözdüğünde 1 puan getirir; 10 soruluk bir testin hepsini doğru yaparsan ⭐ bonus da kazanırsın. Puanların sadece bu cihazda tutulur.";
@@ -736,7 +736,7 @@
       });
       tekrarModuUygula();
       $("yks-dy").innerHTML = havuz("dy-yks").length ? '<button type="button" class="sec s3" data-dy="dy-yks"><small>' + havuz("dy-yks").length +
-        " ifade</small><strong>Temel Kavramlar</strong>" + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
+        " ifade</small><strong>Temel Kavramlar</strong>" + dyDurum("dy-yks", kayit) + enIyiYazi(rek["dy-yks"], dyN) + "</button>" : "";
       baglan("#yks-dy", "[data-dy]", function (b) { dyBasla(b.getAttribute("data-dy")); });
       var ys = yksSorular();
       $("yks-toplam").textContent = toplamYazi("YKS", ys, kayit, "yks") + "." + PUAN_NOT;
@@ -916,7 +916,7 @@
         "Hepsini çözünce çözdüğün sorular yine gelir ama artık puan getirmez."
       ]) +
       b("⚡ Puan getirmeyenler", [
-        "⚡ Doğru / Yanlış turları ve 📇 kelime kartları puan getirmez; hızlı tekrar ve ezber içindir. Doğru / Yanlış'ta en iyi skorun kaydedilir.",
+        "⚡ Doğru / Yanlış turları ve 📇 kelime kartları puan getirmez; hızlı tekrar ve ezber içindir. Doğru / Yanlış'ta en iyi skorun kaydedilir; kaçırdığın ifadeler sonraki turda önce gelir.",
         "🔴 Canlı Yarışma'da gördüğün sorular, süre bitince normal puanına işlenir (orada bonus yok)."
       ]) +
       b("📱 Kayıt", [
@@ -1051,11 +1051,28 @@
   $("oyun-sonraki").addEventListener("click", sonraki);
 
   // ---- ⚡ Doğru / Yanlış ----
+  // ⚡ Doğru/Yanlış'ta sıra (kullanıcı kararı): önce kaçırılan ifadeler (en eski önce), sonra hiç görülmeyenler, en son çözülenler.
+  function dySec(id, n) {
+    var c = cevaplar(oku()), h = havuz(id);
+    var kacan = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 0; });
+    var yeni = h.filter(function (q) { return !c[anahtar(q)]; });
+    var cozulen = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 1; });
+    var sec = eskidenSec(kacan, n, c);
+    if (sec.length < n) sec = sec.concat(karistir(yeni).slice(0, n - sec.length));
+    if (sec.length < n) sec = sec.concat(eskidenSec(cozulen, n - sec.length, c));
+    return sec;
+  }
+  // Kartta: kaç ifadeyi bildin, kaç tanesi tekrar bekliyor
+  function dyDurum(id, kayit) {
+    var h = havuz(id), c = cevaplar(kayit);
+    var bil = cozulenSayi(h, kayit), kac = h.filter(function (q) { var x = c[anahtar(q)]; return x && x[0] === 0; }).length;
+    return '<span class="skor">Bildiğin: ' + bil + " / " + h.length + (kac ? " · 🔁 " + kac + " tekrar bekliyor" : "") + "</span>";
+  }
   function dyBasla(id) {
     sayaciDurdur();
     if (sesAcik) sesBaglam();
     var n = (DY && DY.soruSayisi) || 5;
-    var liste = soruSec(id, n);
+    var liste = dySec(id, n);
     // En az bir doğru ve bir yanlış ifade olsun
     var h = havuz(id);
     [true, false].forEach(function (deger) {
@@ -1158,7 +1175,7 @@
     } else { liste.hidden = true; }
     $("oyun-test-gec").hidden = d === "tum" || d === "yks";
     $("oyun-test-gec").textContent = "📝 5 Soruya geç";
-    $("oyun-tekrar-not").innerHTML = "⚡ Doğru / Yanlış turları toplam puanına eklenmez; hızlı tekrar içindir. En iyi skorun ve serin kaydedilir.";
+    $("oyun-tekrar-not").innerHTML = "⚡ Doğru / Yanlış turları toplam puanına eklenmez; hızlı tekrar içindir. En iyi skorun ve serin kaydedilir." + (dy.kacan.length ? " Kaçırdığın " + dy.kacan.length + " ifade sonraki turda önce gelecek." : "");
     $("oyun-tekrar-not").hidden = false;
     $("oyun-tekrar").classList.add("primary");
     $("oyun-test-gec").setAttribute("data-hedef", "bolum-" + d);
