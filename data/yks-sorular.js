@@ -1526,7 +1526,29 @@ window.KK_YKS = {
       { s: "x<sup>2</sup> − 1/x<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 1/x)(x + 1/x)", "(x − 1/x)<sup>2</sup>", "(x + 1/x)<sup>2</sup>"], a: "İki kare farkı: x<sup>2</sup> − (1/x)<sup>2</sup>." },
       { s: "a + b = 5 ve ab = 6 ise a<sup>2</sup> + b<sup>2</sup> kaçtır?", c: ["13", "25", "19"], a: "a<sup>2</sup> + b<sup>2</sup> = (a + b)<sup>2</sup> − 2ab = 25 − 12 = 13." },
       { s: "a − b = 3 ve ab = 4 ise a<sup>2</sup> + b<sup>2</sup> kaçtır?", c: ["17", "9", "1"], a: "a<sup>2</sup> + b<sup>2</sup> = (a − b)<sup>2</sup> + 2ab = 9 + 8 = 17." },
-      { s: "a + b = 4 ve ab = 3 ise (a − b)<sup>2</sup> kaçtır?", c: ["4", "16", "10"], a: "(a − b)<sup>2</sup> = (a + b)<sup>2</sup> − 4ab = 16 − 12 = 4." }
+      { s: "a + b = 4 ve ab = 3 ise (a − b)<sup>2</sup> kaçtır?", c: ["4", "16", "10"], a: "(a − b)<sup>2</sup> = (a + b)<sup>2</sup> − 4ab = 16 − 12 = 4." },
+      // x² + bx + c (çarpımı c, toplamı b) ve sadeleştirme (önce çarpanlara ayır; toplamda sadeleştirme yok)
+      { s: "x<sup>2</sup> + bx + c ayrılırken aranan iki sayı için hangisi doğrudur?", c: ["Çarpımları c, toplamları b", "Toplamları c, çarpımları b", "Farkları b, çarpımları c"], a: "(x + m)(x + n) = x<sup>2</sup> + (m + n)x + mn: toplam b, çarpım c." },
+      { s: "(x − 4)(x + 1) ifadesinin açılımı hangisidir?", c: ["x<sup>2</sup> − 3x − 4", "x<sup>2</sup> + 3x − 4", "x<sup>2</sup> − 3x + 4"], a: "Ortadaki: −4 + 1 = −3; son: (−4) · 1 = −4." },
+      { s: "x<sup>2</sup> + 5x + 6 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x + 2)(x + 3)", "(x + 1)(x + 6)", "(x − 2)(x − 3)"], a: "Çarpımı 6, toplamı 5: 2 ve 3." },
+      { s: "x<sup>2</sup> − 5x + 6 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 2)(x − 3)", "(x + 2)(x + 3)", "(x − 1)(x − 6)"], a: "Çarpımı 6, toplamı −5: −2 ve −3." },
+      { s: "x<sup>2</sup> − x − 6 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 3)(x + 2)", "(x + 3)(x − 2)", "(x − 6)(x + 1)"], a: "Çarpımı −6, toplamı −1: −3 ve 2." },
+      { s: "x<sup>2</sup> + x − 12 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x + 4)(x − 3)", "(x − 4)(x + 3)", "(x + 6)(x − 2)"], a: "Çarpımı −12, toplamı 1: 4 ve −3." },
+      { s: "x<sup>2</sup> + 7x + 10 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x + 2)(x + 5)", "(x + 1)(x + 10)", "(x + 3)(x + 4)"], a: "Çarpımı 10, toplamı 7: 2 ve 5." },
+      { s: "x<sup>2</sup> − 8x + 15 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 3)(x − 5)", "(x + 3)(x + 5)", "(x − 1)(x − 15)"], a: "Çarpımı 15, toplamı −8: −3 ve −5." },
+      { s: "x<sup>2</sup> + 2x − 8 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x + 4)(x − 2)", "(x − 4)(x + 2)", "(x + 8)(x − 1)"], a: "Çarpımı −8, toplamı 2: 4 ve −2." },
+      { s: "x<sup>2</sup> − 9x + 20 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 4)(x − 5)", "(x + 4)(x + 5)", "(x − 2)(x − 10)"], a: "Çarpımı 20, toplamı −9: −4 ve −5." },
+      { s: "(x<sup>2</sup> − 9)/(x − 3) ifadesinin sadeleşmiş hâli hangisidir?", c: ["x + 3", "x − 3", "x"], a: "x<sup>2</sup> − 9 = (x − 3)(x + 3); x − 3 sadeleşir." },
+      { s: "(x<sup>2</sup> − 1)/(x + 1) ifadesinin sadeleşmiş hâli hangisidir?", c: ["x − 1", "x + 1", "x"], a: "x<sup>2</sup> − 1 = (x − 1)(x + 1)." },
+      { s: "(a<sup>2</sup> − b<sup>2</sup>)/(a + b) ifadesinin sadeleşmiş hâli hangisidir?", c: ["a − b", "a + b", "a<sup>2</sup> − b"], a: "a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b)." },
+      { s: "(x<sup>2</sup> + 2x)/x ifadesinin sadeleşmiş hâli hangisidir?", c: ["x + 2", "x<sup>2</sup> + 2", "3x"], a: "x<sup>2</sup> + 2x = x(x + 2); x sadeleşir." },
+      { s: "(x<sup>2</sup> − x)/(x − 1) ifadesinin sadeleşmiş hâli hangisidir?", c: ["x", "x − 1", "1"], a: "x<sup>2</sup> − x = x(x − 1)." },
+      { s: "(2x + 6)/(x + 3) ifadesinin sadeleşmiş hâli hangisidir?", c: ["2", "2x", "x + 2"], a: "2x + 6 = 2(x + 3)." },
+      { s: "(3x + 6)/3 ifadesinin eşiti hangisidir?", c: ["x + 2", "x + 6", "3x + 2"], a: "Önce payı çarpanlarına ayır: 3(x + 2)/3 = x + 2." },
+      { s: "(x<sup>2</sup> + 5x + 6)/(x + 2) ifadesinin sadeleşmiş hâli hangisidir?", c: ["x + 3", "x + 2", "x + 5"], a: "x<sup>2</sup> + 5x + 6 = (x + 2)(x + 3)." },
+      { s: "(x<sup>2</sup> − 4)/(x<sup>2</sup> + 4x + 4) ifadesinin sadeleşmiş hâli hangisidir?", c: ["(x − 2)/(x + 2)", "(x + 2)/(x − 2)", "−1"], a: "(x − 2)(x + 2) / (x + 2)<sup>2</sup>: bir (x + 2) sadeleşir." },
+      { s: "(x − 5)/(5 − x) ifadesinin eşiti hangisidir?", c: ["−1", "1", "0"], a: "5 − x = −(x − 5): sonuç −1." },
+      { s: "(x + 3)/3 ifadesi için hangisi doğrudur?", c: ["Sadeleşmez", "x'e eşittir", "x + 1'e eşittir"], a: "Toplamda sadeleştirme yapılmaz: 3, x + 3'ün çarpanı değil, terimi. (x = 3 için 6/3 = 2, x + 1 = 4.)" }
     ]
   },
 
@@ -1869,6 +1891,10 @@ window.KK_YKS = {
     { k: "yks-carpan", s: "x + y, x − y ifadesinin bir çarpanıdır.", d: false, n: "x − y = (√x − √y)(√x + √y); x + y çarpan değil" },
     { k: "yks-carpan", s: "2 + √x, 4 − x ifadesinin bir çarpanıdır.", d: true },
     { k: "yks-carpan", s: "(x + 1/x)<sup>2</sup> = x<sup>2</sup> + 1/x<sup>2</sup>", d: false, n: "Ortadaki 2 · x · 1/x = 2 unutulmasın: x<sup>2</sup> + 2 + 1/x<sup>2</sup>" },
-    { k: "yks-carpan", s: "x + 1/x = 3 ise x<sup>2</sup> + 1/x<sup>2</sup> = 7'dir.", d: true }
+    { k: "yks-carpan", s: "x + 1/x = 3 ise x<sup>2</sup> + 1/x<sup>2</sup> = 7'dir.", d: true },
+    { k: "yks-carpan", s: "(x + 3)/3 = x + 1", d: false, n: "Toplamda sadeleştirme yapılmaz; 3, x + 3'ün çarpanı değil" },
+    { k: "yks-carpan", s: "x ≠ 3 için (x<sup>2</sup> − 9)/(x − 3) = x + 3", d: true },
+    { k: "yks-carpan", s: "x<sup>2</sup> + 5x + 6 = (x + 2)(x + 3)", d: true },
+    { k: "yks-carpan", s: "(x − 5)/(5 − x) = 1", d: false, n: "5 − x = −(x − 5): sonuç −1" }
   ]
 };
