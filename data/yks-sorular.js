@@ -27,7 +27,8 @@ window.KK_YKS = {
     { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" },
     { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 },
-    { id: "yks-mutlak", ad: "Mutlak Değer", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-mutlak", ad: "Mutlak Değer", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-carpan", ad: "Çarpanlara Ayırma", ust: "Cebir", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -1404,6 +1405,50 @@ window.KK_YKS = {
       { s: "2 < |a| < 5 koşulunu sağlayan kaç tam sayı vardır?", c: ["4", "2", "8"], a: "Sağda 3 ve 4, solda −3 ve −4: dört tane." },
       { s: "1 ≤ |−a| ≤ 3 ne demektir?", c: ["−a'nın sıfıra uzaklığı 1 ile 3 birim arasındadır", "−a, 1 ile 3 arasındadır", "−a'nın sıfıra uzaklığı 3 birimden fazladır"], a: "|−a|, −a'nın sıfıra uzaklığı: en az 1, en çok 3 birim." },
       { s: "|x| < −1 eşitsizliğinin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x < −1", "−1 < x < 1"], a: "Mutlak değer 0 ya da pozitif; negatif bir sayıdan küçük olamaz." }
+    ],
+    // Çarpanlara Ayırma (kullanıcı kararı): iki değişkenli parantez açma → ortak çarpan parantezine alma → iki kare farkı → tam kareler.
+    // Açma ile ayırma birbirinin tersi; her kural iki yönden sorulur. Çok adımlı yok.
+    "yks-carpan": [
+      // Parantez açma (iki değişken)
+      { s: "2(x − 3y) ifadesinin eşiti hangisidir?", c: ["2x − 6y", "2x − 3y", "2x + 6y"], a: "2 her terimle çarpılır: 2 · x − 2 · 3y." },
+      { s: "3(x + 2) − 2(y − x) ifadesinin eşiti hangisidir?", c: ["5x − 2y + 6", "x − 2y + 6", "5x − 2y + 4"], a: "3x + 6 − 2y + 2x = 5x − 2y + 6. −2 · (−x) = +2x." },
+      { s: "−(2x − y) ifadesinin eşiti hangisidir?", c: ["−2x + y", "−2x − y", "2x + y"], a: "Eksi her terimin işaretini değiştirir." },
+      { s: "x(y − 2) ifadesinin eşiti hangisidir?", c: ["xy − 2x", "xy − 2", "x + y − 2"], a: "x her terimle çarpılır: x · y − x · 2." },
+      { s: "2(x − y) − 3(x + y) ifadesinin eşiti hangisidir?", c: ["−x − 5y", "−x + y", "5x − 5y"], a: "2x − 2y − 3x − 3y = −x − 5y." },
+      { s: "−3(2a − b) + a ifadesinin eşiti hangisidir?", c: ["−5a + 3b", "−5a − 3b", "−7a + 3b"], a: "−6a + 3b + a = −5a + 3b." },
+      { s: "a(b + c) − b(a − c) ifadesinin eşiti hangisidir?", c: ["ac + bc", "2ab + ac − bc", "ac − bc"], a: "ab + ac − ab + bc = ac + bc." },
+      // Ortak çarpan parantezine alma
+      { s: "Çarpanlara ayırma ile parantez açma arasında hangisi doğrudur?", c: ["Birbirinin tersidir", "Aynı işlemdir", "İlgisizdir"], a: "2(x + 3) = 2x + 6 açmaktır; 2x + 6 = 2(x + 3) çarpanlara ayırmaktır." },
+      { s: "2x + 6 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["2(x + 3)", "2(x + 6)", "x(2 + 6)"], a: "İki terimde de 2 var: 2 · x + 2 · 3 = 2(x + 3)." },
+      { s: "3x − 12 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["3(x − 4)", "3(x − 12)", "3(x + 4)"], a: "3 · x − 3 · 4 = 3(x − 4)." },
+      { s: "−4x − 8 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["−4(x + 2)", "−4(x − 2)", "4(x − 2)"], a: "−4 parantezine alınca işaretler değişir: −4 · x + (−4) · 2." },
+      { s: "x<sup>2</sup> + 5x ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["x(x + 5)", "x(x + 5x)", "5x(x + 1)"], a: "İki terimde de x var: x · x + x · 5 = x(x + 5)." },
+      { s: "ax + ay ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["a(x + y)", "x(a + y)", "ay(x + 1)"], a: "Ortak çarpan a." },
+      { s: "6xy − 9y ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["3y(2x − 3)", "3y(2x − 9)", "6y(x − 3)"], a: "Ortak çarpan 3y: 3y · 2x − 3y · 3." },
+      { s: "x(a − b) + y(a − b) ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(a − b)(x + y)", "(a − b)xy", "(a + b)(x − y)"], a: "Ortak çarpan bir parantez de olabilir: (a − b) dışarı alınır." },
+      // İki kare farkı
+      { s: "a<sup>2</sup> − b<sup>2</sup> hangisine eşittir?", c: ["(a − b)(a + b)", "(a − b)<sup>2</sup>", "(a + b)<sup>2</sup>"], a: "İki kare farkı: (a − b)(a + b) = a<sup>2</sup> + ab − ab − b<sup>2</sup>." },
+      { s: "x<sup>2</sup> − 9 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 3)(x + 3)", "(x − 9)(x + 9)", "(x − 3)<sup>2</sup>"], a: "9 = 3<sup>2</sup>: x<sup>2</sup> − 3<sup>2</sup> = (x − 3)(x + 3)." },
+      { s: "1 − x<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(1 − x)(1 + x)", "(x − 1)(x + 1)", "(1 − x)<sup>2</sup>"], a: "1<sup>2</sup> − x<sup>2</sup> = (1 − x)(1 + x). (x − 1)(x + 1) ise x<sup>2</sup> − 1 olur." },
+      { s: "4 − x<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(2 − x)(2 + x)", "(4 − x)(4 + x)", "(2 − x)<sup>2</sup>"], a: "4 = 2<sup>2</sup>: (2 − x)(2 + x)." },
+      { s: "9 − 4x<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(3 − 2x)(3 + 2x)", "(9 − 2x)(9 + 2x)", "(3 − 4x)(3 + 4x)"], a: "9 = 3<sup>2</sup>, 4x<sup>2</sup> = (2x)<sup>2</sup>: (3 − 2x)(3 + 2x)." },
+      { s: "9x<sup>2</sup> − 4y<sup>2</sup> ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(3x − 2y)(3x + 2y)", "(9x − 4y)(9x + 4y)", "(3x − 2y)<sup>2</sup>"], a: "(3x)<sup>2</sup> − (2y)<sup>2</sup> = (3x − 2y)(3x + 2y)." },
+      { s: "(3x − 2y)(3x + 2y) ifadesinin eşiti hangisidir?", c: ["9x<sup>2</sup> − 4y<sup>2</sup>", "9x<sup>2</sup> + 4y<sup>2</sup>", "3x<sup>2</sup> − 2y<sup>2</sup>"], a: "İki kare farkı: (3x)<sup>2</sup> − (2y)<sup>2</sup>. Karesi alınırken katsayının da karesi alınır." },
+      { s: "(x − 5)(x + 5) ifadesinin eşiti hangisidir?", c: ["x<sup>2</sup> − 25", "x<sup>2</sup> + 25", "x<sup>2</sup> − 10"], a: "x<sup>2</sup> − 5<sup>2</sup> = x<sup>2</sup> − 25." },
+      { s: "x<sup>2</sup> + 9 ifadesi için hangisi doğrudur?", c: ["İki kare farkı değildir", "(x − 3)(x + 3)'e eşittir", "(x + 3)<sup>2</sup>'ye eşittir"], a: "Arada artı var: iki kare toplamı. (x − 3)(x + 3) = x<sup>2</sup> − 9." },
+      { s: "51<sup>2</sup> − 49<sup>2</sup> kaçtır?", c: ["200", "2", "100"], a: "İki kare farkı: (51 − 49)(51 + 49) = 2 · 100 = 200." },
+      // Tam kareler
+      { s: "(a + b)<sup>2</sup> hangisine eşittir?", c: ["a<sup>2</sup> + 2ab + b<sup>2</sup>", "a<sup>2</sup> + b<sup>2</sup>", "a<sup>2</sup> + ab + b<sup>2</sup>"], a: "(a + b)(a + b) = a<sup>2</sup> + ab + ab + b<sup>2</sup>. Ortadaki 2ab unutulmaz." },
+      { s: "(a − b)<sup>2</sup> hangisine eşittir?", c: ["a<sup>2</sup> − 2ab + b<sup>2</sup>", "a<sup>2</sup> − b<sup>2</sup>", "a<sup>2</sup> − 2ab − b<sup>2</sup>"], a: "(a − b)(a − b) = a<sup>2</sup> − ab − ab + b<sup>2</sup>. Son terim (−b)<sup>2</sup> = +b<sup>2</sup>." },
+      { s: "(x + 3)<sup>2</sup> ifadesinin açılımı hangisidir?", c: ["x<sup>2</sup> + 6x + 9", "x<sup>2</sup> + 9", "x<sup>2</sup> + 3x + 9"], a: "x<sup>2</sup> + 2 · x · 3 + 3<sup>2</sup> = x<sup>2</sup> + 6x + 9." },
+      { s: "(x − 2)<sup>2</sup> ifadesinin açılımı hangisidir?", c: ["x<sup>2</sup> − 4x + 4", "x<sup>2</sup> − 4", "x<sup>2</sup> − 2x + 4"], a: "x<sup>2</sup> − 2 · x · 2 + 2<sup>2</sup> = x<sup>2</sup> − 4x + 4." },
+      { s: "(2x + 1)<sup>2</sup> ifadesinin açılımı hangisidir?", c: ["4x<sup>2</sup> + 4x + 1", "4x<sup>2</sup> + 1", "2x<sup>2</sup> + 4x + 1"], a: "(2x)<sup>2</sup> + 2 · 2x · 1 + 1<sup>2</sup> = 4x<sup>2</sup> + 4x + 1." },
+      { s: "(3x − y)<sup>2</sup> ifadesinin açılımı hangisidir?", c: ["9x<sup>2</sup> − 6xy + y<sup>2</sup>", "9x<sup>2</sup> − y<sup>2</sup>", "3x<sup>2</sup> − 6xy + y<sup>2</sup>"], a: "(3x)<sup>2</sup> − 2 · 3x · y + y<sup>2</sup>." },
+      { s: "(−x − 2)<sup>2</sup> ifadesinin açılımı hangisidir?", c: ["x<sup>2</sup> + 4x + 4", "x<sup>2</sup> − 4x + 4", "−x<sup>2</sup> − 4x − 4"], a: "(−x − 2)<sup>2</sup> = (x + 2)<sup>2</sup>: kare alınınca eksi kaybolur." },
+      { s: "(a − b)<sup>2</sup> ile (b − a)<sup>2</sup> için hangisi doğrudur?", c: ["Eşittir", "Birbirinin ters işaretlisidir", "(a − b)<sup>2</sup> daha büyüktür"], a: "b − a = −(a − b); karesi alınınca eksi kaybolur." },
+      { s: "x<sup>2</sup> + 10x + 25 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x + 5)<sup>2</sup>", "(x + 25)<sup>2</sup>", "(x − 5)<sup>2</sup>"], a: "25 = 5<sup>2</sup>, 10x = 2 · x · 5: (x + 5)<sup>2</sup>." },
+      { s: "x<sup>2</sup> − 6x + 9 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − 3)<sup>2</sup>", "(x + 3)<sup>2</sup>", "(x − 3)(x + 3)"], a: "9 = 3<sup>2</sup>, −6x = −2 · x · 3: (x − 3)<sup>2</sup>." },
+      { s: "4x<sup>2</sup> + 4x + 1 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(2x + 1)<sup>2</sup>", "(4x + 1)<sup>2</sup>", "(2x − 1)<sup>2</sup>"], a: "4x<sup>2</sup> = (2x)<sup>2</sup>, 4x = 2 · 2x · 1: (2x + 1)<sup>2</sup>." }
     ]
   },
 
@@ -1725,6 +1770,14 @@ window.KK_YKS = {
     { k: "yks-mutlak", s: "√(x<sup>2</sup>) = |x|", d: true },
     { k: "yks-mutlak", s: "√((−5)<sup>2</sup>) = |−5|", d: true },
     { k: "yks-mutlak", s: "“x, 90'dan 10 fazla ya da 10 eksik” ifadesi |x − 90| = 10 ile gösterilir.", d: true },
-    { k: "yks-mutlak", s: "“x, 45'ten en çok 3 farklı” ifadesi |x − 45| ≥ 3 ile gösterilir.", d: false, n: "En çok 3: |x − 45| ≤ 3" }
+    { k: "yks-mutlak", s: "“x, 45'ten en çok 3 farklı” ifadesi |x − 45| ≥ 3 ile gösterilir.", d: false, n: "En çok 3: |x − 45| ≤ 3" },
+    { k: "yks-carpan", s: "(a + b)<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup>", d: false, n: "Ortadaki 2ab unutulmasın: a<sup>2</sup> + 2ab + b<sup>2</sup>" },
+    { k: "yks-carpan", s: "a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b)", d: true },
+    { k: "yks-carpan", s: "(a − b)<sup>2</sup> = a<sup>2</sup> − b<sup>2</sup>", d: false, n: "a<sup>2</sup> − 2ab + b<sup>2</sup>" },
+    { k: "yks-carpan", s: "x<sup>2</sup> + 4 bir iki kare farkıdır.", d: false, n: "Arada artı var: iki kare toplamıdır" },
+    { k: "yks-carpan", s: "2x + 6 = 2(x + 3)", d: true },
+    { k: "yks-carpan", s: "(a − b)<sup>2</sup> = (b − a)<sup>2</sup>", d: true },
+    { k: "yks-carpan", s: "1 − x<sup>2</sup> = (x − 1)(x + 1)", d: false, n: "(1 − x)(1 + x); (x − 1)(x + 1) = x<sup>2</sup> − 1" },
+    { k: "yks-carpan", s: "Çarpanlara ayırma, parantez açmanın tersidir.", d: true }
   ]
 };
