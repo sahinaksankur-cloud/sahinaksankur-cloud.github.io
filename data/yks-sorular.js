@@ -1474,7 +1474,30 @@ window.KK_YKS = {
       { s: "(a + b)<sup>3</sup> ifadesine hangileri eşittir?<br>I. a<sup>3</sup> + 3a<sup>2</sup>b + 3ab<sup>2</sup> + b<sup>3</sup><br>II. a<sup>3</sup> + b<sup>3</sup> + 3ab(a + b)<br>III. (a + b)(a + b)<sup>2</sup>", c: ["I, II ve III", "I ve II", "Yalnız I"], a: "I açık hâl, II kısa yazılış, III de (a + b) · (a + b)<sup>2</sup> = (a + b)<sup>3</sup>: üçü de eşit." },
       { s: "(a − b)<sup>3</sup> ifadesine hangileri eşittir?<br>I. a<sup>3</sup> − 3a<sup>2</sup>b + 3ab<sup>2</sup> − b<sup>3</sup><br>II. a<sup>3</sup> − b<sup>3</sup> − 3ab(a − b)<br>III. a<sup>3</sup> − b<sup>3</sup>", c: ["I ve II", "Yalnız I", "Yalnız III"], a: "I açık hâl, II kısa yazılış. a<sup>3</sup> − b<sup>3</sup> eksik." },
       { s: "1 − x<sup>3</sup> ifadesine hangileri eşittir?<br>I. (1 − x)(1 + x + x<sup>2</sup>)<br>II. (1 − x)<sup>3</sup> − 3x(1 − x)<br>III. (1 − x)(1 − x + x<sup>2</sup>)", c: ["Yalnız I", "I ve II", "I ve III"], a: "Yalnız I. Doğrusu (1 − x)<sup>3</sup> + 3x(1 − x) olmalı (II'de işaret yanlış); III'te ortadaki işaret yanlış (farkta artı olmalı)." },
-      { s: "a<sup>2</sup> + b<sup>2</sup> ifadesine hangileri eşittir?<br>I. (a + b)<sup>2</sup> − 2ab<br>II. (a − b)<sup>2</sup> + 2ab<br>III. (a + b)(a − b)", c: ["I ve II", "Yalnız I", "I, II ve III"], a: "I ve II doğru. (a + b)(a − b) = a<sup>2</sup> − b<sup>2</sup>." }
+      { s: "a<sup>2</sup> + b<sup>2</sup> ifadesine hangileri eşittir?<br>I. (a + b)<sup>2</sup> − 2ab<br>II. (a − b)<sup>2</sup> + 2ab<br>III. (a + b)(a − b)", c: ["I ve II", "Yalnız I", "I, II ve III"], a: "I ve II doğru. (a + b)(a − b) = a<sup>2</sup> − b<sup>2</sup>." },
+      // Köklü ifadelerle eşlenik: iki kare farkı (√x − √y)(√x + √y) ve küplerin farkı/toplamı (∛)
+      { s: "(x − y)/(√x − √y) ifadesinin eşiti hangisidir?", c: ["√x + √y", "√x − √y", "x + y"], a: "x − y = (√x)<sup>2</sup> − (√y)<sup>2</sup> = (√x − √y)(√x + √y). Sadeleşince √x + √y kalır." },
+      { s: "(x − y)/(√x + √y) ifadesinin eşiti hangisidir?", c: ["√x − √y", "√x + √y", "x − y"], a: "x − y = (√x − √y)(√x + √y); √x + √y sadeleşir." },
+      { s: "(2 − x<sup>2</sup>)/(√2 + x) ifadesinin eşiti hangisidir?", c: ["√2 − x", "√2 + x", "2 − x"], a: "2 − x<sup>2</sup> = (√2)<sup>2</sup> − x<sup>2</sup> = (√2 − x)(√2 + x)." },
+      { s: "(x − 4)/(√x − 2) ifadesinin eşiti hangisidir?", c: ["√x + 2", "√x − 2", "x + 2"], a: "x − 4 = (√x)<sup>2</sup> − 2<sup>2</sup> = (√x − 2)(√x + 2)." },
+      { s: "(9 − x)/(3 + √x) ifadesinin eşiti hangisidir?", c: ["3 − √x", "3 + √x", "9 − √x"], a: "9 − x = 3<sup>2</sup> − (√x)<sup>2</sup> = (3 − √x)(3 + √x)." },
+      { s: "(a − 1)/(√a + 1) ifadesinin eşiti hangisidir?", c: ["√a − 1", "√a + 1", "a − 1"], a: "a − 1 = (√a − 1)(√a + 1)." },
+      { s: "(x − 3)/(√x + √3) ifadesinin eşiti hangisidir?", c: ["√x − √3", "√x + √3", "x − √3"], a: "x − 3 = (√x)<sup>2</sup> − (√3)<sup>2</sup> = (√x − √3)(√x + √3)." },
+      { s: "x − 5 ifadesinin köklü çarpanları hangisidir?", c: ["(√x − √5)(√x + √5)", "(x − √5)(x + √5)", "(√x − 5)(√x + 5)"], a: "x = (√x)<sup>2</sup>, 5 = (√5)<sup>2</sup>: iki kare farkı." },
+      { s: "x<sup>2</sup> − 3 ifadesinin çarpanlarına ayrılmış hâli hangisidir?", c: ["(x − √3)(x + √3)", "(x − 3)(x + 3)", "(x − √3)<sup>2</sup>"], a: "3 = (√3)<sup>2</sup>: x<sup>2</sup> − (√3)<sup>2</sup>." },
+      { s: "(√x − √y)(√x + √y) ifadesinin eşiti hangisidir?", c: ["x − y", "x + y", "√x − √y"], a: "İki kare farkı: (√x)<sup>2</sup> − (√y)<sup>2</sup> = x − y." },
+      { s: "(√5 − √3)(√5 + √3) kaçtır?", c: ["2", "8", "√2"], a: "(√5)<sup>2</sup> − (√3)<sup>2</sup> = 5 − 3 = 2." },
+      { s: "(√3 + 1)<sup>2</sup> ifadesinin eşiti hangisidir?", c: ["4 + 2√3", "4", "3 + 2√3"], a: "(√3)<sup>2</sup> + 2 · √3 · 1 + 1 = 3 + 2√3 + 1 = 4 + 2√3." },
+      { s: "(√5 − √2)<sup>2</sup> ifadesinin eşiti hangisidir?", c: ["7 − 2√10", "3", "7 − √10"], a: "5 − 2 · √5 · √2 + 2 = 7 − 2√10." },
+      { s: "1/(√2 − 1) ifadesinin eşiti hangisidir?", c: ["√2 + 1", "√2 − 1", "1/√2"], a: "Eşlenikle genişlet: (√2 + 1)/((√2)<sup>2</sup> − 1) = (√2 + 1)/1." },
+      { s: "(x − y)/(∛x − ∛y) ifadesinin eşiti hangisidir?", c: ["∛(x<sup>2</sup>) + ∛(xy) + ∛(y<sup>2</sup>)", "∛(x<sup>2</sup>) − ∛(xy) + ∛(y<sup>2</sup>)", "∛x + ∛y"], a: "x − y = (∛x)<sup>3</sup> − (∛y)<sup>3</sup> = (∛x − ∛y)(∛(x<sup>2</sup>) + ∛(xy) + ∛(y<sup>2</sup>))." },
+      { s: "(x + 1)/(∛x + 1) ifadesinin eşiti hangisidir?", c: ["∛(x<sup>2</sup>) − ∛x + 1", "∛(x<sup>2</sup>) + ∛x + 1", "∛x − 1"], a: "x + 1 = (∛x)<sup>3</sup> + 1<sup>3</sup> = (∛x + 1)(∛(x<sup>2</sup>) − ∛x + 1)." },
+      { s: "(x − 8)/(∛x − 2) ifadesinin eşiti hangisidir?", c: ["∛(x<sup>2</sup>) + 2∛x + 4", "∛(x<sup>2</sup>) − 2∛x + 4", "∛x + 2"], a: "x − 8 = (∛x)<sup>3</sup> − 2<sup>3</sup> = (∛x − 2)(∛(x<sup>2</sup>) + 2∛x + 4)." },
+      { s: "(1 − x)/(1 − ∛x) ifadesinin eşiti hangisidir?", c: ["1 + ∛x + ∛(x<sup>2</sup>)", "1 − ∛x + ∛(x<sup>2</sup>)", "1 + ∛x"], a: "1 − x = 1<sup>3</sup> − (∛x)<sup>3</sup> = (1 − ∛x)(1 + ∛x + ∛(x<sup>2</sup>))." },
+      { s: "(∛a − ∛b)(∛(a<sup>2</sup>) + ∛(ab) + ∛(b<sup>2</sup>)) ifadesinin eşiti hangisidir?", c: ["a − b", "a + b", "∛a − ∛b"], a: "Küplerin farkı: (∛a)<sup>3</sup> − (∛b)<sup>3</sup> = a − b." },
+      { s: "(∛2 + 1)(∛4 − ∛2 + 1) kaçtır?", c: ["3", "1", "2∛2"], a: "Küplerin toplamı: (∛2)<sup>3</sup> + 1<sup>3</sup> = 2 + 1 = 3 (∛4 = ∛(2<sup>2</sup>))." },
+      { s: "x − y ifadesine hangileri eşittir?<br>I. (√x − √y)(√x + √y)<br>II. (∛x − ∛y)(∛(x<sup>2</sup>) + ∛(xy) + ∛(y<sup>2</sup>))<br>III. (√x − √y)<sup>2</sup>", c: ["I ve II", "Yalnız I", "I, II ve III"], a: "I iki kare farkı, II küplerin farkı. (√x − √y)<sup>2</sup> = x − 2√(xy) + y." },
+      { s: "x + 8 ifadesine hangileri eşittir?<br>I. (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4)<br>II. (∛x + 2)<sup>3</sup><br>III. (∛x + 2)(∛(x<sup>2</sup>) + 2∛x + 4)", c: ["Yalnız I", "I ve II", "I ve III"], a: "Küplerin toplamı: (∛x)<sup>3</sup> + 2<sup>3</sup> = (∛x + 2)(∛(x<sup>2</sup>) − 2∛x + 4). Toplamda ortadaki işaret eksi." }
     ]
   },
 
@@ -1810,6 +1833,9 @@ window.KK_YKS = {
     { k: "yks-carpan", s: "a<sup>3</sup> + b<sup>3</sup> = (a + b)(a<sup>2</sup> + ab + b<sup>2</sup>)", d: false, n: "Toplamda ortadaki işaret eksi: (a + b)(a<sup>2</sup> − ab + b<sup>2</sup>)" },
     { k: "yks-carpan", s: "(a + b)<sup>3</sup> = a<sup>3</sup> + b<sup>3</sup> + 3ab(a + b)", d: true },
     { k: "yks-carpan", s: "a<sup>2</sup> + b<sup>2</sup> = (a + b)<sup>2</sup> − 2ab", d: true },
-    { k: "yks-carpan", s: "(a + b)<sup>2</sup> − (a − b)<sup>2</sup> = 4ab", d: true }
+    { k: "yks-carpan", s: "(a + b)<sup>2</sup> − (a − b)<sup>2</sup> = 4ab", d: true },
+    { k: "yks-carpan", s: "(√x − √y)(√x + √y) = x − y", d: true },
+    { k: "yks-carpan", s: "(x − 4)/(√x − 2) = √x − 2", d: false, n: "x − 4 = (√x − 2)(√x + 2): sonuç √x + 2" },
+    { k: "yks-carpan", s: "(√3 + 1)<sup>2</sup> = 4", d: false, n: "Ortadaki 2√3 unutulmasın: 4 + 2√3" }
   ]
 };
