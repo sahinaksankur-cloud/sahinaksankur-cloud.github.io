@@ -868,7 +868,7 @@
   function seviyeKapat() { $("seviye-perde").hidden = true; seviyeHedef = null; }
 
   // ---- ℹ️ Puan kuralları: teste başlarken kısa hâli, "Puanlar nasıl işler?" penceresinde tamamı ----
-  function bonusOlur(id) { var t = testBilgi(id); return !t.bolum && !zorMu(id) && t.sayi >= (O.soruSayisi || 10); }
+  function bonusOlur(id) { var t = testBilgi(id); return !t.bolum && !zorMu(id) && id !== ZOR && t.sayi >= (O.soruSayisi || 10); }
   function bonusYazi() {
     return SEVIYELER.map(function (sv) {
       var b = TAM_BONUS[sv.id] || {};
@@ -881,8 +881,8 @@
     else k.push("⭐ Her soru, <strong>ilk kez doğru</strong> çözdüğünde 1 puan getirir. Süre dolarsa puan yok.");
     if (bonusOlur(id)) k.push("🎯 Hepsini doğru yaparsan bonus: " + bonusYazi() + ".");
     else if (testBilgi(id).bolum) k.push("🎯 5 soruluk chapter testlerinde bonus yok; bonus 10 soruluk testlerde.");
-    else if (zorMu(id)) k.push("🎯 Zorlandıklarım'da bonus yok; bonus konu testlerinde.");
-    if (zorMu(id)) k.push("📌 En önce kaçırdığın soru önce gelir. Doğru yaptığın soru desteden çıkar.");
+    else if (zorMu(id) || id === ZOR) k.push("🎯 Zorlandıklarım'da bonus yok; bonus konu testlerinde.");
+    if (zorMu(id) || id === ZOR) k.push("📌 En önce kaçırdığın soru önce gelir. Doğru yaptığın soru desteden çıkar.");
     else if (!tekrarMi(id) && !ozelListe) k.push("🔁 Önce hiç görmediğin sorular, sonra kaçırdıkların gelir.");
     return k;
   }
@@ -901,7 +901,7 @@
         "10 soruluk testlerde hepsini doğru yaparsan: " + bonusYazi() + ".",
         "Hız bonusu: soru başına ortalama kaç saniye erken bitirdiysen o kadar puan (12 saniyelik soruyu 9 saniyede çözersen +3).",
         "Bonus, o turda en az bir yeni puan aldıysan eklenir. Bir konunun bütün sorularını çözdüysen kutlama yapılır ama bonus eklenmez.",
-        "5 soruluk “Sınava Hazır mısın?” testlerinde ve 📌 Zorlandıklarım'da (Üniversite, YKS) bonus yok."
+        "5 soruluk “Sınava Hazır mısın?” testlerinde ve 📌 Zorlandıklarım'da bonus yok."
       ]) +
       b("⏱ Süre ve seviye", [
         "Seviye sadece süreyi değiştirir, sorular aynıdır: " + sureler + ". Grafikli sorularda " + ek + " saniye ek süre var.",
