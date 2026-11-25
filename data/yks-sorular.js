@@ -1369,6 +1369,20 @@ window.KK_YKS = {
       { s: "|x| ≤ 0 eşitsizliğini hangi sayılar sağlar?", c: ["Sadece 0", "Hiçbir sayı", "Bütün sayılar"], a: "Mutlak değer negatif olamaz; 0'dan küçük ya da eşit olması için 0 olmalı: x = 0." },
       { s: "|x| > −2 eşitsizliğini hangi sayılar sağlar?", c: ["Bütün reel sayılar", "Hiçbir sayı", "x > 2 olanlar"], a: "Mutlak değer hep 0 ya da pozitif; her zaman −2'den büyüktür." },
       { s: "|x| ≥ 0 eşitsizliğini hangi sayılar sağlar?", c: ["Bütün reel sayılar", "Sadece pozitifler", "Sadece 0"], a: "Uzaklık hiçbir zaman negatif değildir: her sayı sağlar." },
+      // "Ne demektir?": |a| < 3 → a, sıfıra 3 birimden yakın; |a| > 5 → 5 birimden uzak; 2 < |a| < 5 → uzaklık 2 ile 5 birim arası
+      { s: "|a| < 3 ne demektir?", c: ["a, sıfıra 3 birimden daha yakındır", "a, sıfıra 3 birimden daha uzaktır", "a, −3'ten küçüktür"], a: "|a|, a'nın sıfıra uzaklığı; bu uzaklık 3'ten az: a, sıfıra 3 birimden yakın." },
+      { s: "|−a| < 5 ne demektir?", c: ["−a, sıfıra 5 birimden daha yakındır", "−a, sıfıra 5 birimden daha uzaktır", "−a, negatif bir sayıdır"], a: "|−a|, −a'nın sıfıra uzaklığı; 5'ten az: −a, sıfıra 5 birimden yakın." },
+      { s: "|−a| < 5 ise a için hangisi doğrudur?", c: ["a da sıfıra 5 birimden yakındır", "a, sıfıra 5 birimden uzaktır", "a, negatif bir sayıdır"], a: "a ile −a sıfıra eşit uzaklıkta: |−a| = |a| < 5." },
+      { s: "|a| > 5 ne demektir?", c: ["a, sıfıra 5 birimden daha uzaktır", "a, sıfıra 5 birimden daha yakındır", "a, −5 ile 5 arasındadır"], a: "Sıfıra uzaklık 5'ten fazla: a, sayı doğrusunda 5'in sağında ya da −5'in solunda." },
+      { s: "|−a| > 5 ne demektir?", c: ["−a, sıfıra 5 birimden daha uzaktır", "−a, sıfıra 5 birimden daha yakındır", "−a, 5'ten küçüktür"], a: "|−a|, −a'nın sıfıra uzaklığı; 5'ten fazla." },
+      { s: "|a| ≤ 3 ne demektir?", c: ["a, sıfıra en çok 3 birim uzaktadır", "a, sıfıra en az 3 birim uzaktadır", "a, sıfıra tam 3 birim uzaktadır"], a: "≤: uzaklık 3 ya da daha az." },
+      { s: "|a| ≥ 2 ne demektir?", c: ["a, sıfıra en az 2 birim uzaktadır", "a, sıfıra en çok 2 birim uzaktadır", "a, sıfıra tam 2 birim uzaktadır"], a: "≥: uzaklık 2 ya da daha fazla." },
+      { s: "2 < |a| < 5 ne demektir?", c: ["a'nın sıfıra uzaklığı 2 birim ile 5 birim arasındadır", "a, 2 ile 5 arasındadır", "a'nın sıfıra uzaklığı 2 birimden azdır"], a: "|a| uzaklıktır: 2'den fazla, 5'ten az. a negatif de olabilir." },
+      { s: "Sıfıra uzaklığı 2 birimden fazla, 5 birimden az olan sayıları hangisi gösterir?", c: ["2 < |x| < 5", "2 < x < 5", "|x| < 5"], a: "Uzaklık |x|: 2 < |x| < 5." },
+      { s: "2 < |a| < 5 ise a hangisi olabilir?", c: ["−3", "1", "6"], a: "|−3| = 3: 2 ile 5 arasında. |1| = 1 ve |6| = 6 değil." },
+      { s: "2 < |a| < 5 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−5 < a < −2 ya da 2 < a < 5", "2 < a < 5", "−5 < a < 5"], a: "Sıfırın iki yanında: sağda 2 ile 5 arası, solda −5 ile −2 arası." },
+      { s: "2 < |a| < 5 koşulunu sağlayan kaç tam sayı vardır?", c: ["4", "2", "8"], a: "Sağda 3 ve 4, solda −3 ve −4: dört tane." },
+      { s: "1 ≤ |−a| ≤ 3 ne demektir?", c: ["−a'nın sıfıra uzaklığı 1 ile 3 birim arasındadır", "−a, 1 ile 3 arasındadır", "−a'nın sıfıra uzaklığı 3 birimden fazladır"], a: "|−a|, −a'nın sıfıra uzaklığı: en az 1, en çok 3 birim." },
       { s: "|x| < −1 eşitsizliğinin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x < −1", "−1 < x < 1"], a: "Mutlak değer 0 ya da pozitif; negatif bir sayıdan küçük olamaz." }
     ]
   },
@@ -1683,6 +1697,10 @@ window.KK_YKS = {
     { k: "yks-mutlak", s: "|x| > 2 ise x > 2'dir.", d: false, n: "x < −2 de olabilir: |−3| = 3 > 2" },
     { k: "yks-mutlak", s: "|x| > −2 eşitsizliğini her reel sayı sağlar.", d: true },
     { k: "yks-mutlak", s: "|x| ≤ 0 ise x = 0'dır.", d: true },
-    { k: "yks-mutlak", s: "|x − 2| < 3, x'in 2'ye uzaklığının 3'ten az olduğunu söyler.", d: true }
+    { k: "yks-mutlak", s: "|x − 2| < 3, x'in 2'ye uzaklığının 3'ten az olduğunu söyler.", d: true },
+    { k: "yks-mutlak", s: "|a| < 3, a'nın sıfıra 3 birimden daha yakın olduğunu söyler.", d: true },
+    { k: "yks-mutlak", s: "|a| > 5, a'nın sıfıra 5 birimden daha yakın olduğunu söyler.", d: false, n: "Daha uzak olduğunu söyler" },
+    { k: "yks-mutlak", s: "|−a| > 5 ise a'nın sıfıra uzaklığı da 5'ten fazladır.", d: true },
+    { k: "yks-mutlak", s: "2 < |a| < 5 ise a, 2 ile 5 arasındadır.", d: false, n: "a negatif de olabilir: |−3| = 3" }
   ]
 };
