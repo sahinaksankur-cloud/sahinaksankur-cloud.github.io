@@ -56,7 +56,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - `whatsappKanal`: WhatsApp duyuru kanalı linki. Boşsa sitedeki tüm kanal bağlantıları gizlenir.
 - `pdfIndirme`: `false` yapılırsa PDF'lerin yanındaki "⬇ İndir" düğmesi kalkar.
 - `whatsapp`: Birebir iletişim numarası. **Boş kalmalı** (kişisel numara gösterilmiyor).
-- `canli`: Canlı Yarışma ayarları: `aktif` (false → şeritler gizlenir), `soruSayisi` 10, `soruSure` 20, `cevapSure` 8, `program` (Türkiye saati; `gunler` 1 Pzt … 6 Cmt, 0 Paz), `iptal` (`"2026-12-31"` ya da `"2026-12-31 20:00"`), `calculusKonular`. Şu an: YKS hafta içi 17:30, hafta sonu 10:00, her gün 20:00; Calculus her gün 21:00; İngilizce her gün 12:30 (öğle arası, öğrenciler okuldayken; deneme amaçlı).
+- `canli`: Canlı Yarışma ayarları: `aktif` (false → şeritler gizlenir), `soruSayisi` 10, `soruSure` 20, `cevapSure` 8, `program` (Türkiye saati; `gunler` 1 Pzt … 6 Cmt, 0 Paz), `iptal` (`"2026-12-31"` ya da `"2026-12-31 20:00"`), `calculusKonular`. Şu an (saatler Kuzey Kampüs Kamplarının molalarına göre): YKS hafta içi 18:00 (öğle ve akşam kampı arası), hafta sonu 10:45 (Sabah Kampı uzun molası), her gün 19:51 (Akşam Kampı 1. mola); Calculus her gün 21:45 (Akşam Kampı uzun molası); İngilizce her gün 12:51 (sabah ve öğle kampı arası, öğle arası; deneme amaçlı). Kamp saatleri değişirse yarışmaları da kaydır.
 - `kamplar`: Kuzey Kampüs Kampları: `aktif`, `duzen` ([ders dk, mola dk] sırayla; şu an 50/10, 50/10, 40/20, 50/10, 50 → 5 ders, 240 dk), `liste` (sabah 08:00, öğle 13:00, akşam 19:00; `not` kartta küçük yazı), `iptal`.
 - `sheetCsvUrl`: Doluysa video listesi `data/videos.csv` yerine bu Google E-Tablo'dan okunur. Şu an boş.
 
@@ -118,7 +118,7 @@ Düz HTML/CSS/JS, derleme adımı yok. GitHub Pages, `main` dalından yayınlar 
 - **🎧 Arka plan sesi**: Kapalı / 💧 Su / 🌧 Yağmur / 🎵 Hafif müzik (hepsi Web Audio ile üretilir, dosya yok) + ses yüksekliği.
 - **🔥 Derse Isınma**: konu seçilir (Calculus, YKS, İngilizce kelime grupları) → 5 soru (`KK_ARAC.soruSec`, Testler'deki sırayla; puan Testler'e işlenir), sonra kampa ya da kendi saatinde çalışmaya geçilir. Soru dosyaları ve `oyun.js` sayfa açıldıktan sonra yüklenir.
 - **📊 Rapor** (sadece cihazda, `localStorage` → `kk-kamp-v1`: `gun` {tarih: saniye}, `hedef` (🎯 Bugünkü hedefim, son 30), `ayar`, `aktif` (süren çalışma; sayfa yeniden açılınca devam eder)): Bugün, Bu hafta (Pazartesiden), Bu ay, Toplam, 🔥 seri (≥10 dk çalışılan art arda günler), son 7 gün çubukları, son 5 hedef. Hiçbir yere gönderilmez. Kampta süre, katılınan andan "Kamptan ayrıl"a (ya da kamp bitişine) kadar ders bloklarıyla örtüşen kısımdır.
-- Çalışırken Canlı Yarışma hatırlatması gizlenir (`body.calisiyor`). Canlı Yarışma saatleri (20:00, 21:00) Akşam Kampı'nın ders başlarına denk geliyor; şimdilik bilerek dokunulmadı.
+- Çalışırken Canlı Yarışma hatırlatması gizlenir (`body.calisiyor`). Canlı Yarışmalar kamp molalarına yerleştirildi; molada bir yarışma varsa (ya da sürüyorsa) çalışma ekranında "🔴 Molada Canlı Yarışma" bağlantısı çıkar (`yarismaLink`, yeni sekmede açılır; kamp sayfası açık kalır, zil orada çalar).
 
 ## Kullanıcıya dosya gönderirken (Mac)
 - Mac'in Archive Utility'si buradan gönderilen zip'leri açamıyor ("Error 0"); Terminal'de `unzip` çalışıyor.

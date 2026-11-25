@@ -915,3 +915,6 @@ body.calisiyor .canli-hatirlat { display: none !important; }
 .ekran-panel p { margin: 0; line-height: 1.5; }
 .ekran-ikon { font-size: 2.6rem; }
 #kamp-isinma .oyun-kart + .oyun-kart { margin-top: 0; }
+.calis-dugmeler .kamp-yarisma { border-color: #d64545; color: #c0392b; font-weight: 600; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .calis-dugmeler .kamp-yarisma { color: #ff8a80; } }
+.calis-dugmeler .kamp-kucuk { flex-basis: 100%; margin: 0; }

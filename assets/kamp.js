@@ -376,6 +376,7 @@
       sure = mmss(h.kalan); oran = 1 - h.kalan / h.toplam;
       mesaj = "Kalk, su iç, biraz hareket et. Mola bitince zil çalacak; sayfayı kapatma.";
       if (a.tur === "kisisel") dugmeler = '<button type="button" class="btn big" data-don>Molayı bitir, derse dön</button>';
+      dugmeler += yarismaLink(s, s + h.kalan);
       document.title = "☕ " + mmss(h.kalan) + " · Mola";
       kilitAl();
     } else if (h.faz === "donus") {
@@ -405,6 +406,16 @@
     $("calis-hedef").hidden = !hd;
     $("calis-hedef").textContent = hd ? "🎯 " + hd : "";
     if (h.faz === "ders" && h.kalan > 0) kilitBirak();
+  }
+  // Molada Canlı Yarışma varsa (ya da sürüyorsa): yeni sekmede açılır, kamp sayfası açık kalır ve zil burada çalar
+  function yarismaLink(bas, bit) {
+    var T = window.KK_TAKVIM;
+    if (!T || T.CFG.aktif === false) return "";
+    var y = T.aralik(bas - 10 * DK, bit).filter(function (x) { return x.bas < bit && x.bas + T.tahminiSure() > bas; })[0];
+    if (!y) return "";
+    var basladi = y.bas <= bas;
+    return '<a class="btn kamp-yarisma" href="canli.html" target="_blank" rel="noopener">🔴 Molada Canlı Yarışma: ' + y.ad + " " + y.saat +
+      (basladi ? " · şimdi" : "") + " →</a>" + '<span class="kamp-kucuk">Yarışma yeni sekmede açılır. Bu sayfayı kapatma; mola bitince zil burada çalar.</span>';
   }
   // Faz değişince (sayfa açıkken): molaya geçişte haber, derse geçişte zil + konuşma
   function gecis(eski, h) {

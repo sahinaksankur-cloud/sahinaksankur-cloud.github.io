@@ -26,11 +26,12 @@ window.KK_CONFIG = {
     soruSure: 20,         // her soru (saniye); grafikli ve parçalı fonksiyonlu sorulara +5 sn
     cevapSure: 8,         // süre bitince doğru cevabın ekranda kalma süresi (saniye)
     program: [
-      { grup: "yks", saat: "10:00", gunler: [6, 0] },
-      { grup: "yks", saat: "17:30", gunler: [1, 2, 3, 4, 5] },
-      { grup: "yks", saat: "20:00" },
-      { grup: "calculus", saat: "21:00" },
-      { grup: "ingilizce", saat: "12:30" }   // öğle arası: öğrenciler okuldayken (deneme)
+      // Saatler Kuzey Kampüs Kamplarının molalarına denk gelir (kamplar: 08:00, 13:00, 19:00; bkz. kamplar.duzen)
+      { grup: "yks", saat: "10:45", gunler: [6, 0] },          // Sabah Kampı uzun molası (10:40–11:00)
+      { grup: "yks", saat: "18:00", gunler: [1, 2, 3, 4, 5] }, // Öğle ve Akşam kampları arası
+      { grup: "yks", saat: "19:51" },                          // Akşam Kampı 1. mola (19:50–20:00)
+      { grup: "calculus", saat: "21:45" },                     // Akşam Kampı uzun molası (21:40–22:00)
+      { grup: "ingilizce", saat: "12:51" }   // Sabah Kampı ile Öğle Kampı arası; öğle arası (deneme)
     ],
     // Yarışmanın yapılmayacağı günler: "2026-12-31" (o günün tüm yarışmaları) ya da "2026-12-31 20:00" (sadece o saat)
     iptal: [],
