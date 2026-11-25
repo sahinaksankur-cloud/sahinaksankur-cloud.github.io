@@ -26,7 +26,8 @@ window.KK_YKS = {
     { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" },
-    { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 }
+    { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 },
+    { id: "yks-mutlak", ad: "Mutlak Değer", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
   ],
 
   sorular: {
@@ -1303,6 +1304,55 @@ window.KK_YKS = {
       { s: "1 < x < 4 ise −x hangi aralıktadır?", c: ["−4 < −x < −1", "−1 < −x < 4", "1 < −x < 4"], a: "−1 ile çarp, yön dönsün: −1 > −x > −4, yani −4 < −x < −1." },
       { s: "2 < x < 5 ise 3x hangi aralıktadır?", c: ["6 < 3x < 15", "5 < 3x < 8", "2 < 3x < 15"], a: "Her tarafı pozitif 3 ile çarp: 6 < 3x < 15." },
       { s: "−1 < x < 2 ise −2x hangi aralıktadır?", c: ["−4 < −2x < 2", "−2 < −2x < 4", "−4 < −2x < −2"], a: "−2 ile çarp, yön dönsün: 2 > −2x > −4, yani −4 < −2x < 2." }
+    ],
+    // Mutlak Değer (kullanıcı kararı): önce sıfıra uzaklık (|7|, |x|, sıfıra uzaklığı 5 olanlar, |5 − 2| ve |a − b| iki sayı arasındaki uzaklık),
+    // sonra x ve −x'in işareti bilinemez, |x| ile |−x| (hangisi doğru/yanlış), kısa hesap, |x| = 5 / |x| = −5, |x − 3| = 7, |x + 2| = −4, basit eşitsizlik.
+    "yks-mutlak": [
+      // Sıfıra uzaklık
+      { s: "|7| ne demektir?", c: ["7'nin sayı doğrusunda sıfıra uzaklığı", "7'nin ters işaretlisi", "7'nin karesi"], a: "Mutlak değer, sayının sayı doğrusunda sıfıra uzaklığıdır: |7| = 7." },
+      { s: "|x| ne demektir?", c: ["x'in sayı doğrusunda sıfıra uzaklığı", "x'in ters işaretlisi", "x'in pozitif olduğu"], a: "|x|, x'in sıfıra kaç birim uzakta olduğunu söyler." },
+      { s: "|−5| kaçtır?", c: ["5", "−5", "0"], a: "−5, sıfırdan 5 birim uzakta: |−5| = 5." },
+      { s: "Sayı doğrusunda sıfıra uzaklığı 5 olan sayılar hangileridir?", c: ["5 ve −5", "Sadece 5", "0 ve 5"], a: "Sıfırın sağında 5, solunda −5: ikisi de 5 birim uzakta." },
+      { s: "Sayı doğrusunda sıfıra uzaklığı 4 olan sayıları hangisi gösterir?", c: ["|x| = 4", "x = 4", "−x = 4"], a: "Sıfıra uzaklık mutlak değerdir: |x| = 4 (x = 4 ya da x = −4)." },
+      { s: "Mutlak değer neden negatif olamaz?", c: ["Uzaklık negatif olamaz", "Bütün sayılar pozitiftir", "Karesi alındığı için"], a: "Mutlak değer bir uzaklıktır; uzaklık 0 ya da pozitiftir." },
+      { s: "|5 − 2| ne demektir?", c: ["5 ile 2 arasındaki uzaklık", "5 ile 2'nin toplamı", "2'nin 5'e uzaklığının eksisi"], a: "|5 − 2| = 3: sayı doğrusunda 5 ile 2 arasında 3 birim var." },
+      { s: "|a − b| ne demektir?", c: ["a ile b arasındaki uzaklık", "a ile b'nin toplamı", "a'nın sıfıra uzaklığı"], a: "Farkın mutlak değeri, iki sayı arasındaki uzaklıktır." },
+      { s: "|2 − 5| kaçtır?", c: ["3", "−3", "7"], a: "2 ile 5 arasındaki uzaklık 3. Uzaklık hangi sayıdan başlarsan başla aynıdır." },
+      { s: "|a − b| ile |b − a| için hangisi doğrudur?", c: ["Eşittir", "|a − b| daha büyüktür", "Birbirinin ters işaretlisidir"], a: "İkisi de a ile b arasındaki uzaklık: eşittir." },
+      // x ve −x'in işareti
+      { s: "x sayısı pozitif midir, negatif midir?", c: ["Bilinemez", "Pozitif", "Negatif"], a: "x her sayı olabilir: 3 de olabilir, −3 de, 0 da." },
+      { s: "−x sayısı pozitif midir, negatif midir?", c: ["Bilinemez", "Negatif", "Pozitif"], a: "−x, x'in ters işaretlisidir. x = −3 ise −x = 3 pozitif olur. Önündeki eksi, negatif demek değildir." },
+      { s: "|x| ifadesinin sonucu için hangisi doğrudur?", c: ["x'in işaretine göre x ya da −x'tir", "Her zaman x'tir", "Her zaman −x'tir"], a: "x ≥ 0 ise |x| = x; x < 0 ise |x| = −x (örnek: |−3| = 3 = −(−3))." },
+      { s: "|−x| ifadesinin sonucu için hangisi doğrudur?", c: ["|x| ile aynıdır", "Her zaman −x'tir", "Her zaman negatiftir"], a: "x ile −x sıfıra eşit uzaklıkta: |−x| = |x|." },
+      { s: "Mutlak değer için hangisi her x için doğrudur?", c: ["|−x| = |x|", "|x| = x", "|−x| = x"], a: "|x| = x ve |−x| = x, x negatifse bozulur (x = −3: |−3| = 3 ≠ −3)." },
+      { s: "Mutlak değer için hangisi her x için doğru değildir?", c: ["|x| = x", "|x| ≥ 0", "|−x| = |x|"], a: "x = −3 için |x| = 3 ama x = −3: |x| = x yanlış olur." },
+      { s: "x < 0 ise |x| hangisidir?", c: ["−x", "x", "0"], a: "x negatifse uzaklığı −x'tir: x = −3 ise |x| = 3 = −x." },
+      { s: "x > 0 ise |−x| hangisidir?", c: ["x", "−x", "0"], a: "|−x| = |x| = x (x pozitif)." },
+      { s: "x = −3 iken |x| ile x arasında hangisi doğrudur?", c: ["|x| = −x", "|x| = x", "|x| < x"], a: "|−3| = 3 ve −x = 3: |x| = −x." },
+      { s: "Mutlak değer için hangisi her zaman doğrudur?", c: ["|x| ≥ 0", "|x| > 0", "|x| = x"], a: "|0| = 0 olduğu için > değil ≥: |x| ≥ 0." },
+      // Kısa hesap
+      { s: "|−3| + |2| kaçtır?", c: ["5", "−1", "1"], a: "3 + 2 = 5." },
+      { s: "|−7| − |−2| kaçtır?", c: ["5", "−9", "9"], a: "7 − 2 = 5." },
+      { s: "−|−4| kaçtır?", c: ["−4", "4", "0"], a: "Önce |−4| = 4, sonra dışarıdaki eksi: −4. Eksi mutlak değerin dışında." },
+      { s: "|3 − 8| kaçtır?", c: ["5", "−5", "11"], a: "Önce içi: 3 − 8 = −5, sonra |−5| = 5." },
+      { s: "|−2| · |−3| kaçtır?", c: ["6", "−6", "5"], a: "2 · 3 = 6." },
+      { s: "|√2 − 2| ifadesinin eşiti hangisidir?", c: ["2 − √2", "√2 − 2", "√2 + 2"], a: "√2 ≈ 1,4 < 2: içi negatif, ters işaretlisi çıkar: 2 − √2." },
+      { s: "a < b ise |a − b| hangisidir?", c: ["b − a", "a − b", "a + b"], a: "a − b negatif; ters işaretlisi çıkar: b − a (büyükten küçük)." },
+      // Denklemler
+      { s: "|x| = 5 ise x hangileridir?", c: ["5 ya da −5", "Sadece 5", "Sadece −5"], a: "Sıfıra uzaklığı 5 olan iki sayı var: 5 ve −5." },
+      { s: "|x| = 5 denkleminin kaç çözümü vardır?", c: ["2", "1", "0"], a: "5 ve −5: iki çözüm." },
+      { s: "|x| = −5 denkleminin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x = −5", "x = 5 ya da x = −5"], a: "Uzaklık negatif olamaz: hiçbir sayının mutlak değeri −5 değildir." },
+      { s: "|x| = 0 ise x kaçtır?", c: ["0", "1", "Çözüm yoktur"], a: "Sıfıra uzaklığı 0 olan tek sayı 0'dır." },
+      { s: "|x − 3| = 7 ne demektir?", c: ["x'in 3'e uzaklığı 7'dir", "x'in 3 eksiği 7'dir", "x'in sıfıra uzaklığı 7'dir"], a: "|x − 3|, x ile 3 arasındaki uzaklık." },
+      { s: "|x − 3| = 7 ise x hangileridir?", c: ["10 ya da −4", "10 ya da 4", "Sadece 10"], a: "x − 3 = 7 ya da x − 3 = −7: x = 10 ya da x = −4 (3'ün 7 sağı ve 7 solu)." },
+      { s: "|x − 1| = 4 ise x hangileridir?", c: ["5 ya da −3", "5 ya da 3", "Sadece 5"], a: "x − 1 = 4 ya da x − 1 = −4: x = 5 ya da x = −3." },
+      { s: "|x + 2| = 3 ise x hangileridir?", c: ["1 ya da −5", "1 ya da 5", "−1 ya da 5"], a: "x + 2 = 3 ya da x + 2 = −3: x = 1 ya da x = −5." },
+      { s: "|x + 2| = −4 denkleminin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x = −6", "x = 2 ya da x = −6"], a: "Mutlak değer negatif olamaz; içinde ne olursa olsun −4'e eşit olmaz." },
+      // Basit eşitsizlik
+      { s: "|x| < 3 eşitsizliği hangisiyle aynı anlamdadır?", c: ["−3 < x < 3", "x < 3", "x > −3"], a: "Sıfıra uzaklığı 3'ten az: −3 ile 3 arasında." },
+      { s: "|x| > 2 eşitsizliği hangisiyle aynı anlamdadır?", c: ["x < −2 ya da x > 2", "−2 < x < 2", "x > 2"], a: "Sıfıra uzaklığı 2'den fazla: 2'nin sağında ya da −2'nin solunda." },
+      { s: "|x| ≤ 2 koşulunu sağlayan kaç tam sayı vardır?", c: ["5", "3", "4"], a: "−2, −1, 0, 1, 2: beş tane." },
+      { s: "|x| < −1 eşitsizliğinin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x < −1", "−1 < x < 1"], a: "Mutlak değer 0 ya da pozitif; negatif bir sayıdan küçük olamaz." }
     ]
   },
 
@@ -1602,6 +1652,15 @@ window.KK_YKS = {
     { k: "yks-esitsizlik", s: "x < 5 ise x'in alabileceği en büyük tam sayı değeri 5'tir.", d: false, n: "5 dahil değil: en büyük tam sayı 4" },
     { k: "yks-esitsizlik", s: "2 < 3 olduğu için −2 < −3'tür.", d: false, n: "−2 > −3: negatifle çarpınca sıra ters döner" },
     { k: "yks-esitsizlik", s: "x > 3 ile 3 < x aynı anlamdadır.", d: true },
-    { k: "yks-esitsizlik", s: "3x > −6 ise x > −2'dir.", d: true }
+    { k: "yks-esitsizlik", s: "3x > −6 ise x > −2'dir.", d: true },
+    { k: "yks-mutlak", s: "|7|, 7'nin sayı doğrusunda sıfıra uzaklığıdır.", d: true },
+    { k: "yks-mutlak", s: "Her x için |x| = x'tir.", d: false, n: "x negatifse |x| = −x: |−3| = 3" },
+    { k: "yks-mutlak", s: "−x her zaman negatif bir sayıdır.", d: false, n: "x = −3 ise −x = 3" },
+    { k: "yks-mutlak", s: "|−x| = |x|", d: true },
+    { k: "yks-mutlak", s: "|a − b|, a ile b arasındaki uzaklıktır.", d: true },
+    { k: "yks-mutlak", s: "|x| = −5 denkleminin iki çözümü vardır.", d: false, n: "Uzaklık negatif olamaz: çözüm yok" },
+    { k: "yks-mutlak", s: "−|−4| = 4", d: false, n: "Önce |−4| = 4, sonra eksi: −4" },
+    { k: "yks-mutlak", s: "|2 − 5| = |5 − 2|", d: true },
+    { k: "yks-mutlak", s: "|x| < 3 ise x, −3 ile 3 arasındadır.", d: true }
   ]
 };
