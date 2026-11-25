@@ -24,7 +24,8 @@ window.KK_YKS = {
     { id: "yks-bolunebilme", ad: "Bölünebilme Kuralları", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-ebob", ad: "EBOB – EKOK", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-uslu", ad: "Üslü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
-    { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 }
+    { id: "yks-koklu", ad: "Köklü Sayılar", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
+    { id: "yks-denklem", ad: "Birinci Dereceden Denklemler", ust: "Denklemler", sinav: "TYT", sinif: 9, baslik: "Temel Kavramlar · 3. Kısım" }
   ],
 
   sorular: {
@@ -1160,6 +1161,62 @@ window.KK_YKS = {
       { s: "√(∛64) = ?", c: ["2", "4", "8"], a: "İçten başla: ∛64 = 4, √4 = 2. Ya da 64<sup>1/6</sup> = 2." },
       { s: "√(√(√a)) = a<sup>?</sup>", c: ["1/8", "1/6", "3/2"], a: "Üç karekök iç içe: 1/2 · 1/2 · 1/2 = 1/8." },
       { s: "√(2√2) = 2<sup>?</sup>", c: ["3/4", "1/2", "3/2"], a: "Önce içi: 2√2 = 2<sup>1</sup> · 2<sup>1/2</sup> = 2<sup>3/2</sup>. Sonra karekök: (2<sup>3/2</sup>)<sup>1/2</sup> = 2<sup>3/4</sup>." }
+    ],
+    // Birinci Dereceden Denklemler (kullanıcı kararı): önce x'li ifade ve denklemin ne anlattığı (denklemden sözele, sözelden denkleme),
+    // sonra en basit çözümler (artılı/eksili sonuçlar), 0 ile çarpma/bölmeye dikkat, parantez açma (x buldurulmaz; işaret öğretilir).
+    "yks-denklem": [
+      // x'li ifade
+      { s: "3x + 2x ifadesinin eşiti hangisidir?", c: ["5x", "6x", "5x<sup>2</sup>"], a: "Benzer terimler toplanır: 3 tane x ile 2 tane x, 5 tane x eder." },
+      { s: "3x + 2 ifadesi için hangisi doğrudur?", c: ["Daha fazla sadeleşmez", "5x'e eşittir", "6x'e eşittir"], a: "3x ile 2 benzer terim değildir (birinde x var, öbüründe yok); toplanamaz." },
+      { s: "5x − x ifadesinin eşiti hangisidir?", c: ["4x", "5", "4"], a: "5 tane x'ten 1 tane x çıkınca 4 tane x kalır: 4x." },
+      { s: "2x + 3 + x − 1 ifadesinin eşiti hangisidir?", c: ["3x + 2", "3x + 4", "5x"], a: "x'ler kendi arasında (2x + x = 3x), sayılar kendi arasında (3 − 1 = 2) toplanır." },
+      { s: "x = 2 iken 3x − 1 ifadesinin değeri kaçtır?", c: ["5", "31", "6"], a: "3x, 3 · x demektir: 3 · 2 − 1 = 5." },
+      { s: "x = −2 iken 5 − x ifadesinin değeri kaçtır?", c: ["7", "3", "−7"], a: "5 − (−2) = 5 + 2 = 7. Negatif sayıyı parantezle yaz." },
+      // Denklemden sözele, sözelden denkleme
+      { s: "x + 3 = 12 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 3 fazlası 12'dir", "Bir sayının 3 katı 12'dir", "Bir sayının 3 eksiği 12'dir"], a: "x + 3: sayının 3 fazlası." },
+      { s: "1 − x = 9 denklemi hangi cümleyle ifade edilir?", c: ["1'den bir sayı çıkarılınca 9 kalır", "Bir sayıdan 1 çıkarılınca 9 kalır", "Bir sayının 1 eksiği 9'dur"], a: "1 − x: 1'den x çıkıyor. “Bir sayıdan 1 çıkarılınca” x − 1 olur." },
+      { s: "x/5 = 7 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 5'te biri 7'dir", "Bir sayının 5 katı 7'dir", "Bir sayının 5 eksiği 7'dir"], a: "x/5: sayı 5 eşit parçaya bölünmüş, bir parçası." },
+      { s: "4x = 12 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 4 katı 12'dir", "Bir sayının 4 fazlası 12'dir", "Bir sayının 4'te biri 12'dir"], a: "4x = 4 · x: sayının 4 katı." },
+      { s: "2x + 3 = 15 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 2 katının 3 fazlası 15'tir", "Bir sayının 3 fazlasının 2 katı 15'tir", "Bir sayının 2 fazlasının 3 katı 15'tir"], a: "Önce 2 katı (2x), sonra 3 fazlası (+ 3). “3 fazlasının 2 katı” 2(x + 3) olurdu." },
+      { s: "“Bir sayının 3 katının 2 fazlası 14'tür” hangi denklemle yazılır?", c: ["3x + 2 = 14", "3(x + 2) = 14", "2x + 3 = 14"], a: "3 katı: 3x; 2 fazlası: 3x + 2." },
+      { s: "“Bir sayının 4 fazlasının yarısı 6'dır” hangi denklemle yazılır?", c: ["(x + 4)/2 = 6", "x/2 + 4 = 6", "2(x + 4) = 6"], a: "Önce 4 fazlası (x + 4), sonra bu toplamın yarısı: parantez şart." },
+      { s: "“Bir sayının 5 eksiği 8'dir” hangi denklemle yazılır?", c: ["x − 5 = 8", "5 − x = 8", "5x = 8"], a: "Sayıdan 5 eksiliyor: x − 5." },
+      // Denklem ve kök
+      { s: "Hangisi 2x + 1 = 7 denkleminin köküdür?", c: ["3", "4", "6"], a: "Yerine koy: 2 · 3 + 1 = 7. Kök, eşitliği doğru yapan sayıdır." },
+      { s: "Bir denklemin iki tarafına aynı sayı eklenirse ne olur?", c: ["Kökü değişmez", "Kökü o sayı kadar artar", "Denklem bozulur"], a: "Terazinin iki kefesine aynı ağırlığı koymak gibi: denge bozulmaz." },
+      // En basit çözümler
+      { s: "x + 3 = 12 ise x kaçtır?", c: ["9", "15", "4"], a: "İki taraftan 3 çıkar: x = 12 − 3 = 9." },
+      { s: "1 − x = 9 ise x kaçtır?", c: ["−8", "8", "10"], a: "1'den çıkan sayı 9 bırakıyorsa x = 1 − 9 = −8. Kontrol: 1 − (−8) = 9." },
+      { s: "x/5 = 7 ise x kaçtır?", c: ["35", "12", "7/5"], a: "İki tarafı 5 ile çarp: x = 35." },
+      { s: "4x = 12 ise x kaçtır?", c: ["3", "8", "48"], a: "İki tarafı 4'e böl: x = 3." },
+      { s: "x − 7 = −2 ise x kaçtır?", c: ["5", "−9", "9"], a: "İki tarafa 7 ekle: x = −2 + 7 = 5." },
+      { s: "x + 5 = 2 ise x kaçtır?", c: ["−3", "3", "7"], a: "İki taraftan 5 çıkar: x = 2 − 5 = −3." },
+      { s: "−3x = 12 ise x kaçtır?", c: ["−4", "4", "9"], a: "İki tarafı −3'e böl: x = −4. Kontrol: −3 · (−4) = 12." },
+      { s: "−x = 4 ise x kaçtır?", c: ["−4", "4", "0"], a: "−x, x'in ters işaretlisi: x = −4." },
+      { s: "2x + 3 = 15 ise x kaçtır?", c: ["6", "9", "12"], a: "Önce 3'ü at: 2x = 12, sonra 2'ye böl: x = 6." },
+      { s: "3x − 4 = −10 ise x kaçtır?", c: ["−2", "2", "−14/3"], a: "4 ekle: 3x = −6, 3'e böl: x = −2." },
+      { s: "5 − 2x = 11 ise x kaçtır?", c: ["−3", "3", "8"], a: "5'i at: −2x = 6, −2'ye böl: x = −3." },
+      { s: "x/3 − 2 = 1 ise x kaçtır?", c: ["9", "3", "−3"], a: "2 ekle: x/3 = 3, 3 ile çarp: x = 9." },
+      // 0 ile çarpma ve bölmeye dikkat
+      { s: "3x = 0 ise x kaçtır?", c: ["0", "3", "Çözüm yoktur"], a: "3 · 0 = 0: x = 0 bir çözümdür. 0 da sayıdır." },
+      { s: "x/4 = 0 ise x kaçtır?", c: ["0", "4", "Tanımsız"], a: "Payı 0 olan kesir 0'dır: x = 0." },
+      { s: "0 · x = 5 denkleminin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x = 5", "x = 0"], a: "Hangi sayı 0 ile çarpılırsa çarpılsın sonuç 0; asla 5 olmaz." },
+      { s: "0 · x = 0 denkleminin çözümü için hangisi doğrudur?", c: ["Her sayı çözümdür", "Çözüm yoktur", "Sadece x = 0"], a: "Her sayının 0 katı 0'dır: bütün sayılar denklemi sağlar." },
+      { s: "Bir denklemin iki tarafı hangi sayıya bölünemez?", c: ["0", "1", "−1"], a: "0'a bölme tanımsızdır." },
+      { s: "x = x + 1 denkleminin çözümü için hangisi doğrudur?", c: ["Çözüm yoktur", "x = 1", "x = 0"], a: "Bir sayı kendisinin 1 fazlasına eşit olamaz (iki taraftan x çıkarsa 0 = 1 kalır)." },
+      // Parantez açma (x buldurulmaz; işaret öğretilir)
+      { s: "3(x − 4) ifadesinin açılımı hangisidir?", c: ["3x − 12", "3x − 4", "3x + 12"], a: "3 parantezin içindeki her terimle çarpılır: 3 · x − 3 · 4." },
+      { s: "3(2x − 4) + 9 ifadesinin eşiti hangisidir?", c: ["6x − 3", "6x + 5", "6x − 21"], a: "Önce parantezi aç: 6x − 12, sonra 9'u ekle: 6x − 3." },
+      { s: "−2(x + 5) ifadesinin açılımı hangisidir?", c: ["−2x − 10", "−2x + 10", "−2x + 5"], a: "−2 her terimle çarpılır: −2 · x = −2x, −2 · 5 = −10." },
+      { s: "−(x − 3) ifadesinin eşiti hangisidir?", c: ["−x + 3", "−x − 3", "x + 3"], a: "Parantezin önündeki eksi, içindeki her terimin işaretini değiştirir." },
+      { s: "−3(2 − x) ifadesinin açılımı hangisidir?", c: ["−6 + 3x", "−6 − 3x", "6 + 3x"], a: "−3 · 2 = −6, −3 · (−x) = +3x." },
+      { s: "−4(−x − 2) ifadesinin açılımı hangisidir?", c: ["4x + 8", "−4x + 8", "4x − 8"], a: "Eksi çarpı eksi artı: −4 · (−x) = 4x, −4 · (−2) = 8." },
+      { s: "4(x + 2) − 3 ifadesinin eşiti hangisidir?", c: ["4x + 5", "4x − 1", "4x + 11"], a: "4x + 8 − 3 = 4x + 5." },
+      { s: "5 − 2(x − 1) ifadesinin eşiti hangisidir?", c: ["7 − 2x", "3 − 2x", "6 − 2x"], a: "−2 ile çarparken işaretler değişir: 5 − 2x + 2 = 7 − 2x." },
+      { s: "6 − (x + 4) ifadesinin eşiti hangisidir?", c: ["2 − x", "10 − x", "2 + x"], a: "Eksi parantezi açınca: 6 − x − 4 = 2 − x." },
+      { s: "x − (2x − 5) ifadesinin eşiti hangisidir?", c: ["−x + 5", "−x − 5", "3x − 5"], a: "x − 2x + 5 = −x + 5. Parantezdeki −5 eksiyle çarpılınca +5 olur." },
+      { s: "2(x + 1) + 3(x − 1) ifadesinin eşiti hangisidir?", c: ["5x − 1", "5x + 1", "5x"], a: "2x + 2 + 3x − 3 = 5x − 1." },
+      { s: "(x − 3) · 2 ifadesinin açılımı hangisidir?", c: ["2x − 6", "2x − 3", "x − 6"], a: "Çarpan sağda da olsa her terimle çarpılır: 2x − 6." }
     ]
   },
 
@@ -1434,6 +1491,17 @@ window.KK_YKS = {
     { k: "yks-koklu", s: "∛(a<sup>2</sup>) = a<sup>3/2</sup>", d: false, n: "a<sup>2/3</sup>: içerideki üs paya, kök derecesi paydaya" },
     { k: "yks-koklu", s: "√4 + √9 = √13", d: false, n: "√4 + √9 = 2 + 3 = 5" },
     { k: "yks-koklu", s: "∛(−8) tanımsızdır.", d: false, n: "∛(−8) = −2; küpkökün içi negatif olabilir" },
-    { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true }
+    { k: "yks-koklu", s: "√(−4) reel sayılarda tanımsızdır.", d: true },
+    { k: "yks-denklem", s: "x + 3 = 12 denklemi “bir sayının 3 fazlası 12'dir” demektir.", d: true },
+    { k: "yks-denklem", s: "3x + 2 ifadesi 5x'e eşittir.", d: false, n: "3x ile 2 benzer terim değildir, toplanmaz" },
+    { k: "yks-denklem", s: "Denklemin iki tarafına aynı sayı eklenirse kök değişmez.", d: true },
+    { k: "yks-denklem", s: "3x = 0 denkleminin çözümü yoktur.", d: false, n: "x = 0 çözümdür: 3 · 0 = 0" },
+    { k: "yks-denklem", s: "0 · x = 5 denkleminin çözümü yoktur.", d: true },
+    { k: "yks-denklem", s: "0 · x = 0 denklemini her sayı sağlar.", d: true },
+    { k: "yks-denklem", s: "Bir denklemin iki tarafı 0'a bölünebilir.", d: false, n: "0'a bölme tanımsızdır" },
+    { k: "yks-denklem", s: "3(x − 4) = 3x − 4", d: false, n: "3 her terimle çarpılır: 3x − 12" },
+    { k: "yks-denklem", s: "−(x − 3) = −x + 3", d: true },
+    { k: "yks-denklem", s: "−2(x − 5) = −2x − 10", d: false, n: "−2 · (−5) = +10: −2x + 10" },
+    { k: "yks-denklem", s: "2x + 3 ile 2(x + 3) aynı ifadedir.", d: false, n: "2(x + 3) = 2x + 6" }
   ]
 };
