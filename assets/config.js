@@ -108,11 +108,11 @@ window.KK_CONFIG = {
       id: "yks-ayt",
       ad: "AYT Matematik",
       kisaAd: "AYT",
-      aciklama: "Fonksiyonlardan başlayarak AYT matematik konu anlatımı. Her dersin altında ✏️ Kendini test et: kitaptaki çalışma sorularından 3 soru.",
-      playlist: "",
+      aciklama: "Fonksiyonlardan başlayarak AYT matematik konu anlatımı.",
+      playlist: "PLE2Fyo-BY8mI",
       dil: "tr",
       sorular: true,
-      aktif: false
+      aktif: true
     },
     {
       id: "en-calc",
