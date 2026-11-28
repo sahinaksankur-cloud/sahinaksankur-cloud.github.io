@@ -45,7 +45,7 @@ window.KK_YKS = {
 
     { id: "yks-havuzprob", ad: "Havuz Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
-    // { id: "yks-yuzdeprob", ad: "Yüzde Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+    { id: "yks-yuzdeprob", ad: "Yüzde Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
     // { id: "yks-karzarar", ad: "Kâr – Zarar Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
