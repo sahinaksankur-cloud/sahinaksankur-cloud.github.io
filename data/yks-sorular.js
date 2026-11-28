@@ -1681,10 +1681,91 @@ window.KK_YKS = {
 
     // ── yks-sayiprob · Sayı Problemleri ──
     "yks-sayiprob": [
+      // Bir sayı: katı, fazlası, eksiği verilince sayıyı bulma
+      { s: "Bir sayının 4 katının 3 fazlası 23'tür. Bu sayı kaçtır?", c: ["5", "20", "4"], a: "4x + 3 = 23 → 4x = 20 → x = 5." },
+      { s: "Bir sayının 2 fazlasının 3 katı 21'dir. Bu sayı kaçtır?", c: ["5", "7", "9"], a: "3(x + 2) = 21 → x + 2 = 7 → x = 5." },
+      { s: "Bir sayının 5 katının 4 eksiği 26'dır. Bu sayı kaçtır?", c: ["6", "30", "5"], a: "5x − 4 = 26 → 5x = 30 → x = 6." },
+      { s: "Bir sayının 3 eksiğinin 4 katı 20'dir. Bu sayı kaçtır?", c: ["8", "5", "2"], a: "4(x − 3) = 20 → x − 3 = 5 → x = 8." },
+      { s: "Bir sayı 5 artırılıp 2 ile çarpılırsa 30 elde ediliyor. Bu sayı kaçtır?", c: ["10", "15", "20"], a: "2(x + 5) = 30 → x + 5 = 15 → x = 10." },
+      { s: "Bir sayının 2 katı ile 3 katının toplamı 35'tir. Bu sayı kaçtır?", c: ["7", "5", "6"], a: "2x + 3x = 35 → 5x = 35 → x = 7." },
+      { s: "Bir sayının 7 katı ile 4 katının farkı 18'dir. Bu sayı kaçtır?", c: ["6", "3", "9"], a: "7x − 4x = 18 → 3x = 18 → x = 6." },
+      // İki tarafta x
+      { s: "Bir sayının 4 katı, 9 fazlasına eşittir. Bu sayı kaçtır?", c: ["3", "9", "1"], a: "4x = x + 9 → 3x = 9 → x = 3." },
+      { s: "Bir sayının 5 katı, 3 katından 12 fazladır. Bu sayı kaçtır?", c: ["6", "12", "3"], a: "5x = 3x + 12 → 2x = 12 → x = 6." },
+      { s: "Hangi sayının 2 katının 7 eksiği, kendisinin 1 fazlasına eşittir?", c: ["8", "6", "7"], a: "2x − 7 = x + 1 → x = 8." },
+      { s: "Bir sayının 6 fazlası, 3 katına eşittir. Bu sayı kaçtır?", c: ["3", "2", "6"], a: "x + 6 = 3x → 6 = 2x → x = 3." },
+      { s: "Bir sayının 3 katından 8 çıkarılınca sayının kendisi elde ediliyor. Bu sayı kaçtır?", c: ["4", "8", "2"], a: "3x − 8 = x → 2x = 8 → x = 4." },
+      // İki sayı: toplam ve fark
+      { s: "Toplamları 30, farkları 6 olan iki sayıdan büyüğü kaçtır?", c: ["18", "12", "24"], a: "Küçüğü x, büyüğü x + 6: x + (x + 6) = 30 → 2x = 24 → x = 12. Büyüğü 18." },
+      { s: "Toplamları 20, farkları 4 olan iki sayıdan küçüğü kaçtır?", c: ["8", "12", "16"], a: "Küçüğü x, büyüğü x + 4: x + (x + 4) = 20 → 2x = 16 → x = 8." },
+      { s: "İki sayıdan biri diğerinden 7 fazladır ve toplamları 17'dir. Büyük sayı kaçtır?", c: ["12", "5", "10"], a: "x + (x + 7) = 17 → 2x = 10 → x = 5. Büyük sayı 5 + 7 = 12." },
+      { s: "30 kişilik bir sınıfta kızların sayısı erkeklerden 4 fazladır. Sınıfta kaç kız vardır?", c: ["17", "13", "15"], a: "Erkek x, kız x + 4: x + (x + 4) = 30 → 2x = 26 → x = 13. Kız 17." },
+      // İki sayı: biri diğerinin katı
+      { s: "İki sayıdan büyüğü küçüğünün 3 katıdır. Toplamları 24 ise küçük sayı kaçtır?", c: ["6", "8", "18"], a: "x + 3x = 24 → 4x = 24 → x = 6." },
+      { s: "İki sayıdan büyüğü küçüğünün 4 katıdır. Farkları 15 ise büyük sayı kaçtır?", c: ["20", "5", "15"], a: "4x − x = 15 → 3x = 15 → x = 5. Büyük sayı 4 · 5 = 20." },
+      { s: "İki sayıdan biri diğerinin 2 katıdır. Toplamları 27 ise büyük sayı kaçtır?", c: ["18", "9", "13"], a: "x + 2x = 27 → 3x = 27 → x = 9. Büyük sayı 18." },
+      { s: "Büyük sayı küçük sayının 3 katından 2 fazladır. Toplamları 26 ise küçük sayı kaçtır?", c: ["6", "8", "20"], a: "x + (3x + 2) = 26 → 4x = 24 → x = 6." },
+      { s: "Üç sayıdan ikincisi birincinin 2 katı, üçüncüsü birincinin 3 katıdır. Toplamları 36 ise üçüncü sayı kaçtır?", c: ["18", "6", "12"], a: "x + 2x + 3x = 36 → 6x = 36 → x = 6. Üçüncü sayı 3 · 6 = 18." },
+      // Aktarma ve eşitleme
+      { s: "Ali'nin 20, Ece'nin 8 bilyesi var. Ali Ece'ye kaç bilye verirse bilye sayıları eşit olur?", c: ["6", "12", "4"], a: "20 − x = 8 + x → 12 = 2x → x = 6. Farkın yarısı verilir." },
+      { s: "Birinci kutuda 35, ikinci kutuda 15 kalem var. Birinciden ikinciye kaç kalem aktarılırsa kutulardaki kalem sayısı eşit olur?", c: ["10", "20", "25"], a: "35 − x = 15 + x → 20 = 2x → x = 10." },
+      { s: "Bir rafta 10, öteki rafta 14 kitap var. İkinci raftan birinciye kaç kitap aktarılırsa birinci raftaki kitap sayısı ikincinin 2 katı olur?", c: ["6", "4", "2"], a: "10 + x = 2(14 − x) → 10 + x = 28 − 2x → 3x = 18 → x = 6. Kontrol: 16 ve 8." },
+      { s: "Ayşe'nin parası Can'ın parasının 2 katıdır. Ayşe Can'a 10 TL verirse paraları eşit oluyor. Can'ın kaç TL'si vardır?", c: ["20", "10", "40"], a: "Can x, Ayşe 2x: 2x − 10 = x + 10 → x = 20." },
+      // Para, fiyat ve sayma
+      { s: "Bir kalem 4 TL, bir defter 10 TL'dir. 2 defter ve bir miktar kalem için 36 TL ödendi. Kaç kalem alındı?", c: ["4", "16", "9"], a: "2 · 10 + 4x = 36 → 4x = 16 → x = 4." },
+      { s: "Bir sinema bileti bir mısırdan 30 TL pahalıdır. Bilet ve mısır birlikte 90 TL ise bilet kaç TL'dir?", c: ["60", "30", "45"], a: "Mısır x, bilet x + 30: x + (x + 30) = 90 → 2x = 60 → x = 30. Bilet 60 TL." },
+      { s: "Bir defterin fiyatı bir kalemin fiyatının 3 katıdır. Bir defter ve bir kalem 40 TL ise kalem kaç TL'dir?", c: ["10", "30", "20"], a: "Kalem x, defter 3x: x + 3x = 40 → 4x = 40 → x = 10." },
+      { s: "10 TL'lik ve 20 TL'lik toplam 8 banknotla 110 TL ödendi. Kaç tane 20 TL'lik banknot vardır?", c: ["3", "5", "4"], a: "20'lik x, 10'luk 8 − x: 20x + 10(8 − x) = 110 → 10x + 80 = 110 → x = 3." },
+      { s: "Bir çiftlikteki tavuk ve koyunların sayısı 10, ayaklarının sayısı 28'dir. Kaç koyun vardır?", c: ["4", "6", "7"], a: "Koyun x, tavuk 10 − x: 4x + 2(10 − x) = 28 → 2x + 20 = 28 → x = 4." },
+      { s: "Bir sınavda her doğru 4 puan kazandırıyor, her yanlış 1 puan götürüyor. 10 soruyu cevaplayan biri 25 puan aldıysa kaç doğrusu vardır?", c: ["7", "3", "6"], a: "Doğru x, yanlış 10 − x: 4x − (10 − x) = 25 → 5x = 35 → x = 7." }
     ],
 
     // ── yks-kesirprob · Kesir Problemleri ──
     "yks-kesirprob": [
+      // Cümleden sembole: tek işlem (bölme ve kesir kadarı)
+      { s: "“Bir sayının yedide biri” x ile nasıl yazılır?", c: ["x/7", "7x", "7/x"], a: "Yedide biri: sayı 7'ye bölünür, x/7. 7x sayının 7 katı, 7/x ise 7'nin sayıya bölümüdür." },
+      { s: "“Bir sayının beşte ikisi” x ile nasıl yazılır?", c: ["2x/5", "5x/2", "x/5 + 2"], a: "Beşte biri x/5, beşte ikisi bunun 2 katı: 2x/5." },
+      { s: "“Bir sayının 4'e bölümü” x ile nasıl yazılır?", c: ["x/4", "4/x", "x − 4"], a: "Sayı bölünen, 4 bölen: x/4. 4/x, 4'ün sayıya bölümüdür." },
+      { s: "“Bir sayının dörtte üçü” x ile nasıl yazılır?", c: ["3x/4", "4x/3", "x/4 + 3"], a: "Dörtte biri x/4, dörtte üçü bunun 3 katı: 3x/4." },
+      // Sıra ve parantez: cümlede ilk söylenen işlem önce yapılır
+      { s: "“Bir sayının üçte birinin 2 fazlası” x ile nasıl yazılır?", c: ["x/3 + 2", "(x + 2)/3", "3x + 2"], a: "Önce üçte biri: x/3. Sonra 2 fazlası: x/3 + 2." },
+      { s: "“Bir sayının 2 fazlasının üçte biri” x ile nasıl yazılır?", c: ["(x + 2)/3", "x/3 + 2", "x + 2/3"], a: "Önce 2 fazlası: x + 2. Bunun üçte biri: toplamın tamamı bölünür, parantez şart: (x + 2)/3." },
+      { s: "“Bir sayının 5 eksiğinin dörtte biri” x ile nasıl yazılır?", c: ["(x − 5)/4", "x/4 − 5", "x − 5/4"], a: "Önce 5 eksiği: x − 5. Bunun dörtte biri: (x − 5)/4." },
+      { s: "“Bir sayının dörtte birinin 5 eksiği” x ile nasıl yazılır?", c: ["x/4 − 5", "(x − 5)/4", "5 − x/4"], a: "Önce dörtte biri: x/4. Sonra 5 eksiği: x/4 − 5." },
+      { s: "“Bir sayının 6 fazlasının üçte biri” yazılırken neden parantez gerekir?", c: ["Toplamın tamamı 3'e bölündüğü için", "Bölme her zaman önce yapıldığı için", "Parantez gerekmez"], a: "“-ının üçte biri” önceki sonucu bütün olarak alır: (x + 6)/3. x + 6/3 yazılırsa sadece 6 bölünür." },
+      // Zincirler: 2–3 işlem, sırayla
+      { s: "“Bir sayının üçte birinin 4 katı” x ile nasıl yazılır?", c: ["4x/3", "x/12", "3x/4"], a: "Önce üçte biri x/3, sonra 4 katı: 4 · x/3 = 4x/3." },
+      { s: "“Bir sayının yarısının üçte biri” x ile nasıl yazılır?", c: ["x/6", "x/5", "3x/2"], a: "x/2'nin üçte biri: x/2 ÷ 3 = x/6. Yarısının üçte biri, altıda biridir." },
+      { s: "“Bir sayının 2 eksiğinin yarısının 5 fazlası” x ile nasıl yazılır?", c: ["(x − 2)/2 + 5", "x/2 − 2 + 5", "(x − 2 + 5)/2"], a: "Sırayla: x − 2, sonra (x − 2)/2, sonra (x − 2)/2 + 5." },
+      { s: "“Bir sayının 3 katının 1 fazlasının dörtte biri” x ile nasıl yazılır?", c: ["(3x + 1)/4", "3x + 1/4", "3(x + 1)/4"], a: "Sırayla: 3x, sonra 3x + 1, sonra bunun tamamının dörtte biri: (3x + 1)/4." },
+      // Ters yön: ifadeden cümleye
+      { s: "(x + 2)/3 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 2 fazlasının üçte biri", "Bir sayının üçte birinin 2 fazlası", "Bir sayının 3 katının 2 fazlası"], a: "Parantez önce: x + 2 (2 fazlası), sonra 3'e bölüm (üçte biri)." },
+      { s: "x/5 − 1 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının beşte birinin 1 eksiği", "Bir sayının 1 eksiğinin beşte biri", "Bir sayının 5 katının 1 eksiği"], a: "Önce x/5 (beşte biri), sonra 1 eksiği. Parantez yok, yani bölme önce." },
+      { s: "3x/4 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının dörtte üçü", "Bir sayının üçte dördü", "Bir sayının 3 katının 4 fazlası"], a: "3x/4: sayının 4'e bölünüp 3 ile çarpılması, yani dörtte üçü." },
+      { s: "(x − 1)/2 + 4 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 1 eksiğinin yarısının 4 fazlası", "Bir sayının yarısının 1 eksiğinin 4 fazlası", "Bir sayının 4 fazlasının 1 eksiğinin yarısı"], a: "Sırayla: x − 1 (1 eksiği), (x − 1)/2 (yarısı), + 4 (4 fazlası)." },
+      // Çözmeden denklem kurma
+      { s: "“Bir sayının üçte birinin 2 fazlası 7'dir.” Hangi denklemle yazılır?", c: ["x/3 + 2 = 7", "(x + 2)/3 = 7", "3x + 2 = 7"], a: "Önce üçte biri x/3, sonra 2 fazlası; “-dir” eşittir: x/3 + 2 = 7." },
+      { s: "“Bir sayının 1 eksiğinin beşte biri 3'tür.” Hangi denklemle yazılır?", c: ["(x − 1)/5 = 3", "x/5 − 1 = 3", "5(x − 1) = 3"], a: "Önce 1 eksiği (x − 1), sonra beşte biri: (x − 1)/5 = 3." },
+      { s: "“Bir sayının dörtte üçü 12'dir.” Hangi denklemle yazılır?", c: ["3x/4 = 12", "4x/3 = 12", "x/4 + 3 = 12"], a: "Dörtte üçü 3x/4; “-dir” eşittir: 3x/4 = 12." },
+      // Bütün ve parça
+      { s: "Bir sınıfın 2/5'i kızdır. Sınıfta 12 kız varsa sınıf kaç kişidir?", c: ["30", "24", "20"], a: "2/5'i 12 ise 1/5'i 6, tamamı 5 · 6 = 30." },
+      { s: "Bir kitabın 3/4'ü okununca 20 sayfa kalıyor. Kitap kaç sayfadır?", c: ["80", "60", "15"], a: "Kalan kısım 1/4: 1/4'ü 20 ise tamamı 4 · 20 = 80." },
+      { s: "Bir sayının 2/3'ü 18 ise bu sayı kaçtır?", c: ["27", "12", "36"], a: "2/3'ü 18 ise 1/3'ü 9, sayı 3 · 9 = 27." },
+      { s: "Bir sayının 1/4'ü 5 ise 3/4'ü kaçtır?", c: ["15", "20", "12"], a: "Her dörtte bir 5: dörtte üçü 3 · 5 = 15. Sayıyı bulmaya gerek yok." },
+      { s: "Bir pastanın 3/8'i yenmiştir. Kalan kısım pastanın kaçta kaçıdır?", c: ["5/8", "3/5", "1/8"], a: "Bütün 8/8: 8/8 − 3/8 = 5/8." },
+      { s: "Bir bidonun 1/2'si doludur. Bu suyun 1/3'ü kullanılırsa bidonun kaçta kaçı kullanılmış olur?", c: ["1/6", "1/5", "2/3"], a: "1/2'nin 1/3'ü: 1/2 · 1/3 = 1/6." },
+      // Kalanın kesri
+      { s: "“Kalanın 1/3'ü” ile “tamamın 1/3'ü” neden farklıdır?", c: ["Kalan, tamamdan küçük bir bütündür", "İkisi her zaman eşittir", "Kalanın kesri hep daha büyüktür"], a: "Kesir, söylenen bütüne göre alınır: 90'ın 1/3'ü 30; 30 gidince kalan 60'ın 1/3'ü 20." },
+      { s: "Ali parasının 1/3'ünü, sonra kalanın 1/2'sini harcıyor. Başlangıçtaki parasının kaçta kaçı kalır?", c: ["1/3", "1/6", "1/2"], a: "1/3 harcanınca 2/3 kalır; bunun yarısı harcanınca 1/3 kalır." },
+      { s: "60 TL'nin 1/4'ü harcanıyor, sonra kalanın 1/3'ü de harcanıyor. Geriye kaç TL kalır?", c: ["30", "25", "20"], a: "60'ın 1/4'ü 15: 45 kalır. 45'in 1/3'ü 15: 30 kalır." },
+      { s: "Bir depodaki suyun 1/2'si, sonra kalanın 1/2'si kullanılıyor. Deponun kaçta kaçı kalır?", c: ["1/4", "0", "1/2"], a: "Yarısı gidince 1/2 kalır, onun yarısı gidince 1/4 kalır. İki yarım burada bütün etmez." },
+      // Sondan başa (ters işlem)
+      { s: "Bir öğrenci parasının 1/3'ünü harcayınca 40 TL'si kalıyor. Başta kaç TL'si vardı?", c: ["60", "120", "80"], a: "Kalan 2/3: 2/3'ü 40 ise 1/3'ü 20, tamamı 60." },
+      { s: "Bir sayının yarısına 3 eklenince 8 bulunuyor. Sayı kaçtır?", c: ["10", "22", "5"], a: "Sondan başa, ters işlemle: 8 − 3 = 5, yarısı 5 ise sayı 10." },
+      { s: "Ayşe parasının yarısını, sonra kalanın yarısını harcayınca 15 TL'si kalıyor. Başta kaç TL'si vardı?", c: ["60", "30", "45"], a: "Sondan başa: son kalan 15, öncesi 15 · 2 = 30, başta 30 · 2 = 60." },
+      // Para
+      { s: "Tanesi 3/4 TL olan kalemlerden 8 tanesi kaç TL eder?", c: ["6", "24", "4"], a: "8 · 3/4 = 24/4 = 6 TL." },
+      { s: "1/2 kg'ı 40 TL olan peynirin 2 kg'ı kaç TL eder?", c: ["160", "80", "20"], a: "1 kg 80 TL, 2 kg 160 TL." }
     ],
 
     // ── yks-yasprob · Yaş Problemleri ──
@@ -2086,8 +2167,22 @@ window.KK_YKS = {
     { k: "yks-denklemkurma", s: "Toplamları 20 olan iki sayıdan biri x ise diğeri 20 − x'tir.", d: true },
 
     // ── yks-sayiprob · Sayı Problemleri ──
+    { k: "yks-sayiprob", s: "Toplamları 18, farkları 4 olan iki sayıdan büyüğü 11'dir.", d: true },
+    { k: "yks-sayiprob", s: "Bir sayının 4 katının 2 eksiği 18 ise bu sayı 4'tür.", d: false, n: "4x − 2 = 18 → 4x = 20 → x = 5" },
+    { k: "yks-sayiprob", s: "Büyüğü küçüğünün 3 katı olan iki sayının toplamı, küçük sayının 4 katıdır.", d: true },
+    { k: "yks-sayiprob", s: "Ali'nin 12, Ece'nin 4 kalemi varsa Ali Ece'ye 8 kalem verince kalem sayıları eşit olur.", d: false, n: "12 − x = 4 + x → x = 4; farkın yarısı verilir" },
+    { k: "yks-sayiprob", s: "3 katı, 10 fazlasına eşit olan sayı 5'tir.", d: true },
+    { k: "yks-sayiprob", s: "Tavuk ve koyunlardan oluşan 8 hayvanın ayak sayısı 20 ise 2 koyun vardır.", d: true },
+    { k: "yks-sayiprob", s: "Her doğrunun 3 puan kazandırıp her yanlışın 1 puan götürdüğü 10 soruluk bir sınavda hepsini cevaplayıp 14 puan alan kişinin 5 doğrusu vardır.", d: false, n: "3x − (10 − x) = 14 → 4x = 24 → x = 6 doğru" },
 
     // ── yks-kesirprob · Kesir Problemleri ──
+    { k: "yks-kesirprob", s: "“Bir sayının 2 fazlasının üçte biri” x/3 + 2 ile yazılır.", d: false, n: "(x + 2)/3; x/3 + 2 sayının üçte birinin 2 fazlasıdır" },
+    { k: "yks-kesirprob", s: "“Bir sayının 4'e bölümü” 4/x ile yazılır.", d: false, n: "x/4; 4/x, 4'ün sayıya bölümüdür" },
+    { k: "yks-kesirprob", s: "“Bir sayının beşte üçü” 3x/5 ile yazılır.", d: true },
+    { k: "yks-kesirprob", s: "Bir sayının yarısının yarısı, dörtte biridir.", d: true },
+    { k: "yks-kesirprob", s: "Parasının 1/2'sini, sonra kalanın 1/2'sini harcayan kişinin hiç parası kalmaz.", d: false, n: "Kalanın yarısı harcanır: parasının 1/4'ü kalır" },
+    { k: "yks-kesirprob", s: "Bir sayının 2/3'ü 10 ise sayı 15'tir.", d: true },
+    { k: "yks-kesirprob", s: "Kitabın 1/3'ü okununca kalan kısım kitabın 2/3'üdür.", d: true },
 
     // ── yks-yasprob · Yaş Problemleri ──
 
