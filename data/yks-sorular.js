@@ -29,7 +29,30 @@ window.KK_YKS = {
     { id: "yks-esitsizlik", ad: "Basit Eşitsizlikler", ust: "Eşitsizlikler", sinav: "TYT", sinif: 9 },
     { id: "yks-mutlak", ad: "Mutlak Değer", ust: "Temel Kavramlar", sinav: "TYT", sinif: 9 },
     { id: "yks-carpan", ad: "Çarpanlara Ayırma", ust: "Cebir", sinav: "TYT", sinif: 9 },
-    { id: "yks-oran", ad: "Oran – Orantı", ust: "Oran – Orantı", sinav: "TYT", sinif: 9 }
+    { id: "yks-oran", ad: "Oran – Orantı", ust: "Oran – Orantı", sinav: "TYT", sinif: 9 },
+    // Problemler: her satır, konu kullanıcı onayıyla yayına alınırken baştaki // silinerek açılır (satırlar arasındaki boş satırlar çakışma olmasın diye).
+
+    // { id: "yks-denklemkurma", ad: "Denklem Kurma", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
+
+    // { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-yasprob", ad: "Yaş Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-isciprob", ad: "İşçi Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-havuzprob", ad: "Havuz Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-yuzdeprob", ad: "Yüzde Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-karzarar", ad: "Kâr – Zarar Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-karisim", ad: "Karışım Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-faiz", ad: "Finans – Faiz Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+
+    // { id: "yks-hareket", ad: "Hareket Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
   ],
 
   sorular: {
@@ -1613,6 +1636,87 @@ window.KK_YKS = {
       { s: "Bir yazıcı 5 dakikada 40 sayfa basıyor. 15 dakikada kaç sayfa basar?", c: ["120", "80", "200"], a: "Doğru orantı: süre 3 katı, sayfa 3 katı: 120." },
       { s: "a ile b doğru orantılıdır. a = 4 iken b = 6 ise a = 8 iken b kaçtır?", c: ["12", "3", "10"], a: "Doğru orantı: a 2 katı, b de 2 katı: 12." },
       { s: "a ile b ters orantılıdır. a = 4 iken b = 6 ise a = 8 iken b kaçtır?", c: ["3", "12", "24"], a: "Ters orantı: a · b = 24 sabit: 8 · b = 24, b = 3." }
+    ],
+
+    // ── yks-denklemkurma · Denklem Kurma ──
+    "yks-denklemkurma": [
+      // Kural: cümlede ilk söylenen işlem önce yapılır
+      { s: "“Bir sayının 3 katının 5 fazlası” gibi ifadelerde hangi işlemin önce yapılacağı nasıl anlaşılır?", c: ["Cümlede ilk söylenen işlem önce yapılır", "Çarpma her zaman önce yapılır", "Toplama her zaman önce yapılır"], a: "“3 katının 5 fazlası”: önce 3 katı, sonra 5 fazlası. “5 fazlasının 3 katı”: önce 5 fazlası, sonra 3 katı." },
+      { s: "Önce toplama ya da çıkarma yapılıp sonra katı alınıyorsa yazarken ne gerekir?", c: ["Parantez", "Eşittir işareti", "Hiçbir şey gerekmez"], a: "“5 fazlasının 3 katı”: 3 · x + 5 yazılırsa çarpma önce yapılır. Doğrusu 3(x + 5)." },
+      { s: "Sözel bir problemde “… dır / … dir”, “eşittir”, “bulunur” sözleri denklemde neye karşılık gelir?", c: ["=", "+", "·"], a: "“3 katının 5 fazlası 20'dir”: 3x + 5 = 20. “-dir” eşittir işaretidir." },
+      // Sözelden ifadeye (x: sayı)
+      { s: "“Bir sayının 3 katının 5 fazlası” x ile nasıl yazılır?", c: ["3x + 5", "3(x + 5)", "5x + 3"], a: "Önce 3 katı: 3x. Sonra 5 fazlası: 3x + 5." },
+      { s: "“Bir sayının 5 fazlasının 3 katı” x ile nasıl yazılır?", c: ["3(x + 5)", "3x + 5", "5(x + 3)"], a: "Önce 5 fazlası: x + 5. Bunun 3 katı: parantez gerekir, 3(x + 5)." },
+      { s: "“Bir sayının 2 katının 3 eksiği” x ile nasıl yazılır?", c: ["2x − 3", "2(x − 3)", "3 − 2x"], a: "Önce 2 katı: 2x. Sonra 3 eksiği: 2x − 3." },
+      { s: "“Bir sayının 3 eksiğinin 2 katı” x ile nasıl yazılır?", c: ["2(x − 3)", "2x − 3", "3(x − 2)"], a: "Önce 3 eksiği: x − 3. Bunun 2 katı: 2(x − 3)." },
+      { s: "“Bir sayının yarısının 4 eksiği” x ile nasıl yazılır?", c: ["x/2 − 4", "(x − 4)/2", "4 − x/2"], a: "Önce yarısı: x/2. Sonra 4 eksiği: x/2 − 4." },
+      { s: "“Bir sayının 4 eksiğinin yarısı” x ile nasıl yazılır?", c: ["(x − 4)/2", "x/2 − 4", "x − 4/2"], a: "Önce 4 eksiği: x − 4. Bunun yarısı: (x − 4)/2." },
+      { s: "“Bir sayının üçte biri” x ile nasıl yazılır?", c: ["x/3", "3x", "x − 3"], a: "Üçte biri: 3'e bölünür, x/3. 3x sayının 3 katıdır." },
+      { s: "Bir sayı 10'dan çıkarılırsa kalan x ile nasıl yazılır?", c: ["10 − x", "x − 10", "10x"], a: "10'dan çıkarılan x: 10 − x. x − 10, x'ten 10 çıkarmaktır." },
+      { s: "“Bir sayının karesinin 1 eksiği” x ile nasıl yazılır?", c: ["x<sup>2</sup> − 1", "(x − 1)<sup>2</sup>", "2x − 1"], a: "Önce karesi: x<sup>2</sup>. Sonra 1 eksiği: x<sup>2</sup> − 1." },
+      { s: "“Bir sayının 3 fazlasının karesi” x ile nasıl yazılır?", c: ["(x + 3)<sup>2</sup>", "x<sup>2</sup> + 3", "3x<sup>2</sup>"], a: "Önce 3 fazlası: x + 3. Bunun karesi: (x + 3)<sup>2</sup>." },
+      { s: "“Bir sayının 5 katı ile 2 katının farkı” x ile nasıl yazılır?", c: ["5x − 2x", "5x − 2", "5(x − 2)"], a: "5 katı 5x, 2 katı 2x; farkları 5x − 2x." },
+      { s: "Toplamları 20 olan iki sayıdan biri x ise diğeri nasıl yazılır?", c: ["20 − x", "x − 20", "20x"], a: "x + (20 − x) = 20. Diğeri toplamdan x çıkarılarak bulunur." },
+      { s: "İki sayıdan büyüğü küçüğünün 3 katıdır. Küçüğü x ise büyüğü nasıl yazılır?", c: ["3x", "x + 3", "x/3"], a: "“3 katı”: 3 ile çarpılır, 3x. x + 3 “3 fazlası”dır." },
+      { s: "Bir kutudaki kırmızı bilyeler, mavi bilyelerin 2 katından 3 fazladır. Mavi bilye x ise kırmızı bilye nasıl yazılır?", c: ["2x + 3", "2(x + 3)", "3x + 2"], a: "Önce 2 katı: 2x. Sonra 3 fazlası: 2x + 3." },
+      // Sözelden denkleme
+      { s: "“Bir sayının 3 katının 5 fazlası 20'dir.” Hangi denklemle yazılır?", c: ["3x + 5 = 20", "3(x + 5) = 20", "5x + 3 = 20"], a: "3 katının 5 fazlası 3x + 5; bu 20'ye eşit." },
+      { s: "“Bir sayının 4 eksiğinin 3 katı 12'dir.” Hangi denklemle yazılır?", c: ["3(x − 4) = 12", "3x − 4 = 12", "4 − 3x = 12"], a: "Önce 4 eksiği (x − 4), sonra 3 katı: 3(x − 4) = 12." },
+      { s: "“Bir sayının 7 fazlasının yarısı 9'dur.” Hangi denklemle yazılır?", c: ["(x + 7)/2 = 9", "x/2 + 7 = 9", "2(x + 7) = 9"], a: "Önce 7 fazlası (x + 7), sonra yarısı: (x + 7)/2 = 9." },
+      { s: "“Bir sayının 2 katı, 6 fazlasına eşittir.” Hangi denklemle yazılır?", c: ["2x = x + 6", "2x + 6 = x", "2(x + 6) = x"], a: "2 katı: 2x. 6 fazlası: x + 6. İkisi eşit: 2x = x + 6." },
+      { s: "“Bir sayının yarısı, 3 eksiğine eşittir.” Hangi denklemle yazılır?", c: ["x/2 = x − 3", "x/2 − 3 = x", "(x − 3)/2 = x"], a: "Yarısı x/2, 3 eksiği x − 3; ikisi eşit." },
+      { s: "“Bir sayının 3 fazlası, 2 katından 4 eksiktir.” Hangi denklemle yazılır?", c: ["x + 3 = 2x − 4", "x + 3 = 4 − 2x", "x + 3 − 4 = 2x"], a: "3 fazlası x + 3; 2 katından 4 eksik 2x − 4." },
+      { s: "“Bir sayının 4 katı, 10'dan 2 fazladır.” Hangi denklemle yazılır?", c: ["4x = 10 + 2", "4x + 2 = 10", "4(x + 2) = 10"], a: "4 katı 4x; 10'dan 2 fazla 10 + 2. İkisi eşit." },
+      { s: "“Ardışık iki sayının toplamı 15'tir.” Küçük sayı x ise hangi denklemle yazılır?", c: ["x + (x + 1) = 15", "x + x = 15", "x(x + 1) = 15"], a: "Ardışık iki sayı x ve x + 1; toplamları 15." },
+      // İki bilinmeyen
+      { s: "“a, b'den 5 fazladır.” Hangi eşitlikle yazılır?", c: ["a = b + 5", "b = a + 5", "a + b = 5"], a: "a büyük olan: b'ye 5 eklenince a olur." },
+      { s: "“a'nın 2 katı, b'nin 3 katına eşittir.” Hangi eşitlikle yazılır?", c: ["2a = 3b", "3a = 2b", "a + 2 = b + 3"], a: "a'nın 2 katı 2a, b'nin 3 katı 3b." },
+      { s: "“a ile b'nin toplamının yarısı 8'dir.” Hangi eşitlikle yazılır?", c: ["(a + b)/2 = 8", "a + b/2 = 8", "a/2 + b = 8"], a: "Önce toplam (a + b), sonra yarısı: (a + b)/2." },
+      { s: "“a, b'nin 4 katından 1 eksiktir.” Hangi eşitlikle yazılır?", c: ["a = 4b − 1", "a = 4(b − 1)", "a − 1 = 4b"], a: "Önce 4 katı (4b), sonra 1 eksiği: 4b − 1." },
+      // Denklemden sözele
+      { s: "2(x − 1) = 10 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 1 eksiğinin 2 katı 10'dur.", "Bir sayının 2 katının 1 eksiği 10'dur.", "Bir sayının yarısının 1 eksiği 10'dur."], a: "Parantez önce: x − 1 (1 eksiği), sonra 2 katı." },
+      { s: "x/3 + 4 = 7 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının üçte birinin 4 fazlası 7'dir.", "Bir sayının 4 fazlasının üçte biri 7'dir.", "Bir sayının 3 katının 4 fazlası 7'dir."], a: "Önce üçte biri (x/3), sonra 4 fazlası." },
+      { s: "3x = x + 8 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 3 katı, 8 fazlasına eşittir.", "Bir sayının 3 fazlası, 8 katına eşittir.", "Bir sayının 8 katı, 3 fazlasına eşittir."], a: "Sol taraf 3 katı (3x), sağ taraf 8 fazlası (x + 8)." }
+    ],
+
+    // ── yks-sayiprob · Sayı Problemleri ──
+    "yks-sayiprob": [
+    ],
+
+    // ── yks-kesirprob · Kesir Problemleri ──
+    "yks-kesirprob": [
+    ],
+
+    // ── yks-yasprob · Yaş Problemleri ──
+    "yks-yasprob": [
+    ],
+
+    // ── yks-isciprob · İşçi Problemleri ──
+    "yks-isciprob": [
+    ],
+
+    // ── yks-havuzprob · Havuz Problemleri ──
+    "yks-havuzprob": [
+    ],
+
+    // ── yks-yuzdeprob · Yüzde Problemleri ──
+    "yks-yuzdeprob": [
+    ],
+
+    // ── yks-karzarar · Kâr – Zarar Problemleri ──
+    "yks-karzarar": [
+    ],
+
+    // ── yks-karisim · Karışım Problemleri ──
+    "yks-karisim": [
+    ],
+
+    // ── yks-faiz · Finans – Faiz Problemleri ──
+    "yks-faiz": [
+    ],
+
+    // ── yks-hareket · Hareket Problemleri ──
+    "yks-hareket": [
     ]
   },
 
@@ -1971,6 +2075,34 @@ window.KK_YKS = {
     { k: "yks-oran", s: "Doğru orantılı iki çokluğun bölümü sabittir.", d: true },
     { k: "yks-oran", s: "Ters orantılı iki çokluğun çarpımı sabittir.", d: true },
     { k: "yks-oran", s: "Yaş arttıkça boy da arttığı için yaş ile boy doğru orantılıdır.", d: false, n: "Birlikte artsalar da aynı oranda artmazlar: orantı yok" },
-    { k: "yks-oran", s: "Musluk sayısı azalırsa havuzun dolma süresi uzar.", d: true }
+    { k: "yks-oran", s: "Musluk sayısı azalırsa havuzun dolma süresi uzar.", d: true },
+
+    // ── yks-denklemkurma · Denklem Kurma ──
+    { k: "yks-denklemkurma", s: "Sözel ifadelerde cümlede ilk söylenen işlem önce yapılır.", d: true },
+    { k: "yks-denklemkurma", s: "“Bir sayının 3 katının 5 fazlası” 3(x + 5) ile yazılır.", d: false, n: "3x + 5; 3(x + 5) sayının 5 fazlasının 3 katıdır" },
+    { k: "yks-denklemkurma", s: "“Bir sayının 4 eksiğinin yarısı” (x − 4)/2 ile yazılır.", d: true },
+    { k: "yks-denklemkurma", s: "“Bir sayının yarısının 3 fazlası” (x + 3)/2 ile yazılır.", d: false, n: "x/2 + 3; (x + 3)/2 sayının 3 fazlasının yarısıdır" },
+    { k: "yks-denklemkurma", s: "“a, b'den 5 fazladır” a + 5 = b ile yazılır.", d: false, n: "a büyük olan: a = b + 5" },
+    { k: "yks-denklemkurma", s: "Toplamları 20 olan iki sayıdan biri x ise diğeri 20 − x'tir.", d: true },
+
+    // ── yks-sayiprob · Sayı Problemleri ──
+
+    // ── yks-kesirprob · Kesir Problemleri ──
+
+    // ── yks-yasprob · Yaş Problemleri ──
+
+    // ── yks-isciprob · İşçi Problemleri ──
+
+    // ── yks-havuzprob · Havuz Problemleri ──
+
+    // ── yks-yuzdeprob · Yüzde Problemleri ──
+
+    // ── yks-karzarar · Kâr – Zarar Problemleri ──
+
+    // ── yks-karisim · Karışım Problemleri ──
+
+    // ── yks-faiz · Finans – Faiz Problemleri ──
+
+    // ── yks-hareket · Hareket Problemleri ──
   ]
 };
