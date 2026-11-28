@@ -33,9 +33,9 @@ window.KK_YKS = {
     // Problemler: her satır, konu kullanıcı onayıyla yayına alınırken baştaki // silinerek açılır (satırlar arasındaki boş satırlar çakışma olmasın diye).
     // baslik: "Problemler" sadece AÇIK olan ilk problem konusunda durur; daha önceki bir konu açılınca başlık oraya taşınır.
 
-    // { id: "yks-denklemkurma", ad: "Denklem Kurma", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
+    { id: "yks-denklemkurma", ad: "Denklem Kurma", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
 
-    { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
+    { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
     { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
