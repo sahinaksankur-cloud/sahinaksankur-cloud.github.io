@@ -1934,6 +1934,58 @@ window.KK_YKS = {
 
     // ── yks-havuzprob · Havuz Problemleri ──
     "yks-havuzprob": [
+      // A) KURMA (çözüm yok) — Havuzun tamamı 1; x saatte dolduran musluk 1 saatte 1/x
+      { s: "Havuz problemlerinde boş havuzun tamamı hangi sayıyla gösterilir?", c: ["1", "0", "100"], a: "Havuzun tamamı 1 birim iştir; musluklar bu 1'in kesirlerini doldurur." },
+      { s: "Bir musluk boş havuzu 6 saatte dolduruyor. 1 saatte havuzun ne kadarını doldurur?", c: ["1/6", "6", "5/6"], a: "Havuz (1) 6 eşit saate bölünür: 1 saatte 1/6." },
+      { s: "Boş bir depoyu x saatte dolduran musluk 1 saatte deponun ne kadarını doldurur?", c: ["1/x", "x", "x − 1"], a: "Depo (1) x saate bölünür: 1 saatte 1/x." },
+      { s: "Bir musluk boş havuzu 4 saatte dolduruyor. 3 saatte havuzun ne kadarını doldurur?", c: ["3/4", "1/4", "4/3"], a: "1 saatte 1/4; 3 saatte 3 · 1/4 = 3/4." },
+      { s: "Bir musluk boş havuzu a saatte dolduruyor. t saatte havuzun ne kadarını doldurur?", c: ["t/a", "a/t", "t · a"], a: "1 saatte 1/a; t saatte t · 1/a = t/a." },
+      { s: "A musluğu boş havuzu 3 saatte dolduruyor. B musluğu aynı havuzu A'nın 2 katı sürede dolduruyor. B 1 saatte havuzun ne kadarını doldurur?", c: ["1/6", "2/3", "1/5"], a: "B'nin süresi 2 · 3 = 6 saat; 1 saatte 1/6." },
+      { s: "Boş havuzu 6 saatte dolduran musluk 2 saat açık kalıyor. Havuzun dolan kısmı nasıl yazılır?", c: ["2 · 1/6", "6 · 1/2", "2 + 1/6"], a: "Saat sayısı × 1 saatteki iş: 2 · 1/6 = 1/3." },
+      // İki musluk birlikte: 1/a + 1/b (süreler toplanmaz)
+      { s: "Boş havuzu A musluğu a saatte, B musluğu b saatte dolduruyor. İkisi birlikte 1 saatte havuzun ne kadarını doldurur?", c: ["1/a + 1/b", "1/(a + b)", "a + b"], a: "1 saatteki işler toplanır: 1/a + 1/b. Süreler toplanmaz." },
+      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte 1 saatte havuzun ne kadarını doldurur?", c: ["1/3", "1/16", "1/8"], a: "1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3. 1/16 süreleri toplamaktan gelir." },
+      { s: "Boş havuzu biri 3 saatte, öbürü 6 saatte dolduran iki musluk birlikte açılıyor. Ali “3 + 6 = 9 saatte dolar” diyor. Neden yanlış?", c: ["Birlikte daha hızlı dolar, süre 3 saatten az olmalı", "Süreler çarpılmalıydı: 18 saat", "Süreler çıkarılmalıydı: 3 saat"], a: "İkinci musluk yardım eder; süre hızlı musluğun 3 saatinden kısa olur. Süreler değil, 1 saatteki işler toplanır." },
+      // Boşaltan musluk: eksi
+      { s: "Dolu bir havuzu 5 saatte boşaltan musluk 1 saatte havuzun ne kadarını boşaltır?", c: ["1/5", "5", "4/5"], a: "Boşaltmada da havuz 1'dir: 1 saatte 1/5 boşalır." },
+      { s: "Boş havuzu a saatte dolduran musluk ile dolu havuzu b saatte boşaltan musluk birlikte açılıyor. 1 saatte havuzun ne kadarı dolar?", c: ["1/a − 1/b", "1/a + 1/b", "1/(a − b)"], a: "Dolduran artı, boşaltan eksi: 1/a − 1/b." },
+      { s: "Havuzu 3 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açık. 1 saatte havuzun ne kadarı dolar?", c: ["1/6", "1/2", "1/3"], a: "1/3 − 1/6 = 2/6 − 1/6 = 1/6. 1/2, boşaltanı eksi yazmamaktan gelir." },
+      // Denklem: t saatte dolarsa t(…) = 1
+      { s: "Boş havuzu biri a, öbürü b saatte dolduran iki musluk birlikte t saatte dolduruyor. Hangi denklem kurulur?", c: ["t(1/a + 1/b) = 1", "t = a + b", "t(a + b) = 1"], a: "t saat × birlikte 1 saatteki iş = havuzun tamamı (1)." },
+      { s: "Boş havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılınca havuz t saatte doluyor. Hangi denklem kurulur?", c: ["t(1/2 − 1/6) = 1", "t(1/2 + 1/6) = 1", "t(1/6 − 1/2) = 1"], a: "Dolduran artı, boşaltan eksi; t saatte havuzun tamamı (1) dolar." },
+      // Kısmen dolu havuz: dolacak kısım kalan kısımdır
+      { s: "Havuzun 1/3'ü doluyken doldurucu musluk açılıyor. Havuzun dolması için musluğun doldurması gereken kısım nedir?", c: ["2/3", "1/3", "1"], a: "Kalan kısım: 1 − 1/3 = 2/3." },
+      { s: "Havuzun yarısı doluyken, boş havuzu 8 saatte dolduran musluk açılıyor ve havuz t saatte doluyor. Hangi denklem kurulur?", c: ["t · 1/8 = 1/2", "t · 1/8 = 1", "t · 1/2 = 1/8"], a: "Dolacak kısım havuzun tamamı değil, kalan yarısıdır: t · 1/8 = 1/2." },
+      { s: "Havuzun 1/4'ü doluyken, dolu havuzu 6 saatte boşaltan musluk açılıyor. Havuz t saatte boşalıyorsa hangi denklem kurulur?", c: ["t · 1/6 = 1/4", "t · 1/6 = 3/4", "t · 1/6 = 1"], a: "Boşalacak olan sadece içindeki su, yani 1/4: t · 1/6 = 1/4." },
+      // Denklemden cümleye
+      { s: "3(1/6 + 1/x) = 1 denklemi hangi durumu anlatır?", c: ["Biri 6, öbürü x saatte dolduran iki musluk birlikte 3 saatte doldurur", "6 saatte dolduran, x saatte boşaltan musluk birlikte 3 saatte doldurur", "Biri 3, öbürü 6 saatte dolduran iki musluk birlikte x saatte doldurur"], a: "İki terim de artı: ikisi de doldurur; dıştaki 3 birlikte geçen süredir." },
+      { s: "t(1/4 − 1/12) = 1 denkleminde eksi işareti neyi gösterir?", c: ["12 saatlik musluğun boşalttığını", "12 saatlik musluğun daha hızlı olduğunu", "Musluklardan birinin kapalı olduğunu"], a: "Boşaltan musluğun 1 saatteki işi eksi yazılır." },
+      // B) ÇÖZME — Tek musluk: kesir kadarı
+      { s: "Boş havuzu 8 saatte dolduran musluk havuzun 1/4'ünü kaç saatte doldurur?", c: ["2", "4", "32"], a: "Denklem: t · 1/8 = 1/4 → t = 8/4 = 2 saat." },
+      { s: "Boş havuzu 6 saatte dolduran musluk 4 saatte havuzun ne kadarını doldurur?", c: ["2/3", "1/4", "3/2"], a: "4 · 1/6 = 4/6 = 2/3." },
+      // İki doldurucu birlikte
+      { s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["2", "9", "4,5"], a: "Denklem: t(1/3 + 1/6) = 1 → t · 1/2 = 1 → t = 2 saat." },
+      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["3", "16", "8"], a: "Denklem: t(1/4 + 1/12) = 1 → t · 1/3 = 1 → t = 3 saat." },
+      { s: "Boş havuzu 2 saatte ve 3 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["6/5", "5", "5/6"], a: "Denklem: t(1/2 + 1/3) = 1 → t · 5/6 = 1 → t = 6/5 saat. 5/6, 1 saatte dolan kısımdır." },
+      { s: "Özdeş iki musluktan her biri boş havuzu 10 saatte dolduruyor. İkisi birlikte kaç saatte doldurur?", c: ["5", "20", "10"], a: "Denklem: t(1/10 + 1/10) = 1 → t · 1/5 = 1 → t = 5 saat." },
+      { s: "A musluğu boş havuzu 6 saatte dolduruyor. A ile B birlikte 4 saatte dolduruyor. B tek başına kaç saatte doldurur?", c: ["12", "2", "10"], a: "Denklem: 1/6 + 1/x = 1/4 → 1/x = 1/4 − 1/6 = 1/12 → x = 12 saat." },
+      // Doldurucu + boşaltıcı
+      { s: "Boş havuzu 3 saatte dolduran musluk ile dolu havuzu 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["6", "2", "3"], a: "Denklem: t(1/3 − 1/6) = 1 → t · 1/6 = 1 → t = 6 saat. 2, boşaltanı eksi yazmamaktan gelir." },
+      { s: "Boş havuzu 2 saatte dolduran musluk ile dolu havuzu 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["3", "1,5", "4"], a: "Denklem: t(1/2 − 1/6) = 1 → t · 1/3 = 1 → t = 3 saat." },
+      { s: "Dolu bir depoyu 6 saatte ve 12 saatte boşaltan iki musluk birlikte açılıyor. Dolu depo kaç saatte boşalır?", c: ["4", "18", "6"], a: "İkisi de boşaltır, işler toplanır: t(1/6 + 1/12) = 1 → t · 1/4 = 1 → t = 4 saat." },
+      // Bir süre açık kalıp kapanıyor
+      { s: "Boş havuzu 6 saatte dolduran musluk 2 saat açık kalıp kapanıyor. Havuzun ne kadarı boş kalır?", c: ["2/3", "1/3", "1/6"], a: "Dolan: 2 · 1/6 = 1/3; boş kalan: 1 − 1/3 = 2/3." },
+      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte 2 saat açık kalıyor. Havuzun ne kadarı dolar?", c: ["2/3", "1/3", "1/8"], a: "1 saatte 1/4 + 1/12 = 1/3; 2 saatte 2 · 1/3 = 2/3." },
+      { s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte 1 saat açılıyor, sonra 3 saatlik musluk kapanıyor. Havuzun geri kalanını 6 saatlik musluk kaç saatte doldurur?", c: ["3", "6", "2"], a: "1 saatte 1/3 + 1/6 = 1/2 dolar. Kalan 1/2: t · 1/6 = 1/2 → t = 3 saat." },
+      { s: "Tankı 8 saatte dolduran musluk boş tankı 2 saat doldurup kapanıyor. Tankın geri kalanını, tankı 4 saatte dolduran musluk kaç saatte doldurur?", c: ["3", "2", "4"], a: "Dolan 2 · 1/8 = 1/4, kalan 3/4. Denklem: t · 1/4 = 3/4 → t = 3 saat." },
+      // Kısmen dolu havuz
+      { s: "Havuzun 1/3'ü doluyken, boş havuzu 6 saatte dolduran musluk açılıyor. Havuz kaç saatte dolar?", c: ["4", "2", "6"], a: "Kalan 2/3. Denklem: t · 1/6 = 2/3 → t = 4 saat." },
+      { s: "Havuzun yarısı doluyken, dolu havuzu 10 saatte boşaltan musluk açılıyor. Havuz kaç saatte boşalır?", c: ["5", "10", "20"], a: "Boşalacak kısım 1/2. Denklem: t · 1/10 = 1/2 → t = 5 saat." },
+      { s: "Havuzun 1/3'ü doluyken, havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılıyor. Havuz kaç saatte dolar?", c: ["2", "3", "1"], a: "Kalan 2/3. Denklem: t(1/2 − 1/6) = 2/3 → t · 1/3 = 2/3 → t = 2 saat." },
+      // Dolmaz / boşalır
+      { s: "Boş havuzu 6 saatte dolduran musluk ile dolu havuzu 3 saatte boşaltan musluk birlikte açılıyor. Boş havuz ne zaman dolar?", c: ["Hiç dolmaz", "2 saatte", "6 saatte"], a: "1/6 − 1/3 = −1/6: sonuç eksi, boşaltan daha hızlı. Boş havuz hiç dolmaz." },
+      { s: "Havuz doluyken, havuzu 6 saatte dolduran musluk ile 2 saatte boşaltan musluk birlikte açılıyor. Dolu havuz kaç saatte boşalır?", c: ["3", "1,5", "2"], a: "Boşaltan hızlı: t(1/2 − 1/6) = 1 → t · 1/3 = 1 → t = 3 saat." },
+      { s: "Doldurucu ve boşaltıcı musluk birlikte açılınca boş havuzun hiç dolmaması için ne gerekir?", c: ["Boşaltıcı en az doldurucu kadar hızlı olmalı", "Doldurucu daha hızlı olmalı", "İki musluğun süresi farklı olmalı"], a: "1/a − 1/b sıfır ya da eksiyse havuz dolmaz: boşaltıcı en az doldurucu kadar hızlıdır." },
     ],
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
@@ -2363,6 +2415,13 @@ window.KK_YKS = {
     { k: "yks-isciprob", s: "Bir işi 3 işçi 4 günde bitiriyorsa bu iş 7 işçi-gündür.", d: false, n: "3 · 4 = 12 işçi-gündür" },
 
     // ── yks-havuzprob · Havuz Problemleri ──
+    { k: "yks-havuzprob", s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte 9 saatte doldurur.", d: false, n: "Süreler toplanmaz: 1/3 + 1/6 = 1/2, 2 saatte doldurur" },
+    { k: "yks-havuzprob", s: "Havuzu x saatte dolduran musluk 1 saatte havuzun 1/x'ini doldurur.", d: true },
+    { k: "yks-havuzprob", s: "Boşaltan musluğun 1 saatteki işi denklemde eksi ile yazılır.", d: true },
+    { k: "yks-havuzprob", s: "İki doldurucu musluk birlikte açılınca havuz, hızlı musluğun tek başına doldurduğu süreden uzun sürede dolar.", d: false, n: "Birlikte daha kısa sürede dolar" },
+    { k: "yks-havuzprob", s: "Havuzun 1/3'ü doluyken doldurucu musluğun dolduracağı kısım 2/3'tür.", d: true },
+    { k: "yks-havuzprob", s: "Doldurucu musluk boşaltıcıdan yavaşsa boş havuz hiç dolmaz.", d: true },
+    { k: "yks-havuzprob", s: "Havuzu 4 saatte dolduran musluk 3 saatte havuzun 1/4'ünü doldurur.", d: false, n: "3 · 1/4 = 3/4'ünü doldurur" },
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
 
