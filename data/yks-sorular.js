@@ -1879,57 +1879,91 @@ window.KK_YKS = {
 
     // ── yks-isciprob · İşçi Problemleri ──
     "yks-isciprob": [
-      // A) KURMA (çözüm yok) — 1 günde yapılan iş, işin tamamı 1
-      { s: "Bir işi 5 günde bitiren işçi 1 günde işin ne kadarını yapar?", c: ["1/5", "5", "1/4"], a: "İşin tamamı 1'dir; 5 günde biterse her gün 1/5'i yapılır." },
-      { s: "Bir işi x günde bitiren işçi 1 günde işin ne kadarını yapar?", c: ["1/x", "x", "x − 1"], a: "İş 1, gün sayısı x: 1 günde 1/x. x, işin bitme süresidir, 1 günlük iş değildir." },
-      { s: "Bir işi x günde bitiren işçi 3 günde işin ne kadarını yapar?", c: ["3/x", "x/3", "3x"], a: "1 günde 1/x, 3 günde 3 · 1/x = 3/x." },
-      { s: "Bir işi 8 günde bitiren işçi 3 günde işin ne kadarını yapar?", c: ["3/8", "5/8", "8/3"], a: "1 günde 1/8, 3 günde 3/8. 5/8 kalan kısımdır." },
-      { s: "Bir işi 8 günde bitiren işçi 3 gün çalışırsa işin ne kadarı kalır?", c: ["5/8", "3/8", "5"], a: "Yapılan 3/8; kalan 1 − 3/8 = 5/8." },
-      { s: "İşçi problemlerinde işin tamamı hangi sayıyla gösterilir?", c: ["1", "100", "0"], a: "Bütün iş 1'dir; yapılan kısımlar 1/5, 3/8 gibi kesirlerdir." },
-      // İki işçi birlikte
-      { s: "Bir işi biri a günde, diğeri b günde bitiren iki işçi birlikte 1 günde işin ne kadarını yapar?", c: ["1/a + 1/b", "1/(a + b)", "a + b"], a: "Birlikte çalışınca 1 günlük işler toplanır: 1/a + 1/b. Süreler toplanmaz." },
-      { s: "Bir işi 3 günde ve 6 günde bitiren iki işçi birlikte 1 günde işin ne kadarını yapar?", c: ["1/2", "1/9", "9"], a: "1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2." },
-      { s: "Bir işi a ve b günde bitiren iki işçi birlikte t günde bitiriyor. Hangi denklem doğrudur?", c: ["t(1/a + 1/b) = 1", "t = a + b", "t(a + b) = 1"], a: "1 günde 1/a + 1/b; t günde t katı. İş bitince yapılan iş 1'dir: t(1/a + 1/b) = 1." },
-      { s: "Bir işi 4 ve 12 günde bitiren iki işçi birlikte t günde bitiriyor. Hangi denklem doğrudur?", c: ["t/4 + t/12 = 1", "t = 4 + 12", "4t + 12t = 1"], a: "Biri t günde t/4'ünü, öbürü t/12'sini yapar; toplam iş 1: t/4 + t/12 = 1." },
-      // Hız karşılaştırma
-      { s: "Ali bir işi x günde bitiriyor. Veli, Ali'nin 2 katı hızlı çalışıyor. Veli 1 günde işin ne kadarını yapar?", c: ["2/x", "1/(2x)", "x/2"], a: "Ali 1 günde 1/x; 2 katı hızlı olan 2 · 1/x = 2/x yapar. x/2, Veli'nin bitirme süresidir." },
-      { s: "Ali bir işi x günde bitiriyor. Veli, Ali'nin 2 katı hızlı çalışıyor. Veli bu işi kaç günde bitirir?", c: ["x/2", "2x", "x + 2"], a: "2 katı hızlı olan işi yarı sürede bitirir: x/2. 2x, 2 katı yavaş olanın süresidir." },
-      { s: "Yavaş işçi bir işi hızlı işçinin 3 katı sürede bitiriyor. Hızlı işçi x günde bitiriyorsa yavaş işçi 1 günde işin ne kadarını yapar?", c: ["1/(3x)", "3/x", "1/x + 3"], a: "Yavaş işçinin süresi 3x gün; 1 günde 1/(3x). 3/x, 3 katı hızlı olanın 1 günlük işidir." },
-      // Cümleden denkleme, denklemden cümleye
-      { s: "Bir işi x günde bitiren işçi 2 gün çalışınca işin yarısı bitiyor. Bu cümle hangi denklemle yazılır?", c: ["2/x = 1/2", "2x = 1/2", "x/2 = 2"], a: "2 günde 2/x yapılır; bu, işin yarısıdır: 2/x = 1/2." },
-      { s: "Bir işi 1 işçi 12 günde bitiriyor. Aynı hızda çalışan n işçi bu işi kaç günde bitirir?", c: ["12/n", "12n", "12 − n"], a: "İş 12 işçi-gündür; n işçiyle 12/n gün sürer." },
-      { s: "“1/6 + 1/12 = 1/t” denklemi hangi cümleyi gösterir?", c: ["İşi 6 ve 12 günde bitiren iki işçi birlikte t günde bitirir", "İşi 6 ve 12 günde bitiren iki işçi birlikte 18 günde bitirir", "İşi 6 günde bitiren işçi 12 gün çalışırsa t gün kalır"], a: "Solda iki işçinin 1 günlük işi, sağda birlikte 1 günlük iş: birlikte t günde biter." },
-      { s: "“5/x = 1/3” eşitliği hangi cümleyi gösterir?", c: ["İşi x günde bitiren işçi 5 günde işin üçte birini yapar", "İşi x günde bitiren işçi 3 günde işin beşte birini yapar", "İşi 5 günde bitiren işçi x günde işin üçte birini yapar"], a: "5/x, x günde biten işin 5 günlük kısmıdır; bu kısım 1/3'tür." },
-      // Tuzak: süreler toplanmaz
-      { s: "Bir işi Ayşe 2 günde, Can 3 günde bitiriyor. “Birlikte 2 + 3 = 5 günde biter” düşüncesi neden yanlıştır?", c: ["Birlikte çalışınca süre kısalır", "Sürelerin çarpılması gerekir", "Bu düşünce doğrudur"], a: "Birlikte 1 günlük işler toplanır: 1/2 + 1/3 = 5/6. İş 2 günden bile kısa sürede biter." },
-      { s: "Birlikte çalışan iki işçinin bir işi bitirme süresi için hangisi doğrudur?", c: ["Hızlı işçinin tek başına süresinden kısadır", "İki sürenin toplamına eşittir", "İki sürenin ortalamasına eşittir"], a: "Hızlı işçiye yardım gelince iş daha da çabuk biter; süre her iki işçinin süresinden de kısadır." },
+      // 1) TEK İŞÇİ — İşin tamamı, yarısı, dörtte biri (formül yok)
+      { s: "Bir işi 10 saatte yapan işçi işin yarısını kaç saatte yapar?", c: ["5", "20", "2"], a: "Yarı iş, yarı sürede biter: 10 / 2 = 5 saat." },
+      { s: "Bir işi 12 saatte yapan işçi işin dörtte birini kaç saatte yapar?", c: ["3", "4", "48"], a: "İşin dörtte biri, sürenin dörtte biri: 12 / 4 = 3 saat." },
+      { s: "Bir işi 9 saatte yapan işçi işin üçte birini kaç saatte yapar?", c: ["3", "6", "27"], a: "İşin üçte biri, sürenin üçte biri: 9 / 3 = 3 saat." },
+      { s: "Bir işi 8 saatte yapan işçi işin dörtte üçünü kaç saatte yapar?", c: ["6", "2", "4"], a: "Dörtte biri 8 / 4 = 2 saat; dörtte üçü 3 · 2 = 6 saat." },
+      { s: "Bir işin yarısını 4 saatte yapan işçi işin tamamını kaç saatte yapar?", c: ["8", "2", "6"], a: "Yarısı 4 saat, öbür yarısı da 4 saat: 8 saat." },
+      { s: "Bir işin üçte birini 5 saatte yapan işçi işin tamamını kaç saatte yapar?", c: ["15", "10", "8"], a: "İş üç eşit parça, her parça 5 saat: 3 · 5 = 15 saat." },
+      { s: "Bir işi 6 saatte yapan işçi 2 saatte işin ne kadarını yapar?", c: ["Üçte birini", "Yarısını", "Dörtte birini"], a: "2 saat, 6 saatin üçte biridir; işin de üçte biri yapılır." },
+      { s: "Bir işi 12 saatte yapan işçi 3 saat çalışınca işin ne kadarı kalır?", c: ["Dörtte üçü", "Dörtte biri", "Üçte biri"], a: "3 saat, 12 saatin dörtte biri: dörtte biri yapıldı, dörtte üçü kaldı." },
+      // İşi p (parça, tuğla) olarak düşünmek
+      { s: "Bir işi 100 tuğla gibi düşünelim: iş 100p. Bu işi 5 saatte yapan işçi saatte kaç p yapar?", c: ["20p", "500p", "5p"], a: "100p, 5 saate eşit bölünür: saatte 100 / 5 = 20p." },
+      { s: "100p'lik işi 5 saatte yapan işçi 10p'lik işi kaç saatte yapar?", c: ["Yarım saatte", "2 saatte", "10 saatte"], a: "Saatte 20p yapar; 10p bunun yarısı: yarım saat." },
+      { s: "100p'lik işi 5 saatte yapan işçi 60p'lik işi kaç saatte yapar?", c: ["3", "12", "6"], a: "Saatte 20p; 60p için 60 / 20 = 3 saat." },
+      { s: "100p'lik işi 4 saatte yapan işçi 3 saatte kaç p yapar?", c: ["75p", "25p", "300p"], a: "Saatte 100 / 4 = 25p; 3 saatte 3 · 25 = 75p." },
+      { s: "100p'lik işi 10 saatte yapan işçi 50p'yi kaç saatte yapar?", c: ["5", "50", "2"], a: "Saatte 10p; 50p için 50 / 10 = 5 saat. 50p işin yarısıdır, süre de yarı." },
+      { s: "100p'lik işi 10 saatte yapan işçi 7 saatte kaç p yapar?", c: ["70p", "30p", "17p"], a: "Saatte 10p; 7 saatte 7 · 10 = 70p." },
+      { s: "100p'lik işi 10 saatte yapan işçi 7 saat çalışırsa kaç p iş kalır?", c: ["30p", "70p", "3p"], a: "7 saatte 70p yapılır; kalan 100 − 70 = 30p." },
+      { s: "60p'lik işi 6 saatte yapan işçi saatte kaç p yapar?", c: ["10p", "360p", "54p"], a: "60p, 6 saate eşit bölünür: 60 / 6 = 10p." },
+      { s: "Saatte 8p yapan işçi 40p'lik işi kaç saatte bitirir?", c: ["5", "32", "320"], a: "Her saat 8p: 40 / 8 = 5 saat." },
+      { s: "Saatte 8p yapan işçi 3 saatte kaç p yapar?", c: ["24p", "11p", "5p"], a: "Her saat 8p: 3 · 8 = 24p." },
+      { s: "Saatte 6p yapan işçi 30p'lik bir işte 2 saat çalıştı. Kaç p iş kaldı?", c: ["18p", "12p", "28p"], a: "2 saatte 2 · 6 = 12p yapıldı; kalan 30 − 12 = 18p." },
+      { s: "Saatte 6p yapan işçi 30p'lik bir işte 2 saat çalıştı. Kalan işi kaç saatte bitirir?", c: ["3", "5", "2"], a: "12p yapıldı, 18p kaldı; 18 / 6 = 3 saat." },
+      { s: "Bir işi 6 saatte yapan işçide işi 6p alırsak işçi saatte kaç p yapar?", c: ["1p", "6p", "36p"], a: "6p'lik iş 6 saatte biter: saatte 1p." },
+      { s: "Bir işi 8 saatte yapan işçide işi 40p alırsak işçi saatte kaç p yapar?", c: ["5p", "8p", "320p"], a: "40p, 8 saate eşit bölünür: saatte 5p." },
+      { s: "Bir işçi işin yarısını 3 saatte yapıyor. İş 60p ise işçi saatte kaç p yapar?", c: ["10p", "20p", "30p"], a: "Yarısı 30p, 3 saatte: saatte 30 / 3 = 10p." },
+      { s: "Bir işin 20p'si 2 saatte yapılıyor. İşin tamamı 100p ise tamamı kaç saatte biter?", c: ["10", "5", "20"], a: "Saatte 20 / 2 = 10p; 100p için 100 / 10 = 10 saat." },
+      { s: "Bir işi 12 saatte yapan işçi 3 saat çalışıyor. İşi 12p alırsak kaç p iş kalır?", c: ["9p", "3p", "4p"], a: "12p'lik iş 12 saatte: saatte 1p. 3 saatte 3p yapıldı, 9p kaldı." },
 
-      // B) ÇÖZME — Tek işçi, işin kesir kadarı
-      { s: "Bir işçi bir işin 2/5'ini 4 günde yapıyor. İşin tamamını kaç günde bitirir?", c: ["10", "8", "6"], a: "İş x günde biterse 4/x = 2/5 → 2x = 20 → x = 10." },
-      { s: "Bir işçi bir işin 3/4'ünü 9 günde yapıyor. Kalan işi kaç günde bitirir?", c: ["3", "12", "4"], a: "9/x = 3/4 → x = 12 gün. Kalan 12 − 9 = 3 gün." },
-      { s: "Bir işi 12 günde bitiren işçi işin 2/3'ünü kaç günde yapar?", c: ["8", "6", "9"], a: "t/12 = 2/3 → t = 8." },
-      // İki işçi birlikte
-      { s: "Bir işi Ali 3 günde, Veli 6 günde bitiriyor. Birlikte kaç günde bitirirler?", c: ["2", "9", "4,5"], a: "t(1/3 + 1/6) = 1 → t · 1/2 = 1 → t = 2." },
-      { s: "Bir işi 4 ve 12 günde bitiren iki işçi birlikte kaç günde bitirir?", c: ["3", "16", "8"], a: "1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3; t · 1/3 = 1 → t = 3." },
-      { s: "Aynı hızda çalışan iki işçi bir işi birlikte 5 günde bitiriyor. Biri tek başına kaç günde bitirir?", c: ["10", "5", "2,5"], a: "Her biri x günde: 1/x + 1/x = 1/5 → 2/x = 1/5 → x = 10." },
-      { s: "Ali ile Veli bir işi birlikte 4 günde bitiriyor. Ali tek başına 6 günde bitiriyor. Veli tek başına kaç günde bitirir?", c: ["12", "2", "10"], a: "1/6 + 1/v = 1/4 → 1/v = 3/12 − 2/12 = 1/12 → v = 12." },
-      { s: "Bir işi Ayşe 10 günde, Elif 15 günde bitiriyor. İkisi birlikte 3 günde işin ne kadarını yapar?", c: ["1/2", "1/5", "3/25"], a: "3(1/10 + 1/15) = 3(3/30 + 2/30) = 3 · 1/6 = 1/2." },
-      { s: "Bir işi 2, 3 ve 6 günde bitiren üç işçi birlikte kaç günde bitirir?", c: ["1", "11", "2"], a: "1/2 + 1/3 + 1/6 = 3/6 + 2/6 + 1/6 = 1; 1 günde işin tamamı biter." },
-      { s: "Veli, Ali'nin 2 katı hızlı çalışıyor. Birlikte bir işi 4 günde bitiriyorlar. Ali tek başına kaç günde bitirir?", c: ["12", "6", "8"], a: "Ali 1/x, Veli 2/x: 4(1/x + 2/x) = 1 → 12/x = 1 → x = 12." },
-      { s: "Bir işçi diğerinin 3 katı hızlı çalışıyor. Birlikte bir işi 3 günde bitiriyorlar. Hızlı işçi tek başına kaç günde bitirir?", c: ["4", "12", "9"], a: "Yavaş 1/x, hızlı 3/x: 3(1/x + 3/x) = 1 → 12/x = 1 → x = 12; hızlı işçi 12/3 = 4 günde." },
-      // Biri bir süre çalışıp ayrılıyor
-      { s: "Bir işi Ali 6 günde, Veli 12 günde bitiriyor. 2 gün birlikte çalıştıktan sonra Ali ayrılıyor. Kalan işi Veli kaç günde bitirir?", c: ["6", "4", "8"], a: "2(1/6 + 1/12) = 2 · 3/12 = 1/2 yapıldı. Kalan 1/2: t/12 = 1/2 → t = 6." },
-      { s: "Bir işi 10 ve 15 günde bitiren iki işçi birlikte başlıyor. 3 gün sonra ikinci işçi ayrılıyor. Birinci işçi kalan işi kaç günde bitirir?", c: ["5", "7,5", "2"], a: "3(1/10 + 1/15) = 3 · 1/6 = 1/2 yapıldı. Kalan 1/2: t/10 = 1/2 → t = 5." },
-      { s: "Bir işi Ayşe 9 günde, Can 18 günde bitiriyor. Ayşe 3 gün tek başına çalışıyor, sonra Can katılıyor. Kalan işi birlikte kaç günde bitirirler?", c: ["4", "6", "12"], a: "Ayşe 3/9 = 1/3 yaptı, kalan 2/3. Birlikte 1 günde 1/9 + 1/18 = 1/6: t/6 = 2/3 → t = 4." },
-      { s: "Ali bir işi 8 günde bitiriyor. 2 gün çalışıp bırakıyor. Kalan işi Veli 9 günde bitiriyor. Veli işin tamamını kaç günde bitirir?", c: ["12", "9", "10"], a: "Ali 2/8 = 1/4 yaptı, kalan 3/4. Veli v günde bitirirse 9/v = 3/4 → v = 12." },
-      // Kalan işi bitirme
-      { s: "Bir işi 12 günde bitiren işçi 5 gün çalışıyor. İşi bitirmesi için kaç gün daha çalışmalıdır?", c: ["7", "5", "12"], a: "Yapılan 5/12, kalan 7/12: t/12 = 7/12 → t = 7." },
-      { s: "Bir işin 1/3'ü bitmiş. Kalan işi 6 günde bitiren işçi işin tamamını kaç günde bitirir?", c: ["9", "18", "6"], a: "Kalan 2/3 iş 6 günde: 6/x = 2/3 → x = 9." },
-      // İşçi-gün
-      { s: "Bir işi 3 işçi 8 günde bitiriyor. Bu iş kaç işçi-gündür?", c: ["24", "11", "5"], a: "İşçi-gün = işçi · gün = 3 · 8 = 24. Bu iş, 1 işçinin 24 günlük işidir." },
-      { s: "Bir işi 6 işçi 4 günde bitiriyor. 2 gün çalıştıktan sonra 2 işçi ayrılıyor. Kalan işi geri kalanlar kaç günde bitirir?", c: ["3", "2", "4"], a: "İş 6 · 4 = 24 işçi-gün; 2 günde 12 yapıldı, 12 kaldı. 4 işçi: 4t = 12 → t = 3." },
-      { s: "Bir işi 4 işçi 10 günde bitiriyor. 4 gün çalıştıktan sonra 2 işçi daha geliyor. Kalan işi kaç günde bitirirler?", c: ["4", "6", "3"], a: "İş 4 · 10 = 40 işçi-gün; 4 günde 16 yapıldı, 24 kaldı. 6 işçi: 6t = 24 → t = 4." },
-      { s: "5 işçinin 6 günde bitireceği bir işe 2 gün sonra 5 işçi daha katılıyor. İş toplam kaç günde biter?", c: ["4", "2", "3"], a: "İş 5 · 6 = 30 işçi-gün; 2 günde 10 yapıldı, 20 kaldı. 10 işçi: 10t = 20 → t = 2. Toplam 2 + 2 = 4 gün." }
+      // 2) İŞİ KAÇ p ALIRIZ? — Sürelerin EKOK'i
+      { s: "Biri bir işi 3 saatte, diğeri 5 saatte yapıyor. İki süreye de tam bölünsün diye işi kaç p almak uygundur?", c: ["15p", "8p", "2p"], a: "3 ve 5'in EKOK'i 15: iş 15p alınırsa iki işçinin saatlik işi de tam sayı olur." },
+      { s: "İş 15p ise bu işi 3 saatte yapan işçi saatte kaç p yapar?", c: ["5p", "3p", "45p"], a: "15p, 3 saate bölünür: saatte 5p." },
+      { s: "İş 15p ise bu işi 5 saatte yapan işçi saatte kaç p yapar?", c: ["3p", "5p", "75p"], a: "15p, 5 saate bölünür: saatte 3p." },
+      { s: "İş 15p'dir. Saatte 3p yapan işçi bu işi neden 5 saatte bitirir?", c: ["Çünkü 5 · 3p = 15p", "Çünkü 3 + 5 = 8", "Çünkü 15 − 3 = 12"], a: "Her saat 3p eklenir: 5 saatte 15p, yani işin tamamı." },
+      { s: "Bir işçi saatte 3p, diğeri saatte 5p yapıyor. Hangisi işi daha kısa sürede bitirir?", c: ["Saatte 5p yapan", "Saatte 3p yapan", "İkisi aynı sürede"], a: "Saatte çok p yapan işi daha çabuk bitirir." },
+      { s: "Biri bir işi 4 saatte, diğeri 6 saatte yapıyor. İşi kaç p almak uygundur?", c: ["12p", "10p", "2p"], a: "4 ve 6'nın EKOK'i 12: saatte 3p ve 2p yaparlar." },
+      { s: "İş 12p ise bu işi 4 saatte yapan işçi saatte kaç p yapar?", c: ["3p", "4p", "48p"], a: "12p, 4 saate bölünür: saatte 3p." },
+      { s: "İş 12p; bir işçi saatte 2p yapıyor. Bu işçi işi tek başına kaç saatte bitirir?", c: ["6", "10", "24"], a: "Her saat 2p: 12 / 2 = 6 saat." },
+      { s: "Saatte 5p yapan işçi işi 3 saatte bitiriyor. İş kaç p'dir?", c: ["15p", "8p", "2p"], a: "3 saat, her saat 5p: 3 · 5 = 15p." },
+      { s: "Biri bir işi 2 saatte, diğeri 3 saatte, üçüncüsü 6 saatte yapıyor. İşi kaç p almak uygundur?", c: ["6p", "11p", "36p"], a: "2, 3 ve 6'nın EKOK'i 6: saatte 3p, 2p ve 1p yaparlar." },
+      { s: "Ali bir işi 10 saatte yapıyor. Veli, Ali'nin 2 katı hızlı. İş 10p ise Veli saatte kaç p yapar?", c: ["2p", "1p", "5p"], a: "Ali saatte 1p; 2 katı hızlı Veli saatte 2p." },
+
+      // 3) İKİ İŞÇİ — Birlikte saatte kaç p?
+      { s: "İş 15p; Ali saatte 5p, Veli saatte 3p yapıyor. Birlikte saatte kaç p yaparlar?", c: ["8p", "2p", "15p"], a: "Birlikte çalışınca p'ler toplanır: 5p + 3p = 8p." },
+      { s: "İş 12p; Ali saatte 3p, Veli saatte 1p yapıyor. Birlikte işi kaç saatte bitirirler?", c: ["3", "4", "12"], a: "Birlikte saatte 3p + 1p = 4p: 12 / 4 = 3 saat." },
+      { s: "Bir işi Ali 3 saatte, Veli 6 saatte yapıyor. İşi 6p alırsak birlikte saatte kaç p yaparlar?", c: ["3p", "9p", "2p"], a: "Ali saatte 2p, Veli saatte 1p; birlikte 3p." },
+      { s: "Bir işi Ali 3 saatte, Veli 6 saatte yapıyor. Birlikte kaç saatte bitirirler?", c: ["2", "9", "4,5"], a: "İş 6p; Ali 2p, Veli 1p, birlikte saatte 3p: 6 / 3 = 2 saat." },
+      { s: "Bir işi 4 ve 12 saatte yapan iki işçi birlikte kaç saatte bitirir?", c: ["3", "16", "8"], a: "İş 12p; saatte 3p + 1p = 4p: 12 / 4 = 3 saat." },
+      { s: "Bir işi 6 ve 12 saatte yapan iki işçi birlikte kaç saatte bitirir?", c: ["4", "18", "9"], a: "İş 12p; saatte 2p + 1p = 3p: 12 / 3 = 4 saat." },
+      { s: "Bir işi 10 ve 15 saatte yapan iki işçi birlikte kaç saatte bitirir?", c: ["6", "25", "12,5"], a: "İş 30p; saatte 3p + 2p = 5p: 30 / 5 = 6 saat." },
+      { s: "Bir işi 5 ve 20 saatte yapan iki işçi birlikte kaç saatte bitirir?", c: ["4", "25", "12,5"], a: "İş 20p; saatte 4p + 1p = 5p: 20 / 5 = 4 saat." },
+      { s: "Bir işi 12 ve 24 saatte yapan iki işçi birlikte kaç saatte bitirir?", c: ["8", "36", "18"], a: "İş 24p; saatte 2p + 1p = 3p: 24 / 3 = 8 saat." },
+      { s: "Bir işi 2 ve 3 saatte yapan iki işçi birlikte bu işi kaç saatte bitirir?", c: ["1 saat 12 dakika", "5 saat", "2 saat 30 dakika"], a: "İş 6p; saatte 3p + 2p = 5p. 6p için 1 saat (5p) ve 1p daha: 1/5 saat = 12 dakika." },
+      { s: "Bir işi 3 ve 5 saatte yapan iki işçi 1 saat birlikte çalışırsa 15p'lik işin kaç p'si kalır?", c: ["7p", "8p", "13p"], a: "Saatte 5p + 3p = 8p yapılır; kalan 15 − 8 = 7p." },
+      { s: "Aynı hızda çalışan iki işçiden biri bir işi 8 saatte yapıyor. İkisi birlikte kaç saatte yapar?", c: ["4", "16", "8"], a: "İş 8p; her biri saatte 1p, birlikte 2p: 8 / 2 = 4 saat." },
+      { s: "Ali ile Veli bir işi birlikte 4 saatte, Ali tek başına 6 saatte yapıyor. Veli tek başına kaç saatte yapar?", c: ["12", "2", "10"], a: "İş 12p; birlikte saatte 3p, Ali 2p, demek ki Veli 1p: 12 saat." },
+      { s: "Ali ile Veli bir işi birlikte 2 saatte, Ali tek başına 3 saatte yapıyor. Veli tek başına kaç saatte yapar?", c: ["6", "1", "5"], a: "İş 6p; birlikte saatte 3p, Ali 2p, Veli 1p: 6 saat." },
+      { s: "Bir işi 3 ve 6 saatte yapan iki işçi birlikte bitirdiğinde yavaş işçinin yaptığı kısım işin ne kadarıdır?", c: ["Üçte biri", "Yarısı", "Altıda biri"], a: "İş 6p; saatte 2p + 1p, iş 2 saatte biter. Yavaş işçi 2p yaptı: 6p'nin üçte biri." },
+      // Biri diğerinin katı hızlı
+      { s: "Veli, Ali'nin 2 katı hızlı. Birlikte bir işi 4 saatte bitiriyorlar. Ali tek başına kaç saatte bitirir?", c: ["12", "6", "8"], a: "Ali saatte 1p, Veli 2p, birlikte 3p; 4 saatte iş 12p. Ali tek başına 12 saat." },
+      { s: "Veli, Ali'nin 2 katı hızlı. Birlikte bir işi 4 saatte bitiriyorlar. Veli tek başına kaç saatte bitirir?", c: ["6", "12", "2"], a: "Ali 1p, Veli 2p; iş 4 · 3p = 12p. Veli 12 / 2 = 6 saat." },
+      { s: "Bir işçi diğerinin 3 katı hızlı. Birlikte bir işi 3 saatte bitiriyorlar. Yavaş işçi tek başına kaç saatte bitirir?", c: ["12", "4", "9"], a: "Yavaş 1p, hızlı 3p, birlikte 4p; iş 3 · 4p = 12p. Yavaş işçi 12 saat." },
+      // Biri bırakıyor, biri sonradan katılıyor
+      { s: "Bir işi Ali 6, Veli 12 saatte yapıyor. 2 saat birlikte çalışınca 12p'lik işin kaç p'si yapılmış olur?", c: ["6p", "3p", "12p"], a: "Ali saatte 2p, Veli 1p, birlikte 3p; 2 saatte 6p." },
+      { s: "Bir işi Ali 6, Veli 12 saatte yapıyor. 2 saat birlikte çalıştıktan sonra Ali ayrılıyor. Kalan işi Veli kaç saatte bitirir?", c: ["6", "4", "8"], a: "İş 12p; 2 saatte 6p yapıldı, 6p kaldı. Veli saatte 1p: 6 saat." },
+      { s: "Bir işi Ali 10, Veli 15 saatte yapıyor. 3 saat birlikte çalıştıktan sonra Veli ayrılıyor. Kalan işi Ali kaç saatte bitirir?", c: ["5", "7,5", "2"], a: "İş 30p; Ali 3p, Veli 2p. 3 saatte 15p yapıldı, 15p kaldı. Ali 15 / 3 = 5 saat." },
+      { s: "Bir işi Ayşe 4, Can 12 saatte yapıyor. Birlikte 2 saat çalışıp Ayşe ayrılıyor. Kalan işi Can kaç saatte bitirir?", c: ["4", "8", "10"], a: "İş 12p; Ayşe 3p, Can 1p. 2 saatte 8p yapıldı, 4p kaldı. Can 4 saat." },
+      { s: "Bir işi Ayşe 9, Can 18 saatte yapıyor. Ayşe 3 saat tek başına çalışıyor, sonra Can katılıyor. Kalan işi birlikte kaç saatte bitirirler?", c: ["4", "6", "12"], a: "İş 18p; Ayşe 2p, Can 1p. Ayşe 3 saatte 6p yaptı, 12p kaldı. Birlikte 3p: 4 saat." },
+      { s: "Bir işi Ali 8, Veli 24 saatte yapıyor. Ali 2 saat çalışıp bırakıyor. Kalan işi Veli kaç saatte bitirir?", c: ["18", "22", "6"], a: "İş 24p; Ali saatte 3p, 2 saatte 6p. Kalan 18p, Veli saatte 1p: 18 saat." },
+      { s: "Ali bir işi 8 saatte yapıyor. 2 saat çalışıp bırakıyor; kalan işi Veli 9 saatte bitiriyor. Veli işin tamamını kaç saatte yapar?", c: ["12", "9", "10"], a: "İş 24p; Ali saatte 3p, 2 saatte 6p. Kalan 18p'yi Veli 9 saatte yaptı: saatte 2p. 24p için 12 saat." },
+      { s: "Bir işi 3 ve 6 saatte yapan iki işçiden yavaş olan 3 saat tek başına çalışıyor, sonra hızlı işçi katılıyor. İş toplam kaç saatte biter?", c: ["4", "3", "5"], a: "İş 6p; yavaş 1p, hızlı 2p. 3 saatte 3p yapıldı, 3p kaldı. Birlikte 3p: 1 saat. Toplam 4 saat." },
+      { s: "Bir işi 6 ve 12 saatte yapan iki işçi birlikte çalışıyor. İş bitince hızlı işçi 12p'lik işin kaç p'sini yapmış olur?", c: ["8p", "4p", "6p"], a: "Saatte 2p + 1p = 3p; iş 4 saatte biter. Hızlı işçi 4 · 2p = 8p yaptı." },
+
+      // 4) ÜÇ İŞÇİ — Aynı mantık
+      { s: "Bir işi 2, 3 ve 6 saatte yapan üç işçi birlikte kaç saatte bitirir?", c: ["1", "11", "2"], a: "İş 6p; saatte 3p + 2p + 1p = 6p: 1 saatte biter." },
+      { s: "Bir işi 4, 6 ve 12 saatte yapan üç işçi birlikte kaç saatte bitirir?", c: ["2", "22", "4"], a: "İş 12p; saatte 3p + 2p + 1p = 6p: 12 / 6 = 2 saat." },
+      { s: "Bir işi 6, 10 ve 15 saatte yapan üç işçi birlikte kaç saatte bitirir?", c: ["3", "31", "10"], a: "İş 30p; saatte 5p + 3p + 2p = 10p: 30 / 10 = 3 saat." },
+      { s: "Bir işi 6, 12 ve 12 saatte yapan üç işçi birlikte kaç saatte bitirir?", c: ["3", "30", "6"], a: "İş 12p; saatte 2p + 1p + 1p = 4p: 12 / 4 = 3 saat." },
+      { s: "Bir işi 3, 4 ve 6 saatte yapan üç işçi için işi kaç p almak uygundur?", c: ["12p", "13p", "72p"], a: "3, 4 ve 6'nın EKOK'i 12: saatte 4p, 3p ve 2p yaparlar." },
+      { s: "İş 12p; üç işçi saatte 4p, 3p ve 2p yapıyor. Birlikte işi kaç saatte bitirirler?", c: ["1 saat 20 dakika", "9 saat", "3 saat"], a: "Birlikte saatte 9p. 1 saatte 9p, kalan 3p için 3/9 = 1/3 saat = 20 dakika." },
+      { s: "Bir işi 2, 3 ve 6 saatte yapan üç işçi yarım saat birlikte çalışırsa 6p'lik işin kaç p'si kalır?", c: ["3p", "1p", "6p"], a: "Birlikte saatte 6p; yarım saatte 3p yapılır, 3p kalır." },
+      { s: "Bir işi 4, 6 ve 12 saatte yapan üç işçi 1 saat birlikte çalışıyor, sonra en hızlısı ayrılıyor. Kalan işi diğer ikisi kaç saatte bitirir?", c: ["2", "3", "6"], a: "İş 12p; 3p + 2p + 1p = 6p. 1 saatte 6p yapıldı, 6p kaldı. Kalan ikisi 2p + 1p = 3p: 2 saat." },
+      { s: "Bir işi 3, 6 ve 6 saatte yapan üç işçiden en hızlısı işe hiç gelmezse diğer ikisi işi kaç saatte bitirir?", c: ["3", "12", "6"], a: "İş 6p; en hızlı 2p, diğerleri 1p'şer. İkisi saatte 2p: 6 / 2 = 3 saat." },
+      { s: "Ali, Veli ve Can bir işi birlikte 2 saatte yapıyor. Ali 6, Veli 12 saatte yapıyor. Can tek başına kaç saatte yapar?", c: ["4", "2", "8"], a: "İş 12p; birlikte saatte 6p. Ali 2p, Veli 1p, demek ki Can 3p: 12 / 3 = 4 saat." },
+      { s: "Bir işi 4, 6 ve 12 saatte yapan üç işçi birlikte işi bitirdiğinde en yavaş işçi 12p'lik işin kaç p'sini yapmış olur?", c: ["2p", "1p", "4p"], a: "Birlikte 6p, iş 2 saatte biter. En yavaş saatte 1p: 2p." },
+      { s: "Bir işi 6, 12 ve 4 saatte yapan üç işçiden ilk ikisi 2 saat çalışıyor, sonra üçüncüsü katılıyor. Kalan işi üçü kaç saatte bitirir?", c: ["1", "2", "3"], a: "İş 12p; 2p, 1p, 3p. İlk ikisi 2 saatte 6p yaptı, 6p kaldı. Üçü birlikte 6p: 1 saat." }
     ],
 
     // ── yks-havuzprob · Havuz Problemleri ──
@@ -2406,13 +2440,14 @@ window.KK_YKS = {
     { k: "yks-yasprob", s: "Yaşları toplamı 30 olan iki kişiden biri x yaşındaysa öbürü x − 30 yaşındadır.", d: false, n: "Öbürü 30 − x yaşındadır" },
 
     // ── yks-isciprob · İşçi Problemleri ──
-    { k: "yks-isciprob", s: "Bir işi 6 günde bitiren işçi 1 günde işin 1/6'sını yapar.", d: true },
-    { k: "yks-isciprob", s: "Bir işi 2 ve 3 günde bitiren iki işçi birlikte 5 günde bitirir.", d: false, n: "Süreler toplanmaz: 1/2 + 1/3 = 5/6, iş 6/5 günde biter" },
+    { k: "yks-isciprob", s: "Bir işi 10 saatte yapan işçi işin yarısını 5 saatte yapar.", d: true },
+    { k: "yks-isciprob", s: "Bir işi 3 ve 6 saatte yapan iki işçi birlikte 9 saatte bitirir.", d: false, n: "Süreler toplanmaz: iş 6p, saatte 2p + 1p = 3p, birlikte 2 saatte biter" },
+    { k: "yks-isciprob", s: "Bir işi 3 ve 5 saatte yapan iki işçi için iş 15p alınırsa hızlı işçi saatte 5p yapar.", d: true },
+    { k: "yks-isciprob", s: "100p'lik işi 4 saatte yapan işçi saatte 25p yapar.", d: true },
+    { k: "yks-isciprob", s: "Saatte 4p yapan işçi 20p'lik işi 80 saatte bitirir.", d: false, n: "20 / 4 = 5 saatte bitirir" },
     { k: "yks-isciprob", s: "Birlikte çalışan iki işçi bir işi, hızlı olanın tek başına süresinden daha kısa sürede bitirir.", d: true },
-    { k: "yks-isciprob", s: "Bir işi x günde bitiren işçi 4 günde işin x/4'ünü yapar.", d: false, n: "4/x'ini yapar" },
-    { k: "yks-isciprob", s: "Bir işi 3 ve 6 günde bitiren iki işçi birlikte 1 günde işin yarısını yapar.", d: true },
-    { k: "yks-isciprob", s: "Bir işi 8 günde bitiren işçi 2 gün çalışırsa işin 3/4'ü kalır.", d: true },
-    { k: "yks-isciprob", s: "Bir işi 3 işçi 4 günde bitiriyorsa bu iş 7 işçi-gündür.", d: false, n: "3 · 4 = 12 işçi-gündür" },
+    { k: "yks-isciprob", s: "Bir işi 12 saatte yapan işçi 3 saat çalışırsa işin dörtte üçü kalır.", d: true },
+    { k: "yks-isciprob", s: "Süreleri 4 ve 6 saat olan iki işçide işi 10p almak en uygunudur.", d: false, n: "EKOK(4, 6) = 12: iş 12p alınır, saatte 3p ve 2p" },
 
     // ── yks-havuzprob · Havuz Problemleri ──
     { k: "yks-havuzprob", s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte 9 saatte doldurur.", d: false, n: "Süreler toplanmaz: 1/3 + 1/6 = 1/2, 2 saatte doldurur" },
