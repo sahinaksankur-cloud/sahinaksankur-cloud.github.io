@@ -1824,6 +1824,57 @@ window.KK_YKS = {
 
     // ── yks-yasprob · Yaş Problemleri ──
     "yks-yasprob": [
+      // A) KURMA (çözüm yok) — Zaman kayması: yıl sonra +, yıl önce −
+      { s: "Ali şimdi x yaşındadır. 5 yıl sonra kaç yaşında olur?", c: ["x + 5", "5x", "x − 5"], a: "5 yıl sonra herkes 5 yaş büyür: x + 5. 5x yaşın 5 katıdır." },
+      { s: "Ayşe şimdi x yaşındadır. 3 yıl önce kaç yaşındaydı?", c: ["x − 3", "x + 3", "3 − x"], a: "3 yıl önce herkes 3 yaş küçüktü: x − 3. 3 − x sırası ters yazılmıştır." },
+      { s: "Can'ın 4 yıl sonraki yaşı x ise şimdiki yaşı nedir?", c: ["x − 4", "x + 4", "4x"], a: "Şimdi, 4 yıl sonrasından 4 yıl öncedir: x − 4." },
+      { s: "Elif'in 2 yıl önceki yaşı x ise 6 yıl sonraki yaşı nedir?", c: ["x + 8", "x + 6", "x + 4"], a: "Şimdi x + 2; 6 yıl sonra x + 2 + 6 = x + 8." },
+      // Kat ve fark ilişkisi
+      { s: "Oğul x yaşında, baba oğlunun 3 katı yaşındadır. Babanın yaşı nedir?", c: ["3x", "x + 3", "x/3"], a: "“3 katı” → 3 ile çarpılır: 3x. x + 3, oğuldan 3 yaş büyük demektir." },
+      { s: "Anne kızından 24 yaş büyüktür. Kız x yaşındaysa annenin yaşı nedir?", c: ["x + 24", "24x", "24 − x"], a: "“24 yaş büyük” → 24 eklenir: x + 24. Kat değil, fark verilmiştir." },
+      { s: "Baba 4x, oğlu x yaşındadır. Baba oğlundan kaç yaş büyüktür?", c: ["3x", "4x", "4"], a: "Yaş farkı büyük yaştan küçük yaş çıkarılarak bulunur: 4x − x = 3x." },
+      // Toplam ve fark
+      { s: "İki kardeşin yaşları toplamı 40'tır. Biri x yaşındaysa öbürü kaç yaşındadır?", c: ["40 − x", "x − 40", "40 + x"], a: "Toplamdan bilinen parça çıkarılır: 40 − x." },
+      { s: "Ali x yaşında, Veli Ali'den 6 yaş küçüktür. Yaşları toplamı nasıl yazılır?", c: ["2x − 6", "2x + 6", "x − 6"], a: "Veli x − 6; toplam x + (x − 6) = 2x − 6." },
+      // Kat + yıl kayması
+      { s: "Oğul x, baba 3x yaşındadır. 5 yıl sonra babanın yaşı nasıl yazılır?", c: ["3x + 5", "3(x + 5)", "3x + 15"], a: "Baba da 5 yaş büyür, sadece 5 eklenir: 3x + 5. 3(x + 5), oğlun 5 yıl sonraki yaşının 3 katıdır." },
+      { s: "Oğul x yaşındadır. Oğlun 5 yıl sonraki yaşının 2 katı nasıl yazılır?", c: ["2(x + 5)", "2x + 5", "x + 10"], a: "Önce 5 yıl sonraki yaş: x + 5. Sonra 2 katı, toplamın tamamı: 2(x + 5)." },
+      { s: "Oğul x, baba 3x yaşındadır. “5 yıl sonra babanın yaşı oğlunun yaşının 2 katı olacak.” Denklem hangisidir?", c: ["3x + 5 = 2(x + 5)", "3x + 5 = 2x + 5", "3(x + 5) = 2x"], a: "İkisi de 5 yaş büyür: baba 3x + 5, oğul x + 5. Baba = 2 · oğul: 3x + 5 = 2(x + 5)." },
+      { s: "Kız x, anne 4x yaşındadır. “3 yıl önce annenin yaşı kızının yaşının 7 katıydı.” Denklem hangisidir?", c: ["4x − 3 = 7(x − 3)", "4x − 3 = 7x − 3", "4(x − 3) = 7x"], a: "3 yıl önce anne 4x − 3, kız x − 3. Anne = 7 · kız: 4x − 3 = 7(x − 3)." },
+      { s: "Ali x, babası x + 25 yaşındadır. “4 yıl sonra babanın yaşı Ali'nin yaşının 2 katı olacak.” Denklem hangisidir?", c: ["x + 29 = 2(x + 4)", "x + 29 = 2x + 4", "x + 25 = 2(x + 4)"], a: "4 yıl sonra baba x + 25 + 4 = x + 29, Ali x + 4: x + 29 = 2(x + 4)." },
+      { s: "Yaşları toplamı 30 olan iki kardeşten büyüğü x yaşındadır. “Büyüğün yaşı küçüğün 2 katıdır.” Denklem hangisidir?", c: ["x = 2(30 − x)", "30 − x = 2x", "x = 2 · 30 − x"], a: "Küçük 30 − x. Büyük = 2 · küçük: x = 2(30 − x)." },
+      // Parantez tuzakları
+      { s: "Oğul x yaşındadır. “Oğlun 2 yıl sonraki yaşının 3 katı” hangisidir?", c: ["3(x + 2)", "3x + 2", "x + 6"], a: "Önce 2 yıl sonraki yaş x + 2, sonra bunun tamamının 3 katı: 3(x + 2)." },
+      { s: "Oğul x yaşındadır. 3(x + 2) ile 3x + 2 için hangisi doğrudur?", c: ["İlki 2 yıl sonraki yaşın 3 katı, ikincisi şimdiki yaşın 3 katının 2 fazlası", "İkisi aynıdır", "İkisi arasında 2 fark vardır"], a: "3(x + 2) = 3x + 6. 3x + 2'den 4 fazladır; aynı değildir." },
+      { s: "Baba 3x yaşındadır. Babanın 4 yıl önceki yaşı hangisidir?", c: ["3x − 4", "3(x − 4)", "3x − 12"], a: "4 yıl önce baba da sadece 4 yaş küçüktü: 3x − 4. 3(x − 4), oğlun 4 yıl önceki yaşının 3 katıdır." },
+      // Ters yön: denklemden cümleye
+      { s: "Oğul x, baba x + 30 yaşındadır. “x + 30 = 4x” ne söyler?", c: ["Babanın yaşı oğlunun 4 katıdır", "Oğlun yaşı babanın 4 katıdır", "Yaşları toplamı 4x'tir"], a: "Sol taraf babanın yaşı, sağ taraf oğlun yaşının 4 katı: baba = 4 · oğul." },
+      { s: "Oğul x, baba 3x yaşındadır. “3x + 6 = 2(x + 6)” ne söyler?", c: ["6 yıl sonra babanın yaşı oğlunun 2 katı olacak", "6 yıl önce babanın yaşı oğlunun 2 katıydı", "Babanın yaşı oğlunun 2 katının 6 fazlasıdır"], a: "İki yaşa da 6 eklenmiş: 6 yıl sonra. Baba = 2 · oğul." },
+      { s: "Kız x, anne 3x yaşındadır. “(x − 2) + (3x − 2) = 36” ne söyler?", c: ["2 yıl önce yaşları toplamı 36 idi", "2 yıl sonra yaşları toplamı 36 olacak", "Yaşları farkı 36'dır"], a: "İki yaştan da 2 çıkarılmış: 2 yıl önce. Toplanmış: yaşları toplamı." },
+      // B) ÇÖZME — Yaş farkı hiç değişmez
+      { s: "Ali 12, babası 40 yaşındadır. 10 yıl sonra yaşları farkı kaç olur?", c: ["28", "38", "18"], a: "Fark: 40 − 12 = 28. İkisi de 10 yaş büyür, fark değişmez: 28." },
+      { s: "Anne kızından 26 yaş büyüktür. Kız 30 yaşına geldiğinde anne kaç yaşında olur?", c: ["56", "46", "60"], a: "Fark hep 26: 30 + 26 = 56." },
+      { s: "İki kardeşin yaşları farkı 4, toplamı 20'dir. Büyük kardeş kaç yaşındadır?", c: ["12", "8", "16"], a: "Büyük x, küçük x − 4: x + x − 4 = 20 → 2x = 24 → x = 12." },
+      { s: "Baba 36, oğlu 8 yaşındadır. Kaç yıl sonra babanın yaşı oğlunun 3 katı olur?", c: ["6", "4", "12"], a: "t yıl sonra: 36 + t = 3(8 + t) → 36 + t = 24 + 3t → 2t = 12 → t = 6. (42 = 3 · 14)" },
+      // Toplam yaş: n kişi, t yıl → toplam n · t artar
+      { s: "Üç kardeşin yaşları toplamı 24'tür. 5 yıl sonra yaşları toplamı kaç olur?", c: ["39", "29", "34"], a: "Her biri 5 yaş büyür: 3 · 5 = 15 artar. 24 + 15 = 39." },
+      { s: "Anne, baba ve çocuğun yaşları toplamı bugün 70'tir. 4 yıl önce yaşları toplamı kaçtı?", c: ["58", "66", "62"], a: "3 kişi, her biri 4 yaş küçük: 3 · 4 = 12 az. 70 − 12 = 58." },
+      { s: "Dört kişilik bir ailenin yaşları toplamı 90'dır. Kaç yıl sonra yaşları toplamı 110 olur?", c: ["5", "20", "4"], a: "Her yıl toplam 4 artar: 4t = 110 − 90 = 20 → t = 5." },
+      // Kat ilişkisi + yıl kayması
+      { s: "Baba oğlunun 4 katı yaşındadır. 5 yıl sonra 3 katı olacaktır. Oğul şimdi kaç yaşındadır?", c: ["10", "5", "15"], a: "Oğul x, baba 4x: 4x + 5 = 3(x + 5) → 4x + 5 = 3x + 15 → x = 10. (45 = 3 · 15)" },
+      { s: "Anne kızının 3 katı yaşındadır. 4 yıl önce 5 katıydı. Kız şimdi kaç yaşındadır?", c: ["8", "4", "12"], a: "Kız x, anne 3x: 3x − 4 = 5(x − 4) → 3x − 4 = 5x − 20 → 2x = 16 → x = 8. (20 = 5 · 4)" },
+      { s: "Ali'nin yaşı Ayşe'nin yaşının 2 katıdır. Yaşları toplamı 36'dır. Ali kaç yaşındadır?", c: ["24", "12", "18"], a: "Ayşe x, Ali 2x: x + 2x = 36 → 3x = 36 → x = 12. Ali 2 · 12 = 24." },
+      { s: "Baba 30, oğlu 2 yaşındadır. Kaç yıl sonra babanın yaşı oğlunun 5 katı olur?", c: ["5", "4", "8"], a: "30 + t = 5(2 + t) → 30 + t = 10 + 5t → 4t = 20 → t = 5. (35 = 5 · 7)" },
+      // “Ben senin yaşındayken” (yaş farkıyla)
+      { s: "Ali 20, Veli 14 yaşındadır. Ali, Veli'nin şimdiki yaşındayken Veli kaç yaşındaydı?", c: ["8", "6", "14"], a: "Fark 6. Ali 14 yaşındayken (6 yıl önce) Veli 14 − 6 = 8." },
+      { s: "Ayşe 10, ablası 17 yaşındadır. Ayşe ablasının şimdiki yaşına geldiğinde abla kaç yaşında olur?", c: ["24", "20", "27"], a: "Fark 7. Ayşe 17 olunca abla 17 + 7 = 24." },
+      { s: "16 yaşındaki biri “Ben senin yaşındayken sen 4 yaşındaydın.” diyor. Diğeri kaç yaşındadır?", c: ["10", "12", "8"], a: "Diğeri x, fark 16 − x. O zaman diğeri x − (16 − x) = 4 → 2x = 20 → x = 10. (Fark 6: 10 − 6 = 4)" },
+      { s: "22 yaşındaki biri “Sen benim yaşıma geldiğinde ben 30 yaşında olacağım.” diyor. Diğeri kaç yaşındadır?", c: ["14", "8", "16"], a: "Fark d: 22 + d = 30 → d = 8. Diğeri 22 − 8 = 14." },
+      // Doğum yılı – yaş
+      { s: "2010'da doğan biri 2026 yılında kaç yaşına girer?", c: ["16", "15", "17"], a: "Yaş = yıl − doğum yılı: 2026 − 2010 = 16." },
+      { s: "2026 yılında 35 yaşına giren biri hangi yılda doğmuştur?", c: ["1991", "1981", "2001"], a: "Doğum yılı = yıl − yaş: 2026 − 35 = 1991." },
+      { s: "Bir anne 1990'da, kızı 2015'te doğmuştur. Kızı doğduğunda anne kaç yaşındaydı?", c: ["25", "15", "35"], a: "2015 − 1990 = 25. Bu aynı zamanda aralarındaki yaş farkıdır." },
+      { s: "Bir anne 1990'da, kızı 2015'te doğmuştur. Kızın yaşı annesinin yaşının yarısı olduğunda hangi yıldır?", c: ["2040", "2030", "2050"], a: "Fark 25. Anne = 2 · kız ise kız x, anne 2x: 2x − x = 25 → x = 25. 2015 + 25 = 2040." },
     ],
 
     // ── yks-isciprob · İşçi Problemleri ──
@@ -2243,6 +2294,13 @@ window.KK_YKS = {
     { k: "yks-kesirprob", s: "Kitabın 1/3'ü okununca kalan kısım kitabın 2/3'üdür.", d: true },
 
     // ── yks-yasprob · Yaş Problemleri ──
+    { k: "yks-yasprob", s: "İki kişinin yaşları farkı yıllar geçtikçe değişmez.", d: true },
+    { k: "yks-yasprob", s: "İki kişinin yaşları farkı 10 yıl sonra 10 artar.", d: false, n: "İkisi de 10 yaş büyür; yaş farkı hiç değişmez" },
+    { k: "yks-yasprob", s: "3 kişinin yaşları toplamı 5 yıl sonra 15 artar.", d: true },
+    { k: "yks-yasprob", s: "Oğul x yaşındaysa 4 yıl sonraki yaşının 2 katı 2x + 4'tür.", d: false, n: "2(x + 4) = 2x + 8" },
+    { k: "yks-yasprob", s: "Baba 3x yaşındaysa 2 yıl önceki yaşı 3x − 2'dir.", d: true },
+    { k: "yks-yasprob", s: "Babanın yaşı oğlunun yaşının kaç katıysa yıllar geçse de o kadar katı kalır.", d: false, n: "Kat ilişkisi değişir; sadece yaş farkı sabit kalır" },
+    { k: "yks-yasprob", s: "Yaşları toplamı 30 olan iki kişiden biri x yaşındaysa öbürü x − 30 yaşındadır.", d: false, n: "Öbürü 30 − x yaşındadır" },
 
     // ── yks-isciprob · İşçi Problemleri ──
 
