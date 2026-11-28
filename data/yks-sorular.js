@@ -41,9 +41,9 @@ window.KK_YKS = {
 
     { id: "yks-yasprob", ad: "Yaş Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
-    // { id: "yks-isciprob", ad: "İşçi Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+    { id: "yks-isciprob", ad: "İşçi Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
-    // { id: "yks-havuzprob", ad: "Havuz Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+    { id: "yks-havuzprob", ad: "Havuz Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
     // { id: "yks-yuzdeprob", ad: "Yüzde Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
