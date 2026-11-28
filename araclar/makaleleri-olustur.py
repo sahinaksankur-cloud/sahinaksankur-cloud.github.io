@@ -114,7 +114,7 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
 {ek_head}  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{kok}assets/style.css?v=202611281021">
+  <link rel="stylesheet" href="{kok}assets/style.css?v=202611281022">
 </head>
 <body>
   <header class="topbar">
@@ -137,9 +137,9 @@ def sayfa(baslik, aciklama, yol, govde, kok="", aktif="makaleler", ek_head=""):
     </div>
   </footer>
 
-  <script src="{kok}assets/config.js?v=202611281021"></script>
-  <script src="{kok}assets/app.js?v=202611281021"></script>
-  <script src="{kok}assets/canli-takvim.js?v=202611281021"></script>
+  <script src="{kok}assets/config.js?v=202611281022"></script>
+  <script src="{kok}assets/app.js?v=202611281022"></script>
+  <script src="{kok}assets/canli-takvim.js?v=202611281022"></script>
   <!-- Ziyaretçi sayımı: GoatCounter (çerezsiz, kişisel veri yok; yerelde saymaz) -->
   <script data-goatcounter="https://kuzeykampus.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
