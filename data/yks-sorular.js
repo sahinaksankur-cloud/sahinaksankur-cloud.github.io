@@ -1968,58 +1968,69 @@ window.KK_YKS = {
 
     // ── yks-havuzprob · Havuz Problemleri ──
     "yks-havuzprob": [
-      // A) KURMA (çözüm yok) — Havuzun tamamı 1; x saatte dolduran musluk 1 saatte 1/x
-      { s: "Havuz problemlerinde boş havuzun tamamı hangi sayıyla gösterilir?", c: ["1", "0", "100"], a: "Havuzun tamamı 1 birim iştir; musluklar bu 1'in kesirlerini doldurur." },
-      { s: "Bir musluk boş havuzu 6 saatte dolduruyor. 1 saatte havuzun ne kadarını doldurur?", c: ["1/6", "6", "5/6"], a: "Havuz (1) 6 eşit saate bölünür: 1 saatte 1/6." },
-      { s: "Boş bir depoyu x saatte dolduran musluk 1 saatte deponun ne kadarını doldurur?", c: ["1/x", "x", "x − 1"], a: "Depo (1) x saate bölünür: 1 saatte 1/x." },
-      { s: "Bir musluk boş havuzu 4 saatte dolduruyor. 3 saatte havuzun ne kadarını doldurur?", c: ["3/4", "1/4", "4/3"], a: "1 saatte 1/4; 3 saatte 3 · 1/4 = 3/4." },
-      { s: "Bir musluk boş havuzu a saatte dolduruyor. t saatte havuzun ne kadarını doldurur?", c: ["t/a", "a/t", "t · a"], a: "1 saatte 1/a; t saatte t · 1/a = t/a." },
-      { s: "A musluğu boş havuzu 3 saatte dolduruyor. B musluğu aynı havuzu A'nın 2 katı sürede dolduruyor. B 1 saatte havuzun ne kadarını doldurur?", c: ["1/6", "2/3", "1/5"], a: "B'nin süresi 2 · 3 = 6 saat; 1 saatte 1/6." },
-      { s: "Boş havuzu 6 saatte dolduran musluk 2 saat açık kalıyor. Havuzun dolan kısmı nasıl yazılır?", c: ["2 · 1/6", "6 · 1/2", "2 + 1/6"], a: "Saat sayısı × 1 saatteki iş: 2 · 1/6 = 1/3." },
-      // İki musluk birlikte: 1/a + 1/b (süreler toplanmaz)
-      { s: "Boş havuzu A musluğu a saatte, B musluğu b saatte dolduruyor. İkisi birlikte 1 saatte havuzun ne kadarını doldurur?", c: ["1/a + 1/b", "1/(a + b)", "a + b"], a: "1 saatteki işler toplanır: 1/a + 1/b. Süreler toplanmaz." },
-      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte 1 saatte havuzun ne kadarını doldurur?", c: ["1/3", "1/16", "1/8"], a: "1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3. 1/16 süreleri toplamaktan gelir." },
-      { s: "Boş havuzu biri 3 saatte, öbürü 6 saatte dolduran iki musluk birlikte açılıyor. Ali “3 + 6 = 9 saatte dolar” diyor. Neden yanlış?", c: ["Birlikte daha hızlı dolar, süre 3 saatten az olmalı", "Süreler çarpılmalıydı: 18 saat", "Süreler çıkarılmalıydı: 3 saat"], a: "İkinci musluk yardım eder; süre hızlı musluğun 3 saatinden kısa olur. Süreler değil, 1 saatteki işler toplanır." },
-      // Boşaltan musluk: eksi
-      { s: "Dolu bir havuzu 5 saatte boşaltan musluk 1 saatte havuzun ne kadarını boşaltır?", c: ["1/5", "5", "4/5"], a: "Boşaltmada da havuz 1'dir: 1 saatte 1/5 boşalır." },
-      { s: "Boş havuzu a saatte dolduran musluk ile dolu havuzu b saatte boşaltan musluk birlikte açılıyor. 1 saatte havuzun ne kadarı dolar?", c: ["1/a − 1/b", "1/a + 1/b", "1/(a − b)"], a: "Dolduran artı, boşaltan eksi: 1/a − 1/b." },
-      { s: "Havuzu 3 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açık. 1 saatte havuzun ne kadarı dolar?", c: ["1/6", "1/2", "1/3"], a: "1/3 − 1/6 = 2/6 − 1/6 = 1/6. 1/2, boşaltanı eksi yazmamaktan gelir." },
-      // Denklem: t saatte dolarsa t(…) = 1
-      { s: "Boş havuzu biri a, öbürü b saatte dolduran iki musluk birlikte t saatte dolduruyor. Hangi denklem kurulur?", c: ["t(1/a + 1/b) = 1", "t = a + b", "t(a + b) = 1"], a: "t saat × birlikte 1 saatteki iş = havuzun tamamı (1)." },
-      { s: "Boş havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılınca havuz t saatte doluyor. Hangi denklem kurulur?", c: ["t(1/2 − 1/6) = 1", "t(1/2 + 1/6) = 1", "t(1/6 − 1/2) = 1"], a: "Dolduran artı, boşaltan eksi; t saatte havuzun tamamı (1) dolar." },
-      // Kısmen dolu havuz: dolacak kısım kalan kısımdır
-      { s: "Havuzun 1/3'ü doluyken doldurucu musluk açılıyor. Havuzun dolması için musluğun doldurması gereken kısım nedir?", c: ["2/3", "1/3", "1"], a: "Kalan kısım: 1 − 1/3 = 2/3." },
-      { s: "Havuzun yarısı doluyken, boş havuzu 8 saatte dolduran musluk açılıyor ve havuz t saatte doluyor. Hangi denklem kurulur?", c: ["t · 1/8 = 1/2", "t · 1/8 = 1", "t · 1/2 = 1/8"], a: "Dolacak kısım havuzun tamamı değil, kalan yarısıdır: t · 1/8 = 1/2." },
-      { s: "Havuzun 1/4'ü doluyken, dolu havuzu 6 saatte boşaltan musluk açılıyor. Havuz t saatte boşalıyorsa hangi denklem kurulur?", c: ["t · 1/6 = 1/4", "t · 1/6 = 3/4", "t · 1/6 = 1"], a: "Boşalacak olan sadece içindeki su, yani 1/4: t · 1/6 = 1/4." },
-      // Denklemden cümleye
-      { s: "3(1/6 + 1/x) = 1 denklemi hangi durumu anlatır?", c: ["Biri 6, öbürü x saatte dolduran iki musluk birlikte 3 saatte doldurur", "6 saatte dolduran, x saatte boşaltan musluk birlikte 3 saatte doldurur", "Biri 3, öbürü 6 saatte dolduran iki musluk birlikte x saatte doldurur"], a: "İki terim de artı: ikisi de doldurur; dıştaki 3 birlikte geçen süredir." },
-      { s: "t(1/4 − 1/12) = 1 denkleminde eksi işareti neyi gösterir?", c: ["12 saatlik musluğun boşalttığını", "12 saatlik musluğun daha hızlı olduğunu", "Musluklardan birinin kapalı olduğunu"], a: "Boşaltan musluğun 1 saatteki işi eksi yazılır." },
-      // B) ÇÖZME — Tek musluk: kesir kadarı
-      { s: "Boş havuzu 8 saatte dolduran musluk havuzun 1/4'ünü kaç saatte doldurur?", c: ["2", "4", "32"], a: "Denklem: t · 1/8 = 1/4 → t = 8/4 = 2 saat." },
-      { s: "Boş havuzu 6 saatte dolduran musluk 4 saatte havuzun ne kadarını doldurur?", c: ["2/3", "1/4", "3/2"], a: "4 · 1/6 = 4/6 = 2/3." },
-      // İki doldurucu birlikte
-      { s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["2", "9", "4,5"], a: "Denklem: t(1/3 + 1/6) = 1 → t · 1/2 = 1 → t = 2 saat." },
-      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["3", "16", "8"], a: "Denklem: t(1/4 + 1/12) = 1 → t · 1/3 = 1 → t = 3 saat." },
-      { s: "Boş havuzu 2 saatte ve 3 saatte dolduran iki musluk birlikte kaç saatte doldurur?", c: ["6/5", "5", "5/6"], a: "Denklem: t(1/2 + 1/3) = 1 → t · 5/6 = 1 → t = 6/5 saat. 5/6, 1 saatte dolan kısımdır." },
-      { s: "Özdeş iki musluktan her biri boş havuzu 10 saatte dolduruyor. İkisi birlikte kaç saatte doldurur?", c: ["5", "20", "10"], a: "Denklem: t(1/10 + 1/10) = 1 → t · 1/5 = 1 → t = 5 saat." },
-      { s: "A musluğu boş havuzu 6 saatte dolduruyor. A ile B birlikte 4 saatte dolduruyor. B tek başına kaç saatte doldurur?", c: ["12", "2", "10"], a: "Denklem: 1/6 + 1/x = 1/4 → 1/x = 1/4 − 1/6 = 1/12 → x = 12 saat." },
-      // Doldurucu + boşaltıcı
-      { s: "Boş havuzu 3 saatte dolduran musluk ile dolu havuzu 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["6", "2", "3"], a: "Denklem: t(1/3 − 1/6) = 1 → t · 1/6 = 1 → t = 6 saat. 2, boşaltanı eksi yazmamaktan gelir." },
-      { s: "Boş havuzu 2 saatte dolduran musluk ile dolu havuzu 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["3", "1,5", "4"], a: "Denklem: t(1/2 − 1/6) = 1 → t · 1/3 = 1 → t = 3 saat." },
-      { s: "Dolu bir depoyu 6 saatte ve 12 saatte boşaltan iki musluk birlikte açılıyor. Dolu depo kaç saatte boşalır?", c: ["4", "18", "6"], a: "İkisi de boşaltır, işler toplanır: t(1/6 + 1/12) = 1 → t · 1/4 = 1 → t = 4 saat." },
-      // Bir süre açık kalıp kapanıyor
-      { s: "Boş havuzu 6 saatte dolduran musluk 2 saat açık kalıp kapanıyor. Havuzun ne kadarı boş kalır?", c: ["2/3", "1/3", "1/6"], a: "Dolan: 2 · 1/6 = 1/3; boş kalan: 1 − 1/3 = 2/3." },
-      { s: "Boş havuzu 4 saatte ve 12 saatte dolduran iki musluk birlikte 2 saat açık kalıyor. Havuzun ne kadarı dolar?", c: ["2/3", "1/3", "1/8"], a: "1 saatte 1/4 + 1/12 = 1/3; 2 saatte 2 · 1/3 = 2/3." },
-      { s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte 1 saat açılıyor, sonra 3 saatlik musluk kapanıyor. Havuzun geri kalanını 6 saatlik musluk kaç saatte doldurur?", c: ["3", "6", "2"], a: "1 saatte 1/3 + 1/6 = 1/2 dolar. Kalan 1/2: t · 1/6 = 1/2 → t = 3 saat." },
-      { s: "Tankı 8 saatte dolduran musluk boş tankı 2 saat doldurup kapanıyor. Tankın geri kalanını, tankı 4 saatte dolduran musluk kaç saatte doldurur?", c: ["3", "2", "4"], a: "Dolan 2 · 1/8 = 1/4, kalan 3/4. Denklem: t · 1/4 = 3/4 → t = 3 saat." },
-      // Kısmen dolu havuz
-      { s: "Havuzun 1/3'ü doluyken, boş havuzu 6 saatte dolduran musluk açılıyor. Havuz kaç saatte dolar?", c: ["4", "2", "6"], a: "Kalan 2/3. Denklem: t · 1/6 = 2/3 → t = 4 saat." },
-      { s: "Havuzun yarısı doluyken, dolu havuzu 10 saatte boşaltan musluk açılıyor. Havuz kaç saatte boşalır?", c: ["5", "10", "20"], a: "Boşalacak kısım 1/2. Denklem: t · 1/10 = 1/2 → t = 5 saat." },
-      { s: "Havuzun 1/3'ü doluyken, havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılıyor. Havuz kaç saatte dolar?", c: ["2", "3", "1"], a: "Kalan 2/3. Denklem: t(1/2 − 1/6) = 2/3 → t · 1/3 = 2/3 → t = 2 saat." },
-      // Dolmaz / boşalır
-      { s: "Boş havuzu 6 saatte dolduran musluk ile dolu havuzu 3 saatte boşaltan musluk birlikte açılıyor. Boş havuz ne zaman dolar?", c: ["Hiç dolmaz", "2 saatte", "6 saatte"], a: "1/6 − 1/3 = −1/6: sonuç eksi, boşaltan daha hızlı. Boş havuz hiç dolmaz." },
-      { s: "Havuz doluyken, havuzu 6 saatte dolduran musluk ile 2 saatte boşaltan musluk birlikte açılıyor. Dolu havuz kaç saatte boşalır?", c: ["3", "1,5", "2"], a: "Boşaltan hızlı: t(1/2 − 1/6) = 1 → t · 1/3 = 1 → t = 3 saat." },
-      { s: "Doldurucu ve boşaltıcı musluk birlikte açılınca boş havuzun hiç dolmaması için ne gerekir?", c: ["Boşaltıcı en az doldurucu kadar hızlı olmalı", "Doldurucu daha hızlı olmalı", "İki musluğun süresi farklı olmalı"], a: "1/a − 1/b sıfır ya da eksiyse havuz dolmaz: boşaltıcı en az doldurucu kadar hızlıdır." },
+      // 1) Tek musluk — havuz p'lerden oluşur (tuğla gibi); "saatte kaç p" musluğun hızıdır. 1/x yok.
+      { s: "Havuzu 100p kabul edelim. Havuzu 5 saatte dolduran musluk saatte kaç p doldurur?", c: ["20p", "5p", "500p"], a: "100p, 5 saate eşit paylaşılır: 100 / 5 = 20p." },
+      { s: "100p'lik havuzu 20 saatte dolduran musluk saatte kaç p doldurur?", c: ["5p", "20p", "80p"], a: "100 / 20 = 5p." },
+      { s: "100p'lik havuzu 4 saatte dolduran musluk havuzun yarısını kaç saatte doldurur?", c: ["2", "8", "1"], a: "Saatte 25p; yarısı 50p: 50 / 25 = 2 saat." },
+      { s: "100p'lik havuzu 10 saatte dolduran musluk 30p'yi kaç saatte doldurur?", c: ["3", "30", "10"], a: "Saatte 10p; 30p için 30 / 10 = 3 saat." },
+      { s: "100p'lik havuzu 5 saatte dolduran musluk 10p'yi kaç saatte doldurur?", c: ["Yarım saatte", "2 saatte", "10 saatte"], a: "Saatte 20p; 10p bunun yarısı: yarım saat." },
+      { s: "Bir musluk saatte 15p dolduruyor. 60p'lik havuzu kaç saatte doldurur?", c: ["4", "45", "75"], a: "60 / 15 = 4 saat." },
+      { s: "Bir musluk saatte 3p dolduruyor. 12p'lik havuzun yarısını kaç saatte doldurur?", c: ["2", "4", "6"], a: "Yarısı 6p: 6 / 3 = 2 saat." },
+      { s: "Havuzu 8 saatte dolduran musluk havuzun dörtte birini kaç saatte doldurur?", c: ["2", "4", "32"], a: "Havuz 8p olsun: saatte 1p. Dörtte biri 2p: 2 saat." },
+      { s: "Havuzu 9 saatte dolduran musluk havuzun üçte ikisini kaç saatte doldurur?", c: ["6", "3", "9"], a: "Havuz 9p olsun: saatte 1p. Üçte ikisi 6p: 6 saat." },
+      { s: "Havuzu 6 saatte dolduran musluk 2 saatte havuzun ne kadarını doldurur?", c: ["Üçte birini", "Yarısını", "Altıda birini"], a: "Havuz 6p: saatte 1p, 2 saatte 2p. 6p'nin 2p'si üçte biridir." },
+      { s: "Depoyu 10 saatte dolduran musluk 4 saatte deponun ne kadarını doldurur?", c: ["2/5", "1/4", "3/5"], a: "Depo 10p: saatte 1p, 4 saatte 4p. 10p'nin 4p'si 2/5'tir." },
+      { s: "Havuzu 12 saatte dolduran musluk 3 saat açık kalıyor. Havuzun ne kadarı boş kalır?", c: ["Dörtte üçü", "Dörtte biri", "Üçte biri"], a: "Havuz 12p: 3 saatte 3p doldu, 9p boş. 12p'nin 9p'si dörtte üçüdür." },
+      { s: "30p'lik dolu havuzu 6 saatte boşaltan musluk saatte kaç p boşaltır?", c: ["5p", "6p", "24p"], a: "Boşaltmada da aynı: 30 / 6 = 5p." },
+      { s: "Havuz 6 saatte doluyor. Havuz 6p de alınsa 60p de alınsa yarısı kaç saatte dolar?", c: ["İkisinde de 3 saatte", "6p'de 3, 60p'de 30 saatte", "6p'de 3, 60p'de yarım saatte"], a: "6p: saatte 1p, 3p için 3 saat. 60p: saatte 10p, 30p için yine 3 saat. p sayısı sadece kolaylık içindir." },
+      // 2) Havuzu kaç p almalı: sürelerin EKOK'u
+      { s: "Havuz 12p alındı. Havuzu 4 saatte dolduran musluk saatte kaç p doldurur?", c: ["3p", "4p", "8p"], a: "12 / 4 = 3p." },
+      { s: "Biri havuzu 3 saatte, öbürü 6 saatte dolduruyor. İki süreye de tam bölünsün diye havuzu kaç p almak uygundur?", c: ["6p", "9p", "4p"], a: "3 ve 6'nın EKOK'u 6: havuz 6p alınırsa iki musluğun saatlik p'si de tam sayı olur." },
+      { s: "Musluklar havuzu 4 ve 6 saatte dolduruyor. İki süreye de tam bölünen en küçük p sayısı kaçtır?", c: ["12p", "10p", "24p"], a: "4 ve 6'nın EKOK'u 12. 24p de olur ama en küçüğü 12p'dir." },
+      { s: "Musluklar havuzu a ve b saatte dolduruyor. Havuzu kaç p alacağımız hangisiyle bulunur?", c: ["a ile b'nin EKOK'u", "a ile b'nin EBOB'u", "a + b"], a: "Havuz iki süreye de tam bölünmeli: EKOK." },
+      { s: "Musluklar havuzu 2, 3 ve 6 saatte dolduruyor. Havuzu kaç p almak uygundur?", c: ["6p", "11p", "5p"], a: "2, 3 ve 6'nın EKOK'u 6: saatte 3p, 2p ve 1p." },
+      // 3) İki doldurucu: saatlik p'ler toplanır
+      { s: "Havuz 6p. Bir musluk saatte 2p, öbürü saatte 1p dolduruyor. Birlikte saatte kaç p doldururlar?", c: ["3p", "2p", "6p"], a: "Birlikte açılınca saatlik p'ler toplanır: 2p + 1p = 3p." },
+      { s: "Havuzu 3 ve 6 saatte dolduran iki musluk birlikte boş havuzu kaç saatte doldurur?", c: ["2", "9", "4,5"], a: "Havuz 6p; saatte 2p + 1p = 3p: 6 / 3 = 2 saat." },
+      { s: "Havuzu 4 ve 12 saatte dolduran iki musluk birlikte boş havuzu kaç saatte doldurur?", c: ["3", "16", "8"], a: "Havuz 12p; saatte 3p + 1p = 4p: 12 / 4 = 3 saat." },
+      { s: "Havuzu 6 ve 12 saatte dolduran iki musluk birlikte boş havuzu kaç saatte doldurur?", c: ["4", "18", "9"], a: "Havuz 12p; saatte 2p + 1p = 3p: 12 / 3 = 4 saat." },
+      { s: "Havuzu 2 ve 3 saatte dolduran iki musluk birlikte boş havuzu ne kadar sürede doldurur?", c: ["1 saat 12 dakikada", "5 saatte", "2 saat 30 dakikada"], a: "Havuz 6p; saatte 3p + 2p = 5p: 6 / 5 saat = 1 saat 12 dakika." },
+      { s: "Özdeş iki musluktan her biri havuzu 10 saatte dolduruyor. İkisi birlikte boş havuzu kaç saatte doldurur?", c: ["5", "20", "10"], a: "Havuz 10p; saatte 1p + 1p = 2p: 10 / 2 = 5 saat." },
+      { s: "Üç özdeş musluktan her biri havuzu 12 saatte dolduruyor. Üçü birlikte boş havuzu kaç saatte doldurur?", c: ["4", "36", "12"], a: "Havuz 12p; saatte 1p + 1p + 1p = 3p: 12 / 3 = 4 saat." },
+      { s: "İki musluk havuzu 3 ve 6 saatte dolduruyor. “Birlikte 3 + 6 = 9 saatte doldurur” düşüncesi neden yanlıştır?", c: ["Birlikte saatte daha çok p dolar, süre kısalır", "Süreler çarpılmalıdır", "Bu düşünce doğrudur"], a: "Havuz 6p; saatte 2p + 1p = 3p dolar, havuz 2 saatte dolar. Süre, hızlı musluğun 3 saatinden bile kısadır." },
+      { s: "A musluğu havuzu 6 saatte dolduruyor. A ile B birlikte 4 saatte dolduruyor. B tek başına kaç saatte doldurur?", c: ["12", "2", "10"], a: "Havuz 12p. A saatte 2p, birlikte saatte 3p: B saatte 1p, 12 saatte doldurur." },
+      { s: "B musluğu, A musluğunun 2 katı hızlı akıtıyor. Birlikte boş havuzu 4 saatte dolduruyorlar. A tek başına kaç saatte doldurur?", c: ["12", "6", "8"], a: "A saatte 1p, B 2p: birlikte 3p. 4 saatte 12p: havuz 12p. A tek başına 12 saatte." },
+      { s: "Havuzu 6 ve 12 saatte dolduran iki musluk birlikte 2 saat açık kalıyor. Havuzun ne kadarı dolar?", c: ["Yarısı", "Dörtte biri", "Üçte biri"], a: "Havuz 12p; saatte 3p, 2 saatte 6p: yarısı." },
+      // 4) Doldurucu + boşaltıcı: saatlik p'ler çıkarılır
+      { s: "Bir musluk saatte 3p dolduruyor, açık bir gider saatte 1p boşaltıyor. Havuz saatte kaç p dolar?", c: ["2p", "4p", "3p"], a: "Giren 3p, çıkan 1p: 3p − 1p = 2p." },
+      { s: "Havuzu 3 saatte dolduran musluk ile dolu havuzu 6 saatte boşaltan musluk birlikte açık. Havuz 6p ise saatte kaç p dolar?", c: ["1p", "3p", "2p"], a: "Giren 2p, çıkan 1p: saatte 1p dolar. 3p, boşaltanı çıkarmamaktan gelir." },
+      { s: "Havuzu 3 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["6", "2", "3"], a: "Havuz 6p; saatte 2p − 1p = 1p: 6 saat." },
+      { s: "Havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["3", "1,5", "4"], a: "Havuz 6p; saatte 3p − 1p = 2p: 6 / 2 = 3 saat." },
+      { s: "Havuzu 4 saatte dolduran musluk ile 12 saatte boşaltan musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["6", "3", "8"], a: "Havuz 12p; saatte 3p − 1p = 2p: 12 / 2 = 6 saat." },
+      { s: "Dolu bir depoyu 6 ve 12 saatte boşaltan iki musluk birlikte açılıyor. Dolu depo kaç saatte boşalır?", c: ["4", "18", "6"], a: "İkisi de boşaltır, p'ler toplanır. Depo 12p; saatte 2p + 1p = 3p: 4 saat." },
+      { s: "Havuzu 6 saatte dolduran musluk ile 3 saatte boşaltan musluk birlikte açılıyor. Boş havuz ne zaman dolar?", c: ["Hiç dolmaz", "2 saatte", "6 saatte"], a: "Havuz 6p; saatte 1p girer, 2p çıkar. Giren çıkandan az: boş havuz dolmaz." },
+      { s: "Havuz doluyken, 6 saatte dolduran musluk ile 2 saatte boşaltan musluk birlikte açılıyor. Dolu havuz kaç saatte boşalır?", c: ["3", "1,5", "2"], a: "Havuz 6p; saatte 3p çıkar, 1p girer: net 2p çıkar. 6 / 2 = 3 saat." },
+      { s: "Doldurucu musluk saatte 4p, boşaltıcı musluk saatte 4p akıtıyor. İkisi birlikte açık kalırsa boş havuza ne olur?", c: ["Hep boş kalır", "Yavaşça dolar", "Yarısına kadar dolar"], a: "Saatte 4p girer, 4p çıkar: havuzda hiç su birikmez." },
+      { s: "Doldurucu ve boşaltıcı birlikte açıkken boş havuzun dolması için ne gerekir?", c: ["Doldurucunun saatte daha çok p akıtması", "Boşaltıcının daha hızlı olması", "İki musluğun eşit hızda olması"], a: "Giren p, çıkan p'den çok olmalı; yoksa havuzda su birikmez." },
+      // 5) Bir süre açık kalıp kapanma, sonradan açılma, kısmen dolu havuz
+      { s: "Havuzu 6 saatte dolduran musluk 2 saat açık kalıp kapanıyor. Havuzun ne kadarı boş kalır?", c: ["Üçte ikisi", "Üçte biri", "Altıda biri"], a: "Havuz 6p: 2 saatte 2p doldu, 4p boş. 6p'nin 4p'si üçte ikisidir." },
+      { s: "Havuzu 12 saatte dolduran musluk 5 saat açık kalıyor. Havuzun dolması için kaç saat daha açık kalmalıdır?", c: ["7", "5", "12"], a: "Havuz 12p: 5 saatte 5p doldu, 7p kaldı. Saatte 1p: 7 saat." },
+      { s: "Havuzu 3 ve 6 saatte dolduran iki musluk 1 saat birlikte açılıyor, sonra 3 saatlik musluk kapanıyor. Kalanı 6 saatlik musluk kaç saatte doldurur?", c: ["3", "6", "2"], a: "Havuz 6p; 1 saatte 2p + 1p = 3p doldu, 3p kaldı. 6 saatlik musluk saatte 1p: 3 saat." },
+      { s: "Havuzu 6 ve 12 saatte dolduran iki musluk 2 saat birlikte açık kalıyor, sonra 6 saatlik musluk kapanıyor. Kalanı öbürü kaç saatte doldurur?", c: ["6", "4", "8"], a: "Havuz 12p; 2 saatte 6p doldu, 6p kaldı. 12 saatlik musluk saatte 1p: 6 saat." },
+      { s: "Havuzu 8 saatte dolduran musluk 2 saat açık kalıp kapanıyor. Kalanı, havuzu 4 saatte dolduran musluk kaç saatte doldurur?", c: ["3", "2", "4"], a: "Havuz 8p; 2 saatte 2p doldu, 6p kaldı. İkinci musluk saatte 2p: 3 saat." },
+      { s: "Havuzu 9 saatte dolduran musluk 3 saat tek başına açık kalıyor, sonra havuzu 18 saatte dolduran musluk da açılıyor. Kalan kısım kaç saatte dolar?", c: ["4", "6", "12"], a: "Havuz 18p; ilk musluk saatte 2p, 3 saatte 6p doldu, 12p kaldı. Birlikte saatte 2p + 1p = 3p: 4 saat." },
+      { s: "Havuzun yarısı dolu. Havuzu 8 saatte dolduran musluk açılırsa havuz kaç saatte dolar?", c: ["4", "8", "2"], a: "Havuz 8p; 4p dolu, 4p kaldı. Saatte 1p: 4 saat." },
+      { s: "Havuzun üçte biri dolu. Havuzu 6 saatte dolduran musluk açılırsa havuz kaç saatte dolar?", c: ["4", "2", "6"], a: "Havuz 6p; 2p dolu, 4p kaldı. Saatte 1p: 4 saat." },
+      { s: "Havuzun yarısı dolu. Dolu havuzu 10 saatte boşaltan musluk açılırsa havuz kaç saatte boşalır?", c: ["5", "10", "20"], a: "Havuz 10p; içinde 5p su var. Saatte 1p boşalır: 5 saat." },
+      { s: "Havuzun dörtte biri dolu. Dolu havuzu 8 saatte boşaltan musluk açılırsa havuz kaç saatte boşalır?", c: ["2", "6", "8"], a: "Havuz 8p; içinde sadece 2p su var. Saatte 1p: 2 saat. 6, boş kısımdır." },
+      { s: "Havuzun üçte biri dolu. Havuzu 2 saatte dolduran musluk ile 6 saatte boşaltan musluk birlikte açılıyor. Havuz kaç saatte dolar?", c: ["2", "3", "1"], a: "Havuz 6p; 2p dolu, 4p kaldı. Saatte 3p − 1p = 2p: 2 saat." },
+      { s: "Havuzun üçte biri dolu. Bir musluk kalan kısmı 6 saatte dolduruyor. Bu musluk boş havuzu kaç saatte doldurur?", c: ["9", "18", "6"], a: "Havuz 9p olsun: 3p dolu, kalan 6p 6 saatte dolar, saatte 1p. Boş havuz 9p: 9 saat." },
+      // 6) Üç musluk
+      { s: "Havuzu 2, 3 ve 6 saatte dolduran üç musluk birlikte boş havuzu kaç saatte doldurur?", c: ["1", "11", "2"], a: "Havuz 6p; saatte 3p + 2p + 1p = 6p: 1 saat." },
+      { s: "Havuzu 4, 6 ve 12 saatte dolduran üç musluk birlikte boş havuzu kaç saatte doldurur?", c: ["2", "22", "3"], a: "Havuz 12p; saatte 3p + 2p + 1p = 6p: 12 / 6 = 2 saat." },
+      { s: "Havuzu 2 ve 3 saatte dolduran iki musluk ile 6 saatte boşaltan bir musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["1,5", "1", "2"], a: "Havuz 6p; saatte 3p + 2p − 1p = 4p: 6 / 4 = 1,5 saat." },
+      { s: "Havuzu 4 ve 6 saatte dolduran iki musluk ile 12 saatte boşaltan bir musluk birlikte açılıyor. Boş havuz kaç saatte dolar?", c: ["3", "2", "4"], a: "Havuz 12p; saatte 3p + 2p − 1p = 4p: 12 / 4 = 3 saat." },
+      { s: "Havuzu 3 ve 6 saatte dolduran iki musluk ile 2 saatte boşaltan bir musluk birlikte açılıyor. Boş havuza ne olur?", c: ["Hep boş kalır", "2 saatte dolar", "1 saatte dolar"], a: "Havuz 6p; saatte 2p + 1p = 3p girer, 3p çıkar: su birikmez." },
     ],
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
@@ -2450,13 +2461,14 @@ window.KK_YKS = {
     { k: "yks-isciprob", s: "Süreleri 4 ve 6 saat olan iki işçide işi 10p almak en uygunudur.", d: false, n: "EKOK(4, 6) = 12: iş 12p alınır, saatte 3p ve 2p" },
 
     // ── yks-havuzprob · Havuz Problemleri ──
-    { k: "yks-havuzprob", s: "Boş havuzu 3 saatte ve 6 saatte dolduran iki musluk birlikte 9 saatte doldurur.", d: false, n: "Süreler toplanmaz: 1/3 + 1/6 = 1/2, 2 saatte doldurur" },
-    { k: "yks-havuzprob", s: "Havuzu x saatte dolduran musluk 1 saatte havuzun 1/x'ini doldurur.", d: true },
-    { k: "yks-havuzprob", s: "Boşaltan musluğun 1 saatteki işi denklemde eksi ile yazılır.", d: true },
-    { k: "yks-havuzprob", s: "İki doldurucu musluk birlikte açılınca havuz, hızlı musluğun tek başına doldurduğu süreden uzun sürede dolar.", d: false, n: "Birlikte daha kısa sürede dolar" },
-    { k: "yks-havuzprob", s: "Havuzun 1/3'ü doluyken doldurucu musluğun dolduracağı kısım 2/3'tür.", d: true },
-    { k: "yks-havuzprob", s: "Doldurucu musluk boşaltıcıdan yavaşsa boş havuz hiç dolmaz.", d: true },
-    { k: "yks-havuzprob", s: "Havuzu 4 saatte dolduran musluk 3 saatte havuzun 1/4'ünü doldurur.", d: false, n: "3 · 1/4 = 3/4'ünü doldurur" },
+    { k: "yks-havuzprob", s: "Havuz 100p ise havuzu 5 saatte dolduran musluk saatte 20p doldurur.", d: true },
+    { k: "yks-havuzprob", s: "Havuzu 3 ve 6 saatte dolduran iki musluk birlikte 9 saatte doldurur.", d: false, n: "Havuz 6p; saatte 2p + 1p = 3p: 2 saatte doldurur" },
+    { k: "yks-havuzprob", s: "Musluklar havuzu 4 ve 6 saatte dolduruyorsa havuzu 12p almak uygundur.", d: true },
+    { k: "yks-havuzprob", s: "Havuzu kaç p alacağımız sürelerin EBOB'u ile bulunur.", d: false, n: "EKOK'u ile: havuz iki süreye de tam bölünmeli" },
+    { k: "yks-havuzprob", s: "Boşaltan musluğun saatte akıttığı p, dolan p'den çıkarılır.", d: true },
+    { k: "yks-havuzprob", s: "Saatte 3p dolduran ve saatte 3p boşaltan musluk birlikte açılınca boş havuz yavaşça dolar.", d: false, n: "Giren ve çıkan eşit: havuz hep boş kalır" },
+    { k: "yks-havuzprob", s: "Havuzun yarısı doluyken musluk sadece kalan yarıyı doldurur.", d: true },
+    { k: "yks-havuzprob", s: "Havuz 6p de alınsa 60p de alınsa dolma süresi değişmez.", d: true },
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
 
