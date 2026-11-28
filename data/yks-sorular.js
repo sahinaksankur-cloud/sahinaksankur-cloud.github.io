@@ -35,9 +35,9 @@ window.KK_YKS = {
 
     // { id: "yks-denklemkurma", ad: "Denklem Kurma", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
 
-    { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+    { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
 
-    { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
+    { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
     // { id: "yks-yasprob", ad: "Yaş Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
