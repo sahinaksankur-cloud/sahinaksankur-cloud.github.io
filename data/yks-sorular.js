@@ -31,12 +31,13 @@ window.KK_YKS = {
     { id: "yks-carpan", ad: "Çarpanlara Ayırma", ust: "Cebir", sinav: "TYT", sinif: 9 },
     { id: "yks-oran", ad: "Oran – Orantı", ust: "Oran – Orantı", sinav: "TYT", sinif: 9 },
     // Problemler: her satır, konu kullanıcı onayıyla yayına alınırken baştaki // silinerek açılır (satırlar arasındaki boş satırlar çakışma olmasın diye).
+    // baslik: "Problemler" sadece AÇIK olan ilk problem konusunda durur; daha önceki bir konu açılınca başlık oraya taşınır.
 
     // { id: "yks-denklemkurma", ad: "Denklem Kurma", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
 
     { id: "yks-sayiprob", ad: "Sayı Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
-    { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
+    { id: "yks-kesirprob", ad: "Kesir Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9, baslik: "Problemler" },
 
     // { id: "yks-yasprob", ad: "Yaş Problemleri", ust: "Problemler", sinav: "TYT", sinif: 9 },
 
@@ -1640,43 +1641,96 @@ window.KK_YKS = {
 
     // ── yks-denklemkurma · Denklem Kurma ──
     "yks-denklemkurma": [
-      // Kural: cümlede ilk söylenen işlem önce yapılır
+      // Kural: Türkçede işlemler cümledeki sırayla yapılır
       { s: "“Bir sayının 3 katının 5 fazlası” gibi ifadelerde hangi işlemin önce yapılacağı nasıl anlaşılır?", c: ["Cümlede ilk söylenen işlem önce yapılır", "Çarpma her zaman önce yapılır", "Toplama her zaman önce yapılır"], a: "“3 katının 5 fazlası”: önce 3 katı, sonra 5 fazlası. “5 fazlasının 3 katı”: önce 5 fazlası, sonra 3 katı." },
       { s: "Önce toplama ya da çıkarma yapılıp sonra katı alınıyorsa yazarken ne gerekir?", c: ["Parantez", "Eşittir işareti", "Hiçbir şey gerekmez"], a: "“5 fazlasının 3 katı”: 3 · x + 5 yazılırsa çarpma önce yapılır. Doğrusu 3(x + 5)." },
       { s: "Sözel bir problemde “… dır / … dir”, “eşittir”, “bulunur” sözleri denklemde neye karşılık gelir?", c: ["=", "+", "·"], a: "“3 katının 5 fazlası 20'dir”: 3x + 5 = 20. “-dir” eşittir işaretidir." },
-      // Sözelden ifadeye (x: sayı)
+      // Tek işlem (x: sayı)
+      { s: "“Bir sayının 3 fazlası” x ile nasıl yazılır?", c: ["x + 3", "3x", "x − 3"], a: "“Fazlası”: eklenir. 3x sayının 3 katıdır." },
+      { s: "“Bir sayının 3 eksiği” x ile nasıl yazılır?", c: ["x − 3", "3 − x", "x + 3"], a: "“Eksiği”: sayıdan çıkarılır, x − 3. 3 − x, 3'ten sayının çıkarılmasıdır." },
+      { s: "“Bir sayının 3 katı” x ile nasıl yazılır?", c: ["3x", "x + 3", "x<sup>3</sup>"], a: "“Katı”: çarpılır, 3 · x = 3x. x<sup>3</sup> sayının küpüdür." },
+      { s: "“Bir sayı ile 5'in çarpımı” x ile nasıl yazılır?", c: ["5x", "x + 5", "5 − x"], a: "Çarpım: x · 5 = 5x." },
+      { s: "Bir sayı 10'dan çıkarılırsa kalan x ile nasıl yazılır?", c: ["10 − x", "x − 10", "10x"], a: "10'dan çıkarılan x: 10 − x. x − 10, x'ten 10 çıkarmaktır." },
+      { s: "“Bir sayının 10 eksiği” ile “10'dan bir sayı çıkarılınca kalan” nasıl yazılır?", c: ["x − 10 ve 10 − x", "İkisi de x − 10", "İkisi de 10 − x"], a: "Kimden çıkarıldığına bak: sayının 10 eksiği x − 10; 10'dan sayı çıkarılırsa 10 − x." },
+      // İki işlem: sıra değişince ifade değişir
       { s: "“Bir sayının 3 katının 5 fazlası” x ile nasıl yazılır?", c: ["3x + 5", "3(x + 5)", "5x + 3"], a: "Önce 3 katı: 3x. Sonra 5 fazlası: 3x + 5." },
       { s: "“Bir sayının 5 fazlasının 3 katı” x ile nasıl yazılır?", c: ["3(x + 5)", "3x + 5", "5(x + 3)"], a: "Önce 5 fazlası: x + 5. Bunun 3 katı: parantez gerekir, 3(x + 5)." },
+      { s: "“Bir sayının 3 katının 5 eksiği” x ile nasıl yazılır?", c: ["3x − 5", "3(x − 5)", "5 − 3x"], a: "Önce 3 katı: 3x. Sonra 5 eksiği: 3x − 5." },
+      { s: "“Bir sayının 5 eksiğinin 3 katı” x ile nasıl yazılır?", c: ["3(x − 5)", "3x − 5", "5(x − 3)"], a: "Önce 5 eksiği: x − 5. Bunun 3 katı: 3(x − 5)." },
       { s: "“Bir sayının 2 katının 3 eksiği” x ile nasıl yazılır?", c: ["2x − 3", "2(x − 3)", "3 − 2x"], a: "Önce 2 katı: 2x. Sonra 3 eksiği: 2x − 3." },
       { s: "“Bir sayının 3 eksiğinin 2 katı” x ile nasıl yazılır?", c: ["2(x − 3)", "2x − 3", "3(x − 2)"], a: "Önce 3 eksiği: x − 3. Bunun 2 katı: 2(x − 3)." },
-      { s: "“Bir sayının yarısının 4 eksiği” x ile nasıl yazılır?", c: ["x/2 − 4", "(x − 4)/2", "4 − x/2"], a: "Önce yarısı: x/2. Sonra 4 eksiği: x/2 − 4." },
-      { s: "“Bir sayının 4 eksiğinin yarısı” x ile nasıl yazılır?", c: ["(x − 4)/2", "x/2 − 4", "x − 4/2"], a: "Önce 4 eksiği: x − 4. Bunun yarısı: (x − 4)/2." },
-      { s: "“Bir sayının üçte biri” x ile nasıl yazılır?", c: ["x/3", "3x", "x − 3"], a: "Üçte biri: 3'e bölünür, x/3. 3x sayının 3 katıdır." },
-      { s: "Bir sayı 10'dan çıkarılırsa kalan x ile nasıl yazılır?", c: ["10 − x", "x − 10", "10x"], a: "10'dan çıkarılan x: 10 − x. x − 10, x'ten 10 çıkarmaktır." },
-      { s: "“Bir sayının karesinin 1 eksiği” x ile nasıl yazılır?", c: ["x<sup>2</sup> − 1", "(x − 1)<sup>2</sup>", "2x − 1"], a: "Önce karesi: x<sup>2</sup>. Sonra 1 eksiği: x<sup>2</sup> − 1." },
-      { s: "“Bir sayının 3 fazlasının karesi” x ile nasıl yazılır?", c: ["(x + 3)<sup>2</sup>", "x<sup>2</sup> + 3", "3x<sup>2</sup>"], a: "Önce 3 fazlası: x + 3. Bunun karesi: (x + 3)<sup>2</sup>." },
-      { s: "“Bir sayının 5 katı ile 2 katının farkı” x ile nasıl yazılır?", c: ["5x − 2x", "5x − 2", "5(x − 2)"], a: "5 katı 5x, 2 katı 2x; farkları 5x − 2x." },
+      { s: "“Bir sayının 4 fazlasının 2 fazlası” x ile nasıl yazılır?", c: ["x + 6", "2(x + 4)", "x + 8"], a: "Önce x + 4, sonra 2 fazlası: x + 4 + 2 = x + 6. Arka arkaya toplamada parantez gerekmez." },
+      { s: "“Bir sayının 7 fazlasının 2 eksiği” x ile nasıl yazılır?", c: ["x + 5", "x + 9", "2(x + 7)"], a: "x + 7 − 2 = x + 5." },
+      { s: "“Bir sayının 2 katının 3 katı” x ile nasıl yazılır?", c: ["6x", "5x", "2x + 3"], a: "Önce 2x, sonra bunun 3 katı: 3 · 2x = 6x." },
+      { s: "Bir sayının 2 katı 10'dan çıkarılırsa kalan x ile nasıl yazılır?", c: ["10 − 2x", "2x − 10", "2(10 − x)"], a: "Önce 2 katı: 2x. 10'dan çıkarılıyor: 10 − 2x." },
+      { s: "“Bir sayının 3 fazlası ile 2 katının toplamı” x ile nasıl yazılır?", c: ["x + 3 + 2x", "2(x + 3)", "3x + 2"], a: "3 fazlası x + 3, 2 katı 2x; toplamları x + 3 + 2x = 3x + 3." },
+      { s: "“Bir sayının 5 katı ile 2 katının farkı” x ile nasıl yazılır?", c: ["5x − 2x", "5x − 2", "5(x − 2)"], a: "5 katı 5x, 2 katı 2x; farkları 5x − 2x = 3x." },
       { s: "Toplamları 20 olan iki sayıdan biri x ise diğeri nasıl yazılır?", c: ["20 − x", "x − 20", "20x"], a: "x + (20 − x) = 20. Diğeri toplamdan x çıkarılarak bulunur." },
-      { s: "İki sayıdan büyüğü küçüğünün 3 katıdır. Küçüğü x ise büyüğü nasıl yazılır?", c: ["3x", "x + 3", "x/3"], a: "“3 katı”: 3 ile çarpılır, 3x. x + 3 “3 fazlası”dır." },
+      { s: "İki sayıdan büyüğü küçüğünün 3 katıdır. Küçüğü x ise büyüğü nasıl yazılır?", c: ["3x", "x + 3", "3 − x"], a: "“3 katı”: 3 ile çarpılır, 3x. x + 3 “3 fazlası”dır." },
       { s: "Bir kutudaki kırmızı bilyeler, mavi bilyelerin 2 katından 3 fazladır. Mavi bilye x ise kırmızı bilye nasıl yazılır?", c: ["2x + 3", "2(x + 3)", "3x + 2"], a: "Önce 2 katı: 2x. Sonra 3 fazlası: 2x + 3." },
-      // Sözelden denkleme
+      // Üç ve dört işlem: cümleyi soldan sağa oku
+      { s: "“Bir sayının 3 fazlasının 5 katının 4 eksiği” x ile nasıl yazılır?", c: ["5(x + 3) − 4", "5x + 3 − 4", "5(x + 3 − 4)"], a: "Sırayla: x + 3 → 5(x + 3) → 5(x + 3) − 4." },
+      { s: "“Bir sayının 2 katının 3 eksiğinin 4 katı” x ile nasıl yazılır?", c: ["4(2x − 3)", "4 · 2x − 3", "4 · 2(x − 3)"], a: "Sırayla: 2x → 2x − 3 → 4(2x − 3)." },
+      { s: "“Bir sayının 4 eksiğinin 3 katının 2 fazlası” x ile nasıl yazılır?", c: ["3(x − 4) + 2", "3x − 4 + 2", "3(x − 4 + 2)"], a: "Sırayla: x − 4 → 3(x − 4) → 3(x − 4) + 2." },
+      { s: "“Bir sayının 5 katının 2 fazlasının 3 katı” x ile nasıl yazılır?", c: ["3(5x + 2)", "3 · 5x + 2", "5(3x + 2)"], a: "Sırayla: 5x → 5x + 2 → 3(5x + 2)." },
+      { s: "“Bir sayının 1 fazlasının 2 katının 6 fazlası” x ile nasıl yazılır?", c: ["2(x + 1) + 6", "2x + 1 + 6", "2(x + 1 + 6)"], a: "Sırayla: x + 1 → 2(x + 1) → 2(x + 1) + 6." },
+      { s: "“Bir sayının 3 eksiğinin 4 katının 5 katı” x ile nasıl yazılır?", c: ["20(x − 3)", "20x − 3", "9(x − 3)"], a: "x − 3 → 4(x − 3) → 5 · 4(x − 3) = 20(x − 3). Kat üstüne kat: çarpılır." },
+      { s: "“Bir sayının 2 katının 5 fazlasının 3 eksiği” x ile nasıl yazılır?", c: ["2x + 5 − 3", "2(x + 5) − 3", "2(x + 5 − 3)"], a: "Sırayla: 2x → 2x + 5 → 2x + 5 − 3. Katı en başta alındığı için parantez gerekmez." },
+      { s: "“Bir sayının 6 fazlasının 2 eksiğinin 3 katı” x ile nasıl yazılır?", c: ["3(x + 6 − 2)", "3(x + 6) − 2", "x + 6 − 2 · 3"], a: "Sırayla: x + 6 → x + 6 − 2 → 3(x + 6 − 2) = 3(x + 4)." },
+      { s: "“Bir sayının 2 katının 1 eksiğinin 3 katının 4 fazlası” x ile nasıl yazılır?", c: ["3(2x − 1) + 4", "3 · 2x − 1 + 4", "3(2x − 1 + 4)"], a: "Sırayla: 2x → 2x − 1 → 3(2x − 1) → 3(2x − 1) + 4." },
+      { s: "“Bir sayının 3 katı ile 4 fazlasının toplamının 2 katı” x ile nasıl yazılır?", c: ["2(3x + x + 4)", "2 · 3x + x + 4", "3x + 2(x + 4)"], a: "Önce toplam: 3x + (x + 4). Toplamın 2 katı: toplam paranteze girer." },
+      { s: "“Bir sayının 2 fazlası ile 3 eksiğinin çarpımı” x ile nasıl yazılır?", c: ["(x + 2)(x − 3)", "x + 2 · x − 3", "x + 2(x − 3)"], a: "İki ifade ayrı ayrı paranteze alınıp çarpılır." },
+      // Parantez: ne zaman gerekir, yanlış kullanım
+      { s: "“Bir sayının 4 fazlasının 3 katı” için 3 · x + 4 yazan öğrencinin hatası nedir?", c: ["Parantez unutulmuş; doğrusu 3(x + 4)", "Hata yoktur", "4 ile 3'ün yeri değişmeli"], a: "3 · x + 4'te önce çarpma yapılır: bu “3 katının 4 fazlası” olur." },
+      { s: "Hangi ifade yazılırken parantez gerekmez?", c: ["Bir sayının 3 katının 4 fazlası", "Bir sayının 4 fazlasının 3 katı", "Bir sayının 4 eksiğinin 3 katı"], a: "3x + 4: çarpma zaten önce yapılır. Öbür ikisinde toplama/çıkarma önce: 3(x + 4), 3(x − 4)." },
+      { s: "Hangi ifade yazılırken parantez gerekir?", c: ["Bir sayının 2 eksiğinin 5 katı", "Bir sayının 5 katının 2 eksiği", "Bir sayının 2 katının 5 katı"], a: "5(x − 2): çıkarma önce yapılacak. 5x − 2 ve 10x'te parantez gerekmez." },
+      { s: "“Bir sayının 3 fazlasının 2 fazlası” yazılırken parantez gerekir mi?", c: ["Gerekmez: x + 3 + 2", "Gerekir: 2(x + 3)", "Gerekir: (x + 3)(x + 2)"], a: "Toplamanın arkasından yine toplama geliyor: sıra değişmez, parantez gerekmez." },
+      { s: "3(x + 5) ile 3x + 5 için hangisi doğrudur?", c: ["Farklıdır: 3(x + 5) = 3x + 15", "Eşittir", "Sadece x = 5 iken farklıdır"], a: "3(x + 5)'te 5 de 3 ile çarpılır. 3x + 5'te sadece x çarpılır." },
+      { s: "“Bir sayının 5 eksiğinin 2 katı” yerine 2x − 5 yazılırsa hangi cümle yazılmış olur?", c: ["Bir sayının 2 katının 5 eksiği", "Bir sayının 5 eksiğinin 2 katı", "Bir sayının 5 katının 2 eksiği"], a: "Parantez unutulunca sıra değişir: 2x − 5 “2 katının 5 eksiği”dir." },
+      { s: "5(x + 3) − 4 yerine 5x + 3 − 4 yazılırsa hangi cümle yazılmış olur?", c: ["Bir sayının 5 katının 3 fazlasının 4 eksiği", "Bir sayının 3 fazlasının 5 katının 4 eksiği", "Bir sayının 4 eksiğinin 5 katının 3 fazlası"], a: "Parantez kalkınca önce 5 katı alınır: 5x → 5x + 3 → 5x + 3 − 4." },
+      { s: "“Bir sayının 2 katının 1 eksiğinin 3 katı” için hangisi <u>yanlıştır</u>?", c: ["3 · 2x − 1", "3(2x − 1)", "6x − 3"], a: "Doğrusu 3(2x − 1) = 6x − 3. 3 · 2x − 1'de 1 eksiği çarpılmamış." },
+      // Ters yön: ifadeden cümleye
+      { s: "3x + 4 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 3 katının 4 fazlası", "Bir sayının 4 fazlasının 3 katı", "Bir sayının 4 katının 3 fazlası"], a: "Önce 3 katı (3x), sonra 4 fazlası." },
+      { s: "4(x − 2) ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 2 eksiğinin 4 katı", "Bir sayının 4 katının 2 eksiği", "Bir sayının 2 katının 4 eksiği"], a: "Parantez önce: x − 2 (2 eksiği), sonra 4 katı." },
+      { s: "2(x + 3) − 5 ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 3 fazlasının 2 katının 5 eksiği", "Bir sayının 2 katının 3 fazlasının 5 eksiği", "Bir sayının 3 fazlasının 5 eksiğinin 2 katı"], a: "x + 3 → 2(x + 3) → 2(x + 3) − 5." },
+      { s: "3(2x − 1) ifadesi hangi cümleyle söylenir?", c: ["Bir sayının 2 katının 1 eksiğinin 3 katı", "Bir sayının 1 eksiğinin 2 katının 3 katı", "Bir sayının 3 katının 2 katının 1 eksiği"], a: "İçeriden dışarı: 2x → 2x − 1 → 3(2x − 1)." },
+      { s: "10 − x ifadesi hangi cümleyle söylenir?", c: ["10'dan bir sayı çıkarılınca kalan", "Bir sayının 10 eksiği", "Bir sayının 10 katı"], a: "10'dan x çıkarılıyor. Bir sayının 10 eksiği x − 10'dur." },
+      { s: "2(x − 1) = 10 denklemi hangi cümleyle söylenir?", c: ["Bir sayının 1 eksiğinin 2 katı 10'dur.", "Bir sayının 2 katının 1 eksiği 10'dur.", "Bir sayının 1 katının 2 eksiği 10'dur."], a: "Parantez önce: x − 1 (1 eksiği), sonra 2 katı." },
+      { s: "3x = x + 8 denklemi hangi cümleyle söylenir?", c: ["Bir sayının 3 katı, 8 fazlasına eşittir.", "Bir sayının 3 fazlası, 8 katına eşittir.", "Bir sayının 8 katı, 3 fazlasına eşittir."], a: "Sol taraf 3 katı (3x), sağ taraf 8 fazlası (x + 8)." },
+      { s: "4x − 1 = 2(x + 3) denklemi hangi cümleyle söylenir?", c: ["Bir sayının 4 katının 1 eksiği, 3 fazlasının 2 katına eşittir.", "Bir sayının 4 katının 1 eksiği, 2 katının 3 fazlasına eşittir.", "Bir sayının 1 eksiğinin 4 katı, 3 fazlasının 2 katına eşittir."], a: "Sol: 4x → 4x − 1. Sağ: x + 3 → 2(x + 3)." },
+      // Standart kalıplar: artırma/azaltma, iki sayı, ardışık, kaç tane × her biri
+      { s: "Bir sayı 5 artırılıp sonra 2 katına çıkarılırsa elde edilen sayı x ile nasıl yazılır?", c: ["2(x + 5)", "2x + 5", "5(x + 2)"], a: "“Artırılır” eklemektir, “katına çıkarılır” çarpmaktır. Önce x + 5, sonra 2(x + 5)." },
+      { s: "Bir sayı 2 katına çıkarılıp sonra 3 azaltılırsa elde edilen sayı x ile nasıl yazılır?", c: ["2x − 3", "2(x − 3)", "3 − 2x"], a: "Önce 2x, sonra 3 azaltılır: 2x − 3." },
+      { s: "Bir sayı 4 azaltılıp sonra 3 katına çıkarılırsa elde edilen sayı x ile nasıl yazılır?", c: ["3(x − 4)", "3x − 4", "4(x − 3)"], a: "Önce x − 4, sonra 3 katı: 3(x − 4)." },
+      { s: "“a ile b'nin farkı” nasıl yazılır?", c: ["a − b", "b − a", "a + b"], a: "İlk söylenenden ikinci çıkarılır: a − b." },
+      { s: "“a ile b'nin çarpımının 2 fazlası” nasıl yazılır?", c: ["ab + 2", "a(b + 2)", "2ab"], a: "Önce çarpım (ab), sonra 2 fazlası: ab + 2." },
+      { s: "“a, b'den 3 eksiktir.” Hangi eşitlikle yazılır?", c: ["a = b − 3", "a = 3 − b", "b = a − 3"], a: "a küçük olan: b'den 3 çıkarılınca a olur." },
+      { s: "“Bir sayının 2 katının karesi” ile “karesinin 2 katı” nasıl yazılır?", c: ["(2x)<sup>2</sup> ve 2x<sup>2</sup>", "İkisi de 2x<sup>2</sup>", "İkisi de (2x)<sup>2</sup>"], a: "Önce 2 katı, sonra karesi: (2x)<sup>2</sup> = 4x<sup>2</sup>. Önce karesi, sonra 2 katı: 2x<sup>2</sup>." },
+      { s: "Ardışık iki tek sayıdan küçüğü x ise büyüğü nasıl yazılır?", c: ["x + 2", "x + 1", "2x + 1"], a: "Tek sayılar ikişer artar: 7, 9 gibi. x + 1 çift olur." },
+      { s: "Ardışık üç çift sayıdan en küçüğü x ise en büyüğü nasıl yazılır?", c: ["x + 4", "x + 2", "x + 3"], a: "Çift sayılar ikişer artar: x, x + 2, x + 4." },
+      { s: "Bir sınıfta x sıra var. Her sırada 2 öğrenci oturuyor ve 3 öğrenci ayakta. Öğrenci sayısı nasıl yazılır?", c: ["2x + 3", "2(x + 3)", "3x + 2"], a: "x sıranın her birinde 2 öğrenci: 2x. Ayaktaki 3 öğrenci eklenir." },
+      { s: "Tanesi 4 lira olan x kalem ile tanesi 7 lira olan y defter için ödenen para nasıl yazılır?", c: ["4x + 7y", "11xy", "4y + 7x"], a: "Kaç tane × tanesinin fiyatı: kalemler 4x, defterler 7y; toplam 4x + 7y." },
+      { s: "Bir otobüste x yolcu vardı. Durakta 5 kişi indi, 3 kişi bindi. Yolcu sayısı nasıl yazılır?", c: ["x − 5 + 3", "x + 5 − 3", "x − 5 − 3"], a: "İnen çıkarılır, binen eklenir: x − 5 + 3 = x − 2." },
+      { s: "“İki sayının toplamı 30, büyüğü küçüğünün 2 katıdır.” Küçük sayı x ise hangi denklemle yazılır?", c: ["x + 2x = 30", "x + 2 = 30", "2(x + 30) = 0"], a: "Küçüğü x, büyüğü 2x; toplamları 30." },
+      { s: "“İki sayının farkı 6, büyüğü küçüğünün 3 katıdır.” Küçük sayı x ise hangi denklemle yazılır?", c: ["3x − x = 6", "x − 3x = 6", "3(x − 6) = x"], a: "Büyüğü 3x, küçüğü x; fark büyükten küçüğün çıkarılmasıdır." },
+      // Çözmeden denklem kurma
       { s: "“Bir sayının 3 katının 5 fazlası 20'dir.” Hangi denklemle yazılır?", c: ["3x + 5 = 20", "3(x + 5) = 20", "5x + 3 = 20"], a: "3 katının 5 fazlası 3x + 5; bu 20'ye eşit." },
       { s: "“Bir sayının 4 eksiğinin 3 katı 12'dir.” Hangi denklemle yazılır?", c: ["3(x − 4) = 12", "3x − 4 = 12", "4 − 3x = 12"], a: "Önce 4 eksiği (x − 4), sonra 3 katı: 3(x − 4) = 12." },
-      { s: "“Bir sayının 7 fazlasının yarısı 9'dur.” Hangi denklemle yazılır?", c: ["(x + 7)/2 = 9", "x/2 + 7 = 9", "2(x + 7) = 9"], a: "Önce 7 fazlası (x + 7), sonra yarısı: (x + 7)/2 = 9." },
+      { s: "“Bir sayının 3 fazlasının 5 katının 4 eksiği 31'dir.” Hangi denklemle yazılır?", c: ["5(x + 3) − 4 = 31", "5x + 3 − 4 = 31", "5(x + 3 − 4) = 31"], a: "x + 3 → 5(x + 3) → 5(x + 3) − 4; bu 31'e eşit." },
       { s: "“Bir sayının 2 katı, 6 fazlasına eşittir.” Hangi denklemle yazılır?", c: ["2x = x + 6", "2x + 6 = x", "2(x + 6) = x"], a: "2 katı: 2x. 6 fazlası: x + 6. İkisi eşit: 2x = x + 6." },
-      { s: "“Bir sayının yarısı, 3 eksiğine eşittir.” Hangi denklemle yazılır?", c: ["x/2 = x − 3", "x/2 − 3 = x", "(x − 3)/2 = x"], a: "Yarısı x/2, 3 eksiği x − 3; ikisi eşit." },
       { s: "“Bir sayının 3 fazlası, 2 katından 4 eksiktir.” Hangi denklemle yazılır?", c: ["x + 3 = 2x − 4", "x + 3 = 4 − 2x", "x + 3 − 4 = 2x"], a: "3 fazlası x + 3; 2 katından 4 eksik 2x − 4." },
       { s: "“Bir sayının 4 katı, 10'dan 2 fazladır.” Hangi denklemle yazılır?", c: ["4x = 10 + 2", "4x + 2 = 10", "4(x + 2) = 10"], a: "4 katı 4x; 10'dan 2 fazla 10 + 2. İkisi eşit." },
+      { s: "“Bir sayının 2 katının 1 eksiği, 5 fazlasına eşittir.” Hangi denklemle yazılır?", c: ["2x − 1 = x + 5", "2(x − 1) = x + 5", "2x − 1 = 5x"], a: "Sol: 2x → 2x − 1. Sağ: x + 5." },
+      { s: "“Bir sayının 3 katı, 2 eksiğinin 4 katına eşittir.” Hangi denklemle yazılır?", c: ["3x = 4(x − 2)", "3x = 4x − 2", "3(x − 2) = 4x"], a: "Sağ taraf: önce 2 eksiği (x − 2), sonra 4 katı." },
+      { s: "“Bir sayının 5 fazlası ile 2 eksiğinin toplamı 17'dir.” Hangi denklemle yazılır?", c: ["(x + 5) + (x − 2) = 17", "5x + 2x = 17", "x + 5 − 2 = 17"], a: "5 fazlası x + 5, 2 eksiği x − 2; ikisinin toplamı 17." },
       { s: "“Ardışık iki sayının toplamı 15'tir.” Küçük sayı x ise hangi denklemle yazılır?", c: ["x + (x + 1) = 15", "x + x = 15", "x(x + 1) = 15"], a: "Ardışık iki sayı x ve x + 1; toplamları 15." },
       // İki bilinmeyen
       { s: "“a, b'den 5 fazladır.” Hangi eşitlikle yazılır?", c: ["a = b + 5", "b = a + 5", "a + b = 5"], a: "a büyük olan: b'ye 5 eklenince a olur." },
       { s: "“a'nın 2 katı, b'nin 3 katına eşittir.” Hangi eşitlikle yazılır?", c: ["2a = 3b", "3a = 2b", "a + 2 = b + 3"], a: "a'nın 2 katı 2a, b'nin 3 katı 3b." },
-      { s: "“a ile b'nin toplamının yarısı 8'dir.” Hangi eşitlikle yazılır?", c: ["(a + b)/2 = 8", "a + b/2 = 8", "a/2 + b = 8"], a: "Önce toplam (a + b), sonra yarısı: (a + b)/2." },
       { s: "“a, b'nin 4 katından 1 eksiktir.” Hangi eşitlikle yazılır?", c: ["a = 4b − 1", "a = 4(b − 1)", "a − 1 = 4b"], a: "Önce 4 katı (4b), sonra 1 eksiği: 4b − 1." },
-      // Denklemden sözele
-      { s: "2(x − 1) = 10 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 1 eksiğinin 2 katı 10'dur.", "Bir sayının 2 katının 1 eksiği 10'dur.", "Bir sayının yarısının 1 eksiği 10'dur."], a: "Parantez önce: x − 1 (1 eksiği), sonra 2 katı." },
-      { s: "x/3 + 4 = 7 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının üçte birinin 4 fazlası 7'dir.", "Bir sayının 4 fazlasının üçte biri 7'dir.", "Bir sayının 3 katının 4 fazlası 7'dir."], a: "Önce üçte biri (x/3), sonra 4 fazlası." },
-      { s: "3x = x + 8 denklemi hangi cümleyle ifade edilir?", c: ["Bir sayının 3 katı, 8 fazlasına eşittir.", "Bir sayının 3 fazlası, 8 katına eşittir.", "Bir sayının 8 katı, 3 fazlasına eşittir."], a: "Sol taraf 3 katı (3x), sağ taraf 8 fazlası (x + 8)." }
+      { s: "“a'nın 3 fazlası, b'nin 2 katıdır.” Hangi eşitlikle yazılır?", c: ["a + 3 = 2b", "3a = 2b", "a + 3 = b + 2"], a: "a'nın 3 fazlası a + 3, b'nin 2 katı 2b." },
+      { s: "“a ile b'nin toplamının 3 katı 24'tür.” Hangi eşitlikle yazılır?", c: ["3(a + b) = 24", "3a + b = 24", "a + 3b = 24"], a: "Önce toplam (a + b), sonra 3 katı: toplam paranteze girer." },
+      { s: "“a'nın 2 eksiğinin 5 katı, b'ye eşittir.” Hangi eşitlikle yazılır?", c: ["5(a − 2) = b", "5a − 2 = b", "2(a − 5) = b"], a: "a − 2 → 5(a − 2); bu b'ye eşit." }
     ],
 
     // ── yks-sayiprob · Sayı Problemleri ──
@@ -2161,10 +2215,14 @@ window.KK_YKS = {
     // ── yks-denklemkurma · Denklem Kurma ──
     { k: "yks-denklemkurma", s: "Sözel ifadelerde cümlede ilk söylenen işlem önce yapılır.", d: true },
     { k: "yks-denklemkurma", s: "“Bir sayının 3 katının 5 fazlası” 3(x + 5) ile yazılır.", d: false, n: "3x + 5; 3(x + 5) sayının 5 fazlasının 3 katıdır" },
-    { k: "yks-denklemkurma", s: "“Bir sayının 4 eksiğinin yarısı” (x − 4)/2 ile yazılır.", d: true },
-    { k: "yks-denklemkurma", s: "“Bir sayının yarısının 3 fazlası” (x + 3)/2 ile yazılır.", d: false, n: "x/2 + 3; (x + 3)/2 sayının 3 fazlasının yarısıdır" },
+    { k: "yks-denklemkurma", s: "“Bir sayının 4 eksiğinin 3 katı” 3(x − 4) ile yazılır.", d: true },
+    { k: "yks-denklemkurma", s: "“Bir sayının 2 katının 3 fazlası” 2(x + 3) ile yazılır.", d: false, n: "2x + 3; 2(x + 3) sayının 3 fazlasının 2 katıdır" },
+    { k: "yks-denklemkurma", s: "“Bir sayının 3 fazlasının 2 katının 1 eksiği” 2(x + 3) − 1 ile yazılır.", d: true },
+    { k: "yks-denklemkurma", s: "Toplama ya da çıkarmadan sonra katı alınıyorsa parantez gerekir.", d: true },
     { k: "yks-denklemkurma", s: "“a, b'den 5 fazladır” a + 5 = b ile yazılır.", d: false, n: "a büyük olan: a = b + 5" },
-    { k: "yks-denklemkurma", s: "Toplamları 20 olan iki sayıdan biri x ise diğeri 20 − x'tir.", d: true },
+    { k: "yks-denklemkurma", s: "“Bir sayının 10 eksiği” 10 − x ile yazılır.", d: false, n: "x − 10; 10 − x, 10'dan sayının çıkarılmasıdır" },
+    { k: "yks-denklemkurma", s: "“a ile b'nin farkı” b − a ile yazılır.", d: false, n: "İlk söylenenden ikinci çıkarılır: a − b" },
+    { k: "yks-denklemkurma", s: "Ardışık iki çift sayıdan küçüğü x ise büyüğü x + 2'dir.", d: true },
 
     // ── yks-sayiprob · Sayı Problemleri ──
     { k: "yks-sayiprob", s: "Toplamları 18, farkları 4 olan iki sayıdan büyüğü 11'dir.", d: true },
