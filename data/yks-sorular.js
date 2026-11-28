@@ -2035,10 +2035,125 @@ window.KK_YKS = {
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
     "yks-yuzdeprob": [
+      // A) KURMA — çözme yok; sayı 100x alınır (formül yok)
+      // 1) Yüzde nedir
+      { s: "%50, bir sayının hangi kesrine eşittir?", c: ["Yarısı", "Dörtte biri", "Beşte biri"], a: "%50 = 50/100 = 1/2: sayının yarısı." },
+      { s: "Bir sayının %25'i, sayının kaçta kaçıdır?", c: ["Dörtte biri", "Beşte biri", "Yarısı"], a: "%25 = 25/100 = 1/4: sayının dörtte biri." },
+      { s: "Bir sayının %10'u, sayının kaçta kaçıdır?", c: ["Onda biri", "Yüzde biri", "Beşte biri"], a: "%10 = 10/100 = 1/10: sayının onda biri." },
+      { s: "Bir sayının %20'si, sayının kaçta kaçıdır?", c: ["Beşte biri", "Dörtte biri", "Onda biri"], a: "%20 = 20/100 = 1/5: sayının beşte biri." },
+      // 2) Bir sayının yüzdesi
+      { s: "Bir sayı 100x olsun. Bu sayının %25'i nedir?", c: ["25x", "75x", "4x"], a: "100x'in her 100 biriminden 25'i alınır: 25x." },
+      { s: "Bir sayı 100x olsun. Bu sayının %60'ı nedir?", c: ["60x", "40x", "160x"], a: "100x'in her 100 biriminden 60'ı: 60x." },
+      { s: "Bir sayı 100x ise bu sayının %5'i nedir?", c: ["5x", "50x", "95x"], a: "100x'in her 100 biriminden 5'i: 5x." },
+      // 3) Fazlası / eksiği
+      { s: "Bir sayı 100x olsun. Bu sayının %30 fazlası nedir?", c: ["130x", "30x", "70x"], a: "Sayı 100x, %30'u 30x: 100x + 30x = 130x." },
+      { s: "100x olan bir sayının %40 eksiği nedir?", c: ["60x", "40x", "140x"], a: "Sayı 100x, %40'ı 40x: 100x − 40x = 60x." },
+      { s: "100x olan bir sayının %100 fazlası nedir?", c: ["200x", "100x", "101x"], a: "100x + 100x = 200x: sayının 2 katı." },
+      { s: "150x, 100x'in yüzde kaç fazlasıdır?", c: ["%50", "%150", "%15"], a: "150x − 100x = 50x fazla. 100x'in 50x'i: %50 fazlası." },
+      // 4) Art arda değişim
+      { s: "100x olan bir sayı önce %20 artırılıyor, sonra %10 azaltılıyor. Sonuç nedir?", c: ["108x", "110x", "90x"], a: "100x → 120x. 120x'in %10'u 12x: 120x − 12x = 108x." },
+      { s: "100x olan bir sayı önce %20 artırılıyor, sonra %20 azaltılıyor. Sonuç nedir?", c: ["96x", "100x", "80x"], a: "100x → 120x. 120x'in %20'si 24x: 120x − 24x = 96x. Eski hâline dönmez." },
+      { s: "100x olan bir sayı art arda iki kez %10 artırılıyor. Sonuç nedir?", c: ["121x", "120x", "111x"], a: "100x → 110x. 110x'in %10'u 11x: 110x + 11x = 121x." },
+      { s: "100x olan bir sayı önce %50 azaltılıyor, sonra %50 artırılıyor. Sonuç nedir?", c: ["75x", "100x", "50x"], a: "100x → 50x. 50x'in %50'si 25x: 50x + 25x = 75x." },
+      // 5) İfadeden cümleye
+      { s: "Bir sayı 100x ise 80x hangi cümleyle söylenir?", c: ["Sayının %20 eksiği", "Sayının %80 eksiği", "Sayının %20 fazlası"], a: "100x − 80x = 20x eksik: sayının %20 eksiği." },
+      { s: "Bir sayı 100x ise 135x hangi cümleyle söylenir?", c: ["Sayının %35 fazlası", "Sayının %35'i", "Sayının %65 eksiği"], a: "135x − 100x = 35x fazla: sayının %35 fazlası." },
+      { s: "Bir sayı 100x ise 15x hangi cümleyle söylenir?", c: ["Sayının %15'i", "Sayının %15 eksiği", "Sayının %85'i"], a: "100x'in 15 birimi: sayının %15'i." },
+      // 6) Çözmeden denklem kurma
+      { s: "Bir sayının %20'si 40'tır. Sayı 100x alınırsa hangi denklem kurulur?", c: ["20x = 40", "100x = 40", "120x = 40"], a: "Sayı 100x, %20'si 20x: 20x = 40." },
+      { s: "Bir sayının %30 fazlası 260'tır. Sayı 100x alınırsa hangi denklem kurulur?", c: ["130x = 260", "30x = 260", "70x = 260"], a: "%30 fazlası 100x + 30x = 130x: 130x = 260." },
+      { s: "Bir sayının %25 eksiği 150'dir. Sayı 100x alınırsa hangi denklem kurulur?", c: ["75x = 150", "25x = 150", "125x = 150"], a: "%25 eksiği 100x − 25x = 75x: 75x = 150." },
+      { s: "Bir sayı önce %10 artırılıp sonra %10 azaltılınca 198 oluyor. Sayı 100x alınırsa hangi denklem kurulur?", c: ["99x = 198", "100x = 198", "110x = 198"], a: "100x → 110x. 110x'in %10'u 11x: 110x − 11x = 99x. Denklem 99x = 198." },
+
+      // B) ÇÖZME — önce kurulan ifade, sonra çözüm
+      // 1) Yüzde hesaplama
+      { s: "300'ün %20'si kaçtır?", c: ["60", "15", "150"], a: "300 = 100x → x = 3. %20'si 20x = 60." },
+      { s: "500'ün %8'i kaçtır?", c: ["40", "80", "8"], a: "500 = 100x → x = 5. %8'i 8x = 40." },
+      { s: "60'ın %50'si kaçtır?", c: ["30", "50", "120"], a: "%50 yarısıdır: 60 / 2 = 30." },
+      { s: "40'ın %10'u kaçtır?", c: ["4", "10", "0,4"], a: "%10 onda biridir: 40 / 10 = 4." },
+      // 2) Yüzdesi verilen sayıyı bulma
+      { s: "Bir sayının %20'si 40'tır. Sayı kaçtır?", c: ["200", "80", "8"], a: "Sayı 100x: 20x = 40 → x = 2. Sayı 100x = 200." },
+      { s: "Bir sayının %30'u 90'dır. Sayı kaçtır?", c: ["300", "270", "120"], a: "Sayı 100x: 30x = 90 → x = 3. Sayı 100x = 300." },
+      { s: "Bir sayının %25'i 100'dür. Sayı kaçtır?", c: ["400", "125", "25"], a: "Sayı 100x: 25x = 100 → x = 4. Sayı 100x = 400." },
+      { s: "Bir sayının %5'i 20'dir. Sayı kaçtır?", c: ["400", "100", "25"], a: "Sayı 100x: 5x = 20 → x = 4. Sayı 100x = 400." },
+      { s: "Bir sayının %40 fazlası 280'dir. Sayı kaçtır?", c: ["200", "168", "240"], a: "Sayı 100x, %40 fazlası 140x: 140x = 280 → x = 2. Sayı 200." },
+      { s: "Bir sayının %20 eksiği 240'tır. Sayı kaçtır?", c: ["300", "288", "260"], a: "Sayı 100x, %20 eksiği 80x: 80x = 240 → x = 3. Sayı 300." },
+      // 3) a, b'nin yüzde kaçıdır
+      { s: "60, 200'ün yüzde kaçıdır?", c: ["%30", "%60", "%40"], a: "200 = 100x → x = 2. 60 = 30x: %30." },
+      { s: "15, 60'ın yüzde kaçıdır?", c: ["%25", "%15", "%40"], a: "15/60 = 1/4 = 25/100: %25." },
+      { s: "40 kişilik bir sınıfta 8 öğrenci gözlüklüdür. Gözlüklüler sınıfın yüzde kaçıdır?", c: ["%20", "%8", "%32"], a: "8/40 = 1/5 = 20/100: %20." },
+      // 4) Artış / azalış yüzdesi
+      { s: "Bir sayı 40'tan 50'ye çıkıyor. Sayı yüzde kaç artmıştır?", c: ["%25", "%10", "%20"], a: "Artış 10. Artış eski sayıya göre bulunur: 10/40 = 1/4 = %25." },
+      { s: "Bir sayı 50'den 40'a iniyor. Sayı yüzde kaç azalmıştır?", c: ["%20", "%10", "%25"], a: "Azalış 10. Azalış eski sayıya göre bulunur: 10/50 = 1/5 = %20." },
+      { s: "200 olan bir sayı 260 oluyor. Sayı yüzde kaç artmıştır?", c: ["%30", "%60", "%26"], a: "200 = 100x → x = 2. 260 = 130x: 100x'ten 130x'e %30 artış." },
+      { s: "300 olan bir sayı 240'a iniyor. Sayı yüzde kaç azalmıştır?", c: ["%20", "%60", "%25"], a: "300 = 100x → x = 3. 240 = 80x: 100x'ten 80x'e %20 azalış." },
+      // 5) Art arda değişim ve tuzaklar
+      { s: "300 sayısı önce %10 artırılıyor, sonra %10 azaltılıyor. Sonuç kaçtır?", c: ["297", "300", "303"], a: "300 = 100x → x = 3. 100x → 110x → 110x − 11x = 99x = 297." },
+      { s: "Bir sayı art arda iki kez %20 artırılıyor. Sayı toplam yüzde kaç artmıştır?", c: ["%44", "%40", "%20"], a: "100x → 120x. 120x'in %20'si 24x: 144x. 100x'ten 144x'e %44 artış." },
+      { s: "Bir sayı önce %20 artırılıp sonra %20 azaltılıyor. Sayı başlangıca göre nasıl değişmiştir?", c: ["%4 azalır", "Değişmez", "%4 artar"], a: "100x → 120x → 120x − 24x = 96x. 100x'ten 96x'e %4 azalır." },
+      { s: "Bir sayı önce %50 artırılıp sonra %50 azaltılıyor. Sonuç, başlangıçtaki sayının yüzde kaçıdır?", c: ["%75", "%100", "%50"], a: "100x → 150x. 150x'in %50'si 75x: 150x − 75x = 75x. Başlangıcın %75'i." },
+      // 6) İndirim ve zam
+      { s: "200 TL'lik bir ürüne %25 indirim yapılıyor. Ürünün yeni fiyatı kaç TL'dir?", c: ["150", "175", "50"], a: "200 = 100x → x = 2. %25 indirimli fiyat 75x = 150 TL." },
+      { s: "Bir ürün %20 indirimle 160 TL'ye satılıyor. Ürünün indirimsiz fiyatı kaç TL'dir?", c: ["200", "192", "180"], a: "Fiyat 100x, indirimli 80x: 80x = 160 → x = 2. Fiyat 200 TL." },
+      { s: "400 TL'lik bir montun fiyatına %15 zam yapılıyor. Montun yeni fiyatı kaç TL'dir?", c: ["460", "415", "340"], a: "400 = 100x → x = 4. Zamlı fiyat 115x = 460 TL." },
+      { s: "300 TL'lik bir ayakkabıya önce %20, sonra yeni fiyata %10 indirim yapılıyor. Son fiyat kaç TL'dir?", c: ["216", "210", "240"], a: "300 = 100x → x = 3. 100x → 80x. 80x'in %10'u 8x: 72x = 216 TL." },
     ],
 
     // ── yks-karzarar · Kâr – Zarar Problemleri ──
     "yks-karzarar": [
+      // A) KURMA — çözme yok. Kavramlar
+      { s: "Kâr – zarar problemlerinde maliyet ne demektir?", c: ["Malın satıcıya kaça mal olduğu", "Malın kaça satıldığı", "Satıştan kalan kâr"], a: "Maliyet (alış fiyatı), malın satıcıya kaça mal olduğudur. Kâr ya da zarar ona göre bulunur." },
+      { s: "Maliyeti 50 lira olan bir mal 65 liraya satılırsa ne olur?", c: ["15 lira kâr", "15 lira zarar", "65 lira kâr"], a: "Kâr = satış − maliyet = 65 − 50 = 15 lira." },
+      { s: "Maliyeti 80 lira olan bir mal 70 liraya satılırsa ne olur?", c: ["10 lira zarar", "10 lira kâr", "70 lira zarar"], a: "Satış maliyetten az: 80 − 70 = 10 lira zarar." },
+      // Maliyeti 100x almak
+      { s: "Maliyeti 100x olan bir mal %20 kârla satılırsa satış fiyatı ne olur?", c: ["120x", "20x", "80x"], a: "100x'in %20'si 20x kâr. Satış = 100x + 20x = 120x." },
+      { s: "Maliyeti 100x olan bir mal %25 zararla satılırsa satış fiyatı ne olur?", c: ["75x", "125x", "25x"], a: "100x'in %25'i 25x zarar. Satış = 100x − 25x = 75x." },
+      { s: "Maliyeti 100x olan bir mal %5 kârla satılırsa satış fiyatı ne olur?", c: ["105x", "150x", "95x"], a: "100x'in %5'i 5x. Satış = 100x + 5x = 105x." },
+      { s: "Maliyeti 100x olan bir mal %40 zararla satılırsa satış fiyatı ne olur?", c: ["60x", "140x", "40x"], a: "100x'in %40'ı 40x. Satış = 100x − 40x = 60x." },
+      { s: "Maliyeti 100x olan bir mal 130x liraya satılıyor. Bu satış için hangisi doğrudur?", c: ["%30 kâr", "%30 zarar", "%130 kâr"], a: "130x − 100x = 30x kâr; 100x'in 30x'i %30'dur." },
+      { s: "Maliyeti 100x olan bir mal 85x liraya satılıyor. Bu satış için hangisi doğrudur?", c: ["%15 zarar", "%85 zarar", "%15 kâr"], a: "100x − 85x = 15x zarar; 100x'in 15x'i %15'tir." },
+      { s: "Maliyeti 100x olan bir mal 100x liraya satılırsa ne olur?", c: ["Kâr da zarar da yok", "%100 kâr", "%100 zarar"], a: "Satış maliyete eşit: kâr da zarar da yoktur." },
+      { s: "Maliyeti 100x olan bir mal 70x liraya satılırsa zarar miktarı nedir?", c: ["30x", "70x", "170x"], a: "Zarar = maliyet − satış = 100x − 70x = 30x." },
+      // Tuzak: kâr yüzdesi maliyet üzerinden
+      { s: "Aksi söylenmedikçe kâr yüzdesi hangi fiyat üzerinden hesaplanır?", c: ["Maliyet (alış) fiyatı", "Satış fiyatı", "Etiket fiyatı"], a: "Kâr ve zarar yüzdesi maliyet üzerinden hesaplanır. Bu yüzden maliyet 100x alınır." },
+      { s: "Maliyeti 80 lira olan bir mal 100 liraya satılıyor. Kâr yüzdesi kaçtır?", c: ["%25", "%20", "%80"], a: "Kâr 20 lira. Maliyet üzerinden: 20/80 = 1/4 = %25. (20/100 = %20 satış üzerinden olurdu, yanlış.)" },
+      // Etiket fiyatı ve indirim
+      { s: "Etiket fiyatı 100y olan bir maldan %10 indirim yapılırsa satış fiyatı ne olur?", c: ["90y", "110y", "10y"], a: "100y'nin %10'u 10y. Satış = 100y − 10y = 90y." },
+      { s: "Maliyeti 100x olan bir mal, 100y etiket fiyatından %10 indirimle satılıp yine %20 kâr ediliyor. Hangi denklem doğrudur?", c: ["90y = 120x", "100y = 120x", "90y = 80x"], a: "Satış iki yoldan yazılır: indirimli etiket 90y, %20 kârlı satış 120x. Eşit: 90y = 120x." },
+      // Çözmeden denklem kurma
+      { s: "Maliyeti 100x olan bir mal %20 kârla 360 liraya satılıyor. Hangi denklem kurulur?", c: ["120x = 360", "100x = 360", "20x = 360"], a: "%20 kârla satış 120x; bu 360 lira: 120x = 360." },
+      { s: "Maliyeti 100x olan bir mal %10 zararla 450 liraya satılıyor. Hangi denklem kurulur?", c: ["90x = 450", "110x = 450", "10x = 450"], a: "%10 zararla satış 90x; bu 450 lira: 90x = 450." },
+      { s: "Maliyeti 100x olan bir mal %20 kârla satılınca kâr 40 lira oluyor. Hangi denklem kurulur?", c: ["20x = 40", "120x = 40", "100x = 40"], a: "40 lira satış değil kâr: kâr 20x. Denklem 20x = 40." },
+      { s: "Maliyeti 100x olan bir mal için 115x = 230 denklemi hangi cümleyi anlatır?", c: ["%15 kârla 230 liraya satıldı", "%15 zararla 230 liraya satıldı", "15 lira kârla 230 liraya satıldı"], a: "115x = 100x + 15x: %15 kârlı satış fiyatı; o da 230 lira." },
+
+      // B) ÇÖZME — önce kurulan denklem, sonra çözüm. Kâr / zarar miktarı ve satış fiyatı
+      { s: "Maliyeti 200 lira olan bir mal %20 kârla satılırsa kâr kaç lira olur?", c: ["40", "20", "240"], a: "100x = 200 → x = 2. Kâr 20x = 40 lira." },
+      { s: "Maliyeti 300 lira olan bir mal %30 kârla satılırsa satış fiyatı kaç lira olur?", c: ["390", "330", "90"], a: "100x = 300 → x = 3. Satış 130x = 390 lira." },
+      { s: "Maliyeti 400 lira olan bir mal %25 zararla satılırsa satış fiyatı kaç lira olur?", c: ["300", "375", "100"], a: "100x = 400 → x = 4. Satış 75x = 300 lira." },
+      { s: "Maliyeti 500 lira olan bir mal %10 zararla satılırsa zarar kaç lira olur?", c: ["50", "450", "10"], a: "100x = 500 → x = 5. Zarar 10x = 50 lira." },
+      // Kâr / zarar yüzdesi
+      { s: "Maliyeti 200 lira olan bir mal 260 liraya satılırsa kâr yüzdesi kaçtır?", c: ["%30", "%60", "%26"], a: "100x = 200 → x = 2. 260 = 130x: satış 130x, yani %30 kâr." },
+      { s: "Maliyeti 500 lira olan bir mal 400 liraya satılırsa zarar yüzdesi kaçtır?", c: ["%20", "%25", "%100"], a: "100x = 500 → x = 5. 400 = 80x: %20 zarar. (100/400 = %25 satış üzerinden olurdu.)" },
+      { s: "Maliyeti 300 lira olan bir mal 330 liraya satılırsa kâr yüzdesi kaçtır?", c: ["%10", "%30", "%33"], a: "100x = 300 → x = 3. 330 = 110x: %10 kâr." },
+      // Satış fiyatından maliyeti bulma
+      { s: "%20 kârla 360 liraya satılan bir malın maliyeti kaç liradır?", c: ["300", "288", "72"], a: "120x = 360 → x = 3. Maliyet 100x = 300 lira. (360'tan %20 düşmek 288 verir, yanlış.)" },
+      { s: "%25 zararla 300 liraya satılan bir malın maliyeti kaç liradır?", c: ["400", "375", "225"], a: "75x = 300 → x = 4. Maliyet 100x = 400 lira." },
+      { s: "%10 zararla 450 liraya satılan bir malın maliyeti kaç liradır?", c: ["500", "495", "405"], a: "90x = 450 → x = 5. Maliyet 100x = 500 lira." },
+      { s: "%50 kârla 600 liraya satılan bir malın maliyeti kaç liradır?", c: ["400", "300", "900"], a: "150x = 600 → x = 4. Maliyet 100x = 400 lira." },
+      { s: "%20 kârla satılan bir malda kâr 60 liradır. Malın maliyeti kaç liradır?", c: ["300", "360", "240"], a: "Kâr 20x = 60 → x = 3. Maliyet 100x = 300 lira." },
+      { s: "%15 zararla satılan bir malda zarar 45 liradır. Malın satış fiyatı kaç liradır?", c: ["255", "300", "345"], a: "Zarar 15x = 45 → x = 3. Satış 85x = 255 lira." },
+      { s: "%40 kârla 280 liraya satılan bir malda kâr kaç liradır?", c: ["80", "112", "40"], a: "140x = 280 → x = 2. Kâr 40x = 80 lira." },
+      // İndirim + kâr
+      { s: "Maliyeti 200 lira olan bir mal, etiket fiyatından indirimle satılınca yine %20 kâr ediliyor. Satış fiyatı kaç liradır?", c: ["240", "200", "160"], a: "100x = 200 → x = 2. İndirimden sonraki satış %20 kârlı: 120x = 240 lira." },
+      { s: "Maliyeti 300 lira olan bir mal, etiket fiyatından %10 indirimle satılınca %20 kâr ediliyor. Etiket fiyatı kaç liradır?", c: ["400", "396", "360"], a: "100x = 300 → x = 3, satış 120x = 360. Etiket 100y: 90y = 360 → y = 4, etiket 400 lira." },
+      { s: "Etiket fiyatı 500 lira olan bir mal %10 indirimle satılınca %50 kâr ediliyor. Malın maliyeti kaç liradır?", c: ["300", "225", "400"], a: "100y = 500 → y = 5, satış 90y = 450. 150x = 450 → x = 3, maliyet 100x = 300 lira." },
+      { s: "Etiket fiyatını maliyetin %50 fazlası koyan satıcı, etiketten %20 indirim yaparsa ne olur?", c: ["%20 kâr", "%30 kâr", "%30 zarar"], a: "Maliyet 100x, etiket 150x. 150x'in %20'si 30x: satış 150x − 30x = 120x, yani %20 kâr." },
+      { s: "Maliyeti 100x olan bir malın etiket fiyatı 150x'tir. Etiketten %40 indirim yapılırsa ne olur?", c: ["%10 zarar", "%10 kâr", "%40 zarar"], a: "150x'in %40'ı 60x: satış 150x − 60x = 90x. 100x'ten az: %10 zarar." },
+      // İki malın birlikte satışı
+      { s: "Maliyetleri 200'er lira olan iki maldan biri %20 kârla, öbürü %20 zararla satılıyor. Toplamda ne olur?", c: ["Kâr da zarar da yok", "%20 kâr", "%40 zarar"], a: "Maliyetler eşit: 40 lira kâr, 40 lira zarar. Toplam 400 liraya 400 lira: kâr da zarar da yok." },
+      { s: "Maliyeti 300 lira olan bir mal %20 kârla, maliyeti 200 lira olan bir mal %10 zararla satılıyor. Toplam kâr kaç liradır?", c: ["40", "80", "10"], a: "300'ün %20'si 60 kâr; 200'ün %10'u 20 zarar. 60 − 20 = 40 lira kâr." },
+      { s: "İki mal 240'ar liraya satılıyor; biri %20 kârla, öbürü %20 zararla. Toplamda ne olur?", c: ["20 lira zarar", "Kâr da zarar da yok", "20 lira kâr"], a: "120x = 240 → x = 2, maliyet 200. 80x = 240 → x = 3, maliyet 300. Toplam maliyet 500, satış 480: 20 lira zarar." },
+      { s: "Maliyeti 400 lira olan bir mal %25 kârla, maliyeti 100 lira olan bir mal %50 zararla satılıyor. Toplamda ne olur?", c: ["50 lira kâr", "25 lira zarar", "Kâr da zarar da yok"], a: "400'ün %25'i 100 kâr; 100'ün %50'si 50 zarar. 100 − 50 = 50 lira kâr." },
     ],
 
     // ── yks-karisim · Karışım Problemleri ──
@@ -2471,8 +2586,24 @@ window.KK_YKS = {
     { k: "yks-havuzprob", s: "Havuz 6p de alınsa 60p de alınsa dolma süresi değişmez.", d: true },
 
     // ── yks-yuzdeprob · Yüzde Problemleri ──
+    { k: "yks-yuzdeprob", s: "Bir sayı art arda iki kez %10 artırılırsa toplam %20 artmış olur.", d: false, n: "100x → 110x → 121x: toplam %21 artar" },
+    { k: "yks-yuzdeprob", s: "Bir sayı %20 artırılıp sonra %20 azaltılırsa eski hâline döner.", d: false, n: "100x → 120x → 96x: %4 azalır" },
+    { k: "yks-yuzdeprob", s: "Bir sayının %50'si, o sayının yarısıdır.", d: true },
+    { k: "yks-yuzdeprob", s: "Bir sayının %100 fazlası, o sayının 2 katıdır.", d: true },
+    { k: "yks-yuzdeprob", s: "Bir sayı 100x ise bu sayının %30 eksiği 70x'tir.", d: true },
+    { k: "yks-yuzdeprob", s: "Bir sayıyı önce %10 artırıp sonra %10 azaltmak, önce %10 azaltıp sonra %10 artırmakla aynı sonucu verir.", d: true },
+    { k: "yks-yuzdeprob", s: "40'tan 50'ye çıkan bir sayı %20 artmıştır.", d: false, n: "Artış eski sayıya göre: 10/40 = %25" },
+    { k: "yks-yuzdeprob", s: "Bir sayının %25 eksiği, o sayının dörtte biridir.", d: false, n: "%25 eksiği 75x: sayının dörtte üçü" },
 
     // ── yks-karzarar · Kâr – Zarar Problemleri ──
+    { k: "yks-karzarar", s: "Kâr, satış fiyatından maliyet çıkarılarak bulunur.", d: true },
+    { k: "yks-karzarar", s: "Maliyeti 100x olan mal %20 zararla satılırsa satış fiyatı 120x olur.", d: false, n: "%20 zararla satış 80x olur; 120x %20 kârdır" },
+    { k: "yks-karzarar", s: "Aksi söylenmedikçe kâr yüzdesi satış fiyatı üzerinden hesaplanır.", d: false, n: "Kâr yüzdesi maliyet üzerinden hesaplanır" },
+    { k: "yks-karzarar", s: "80 liralık malı 100 liraya satan satıcı %25 kâr eder.", d: true },
+    { k: "yks-karzarar", s: "%20 kârla 360 liraya satılan malın maliyeti 300 liradır.", d: true },
+    { k: "yks-karzarar", s: "%25 zararla 300 liraya satılan malın maliyeti 375 liradır.", d: false, n: "75x = 300, x = 4: maliyet 400 liradır" },
+    { k: "yks-karzarar", s: "Maliyetleri eşit iki maldan biri %20 kârla, öbürü %20 zararla satılırsa toplamda kâr da zarar da olmaz.", d: true },
+    { k: "yks-karzarar", s: "Aynı fiyata satılan iki maldan biri %20 kârla, öbürü %20 zararla satılırsa toplamda kâr da zarar da olmaz.", d: false, n: "240'ar liraya satılırsa maliyetler 200 ve 300 lira: toplamda 20 lira zarar" },
 
     // ── yks-karisim · Karışım Problemleri ──
 
