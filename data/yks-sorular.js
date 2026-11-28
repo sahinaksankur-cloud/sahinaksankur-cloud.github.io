@@ -1879,6 +1879,57 @@ window.KK_YKS = {
 
     // ── yks-isciprob · İşçi Problemleri ──
     "yks-isciprob": [
+      // A) KURMA (çözüm yok) — 1 günde yapılan iş, işin tamamı 1
+      { s: "Bir işi 5 günde bitiren işçi 1 günde işin ne kadarını yapar?", c: ["1/5", "5", "1/4"], a: "İşin tamamı 1'dir; 5 günde biterse her gün 1/5'i yapılır." },
+      { s: "Bir işi x günde bitiren işçi 1 günde işin ne kadarını yapar?", c: ["1/x", "x", "x − 1"], a: "İş 1, gün sayısı x: 1 günde 1/x. x, işin bitme süresidir, 1 günlük iş değildir." },
+      { s: "Bir işi x günde bitiren işçi 3 günde işin ne kadarını yapar?", c: ["3/x", "x/3", "3x"], a: "1 günde 1/x, 3 günde 3 · 1/x = 3/x." },
+      { s: "Bir işi 8 günde bitiren işçi 3 günde işin ne kadarını yapar?", c: ["3/8", "5/8", "8/3"], a: "1 günde 1/8, 3 günde 3/8. 5/8 kalan kısımdır." },
+      { s: "Bir işi 8 günde bitiren işçi 3 gün çalışırsa işin ne kadarı kalır?", c: ["5/8", "3/8", "5"], a: "Yapılan 3/8; kalan 1 − 3/8 = 5/8." },
+      { s: "İşçi problemlerinde işin tamamı hangi sayıyla gösterilir?", c: ["1", "100", "0"], a: "Bütün iş 1'dir; yapılan kısımlar 1/5, 3/8 gibi kesirlerdir." },
+      // İki işçi birlikte
+      { s: "Bir işi biri a günde, diğeri b günde bitiren iki işçi birlikte 1 günde işin ne kadarını yapar?", c: ["1/a + 1/b", "1/(a + b)", "a + b"], a: "Birlikte çalışınca 1 günlük işler toplanır: 1/a + 1/b. Süreler toplanmaz." },
+      { s: "Bir işi 3 günde ve 6 günde bitiren iki işçi birlikte 1 günde işin ne kadarını yapar?", c: ["1/2", "1/9", "9"], a: "1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2." },
+      { s: "Bir işi a ve b günde bitiren iki işçi birlikte t günde bitiriyor. Hangi denklem doğrudur?", c: ["t(1/a + 1/b) = 1", "t = a + b", "t(a + b) = 1"], a: "1 günde 1/a + 1/b; t günde t katı. İş bitince yapılan iş 1'dir: t(1/a + 1/b) = 1." },
+      { s: "Bir işi 4 ve 12 günde bitiren iki işçi birlikte t günde bitiriyor. Hangi denklem doğrudur?", c: ["t/4 + t/12 = 1", "t = 4 + 12", "4t + 12t = 1"], a: "Biri t günde t/4'ünü, öbürü t/12'sini yapar; toplam iş 1: t/4 + t/12 = 1." },
+      // Hız karşılaştırma
+      { s: "Ali bir işi x günde bitiriyor. Veli, Ali'nin 2 katı hızlı çalışıyor. Veli 1 günde işin ne kadarını yapar?", c: ["2/x", "1/(2x)", "x/2"], a: "Ali 1 günde 1/x; 2 katı hızlı olan 2 · 1/x = 2/x yapar. x/2, Veli'nin bitirme süresidir." },
+      { s: "Ali bir işi x günde bitiriyor. Veli, Ali'nin 2 katı hızlı çalışıyor. Veli bu işi kaç günde bitirir?", c: ["x/2", "2x", "x + 2"], a: "2 katı hızlı olan işi yarı sürede bitirir: x/2. 2x, 2 katı yavaş olanın süresidir." },
+      { s: "Yavaş işçi bir işi hızlı işçinin 3 katı sürede bitiriyor. Hızlı işçi x günde bitiriyorsa yavaş işçi 1 günde işin ne kadarını yapar?", c: ["1/(3x)", "3/x", "1/x + 3"], a: "Yavaş işçinin süresi 3x gün; 1 günde 1/(3x). 3/x, 3 katı hızlı olanın 1 günlük işidir." },
+      // Cümleden denkleme, denklemden cümleye
+      { s: "Bir işi x günde bitiren işçi 2 gün çalışınca işin yarısı bitiyor. Bu cümle hangi denklemle yazılır?", c: ["2/x = 1/2", "2x = 1/2", "x/2 = 2"], a: "2 günde 2/x yapılır; bu, işin yarısıdır: 2/x = 1/2." },
+      { s: "Bir işi 1 işçi 12 günde bitiriyor. Aynı hızda çalışan n işçi bu işi kaç günde bitirir?", c: ["12/n", "12n", "12 − n"], a: "İş 12 işçi-gündür; n işçiyle 12/n gün sürer." },
+      { s: "“1/6 + 1/12 = 1/t” denklemi hangi cümleyi gösterir?", c: ["İşi 6 ve 12 günde bitiren iki işçi birlikte t günde bitirir", "İşi 6 ve 12 günde bitiren iki işçi birlikte 18 günde bitirir", "İşi 6 günde bitiren işçi 12 gün çalışırsa t gün kalır"], a: "Solda iki işçinin 1 günlük işi, sağda birlikte 1 günlük iş: birlikte t günde biter." },
+      { s: "“5/x = 1/3” eşitliği hangi cümleyi gösterir?", c: ["İşi x günde bitiren işçi 5 günde işin üçte birini yapar", "İşi x günde bitiren işçi 3 günde işin beşte birini yapar", "İşi 5 günde bitiren işçi x günde işin üçte birini yapar"], a: "5/x, x günde biten işin 5 günlük kısmıdır; bu kısım 1/3'tür." },
+      // Tuzak: süreler toplanmaz
+      { s: "Bir işi Ayşe 2 günde, Can 3 günde bitiriyor. “Birlikte 2 + 3 = 5 günde biter” düşüncesi neden yanlıştır?", c: ["Birlikte çalışınca süre kısalır", "Sürelerin çarpılması gerekir", "Bu düşünce doğrudur"], a: "Birlikte 1 günlük işler toplanır: 1/2 + 1/3 = 5/6. İş 2 günden bile kısa sürede biter." },
+      { s: "Birlikte çalışan iki işçinin bir işi bitirme süresi için hangisi doğrudur?", c: ["Hızlı işçinin tek başına süresinden kısadır", "İki sürenin toplamına eşittir", "İki sürenin ortalamasına eşittir"], a: "Hızlı işçiye yardım gelince iş daha da çabuk biter; süre her iki işçinin süresinden de kısadır." },
+
+      // B) ÇÖZME — Tek işçi, işin kesir kadarı
+      { s: "Bir işçi bir işin 2/5'ini 4 günde yapıyor. İşin tamamını kaç günde bitirir?", c: ["10", "8", "6"], a: "İş x günde biterse 4/x = 2/5 → 2x = 20 → x = 10." },
+      { s: "Bir işçi bir işin 3/4'ünü 9 günde yapıyor. Kalan işi kaç günde bitirir?", c: ["3", "12", "4"], a: "9/x = 3/4 → x = 12 gün. Kalan 12 − 9 = 3 gün." },
+      { s: "Bir işi 12 günde bitiren işçi işin 2/3'ünü kaç günde yapar?", c: ["8", "6", "9"], a: "t/12 = 2/3 → t = 8." },
+      // İki işçi birlikte
+      { s: "Bir işi Ali 3 günde, Veli 6 günde bitiriyor. Birlikte kaç günde bitirirler?", c: ["2", "9", "4,5"], a: "t(1/3 + 1/6) = 1 → t · 1/2 = 1 → t = 2." },
+      { s: "Bir işi 4 ve 12 günde bitiren iki işçi birlikte kaç günde bitirir?", c: ["3", "16", "8"], a: "1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3; t · 1/3 = 1 → t = 3." },
+      { s: "Aynı hızda çalışan iki işçi bir işi birlikte 5 günde bitiriyor. Biri tek başına kaç günde bitirir?", c: ["10", "5", "2,5"], a: "Her biri x günde: 1/x + 1/x = 1/5 → 2/x = 1/5 → x = 10." },
+      { s: "Ali ile Veli bir işi birlikte 4 günde bitiriyor. Ali tek başına 6 günde bitiriyor. Veli tek başına kaç günde bitirir?", c: ["12", "2", "10"], a: "1/6 + 1/v = 1/4 → 1/v = 3/12 − 2/12 = 1/12 → v = 12." },
+      { s: "Bir işi Ayşe 10 günde, Elif 15 günde bitiriyor. İkisi birlikte 3 günde işin ne kadarını yapar?", c: ["1/2", "1/5", "3/25"], a: "3(1/10 + 1/15) = 3(3/30 + 2/30) = 3 · 1/6 = 1/2." },
+      { s: "Bir işi 2, 3 ve 6 günde bitiren üç işçi birlikte kaç günde bitirir?", c: ["1", "11", "2"], a: "1/2 + 1/3 + 1/6 = 3/6 + 2/6 + 1/6 = 1; 1 günde işin tamamı biter." },
+      { s: "Veli, Ali'nin 2 katı hızlı çalışıyor. Birlikte bir işi 4 günde bitiriyorlar. Ali tek başına kaç günde bitirir?", c: ["12", "6", "8"], a: "Ali 1/x, Veli 2/x: 4(1/x + 2/x) = 1 → 12/x = 1 → x = 12." },
+      { s: "Bir işçi diğerinin 3 katı hızlı çalışıyor. Birlikte bir işi 3 günde bitiriyorlar. Hızlı işçi tek başına kaç günde bitirir?", c: ["4", "12", "9"], a: "Yavaş 1/x, hızlı 3/x: 3(1/x + 3/x) = 1 → 12/x = 1 → x = 12; hızlı işçi 12/3 = 4 günde." },
+      // Biri bir süre çalışıp ayrılıyor
+      { s: "Bir işi Ali 6 günde, Veli 12 günde bitiriyor. 2 gün birlikte çalıştıktan sonra Ali ayrılıyor. Kalan işi Veli kaç günde bitirir?", c: ["6", "4", "8"], a: "2(1/6 + 1/12) = 2 · 3/12 = 1/2 yapıldı. Kalan 1/2: t/12 = 1/2 → t = 6." },
+      { s: "Bir işi 10 ve 15 günde bitiren iki işçi birlikte başlıyor. 3 gün sonra ikinci işçi ayrılıyor. Birinci işçi kalan işi kaç günde bitirir?", c: ["5", "7,5", "2"], a: "3(1/10 + 1/15) = 3 · 1/6 = 1/2 yapıldı. Kalan 1/2: t/10 = 1/2 → t = 5." },
+      { s: "Bir işi Ayşe 9 günde, Can 18 günde bitiriyor. Ayşe 3 gün tek başına çalışıyor, sonra Can katılıyor. Kalan işi birlikte kaç günde bitirirler?", c: ["4", "6", "12"], a: "Ayşe 3/9 = 1/3 yaptı, kalan 2/3. Birlikte 1 günde 1/9 + 1/18 = 1/6: t/6 = 2/3 → t = 4." },
+      { s: "Ali bir işi 8 günde bitiriyor. 2 gün çalışıp bırakıyor. Kalan işi Veli 9 günde bitiriyor. Veli işin tamamını kaç günde bitirir?", c: ["12", "9", "10"], a: "Ali 2/8 = 1/4 yaptı, kalan 3/4. Veli v günde bitirirse 9/v = 3/4 → v = 12." },
+      // Kalan işi bitirme
+      { s: "Bir işi 12 günde bitiren işçi 5 gün çalışıyor. İşi bitirmesi için kaç gün daha çalışmalıdır?", c: ["7", "5", "12"], a: "Yapılan 5/12, kalan 7/12: t/12 = 7/12 → t = 7." },
+      { s: "Bir işin 1/3'ü bitmiş. Kalan işi 6 günde bitiren işçi işin tamamını kaç günde bitirir?", c: ["9", "18", "6"], a: "Kalan 2/3 iş 6 günde: 6/x = 2/3 → x = 9." },
+      // İşçi-gün
+      { s: "Bir işi 3 işçi 8 günde bitiriyor. Bu iş kaç işçi-gündür?", c: ["24", "11", "5"], a: "İşçi-gün = işçi · gün = 3 · 8 = 24. Bu iş, 1 işçinin 24 günlük işidir." },
+      { s: "Bir işi 6 işçi 4 günde bitiriyor. 2 gün çalıştıktan sonra 2 işçi ayrılıyor. Kalan işi geri kalanlar kaç günde bitirir?", c: ["3", "2", "4"], a: "İş 6 · 4 = 24 işçi-gün; 2 günde 12 yapıldı, 12 kaldı. 4 işçi: 4t = 12 → t = 3." },
+      { s: "Bir işi 4 işçi 10 günde bitiriyor. 4 gün çalıştıktan sonra 2 işçi daha geliyor. Kalan işi kaç günde bitirirler?", c: ["4", "6", "3"], a: "İş 4 · 10 = 40 işçi-gün; 4 günde 16 yapıldı, 24 kaldı. 6 işçi: 6t = 24 → t = 4." },
+      { s: "5 işçinin 6 günde bitireceği bir işe 2 gün sonra 5 işçi daha katılıyor. İş toplam kaç günde biter?", c: ["4", "2", "3"], a: "İş 5 · 6 = 30 işçi-gün; 2 günde 10 yapıldı, 20 kaldı. 10 işçi: 10t = 20 → t = 2. Toplam 2 + 2 = 4 gün." }
     ],
 
     // ── yks-havuzprob · Havuz Problemleri ──
@@ -2303,6 +2354,13 @@ window.KK_YKS = {
     { k: "yks-yasprob", s: "Yaşları toplamı 30 olan iki kişiden biri x yaşındaysa öbürü x − 30 yaşındadır.", d: false, n: "Öbürü 30 − x yaşındadır" },
 
     // ── yks-isciprob · İşçi Problemleri ──
+    { k: "yks-isciprob", s: "Bir işi 6 günde bitiren işçi 1 günde işin 1/6'sını yapar.", d: true },
+    { k: "yks-isciprob", s: "Bir işi 2 ve 3 günde bitiren iki işçi birlikte 5 günde bitirir.", d: false, n: "Süreler toplanmaz: 1/2 + 1/3 = 5/6, iş 6/5 günde biter" },
+    { k: "yks-isciprob", s: "Birlikte çalışan iki işçi bir işi, hızlı olanın tek başına süresinden daha kısa sürede bitirir.", d: true },
+    { k: "yks-isciprob", s: "Bir işi x günde bitiren işçi 4 günde işin x/4'ünü yapar.", d: false, n: "4/x'ini yapar" },
+    { k: "yks-isciprob", s: "Bir işi 3 ve 6 günde bitiren iki işçi birlikte 1 günde işin yarısını yapar.", d: true },
+    { k: "yks-isciprob", s: "Bir işi 8 günde bitiren işçi 2 gün çalışırsa işin 3/4'ü kalır.", d: true },
+    { k: "yks-isciprob", s: "Bir işi 3 işçi 4 günde bitiriyorsa bu iş 7 işçi-gündür.", d: false, n: "3 · 4 = 12 işçi-gündür" },
 
     // ── yks-havuzprob · Havuz Problemleri ──
 
