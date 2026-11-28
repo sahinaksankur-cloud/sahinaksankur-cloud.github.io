@@ -10,6 +10,9 @@ Site sahibinin ayrıca verdiği talimat dosyaları varsa onlar bu dosyadan önce
 deposunda. O depoyu `add_repo` ile ekle; önce oradaki `CLAUDE.md`'yi (bölüm 0: oturum düzeni), sonra `SIRADAKI-OTURUM.md`'yi oku.
 
 ## Kurallar
+- **Önce plan, kullanıcıyla birlikte** (kullanıcı kesin söyledi): yeni bir konu, test, sayfa ya da özellik için doğrudan işe girilmez.
+  Önce ne yapılacağı ve sırası kullanıcıyla belirlenir; içerik (soru, metin) kullanıcı "başla" deyince yazılır. Ayrıntı ve onaylanmış
+  planlar gizli proje deposunda (`CLAUDE.md` bölüm 2 ve `SITE-MASTER-PLAN.md`).
 - Kullanıcıyla **Türkçe** konuş. Teknik adımları tek tek, sade anlat.
 - **Kişisel e-posta adresi hiçbir yerde görünmemeli** (kod, sayfa, commit). Commit kimliği her zaman:
   `sahinaksankur-cloud <356609707+sahinaksankur-cloud@users.noreply.github.com>`.
